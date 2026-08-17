@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance — built into the architecture</title>
+<meta name="description" content="Statutory guardrails outside policy scripts, decision replay, the audit trio, regulatory packs, data residency and Shariah-compliant contracts — structural properties of Swift Lending OS.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">Swift <span>Lending OS</span></a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <div class="nav__links" id="navlinks">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</nav>
+
+<header class="phead">
+  <div class="wrap">
+    <div class="kicker">Compliance built into the architecture</div>
+    <h1>Structural, not bolted on</h1>
+    <p class="lede">Audit trail, decision reproducibility, statutory limits and data residency are
+      properties of how the platform is built — which is why they cannot be switched off by a
+      configuration mistake.</p>
+  </div>
+</header>
+
+<!-- ============ GUARDRAILS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">The central mechanism</div>
+    <h2>Statutory guardrails execute outside policy scripts</h2>
+
+    <div class="grid grid--2" style="align-items:start;margin-top:22px">
+      <div>
+        <p class="lede">A pricing script may propose any rate. The guardrail layer clamps or
+          rejects it — and records that it did.</p>
+        <p>This is the difference between a platform where compliance is <em>configured</em> and
+          one where it is <em>enforced</em>. If statutory caps lived inside the scripts business
+          users edit, a well-meaning edit could breach a rate ceiling, a tenor limit or a fee
+          prohibition.</p>
+        <p>Instead they live in a regulatory pack, versioned and effective-dated, evaluated after
+          the script and before the offer. A misconfigured script cannot produce a
+          non-compliant loan.</p>
+      </div>
+      <div class="card card--navy">
+        <h3>What guardrails cover</h3>
+        <ul class="clean">
+          <li>Interest and profit-rate ceilings</li>
+          <li>Permitted fees, and prohibitions on all others</li>
+          <li>Default-charge limits and computation basis</li>
+          <li>Product amount caps and tenor limits</li>
+          <li>Mandated payment-allocation order</li>
+          <li>Contact-frequency caps and quiet hours</li>
+          <li>Disclosure and notice requirements</li>
+        </ul>
+        <p class="small" style="margin-top:14px;color:var(--grey-2)">Every clamp is recorded on
+          the offer, so the reason a rate moved is always visible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REPLAY ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">The regulator's actual question</div>
+    <h2>Any decision, replayed exactly, years later</h2>
+    <p class="lede">"Why was this application declined in March?" is a question the architecture
+      answers directly — not one that starts a project.</p>
+
+    <div class="grid grid--3" style="margin-top:24px">
+      <div class="card">
+        <h4>Inputs are stored, not re-fetched</h4>
+        <p class="small">Every external call records its request, response, latency and outcome
+          against the subject and the workflow execution. Replay uses stored responses, so no
+          paid provider is called again and the answer cannot drift.</p>
+      </div>
+      <div class="card">
+        <h4>Policy versions are pinned</h4>
+        <p class="small">Every decision records the exact artifact versions in force —
+          scorecard, workflow, pricing script, guardrail pack. Historical evaluation resolves
+          against what was live then.</p>
+      </div>
+      <div class="card">
+        <h4>The rule path is preserved</h4>
+        <p class="small">Which rules fired, on which values, against which thresholds — plus
+          feature contributions where a statistical model contributed, and the human decision and
+          form where one was taken.</p>
+      </div>
+    </div>
+
+    <div class="callout callout--green">
+      <span class="callout__t">Determinism is the enabling property</span>
+      <p>Because the expression runtime is sandboxed with no ambient clock, no randomness and no
+        I/O, identical recorded inputs produce identical outputs indefinitely. Replay is a
+        guarantee rather than a best effort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUDIT ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Evidence</div>
+    <h2>Three complementary records — nothing happens off the record</h2>
+
+    <div class="grid grid--3" style="margin-top:24px">
+      <div class="card">
+        <h3>Entity history</h3>
+        <p class="small">What did this loan, application or client look like over time? Every
+          change to state, attributes, status and linked documents, in chronological order.</p>
+        <p class="small muted">Nothing is silently overwritten. A payment rollback preserves the
+          original allocation; a manual adjustment preserves the value it changed.</p>
+      </div>
+      <div class="card">
+        <h3>Activity log</h3>
+        <p class="small">Who did what, across which records. Logins, views, approvals, edits,
+          overrides, permission changes.</p>
+        <p class="small muted">The surface fraud and security teams use to spot the reviewer
+          working accounts they were never assigned.</p>
+      </div>
+      <div class="card">
+        <h3>Exception log</h3>
+        <p class="small">Where the system itself is failing — integration errors, workflow faults,
+          job failures — with grouping, retry and escalation.</p>
+        <p class="small muted">A failed statutory notice becomes an operational incident, not a
+          line in an application log.</p>
+      </div>
+    </div>
+
+    <div class="spec" style="margin-top:30px">
+      <div class="spec__row">
+        <div class="spec__k">Tamper evidence</div>
+        <div class="spec__v">Audit records are append-only and hash-chained. No application role,
+          including administrator, can alter or delete one.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Configuration is audited too</div>
+        <div class="spec__v">Changes to products, policy, templates and permissions are themselves
+          logged — so the rules governing audit are as transparent as the rest.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Retention and legal hold</div>
+        <div class="spec__v">Configurable per record class and jurisdiction, with legal hold
+          suspending deletion.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REG PACKS ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">Multi-market by construction</div>
+    <h2>Regulatory packs, not forks</h2>
+    <p class="lede">The core stays market-agnostic. Everything jurisdiction-specific lives in a
+      versioned, effective-dated pack.</p>
+
+    <div class="grid grid--2" style="margin-top:24px">
+      <div class="card">
+        <h3>What a pack carries</h3>
+        <ul class="clean">
+          <li>Statutory guardrail rules and their thresholds</li>
+          <li>Prescribed agreement and disclosure templates</li>
+          <li>Rate and APR calculation conventions</li>
+          <li>Bureau reporting formats and cadence</li>
+          <li>Supervisory return definitions</li>
+          <li>Collections conduct rules — contact caps, quiet hours, notice periods</li>
+          <li>Provisioning and classification inputs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Why this shape</h3>
+        <p class="small">A lender entering a second market should be running a configuration
+          exercise, not a second implementation. Because packs are versioned and effective-dated,
+          a historical evaluation resolves against the pack that was in force at the time —
+          which is what makes a retrospective audit tractable.</p>
+        <p class="small">And because no jurisdiction rule is hard-coded in the core, adding a
+          market never destabilises an existing one.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout__t">Depth, not checkbox coverage</span>
+      <p>Regulatory packs are researched against primary sources — the statute and the
+        regulator's own published documents — rather than assembled from summaries. That research
+        routinely surfaces findings that change a product design before it is built.
+        <a href="case-onesphere.html">An example →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECURITY + DATA ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Own your platform, own your data</div>
+    <h2>Access, encryption and residency</h2>
+
+    <div class="grid grid--3" style="margin-top:24px">
+      <div class="card">
+        <h4>Role and attribute-based access</h4>
+        <p class="small">Granular permissions per entity and action, plus attribute rules for
+          thresholds, segregation of duties, four-eyes approval and time-boxed break-glass access
+          that raises an alert.</p>
+      </div>
+      <div class="card">
+        <h4>Data scoping in the database</h4>
+        <p class="small">Visibility limits by branch, region, product or portfolio are enforced by
+          row-level security — not by application code that can be bypassed.</p>
+      </div>
+      <div class="card">
+        <h4>Encryption everywhere</h4>
+        <p class="small">In transit and at rest, with field-level encryption for the most
+          sensitive identifiers and keys held in a managed store, never beside the data they
+          protect.</p>
+      </div>
+      <div class="card">
+        <h4>PII classification drives behaviour</h4>
+        <p class="small">Fields are classified once; masking, log suppression, export control and
+          retention then follow automatically rather than by reviewer discipline.</p>
+      </div>
+      <div class="card">
+        <h4>Residency is a deployment property</h4>
+        <p class="small">Single-tenant by default, deployed where the institution requires —
+          including fully air-gapped, with no outbound dependency for runtime or licensing.</p>
+      </div>
+      <div class="card">
+        <h4>Erasure without losing the record</h4>
+        <p class="small">Subject erasure is honoured by crypto-shredding personal identifiers
+          while preserving the financial and audit record the law requires. Row deletion is never
+          the mechanism.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHARIA ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">Islamic finance</div>
+    <h2>Shariah compliance is a ledger property, not a label</h2>
+
+    <div class="grid grid--2" style="align-items:start;margin-top:22px">
+      <div>
+        <p class="lede">The most damaging failure in this domain is a system that computes
+          interest internally and renames it "profit" at the presentation layer.</p>
+        <p>Under a conventional loan the balance grows as interest accrues with time. Under a
+          compliant sale-based contract the customer owes a <strong>fixed sale price from
+          inception</strong> — profit is recognised over time for accounting, but nothing
+          accrues. That difference reaches the ledger, so it is modelled in the kernel through a
+          contract-type abstraction rather than a product setting.</p>
+      </div>
+      <div class="card">
+        <h3>What the kernel models natively</h3>
+        <ul class="clean">
+          <li><strong>Profit recognition</strong> as an accounting entry that does not change the
+            customer's obligation</li>
+          <li><strong>Compensation and penalty separated</strong> — penalty amounts routed to a
+            charity payable, never recognised as income</li>
+          <li><strong>Rebate on early settlement</strong> as a first-class operation, applied on
+            restructure and acceleration too</li>
+          <li><strong>Purification</strong> tracking for non-permissible income</li>
+          <li><strong>Non-compliance event register</strong>, distinct from the exception log</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout--amber">
+      <span class="callout__t">Stated honestly</span>
+      <p>Contract permissibility varies by jurisdiction and by scholar — a structure widely
+        accepted in one market may be restricted in another. Product structures and market-specific
+        rules require confirmation by a qualified Shariah adviser and local counsel. What the
+        platform provides is a ledger that can model them correctly, and the governance surfaces
+        to evidence it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="section section--navy">
+  <div class="wrap">
+    <div class="kicker">In short</div>
+    <h2 style="max-width:28ch">Compliance you can demonstrate, not just assert</h2>
+    <p class="lede" style="color:var(--ice);max-width:72ch">
+      Guardrails that configuration cannot breach. Decisions that replay exactly. An audit trail
+      no role can alter. Regulatory packs instead of forks. Residency as a deployment choice.
+    </p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="architecture.html">See the architecture</a>
+      <a class="btn btn--ghost" href="case-onesphere.html">See it applied</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <p class="srcnote"><strong>Sources for this page:</strong>
+      <code>architecture/15-security.md</code> (access model, encryption, invariants) ·
+      <code>architecture/07-decision-engine.md</code> §6 (guardrails outside scripts) ·
+      <code>architecture/20-islamic-finance.md</code> ·
+      <code>research/06-compliance.md</code> ·
+      <code>docs/16-security-compliance-and-audit.md</code> ·
+      <code>reviews/ekpkt-licence-readiness-strategy.md</code> (regulatory research method)
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <strong style="color:#fff">Swift Lending OS</strong><br>
+      A configurable Building Platform for lending<br>
+      <span style="color:var(--grey-2)">Powered by swiftAI</span>
+    </div>
+    <div class="footer__links">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

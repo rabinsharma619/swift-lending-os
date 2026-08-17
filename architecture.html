@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture — Swift Lending OS</title>
+<meta name="description" content="Framework-native by design: the five-plane model, the credit kernel boundary, the open SDK and connector contracts, and four deployment topologies from laptop to air-gapped.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">Swift <span>Lending OS</span></a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <div class="nav__links" id="navlinks">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</nav>
+
+<header class="phead">
+  <div class="wrap">
+    <div class="kicker">Framework-native by design</div>
+    <h1>The architecture behind speed and control</h1>
+    <p class="lede">The agility of SaaS and the ownership of custom code. Assemble, extend and
+      govern a lending system at record speed — without surrendering control of a single rule,
+      workflow or integration.</p>
+  </div>
+</header>
+
+<!-- ============ THREE PILLARS ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Open SDK and APIs</h3>
+        <p>Extend, integrate and customise against documented interfaces — no proprietary
+          runtime, no lock-in.</p>
+      </div>
+      <div class="pillar">
+        <h3>Modular Core</h3>
+        <p>Origination, servicing, collections and analytics as separate modules over one
+          unified data model.</p>
+      </div>
+      <div class="pillar">
+        <h3>Deploy Anywhere</h3>
+        <p>Cloud, on-premise, hybrid or air-gapped — the same artifacts in every topology.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIVE PLANES ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">System shape</div>
+    <h2>Five planes, cleanly separated</h2>
+    <p class="lede">The architecture is organised so that what changes fastest is furthest from
+      what must never break.</p>
+
+    <div class="spec" style="margin-top:26px">
+      <div class="spec__row">
+        <div class="spec__k">Channel plane</div>
+        <div class="spec__v">Where borrowers and operators actually are — host platforms, partner
+          systems, direct operator UI, borrower portal and the public API. Swappable without
+          touching lending logic.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Edge plane</div>
+        <div class="spec__v">Per-channel adapters and the API gateway. Each host system gets its
+          own adapter speaking its own idiom, so the core never learns a channel's quirks.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Core plane</div>
+        <div class="spec__v">The lending core: origination, products and offers, the servicing
+          ledger, payments, collections, monitoring, communications and the admin/public API —
+          over a <strong>shared kernel</strong> of entities and state machines, expression
+          runtime, credit operations ledger, policy registry, work queue, scheduler, audit,
+          outbox and statutory guardrails.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Extracted plane</div>
+        <div class="spec__v">Separately deployable where the workload demands it — the
+          decisioning service (bursty, latency-critical), the document renderer (CPU-heavy), the
+          connector hub (the egress boundary) and reporting/batch workers.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Data plane</div>
+        <div class="spec__v">Transactional primary with standby, a modelled reporting replica, an
+          event bus, cache and object storage. Analyst queries never contend with origination
+          latency.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout__t">Why a modular core rather than microservices everywhere</span>
+      <p>The correctness-critical parts of lending benefit enormously from in-process
+        transactional consistency, and self-hosting customers must be able to run the platform
+        without a large platform-engineering practice. Module boundaries are enforced at build
+        time, and the modules that genuinely need independent scaling are extractable from day
+        one. Distributed transactions across loan balances is not a trade we make.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KERNEL BOUNDARY ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">The load-bearing decision</div>
+    <h2>The credit kernel is one transactional boundary</h2>
+    <p class="lede">Balances, credit operations, schedules and allocation commit together — or
+      not at all.</p>
+
+    <figure>
+      <div class="fig-scroll">
+        <img src="assets/arch-kernel-boundary.png"
+             alt="Layered diagram. Top: other verticals — origination, decisioning, collections, monitoring, reporting — where saga and eventual consistency are acceptable. Middle: the credit kernel vertical containing credit operations, balances, schedules, payment allocation and ledger audit trail, on a single database with ACID guarantees and no saga inside. Bottom: external edges — payment rail disbursement, remittance leg, core banking posting and commodity trades — where saga with compensating transactions belongs. Commands and events flow down into the kernel; outbox events flow back out.">
+      </div>
+      <figcaption><strong>The kernel boundary.</strong> Other modules talk to the kernel through
+        commands and events. The kernel publishes outbox events back. Saga appears only at the
+        external edges.</figcaption>
+    </figure>
+
+    <div class="callout callout--red">
+      <span class="callout__t">Saga at the external edges. Never inside the balance.</span>
+      <p>Eventual consistency between a payment and the balance it settles is precisely how
+        lending platforms develop subtle, expensive, late-discovered defects. Everything that
+        genuinely is distributed — payment rails, core-banking posting, a remittance leg — sits
+        outside the boundary with compensating transactions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INVARIANTS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Invariants</div>
+    <h2>Six properties the architecture carries, and tests</h2>
+    <p class="lede">Not aspirations. Each is enforced structurally, and each is testable.</p>
+
+    <div class="grid grid--3" style="margin-top:24px">
+      <div class="card">
+        <h4>Balances change only through credit operations</h4>
+        <p class="small">No service, adapter or batch job writes a balance column. They create
+          operations that the calculation pipeline applies. Enforced by architecture tests.</p>
+      </div>
+      <div class="card">
+        <h4>Money is integer minor units</h4>
+        <p class="small">Every payload carries an integer amount and an ISO currency code.
+          Floating point in a money path is a build failure, caught by static analysis.</p>
+      </div>
+      <div class="card">
+        <h4>Events publish only from the outbox</h4>
+        <p class="small">In the same database transaction as the state change they describe — so
+          there are no phantom events and no lost ones.</p>
+      </div>
+      <div class="card">
+        <h4>Decisions are versioned and replayable</h4>
+        <p class="small">The decision of record is a deterministic policy artifact. Identical
+          recorded inputs produce identical outputs, years later.</p>
+      </div>
+      <div class="card">
+        <h4>Statutory guardrails run outside policy scripts</h4>
+        <p class="small">A pricing script may propose any rate; the guardrail layer clamps or
+          rejects it. Configuration error cannot breach a statutory cap.</p>
+      </div>
+      <div class="card">
+        <h4>Every topology runs the same artifacts</h4>
+        <p class="small">Including air-gapped. No capability exists that works only in a
+          vendor-hosted deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SDK ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">Open SDK and APIs</div>
+    <h2>Extend without lock-in</h2>
+
+    <div class="grid grid--2" style="align-items:start;margin-top:22px">
+      <div>
+        <p class="lede">Extension points are interfaces. The platform never requires subclassing
+          a concrete platform class, and customer code lives in its own module and repository.</p>
+        <p>An upgrade is a dependency bump and a CI run — not a merge conflict against
+          customisation. Semantic versioning with a published deprecation policy makes that a
+          commitment rather than a hope.</p>
+        <h3 style="margin-top:26px">Four connector shapes</h3>
+        <p>Every integration — bureau, core banking, payment rail, KYC, AML, e-signature,
+          accounting — composes from exactly four interface shapes, so a new provider is a small,
+          well-understood piece of work rather than a project.</p>
+      </div>
+      <div>
+        <div class="codeblk"><span class="c">// Pull data about a subject.</span>
+<span class="k">interface</span> OutboundDataSource&lt;S, T&gt; {
+  ConnectorDescriptor descriptor();
+  T fetch(S subject, FetchContext ctx);
+}
+
+<span class="c">// Cause an external effect: payout,</span>
+<span class="c">// posting, SMS, envelope create.</span>
+<span class="c">// MUST be idempotent on the key.</span>
+<span class="k">interface</span> OutboundCommand&lt;C, R&gt; {
+  ConnectorDescriptor descriptor();
+  R execute(C command, CommandContext ctx);
+}
+
+<span class="c">// Plus: inbound webhook receivers</span>
+<span class="c">// and scheduled import jobs.</span></div>
+      </div>
+    </div>
+
+    <div class="spec" style="margin-top:30px">
+      <div class="spec__row">
+        <div class="spec__k">Connector descriptor</div>
+        <div class="spec__v">Every connector declares auth, request and response schema, timeout,
+          retry policy, circuit-breaker thresholds, cost model, PII classification per field and
+          cache policy. The descriptor is what makes the rest automatic.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Call trace persistence</div>
+        <div class="spec__v">Every external call records request, response, latency, cost and
+          outcome — attributable to a subject, a workflow execution and a policy version. This is
+          what makes decision replay possible without re-calling a paid provider.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Failure handling</div>
+        <div class="spec__v">A typed failure taxonomy with a circuit-breaker state machine per
+          provider. A degraded provider affects its own branch only — never the request pool.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Public API</div>
+        <div class="spec__v">REST with OpenAPI, OAuth 2.0, cursor pagination, RFC-standard problem
+          details, mandatory idempotency keys on state-changing requests, and additive-only
+          changes within a major version.</div>
+      </div>
+      <div class="spec__row">
+        <div class="spec__k">Sandbox</div>
+        <div class="spec__v">Every connector ships a fixture mode. No test suite requires a live
+          vendor, and forced decline, timeout and failure scenarios are first-class fixtures.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECISIONING + WORKFLOW ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Modular core</div>
+    <h2>Two engines, one boundary between them</h2>
+    <p class="lede">The separation that lets credit policy and journey shape evolve on different
+      cadences, owned by different teams.</p>
+
+    <div class="grid grid--2" style="margin-top:24px">
+      <div class="card">
+        <h3>Business process</h3>
+        <p class="small">The state machine of an entity — which stages exist, which transitions
+          are legal, what fires on transition, and what guards must hold. Declared as an artifact,
+          reviewed like code.</p>
+        <p class="small muted">Answers: <em>what stage is this in, and what happens next?</em></p>
+      </div>
+      <div class="card">
+        <h3>Decision workflow</h3>
+        <p class="small">The algorithm invoked at a transition — fetch data, evaluate rules,
+          return a verdict. Authored visually, versioned as an artifact, and it never blocks,
+          waits or queues.</p>
+        <p class="small muted">Answers: <em>what is the verdict?</em></p>
+      </div>
+    </div>
+
+    <p style="margin-top:22px">A workflow terminates by attaching <strong>facts</strong> —
+      proceed, pause for human judgment, or hard stop — and exiting. The business process decides
+      what those facts mean for the journey. Neither reaches into the other.</p>
+
+    <h3 style="margin-top:30px">Decision artifacts, all first-class</h3>
+    <div class="grid grid--4" style="margin-top:16px">
+      <div class="card card--soft"><h4>Scorecards</h4><p class="small">Characteristic → attribute → points, with development support and per-programme variants.</p></div>
+      <div class="card card--soft"><h4>Decision tables</h4><p class="small">Condition/outcome matrices with full execution trace.</p></div>
+      <div class="card card--soft"><h4>Decision trees</h4><p class="small">Branching logic where the path itself is the explanation.</p></div>
+      <div class="card card--soft"><h4>Expressions</h4><p class="small">One sandboxed runtime, multiple scopes — features, workflow logic, pricing, metrics.</p></div>
+    </div>
+
+    <div class="callout callout--navy">
+      <span class="callout__t">Nothing goes live unproven</span>
+      <p>Every policy artifact passes the same pipeline before activation:</p>
+      <div class="chain" style="margin-top:14px">
+        <div class="chain__s"><strong>Static validation</strong><span>types, references, budgets</span></div>
+        <div class="chain__s"><strong>Dry run</strong><span>against real records</span></div>
+        <div class="chain__s"><strong>Replay</strong><span>historical cohort, stored responses</span></div>
+        <div class="chain__s"><strong>Shadow</strong><span>live traffic, no effect</span></div>
+        <div class="chain__s is-gate"><strong>Human sign-off</strong><span>then champion/challenger</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEPLOY ANYWHERE ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">Deploy anywhere</div>
+    <h2>Your infrastructure, your rules</h2>
+    <p class="lede">Four topologies from a developer laptop to a fully air-gapped institution —
+      running the same artifacts, differing only in configuration.</p>
+
+    <div class="tbl-wrap" style="margin-top:24px">
+      <table>
+        <thead><tr><th>Topology</th><th>Shape</th><th>Suits</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>T1 — single node</strong></td>
+            <td>One command brings up the application, database, cache, object store, event bus and seeded data</td>
+            <td>Development, demonstration, pilot. A new engineer is productive on day one</td>
+          </tr>
+          <tr>
+            <td><strong>T2 — standard production</strong></td>
+            <td>Multi-zone orchestration, primary with synchronous standby, reporting replica, HA cache and bus</td>
+            <td>The default for most institutions</td>
+          </tr>
+          <tr>
+            <td><strong>T3 — high volume</strong></td>
+            <td>T2 plus aggressive autoscaling on the decisioning service, connector pool isolation, replica reads, partitioned batch</td>
+            <td>Checkout-latency lending at scale</td>
+          </tr>
+          <tr class="is-hl">
+            <td><strong>T4 — on-premise / air-gapped</strong></td>
+            <td>Mirrored registry, local object storage, <strong>no outbound dependency</strong> for runtime or licensing; signed offline update bundles</td>
+            <td>Institutions that cannot accept hosted or connected deployment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid grid--3" style="margin-top:22px">
+      <div class="card">
+        <h4>Supply-chain integrity</h4>
+        <p class="small">Images signed and admission-verified, with software bills of materials
+          attached as attestations and shipped inside the air-gap bundle for offline
+          verification.</p>
+      </div>
+      <div class="card">
+        <h4>No downtime for minor releases</h4>
+        <p class="small">Rolling deployment with expand–migrate–contract schema changes. No
+          big-bang cutovers.</p>
+      </div>
+      <div class="card">
+        <h4>Cloud-agnostic by construction</h4>
+        <p class="small">Containers and infrastructure-as-code, portable across major clouds and
+          on-premise clusters alike.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEPLOYMENT STORIES ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Two deployment stories</div>
+    <h2>Standalone, or as a domain on an enterprise platform</h2>
+    <p class="lede">The lending capability is identical either way. What differs is how much
+      surrounding platform the institution already owns.</p>
+
+    <figure>
+      <div class="fig-scroll">
+        <img src="assets/arch-domain-on-kernel-platform.png"
+             alt="Layered architecture. Top: channels delivered by the platform UI runtime — borrower app compiled to iOS, Android and web; admin console; merchant and broker portals; partner and public API. Middle: the Swift Lending OS domain — credit kernel plus origination, decisioning, products and offer engine, collections and recovery, covenants and monitoring, and regulatory packs. Lower right: the enterprise platform providing identity and access, reference data, business metadata, document management, notification services, process and task management, enterprise integration and predictive AI. Bottom: standard infrastructure stack. Lower left: host estates and external systems including wallet, remittance, digital banking, capital market, bureaus, KYC, payment rails and e-signature.">
+      </div>
+      <figcaption><strong>As a domain on an enterprise platform.</strong> Identity, documents,
+        notifications, reference data, task management and integration are consumed rather than
+        written.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="fig-scroll">
+        <img src="assets/arch-standalone.png"
+             alt="Layered architecture for the standalone option. Top: channels — borrower web application, borrower mobile, admin console, merchant and broker portals, public API and gateway. Middle: the Swift Lending OS lending services, identical to the platform option — credit kernel plus origination, decisioning, products and offer engine, collections and recovery, covenants and monitoring, and regulatory packs. Right: platform services provided within the deployment — identity and access, document engine, notification engine, reference data and catalogs, work queue and task management, connector SDK and integration layer, audit and history substrate, workflow and state machine engine, ML serving, and reporting layer. Bottom: infrastructure. Left: host systems and external integrations.">
+      </div>
+      <figcaption><strong>Standalone.</strong> The platform ships its own identity, document,
+        notification, task, integration and reporting services — nothing external required.</figcaption>
+    </figure>
+
+    <div class="btn-row">
+      <a class="btn btn--dark" href="case-edx.html">The enterprise-platform deployment</a>
+      <a class="btn btn--primary" href="compliance.html">Compliance architecture</a>
+    </div>
+
+    <p class="srcnote"><strong>Architecture sources:</strong>
+      <code>architecture/02-system-architecture.md</code> (five-plane model, invariants, module
+      decomposition) ·
+      <code>architecture/07-decision-engine.md</code> ·
+      <code>architecture/08-workflow-engine.md</code> ·
+      <code>architecture/10-api.md</code> ·
+      <code>architecture/14-integrations.md</code> (connector contracts) ·
+      <code>architecture/16-devops.md</code> (topologies, supply chain) ·
+      <code>architecture/18-engineering-stack.md</code> ·
+      <code>architecture diagram/edx-vs-standalone.md</code>
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <strong style="color:#fff">Swift Lending OS</strong><br>
+      A configurable Building Platform for lending<br>
+      <span style="color:var(--grey-2)">Powered by swiftAI</span>
+    </div>
+    <div class="footer__links">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>

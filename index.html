@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swift Lending OS — a full loan management system on a configurable Building Platform</title>
+<meta name="description" content="Swift Lending OS gives lenders a full loan management system on a configurable Building Platform. Assemble origination, servicing, collections and analytics into the exact workflow your business runs on.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">Swift <span>Lending OS</span></a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <div class="nav__links" id="navlinks">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Loan origination · servicing · collections · analytics</div>
+    <h1>A full loan management system on a configurable Building Platform.</h1>
+    <p class="hero__thesis">
+      Swift Lending OS lets you <strong>assemble origination, servicing, collections and
+      analytics into the exact workflow your business runs on</strong> — then reshape it as your
+      products, markets and regulations evolve.
+    </p>
+    <p class="hero__thesis" style="font-size:18px;margin-top:18px">
+      Powered by <strong>swiftAI</strong>, your AI implementation agent.
+    </p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="product.html">Explore the platform</a>
+      <a class="btn btn--ghost" href="architecture.html">See the architecture</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THREE VALUE PROPS ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="vstrip">
+      <div>
+        <h3>Own Your Platform, Own Your Data</h3>
+        <p>Source-level access, your infrastructure, your governance. No multi-tenant
+          commingling and no vendor holding your book.</p>
+      </div>
+      <div>
+        <h3>Launch in Weeks. Not Months.</h3>
+        <p>Prebuilt lending modules assembled and configured rather than written. Products ship
+          as configuration, not as engineering releases.</p>
+      </div>
+      <div>
+        <h3>Compliance Built Into the Architecture</h3>
+        <p>Statutory limits, audit trail, decision replay and data residency are structural
+          properties — not features bolted on afterwards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FRAMEWORK NATIVE ============ -->
+<section class="section section--navy">
+  <div class="wrap">
+    <div class="kicker">Framework-native by design</div>
+    <h2 style="max-width:30ch">The architecture behind speed and control</h2>
+    <p class="lede" style="color:var(--ice);max-width:74ch">
+      Swift Lending OS brings the best of both worlds — <strong style="color:#fff">the agility of
+      SaaS and the ownership of custom code</strong>. Its framework-native design lets lenders
+      assemble, extend and govern lending systems at record speed, without surrendering control.
+    </p>
+    <p style="max-width:74ch">
+      By combining SDK freedom with prebuilt lending modules, institutions move from design to
+      production in months rather than years — keeping every rule, workflow and integration
+      under their own governance.
+    </p>
+
+    <div class="pillars" style="margin-top:40px">
+      <div class="pillar">
+        <h3>Open SDK and APIs</h3>
+        <p><strong style="color:#fff">Extend without lock-in.</strong> Extend, integrate and
+          customise against documented interfaces. Standard stack, standard patterns, no
+          proprietary runtime to be trapped inside.</p>
+      </div>
+      <div class="pillar">
+        <h3>Modular Core</h3>
+        <p><strong style="color:#fff">Connected workflows, unified data.</strong> Origination,
+          servicing, collections and analytics are separate modules over one data model — so the
+          loan a decision created is the loan servicing collects on.</p>
+      </div>
+      <div class="pillar">
+        <h3>Deploy Anywhere</h3>
+        <p><strong style="color:#fff">Your infrastructure, your rules.</strong> Cloud, on-premise
+          or hybrid — including fully air-gapped. Every topology runs the same artifacts.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn--primary" href="architecture.html">How it is built</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT YOU ASSEMBLE ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">What you assemble</div>
+    <h2>Prebuilt modules over one credit kernel</h2>
+    <p class="lede">Everything a lender needs to originate, price, book, service, collect and
+      report — connected through a single ledger and a single data model.</p>
+
+    <div class="modmap" style="margin-top:28px">
+      <div class="mod mod--kernel">
+        <div class="mod__n">THE CREDIT KERNEL</div>
+        <h4>One ledger. One transactional boundary.</h4>
+        <p>Credit operations, balances, schedules, payment allocation and contract types. Every
+          balance change is a discrete, timestamped, reversible, audited operation — no service
+          anywhere writes a balance directly, and any loan's position at any past instant
+          reconstructs from its operation history alone.</p>
+      </div>
+
+      <div class="mod"><div class="mod__n">01</div><h4>Origination</h4>
+        <p>Multi-channel intake, deduplication, KYC/AML/fraud orchestration, credit assessment,
+          profile building, offer generation, documents, e-signature and disbursement.</p></div>
+      <div class="mod"><div class="mod__n">02</div><h4>Decisioning</h4>
+        <p>Scorecards, decision tables and trees, one expression runtime, a feature store — with
+          dry run, replay, shadow and champion/challenger before anything goes live.</p></div>
+      <div class="mod"><div class="mod__n">03</div><h4>Products &amp; pricing</h4>
+        <p>A two-tier product and variant model, pricing scripts reading verified profiles,
+          multiple payment-calculation engines and collateral rules.</p></div>
+      <div class="mod"><div class="mod__n">04</div><h4>Servicing</h4>
+        <p>Accrual, charge, payment and past-due operations running automatically; restructures,
+          forbearance, payoff, write-off and general-ledger posting.</p></div>
+      <div class="mod"><div class="mod__n">05</div><h4>Payments</h4>
+        <p>Client-level transactions with separate multi-loan allocation, smart and directed
+          allocation, clean rollback, rail and file ingestion, continuous reconciliation.</p></div>
+      <div class="mod"><div class="mod__n">06</div><h4>Collections</h4>
+        <p>Segmentation and treatment strategy, contact-compliance enforced by the platform,
+          promise-to-pay, hardship, settlement, charge-off and recoveries.</p></div>
+      <div class="mod"><div class="mod__n">07</div><h4>Covenants &amp; monitoring</h4>
+        <p>Metrics, specifications and anchored values — contractual conditions checked
+          continuously for the life of the loan, with breach as a first-class event.</p></div>
+      <div class="mod"><div class="mod__n">08</div><h4>Analytics &amp; reporting</h4>
+        <p>Operational views, portfolio and vintage dashboards, regulatory returns and
+          provisioning inputs — generated from the operational record.</p></div>
+    </div>
+
+    <div class="callout">
+      <span class="callout__t">Beneath every module</span>
+      <p>Documents and communications, the connector layer and public API, security, and the
+        audit trio — entity history, activity log and exception log. Nothing happens off the
+        record: every action by a user, job or API is captured with actor, timestamp and
+        before/after state.</p>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn--dark" href="product.html">Module detail</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE CONFIGURATION MODEL ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">How it reshapes</div>
+    <h2>Change the product without changing the system</h2>
+    <p class="lede">The line between what is built and what is configured is drawn once, and
+      held.</p>
+
+    <div class="grid grid--3" style="margin-top:26px">
+      <div class="card">
+        <span class="pill">SDK</span>
+        <h3>Engineers define what is possible</h3>
+        <p class="small">Entities, business processes, events, actions, credit operations,
+          connectors. Ordinary framework code in your repository, reviewed and deployed through
+          your pipeline.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Configuration</span>
+        <h3>The business defines how it behaves</h3>
+        <p class="small">Products and variants, pricing scripts, decision workflows, feature
+          mappings, document and notification templates, roles and queues — versioned, diffable,
+          promotable artifacts.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Operations</span>
+        <h3>Your teams run it</h3>
+        <p class="small">Applications, manual decisions, loan tracking, payments, collections
+          queues, covenant monitoring and dashboards.</p>
+      </div>
+    </div>
+
+    <div class="callout callout--navy">
+      <span class="callout__t">The rule that makes this hold</span>
+      <p>Every configuration option exists because an SDK primitive enables it. A credit policy
+        or price change is a configuration change shipped in hours by the business — <strong
+        style="color:#fff">not a software release</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ swiftAI ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Powered by swiftAI</div>
+    <h2>Your AI implementation agent</h2>
+    <p class="lede">swiftAI compresses the slowest part of any lending programme — turning
+      business intent into working configuration — without ever touching a credit decision.</p>
+
+    <div class="grid grid--2" style="align-items:start;margin-top:24px">
+      <div>
+        <p>Six specialised agents draft products, decision workflows, pricing scripts, tests,
+          migration mappings and operator narratives. Everything they produce is a
+          <strong>proposal</strong> that enters the same versioned artifact lifecycle as
+          human-authored configuration.</p>
+        <ul class="clean" style="margin-top:16px">
+          <li><strong>It changes the lending system.</strong> It never makes a lending decision.</li>
+          <li><strong>Every output is gated</strong> — static validation, dry run, replay, shadow, human sign-off.</li>
+          <li><strong>AI-origin artifacts face stricter gates</strong>, not looser ones.</li>
+          <li><strong>The platform is fully functional without it</strong> — air-gapped deployments run with it absent.</li>
+        </ul>
+      </div>
+      <div class="card card--navy">
+        <h3>The hard line</h3>
+        <p>There is <strong style="color:#fff">no code path</strong> from any swiftAI component
+          to the decision engine's runtime. The decision of record is always a versioned,
+          deterministic, replayable policy artifact.</p>
+        <p>That is both a regulatory necessity and the reason the assistance can be trusted
+          anywhere near a credit system.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn--dark" href="swiftai.html">How swiftAI works</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPLORE ============ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="kicker">Explore</div>
+    <h2>The platform in detail</h2>
+
+    <div class="grid grid--3" style="margin-top:24px">
+      <a class="card card--link" href="product.html">
+        <span class="pill">Platform</span>
+        <h3>Modules and capabilities</h3>
+        <p class="small">What each module does, the configuration model, and what is deliberately
+          left outside the platform.</p>
+        <span class="go">Explore the platform →</span>
+      </a>
+      <a class="card card--link" href="architecture.html">
+        <span class="pill">Architecture</span>
+        <h3>Framework-native design</h3>
+        <p class="small">The five-plane model, the kernel boundary, the SDK and connector
+          contracts, and four deployment topologies.</p>
+        <span class="go">See the architecture →</span>
+      </a>
+      <a class="card card--link" href="swiftai.html">
+        <span class="pill">swiftAI</span>
+        <h3>The implementation agent</h3>
+        <p class="small">Six agents, the safety envelope, and how generated configuration earns
+          its way into production.</p>
+        <span class="go">Meet swiftAI →</span>
+      </a>
+      <a class="card card--link" href="compliance.html">
+        <span class="pill">Compliance</span>
+        <h3>Built into the architecture</h3>
+        <p class="small">Guardrails outside policy scripts, decision replay, the audit trio,
+          regulatory packs and Shariah-compliant contracts.</p>
+        <span class="go">See compliance →</span>
+      </a>
+      <a class="card card--link" href="case-edx.html">
+        <span class="pill">Deployment</span>
+        <h3>Running on an enterprise platform</h3>
+        <p class="small">Swift Lending OS as a domain on EDX — what is reused, what is built, and
+          what that buys.</p>
+        <span class="go">See the deployment →</span>
+      </a>
+      <a class="card card--link" href="case-onesphere.html">
+        <span class="pill">In practice</span>
+        <h3>A lender's programme, end to end</h3>
+        <p class="small">A migrant-lending programme in Malaysia — requirements, fit, and the
+          regulatory findings that shaped it.</p>
+        <span class="go">See it applied →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <strong style="color:#fff">Swift Lending OS</strong><br>
+      A configurable Building Platform for lending<br>
+      <span style="color:var(--grey-2)">Powered by swiftAI</span>
+    </div>
+    <div class="footer__links">
+      <a href="index.html">Overview</a>
+      <a href="product.html">Platform</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="swiftai.html">swiftAI</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="case-edx.html">Deploy on EDX</a>
+      <a href="case-onesphere.html">In practice</a>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+</body>
+</html>
