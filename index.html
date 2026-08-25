@@ -356,7 +356,7 @@
           First initiative · In build
         </p>
         <h2 class="text-[30px] sm:text-[38px] lg:text-[44px] leading-[1.07] tracking-tightest font-semibold">
-          OneSphere Malaysia — Remittance-Native Pay Later, on Swift LendingOS.
+          OneSphere Malaysia — Send Now Pay Later, on Swift LendingOS.
         </h2>
         <p class="mt-6 text-[16.5px] leading-relaxed text-white/70 max-w-[56ch]">
           The first lending business assembled on Swift LendingOS: a KPKT-licensed
@@ -453,10 +453,11 @@
       <!-- Controls -->
       <div class="flex flex-wrap items-center justify-between gap-4 px-5 sm:px-7 py-4 border-b border-line">
         <div class="inline-flex flex-wrap gap-1" role="tablist" aria-label="Loan product">
-          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="true"  data-p="0">Wallet BNPL</button>
-          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="1">Send-Now-Pay-Later</button>
-          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="2">Retail term loan</button>
-          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="3">Margin facility</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="true"  data-p="0">Send-Now-Pay-Later</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="1">Payday loan</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="2">Wallet BNPL</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="3">Retail term loan</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="4">Margin facility</button>
         </div>
         <div class="flex items-center gap-1.5">
           <button id="fl-prev" class="rounded-md border border-line px-2.5 py-1.5 text-[13px] text-mute hover:text-ink hover:bg-surface-2 transition-colors" aria-label="Previous stage">←</button>
@@ -612,6 +613,13 @@
         </thead>
         <tbody class="divide-y divide-line align-top">
           <tr class="bg-accent-soft/40">
+            <th scope="row" class="px-5 py-4 font-medium text-left">OneSphere Malaysia</th>
+            <td class="px-5 py-4 text-mute">Send Now Pay Later · migrant corridor</td>
+            <td class="px-5 py-4 text-mute">Reuses the corridor send-flow machinery on Swift LendingOS / EDX; Ria as remitter of record, decisioning inside the send</td>
+            <td class="px-5 py-4 text-mute">OneSphere — KPKT-licensed lender of record; Ria</td>
+            <td class="px-5 py-4"><span class="font-medium">Phase 0 · first</span></td>
+          </tr>
+          <tr>
             <th scope="row" class="px-5 py-4 font-medium text-left">SmartWallet</th>
             <td class="px-5 py-4 text-mute">Micro-loans and BNPL</td>
             <td class="px-5 py-4 text-mute">Onboards as an external service provider behind the wallet's integration layer — the estate's best-documented seam</td>
@@ -3060,8 +3068,55 @@
         l: 'Balance zero; the facility closes with its full operation history intact.',
         o: 'CLOSURE · balance 0 · pledge released',
         st: ['Closed', 'NPR 0 drawn', 'NPR 0', '—', '0'],
-        h: 'One kernel served a wallet BNPL and a margin facility without forking.' } ] }
+        h: 'One kernel served a wallet BNPL and a margin facility without forking.' } ] },
+
+    { who: 'Ramesh · migrant worker, Malaysia', stages: [
+      { c: 'Short before payday, he opens OneSphere in-app and asks for a small advance against his salary. His e-KYC is already on file.',
+        s: 'Intake arrives through OneSphere\'s KPKT-licensed online channel; identity and work-permit validity are checked, and the human attestation the Act requires is captured.',
+        l: 'Nothing yet — an application is not an obligation.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'The Moneylenders Act attestation is a first-class step — an unattested loan is void, so disbursement is blocked until it is captured.' },
+      { c: 'Answers nothing more; the decision resolves in seconds.',
+        s: 'RemitScore reads salary regularity from his WPS credit history; the Malaysia regulatory pack clamps the amount to the statutory limit.',
+        l: 'Decision recorded with its inputs stored and its policy versions pinned.',
+        o: 'decision recorded · Malaysia pack applied',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'For a thin-file migrant worker, salary regularity — not a bureau score — is the signal.' },
+      { c: 'Sees how much he can take now and the single repayment due on his next payday.',
+        s: 'Pricing proposes; the guardrail enforces the 18% unsecured ceiling and blocks the fees the Act prohibits before the offer is ever shown.',
+        l: 'Terms fixed against the offer; no balance until he accepts.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'RM 800', '—', '—', '—'],
+        h: 'Fees are illegal here, so the whole cost lives in one capped rate — the guardrail proves it, outside the pricing script.' },
+      { c: 'Accepts and attests; the advance lands in his account within the hour.',
+        s: 'Disbursement executes and the agreement is generated from the product\'s document set and stored with its version.',
+        l: 'The first credit operation books principal, and the journal posts in real time.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Disbursement clearing',
+        st: ['Active', 'RM 800', 'RM 806', 'on payday', '0'],
+        h: 'Same kernel, a different regulatory pack — nothing about the ledger changes.' },
+      { c: 'Gets a reminder in his own language the day before payday.',
+        s: 'Accrual runs on schedule; reminders issue inside the contact caps and quiet hours the platform enforces.',
+        l: 'Accrual posts against the single fixed repayment.',
+        o: 'INTEREST_ACCRUAL · posted on schedule',
+        st: ['Active', 'RM 800', 'RM 806', 'in 1 day', '0'],
+        h: 'Tenure never exceeds his remaining permit validity — a permit-expiry flag watches it.' },
+      { c: 'On payday the single repayment clears from his salary account.',
+        s: 'Payment is captured and reconciled against the rail; the outbox emits the event exactly once, in the same transaction as the state change.',
+        l: 'One payment operation clears interest, then principal. Outstanding falls to zero.',
+        o: 'PAYMENT · Dr Cash · Cr Loans & advances',
+        st: ['Active', 'RM 800', 'RM 0', 'today', '0'],
+        h: 'A bullet repayment on payday runs the same waterfall the instalment products use — once.' },
+      { c: 'The advance closes, and his next payday carries a higher limit.',
+        s: 'Repayment history feeds the feature store, so the next decision is better informed than the last.',
+        l: 'Balance zero, history retained and attributable to the policy that produced it.',
+        o: 'CLOSURE · balance 0 · history retained',
+        st: ['Closed', 'RM 800', 'RM 0', '—', '0'],
+        h: 'Good repayment becomes a named variable, so the limit grows without a new build.' } ] }
   ];
+
+  // Display order for the product tabs: SNPL, Payday, Wallet BNPL, Retail, Margin -> index into FL
+  const ORD = [1, 4, 0, 2, 3];
 
   const fl = {
     prods: [...document.querySelectorAll('.fl-prod')],
@@ -3082,7 +3137,7 @@
     let fp = 0, fs = 0, ftimer = null;
 
     const flRender = () => {
-      const prod = FL[fp], stage = prod.stages[fs];
+      const prod = FL[ORD[fp]], stage = prod.stages[fs];
       fl.cust.textContent = stage.c;
       fl.sys.textContent  = stage.s;
       fl.led.textContent  = stage.l;
