@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>OneSphere Malaysia — Technical Paper · finos by Swift</title>
-<meta name="description" content="Technical product paper: building OneSphere's RNPL lending business as a Domain on EDX — architecture, delivery timeline, engineering organisation." />
+<meta name="description" content="Technical product paper: building OneSphere's SNPL lending business as a Domain on EDX — architecture, delivery timeline, engineering organisation." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -70,7 +70,7 @@
     <nav class="ml-auto hidden lg:flex items-center gap-1 text-[13px] text-mute">
       <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#architecture">Architecture</a>
       <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#c4">C4</a>
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#flow">RNPL flow</a>
+      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#flow">SNPL flow</a>
       <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#deploy">Deployment</a>
       <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#timeline">Timeline</a>
       <a class="px-3 py-1.5 ml-1 rounded-md bg-ink text-white" href="#team">Team</a>
@@ -84,7 +84,7 @@
   <div class="mx-auto max-w-content px-6 py-16 lg:py-24">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-6">Technical paper · 2026-08-25 · engineering &amp; architecture review</p>
     <h1 class="text-[30px] lg:text-[44px] leading-[1.08] tracking-tightest font-semibold max-w-[22ch]">OneSphere Malaysia, as an engineering build.</h1>
-    <p class="mt-6 text-[17px] leading-relaxed text-white/70 max-w-[64ch]">The RNPL lending business built as a <span class="text-white">Domain on EDX</span> — architecture (C4 + kernel), the Malaysia solution topology (Ria, DuitNow, the KPKT pack), the delivery timeline, and the engineering organisation.</p>
+    <p class="mt-6 text-[17px] leading-relaxed text-white/70 max-w-[64ch]">The SNPL lending business built as a <span class="text-white">Domain on EDX</span> — architecture (C4 + kernel), the Malaysia solution topology (Ria, DuitNow, the KPKT pack), the delivery timeline, and the engineering organisation.</p>
     <p class="mt-6 text-[13.5px] text-white/45 max-w-[70ch]">The platform architecture is reused from the corridor programme; everything Malaysia-specific — the regulatory pack, the rails, data residency — is called out. The go-live is gated by the KPKT licence, not by engineering.</p>
   </div>
 </section>
@@ -94,10 +94,10 @@
   <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">1 · Architecture overview</p>
     <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Swift LendingOS as a Domain on EDX</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">EDX names "the Financial Services Platform" as a Domain built on it — Swift LendingOS <span class="text-ink">is</span> that Domain. OneSphere Malaysia is a Solution on the RNPL Product. Swift builds the lending Domain; EDX provides the ~10 platform services beneath it (configured, not built).</p>
+    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">EDX names "the Financial Services Platform" as a Domain built on it — Swift LendingOS <span class="text-ink">is</span> that Domain. OneSphere Malaysia is a Solution on the SNPL Product. Swift builds the lending Domain; EDX provides the ~10 platform services beneath it (configured, not built).</p>
     <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
     S["Solution — OneSphere Malaysia&lt;br/&gt;Malaysia/KPKT pack · Ria · DuitNow · MYR · data residency"]
-    P["Product — RNPL (Remit-Now-Pay-Later)&lt;br/&gt;same design as corridor SNPL"]
+    P["Product — SNPL (Send Now Pay Later)&lt;br/&gt;same design as corridor SNPL"]
     D["Domain — Swift LendingOS&lt;br/&gt;credit kernel · decisioning · servicing · payments · collections · regulatory packs"]
     E["Platform — EDX&lt;br/&gt;identity · documents · notifications · integration · metadata UI · AI/ML"]
     S --&gt; P --&gt; D --&gt; E</pre></div>
@@ -183,11 +183,11 @@
   </div>
 </section>
 
-<!-- RNPL flow -->
+<!-- SNPL flow -->
 <section id="flow" class="border-b border-line">
   <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">3 · Solution topology</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">The RNPL request, end to end</h2>
+    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">The SNPL request, end to end</h2>
     <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">The remittance is disbursed by <span class="text-ink">Ria as remitter of record</span> (keeping OneSphere out of money transmission); repayment lands via <span class="text-ink">DuitNow AutoDebit</span> as a <span class="font-mono text-[12.5px]">PAYMENT</span> operation allocated by the servicing waterfall.</p>
     <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">sequenceDiagram
     autonumber
@@ -199,7 +199,7 @@
     participant C as connector-hub
     participant R as Ria (remitter)
     participant N as DuitNow
-    B->>P: Request RNPL (amount, remittance)
+    B->>P: Request SNPL (amount, remittance)
     P->>G: POST /api/v1/applications (idempotent)
     G->>L: create application
     L->>D: decide (remittance signal + features)
@@ -315,7 +315,7 @@
     <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Gated by the licence, not by engineering</h2>
     <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">Engineering can be pilot-ready around M8; the live date waits on full KPKT online approval (conventional licence fully issued → conditional → build + MYNIC → full).</p>
     <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto">
-      <p class="text-[13px] font-semibold mb-3">OneSphere Malaysia RNPL — delivery <span class="text-mute-2 font-normal">· T0 = build start (Oct 2026)</span></p>
+      <p class="text-[13px] font-semibold mb-3">OneSphere Malaysia SNPL — delivery <span class="text-mute-2 font-normal">· T0 = build start (Oct 2026)</span></p>
       <div class="min-w-[720px]">
         <div class="grow"><div></div><div class="grid text-[9.5px] text-mute-2" style="grid-template-columns:repeat(13,1fr);">
           <div class="text-center">Oct'26</div><div class="text-center">Nov</div><div class="text-center">Dec</div><div class="text-center">Jan'27</div><div class="text-center">Feb</div><div class="text-center">Mar</div><div class="text-center">Apr</div><div class="text-center">May</div><div class="text-center">Jun</div><div class="text-center">Jul</div><div class="text-center">Aug</div><div class="text-center">Sep</div><div class="text-center">Oct'27</div>
@@ -323,8 +323,8 @@
 
         <div class="gsec">Build</div>
         <div class="grow"><div class="glabel">Phase 0 — Foundations</div><div class="gtrack"><div class="gbar bg-accent" style="left:0%;width:15.38%"></div></div></div>
-        <div class="grow"><div class="glabel">Phase 1 — RNPL build on EDX</div><div class="gtrack"><div class="gbar bg-accent" style="left:15.38%;width:46.15%"></div></div></div>
-        <div class="grow"><div class="glabel">Pilot — RNPL-first</div><div class="gtrack"><div class="gbar bg-accent" style="left:61.54%;width:30.77%"></div></div></div>
+        <div class="grow"><div class="glabel">Phase 1 — SNPL build on EDX</div><div class="gtrack"><div class="gbar bg-accent" style="left:15.38%;width:46.15%"></div></div></div>
+        <div class="grow"><div class="glabel">Pilot — SNPL-first</div><div class="gtrack"><div class="gbar bg-accent" style="left:61.54%;width:30.77%"></div></div></div>
 
         <div class="gsec">Licence track · critical path</div>
         <div class="grow"><div class="glabel">Conventional licence → full issue</div><div class="gtrack"><div class="gbar" style="left:0%;width:46.15%;background:#9A6510"></div></div></div>
@@ -350,9 +350,9 @@
       <table class="tbl">
         <thead><tr><th class="w-[18%]">Phase</th><th>Scope</th><th class="w-[26%]">Exit gate</th></tr></thead>
         <tbody>
-          <tr><td class="font-medium">0 · Resolve &amp; foundations<br><span class="text-mute-2 font-normal">8 wk</span></td><td class="text-mute">Close the four make-or-break questions in writing; solution-design RNPL; stand up the platform (reuse) + regpack-malaysia v0; prove the guardrail blocks an over-cap loan.</td><td class="text-mute"><b>G0</b> — questions answered; Malaysia guardrail proven; go/no-go on the migrant segment.</td></tr>
-          <tr><td class="font-medium">1 · RNPL build on EDX<br><span class="text-mute-2 font-normal">24 wk</span></td><td class="text-mute">RNPL product config; RemitScore v1 (replayable); regpack-malaysia v1; ria-edge + duitnow-edge; portal; documented KPKT journey + security certificate.</td><td class="text-mute">conditional → <b>full</b> KPKT online approval; pilot-ready.</td></tr>
-          <tr><td class="font-medium">Pilot · RNPL-first<br><span class="text-mute-2 font-normal">16 wk</span></td><td class="text-mute">Bounded cohort; test the remittance-signal thesis; explicit stop criteria (loss appetite, DPD ceiling, scorecard floor, kill switch).</td><td class="text-mute"><b>G1</b> — thesis validated on real repayment, or stopped cleanly.</td></tr>
+          <tr><td class="font-medium">0 · Resolve &amp; foundations<br><span class="text-mute-2 font-normal">8 wk</span></td><td class="text-mute">Close the four make-or-break questions in writing; solution-design SNPL; stand up the platform (reuse) + regpack-malaysia v0; prove the guardrail blocks an over-cap loan.</td><td class="text-mute"><b>G0</b> — questions answered; Malaysia guardrail proven; go/no-go on the migrant segment.</td></tr>
+          <tr><td class="font-medium">1 · SNPL build on EDX<br><span class="text-mute-2 font-normal">24 wk</span></td><td class="text-mute">SNPL product config; RemitScore v1 (replayable); regpack-malaysia v1; ria-edge + duitnow-edge; portal; documented KPKT journey + security certificate.</td><td class="text-mute">conditional → <b>full</b> KPKT online approval; pilot-ready.</td></tr>
+          <tr><td class="font-medium">Pilot · SNPL-first<br><span class="text-mute-2 font-normal">16 wk</span></td><td class="text-mute">Bounded cohort; test the remittance-signal thesis; explicit stop criteria (loss appetite, DPD ceiling, scorecard floor, kill switch).</td><td class="text-mute"><b>G1</b> — thesis validated on real repayment, or stopped cleanly.</td></tr>
         </tbody>
       </table>
     </div>
@@ -364,7 +364,7 @@
   <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">6 · Engineering organisation</p>
     <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">A solution build plus a Malaysia pod</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">RNPL reuses the corridor platform, so this is a solution build — not a greenfield platform build. Two hires are non-negotiable from day zero: a credit-operations domain expert and a Malaysia regulatory lead.</p>
+    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">SNPL reuses the corridor platform, so this is a solution build — not a greenfield platform build. Two hires are non-negotiable from day zero: a credit-operations domain expert and a Malaysia regulatory lead.</p>
 
     <div class="mt-6 space-y-6">
       <div class="rounded-xl border border-line bg-surface p-6">
@@ -437,7 +437,7 @@
           <tr><td>KPKT declines online lending to work-permit holders</td><td><span class="text-signal-red font-medium">Regulatory · critical</span></td><td class="text-mute">Ask in writing at G0; hold scope; fallback citizen/PR segment.</td></tr>
           <tr><td>Licence issuance / online approval slips &gt; 1 year</td><td class="text-signal-amber font-medium">Delivery · high</td><td class="text-mute">Licence track is the critical path; drive full issue now.</td></tr>
           <tr><td>s.27 attestation cannot be satisfied remotely</td><td class="text-signal-amber font-medium">Regulatory · high</td><td class="text-mute">Reverse-engineer an approved Schedule J; confirm with KPKT before UX freeze.</td></tr>
-          <tr><td>Rate cap uneconomic (fees illegal, s.23)</td><td class="text-signal-amber font-medium">Commercial · high</td><td class="text-mute">RNPL at larger tickets; confirm flat-vs-reducing at G0.</td></tr>
+          <tr><td>Rate cap uneconomic (fees illegal, s.23)</td><td class="text-signal-amber font-medium">Commercial · high</td><td class="text-mute">SNPL at larger tickets; confirm flat-vs-reducing at G0.</td></tr>
           <tr><td>Remittance leg triggers MSB licensing</td><td class="text-signal-amber font-medium">Regulatory · high</td><td class="text-mute">Ria = remitter of record; counsel + BNM view before freeze.</td></tr>
           <tr><td>Data residency blocks Kathmandu processing</td><td class="text-signal-amber font-medium">Architecture · high</td><td class="text-mute">Malaysia-resident data plane; masked non-prod data.</td></tr>
           <tr><td>Ledger correctness defect reaches production</td><td><span class="text-signal-red font-medium">Engineering · severe</span></td><td class="text-mute">Property-based invariants from Phase 0; daily reconciliation tripwire; every correction operation-sourced (D4).</td></tr>
