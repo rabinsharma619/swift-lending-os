@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>OneSphere Malaysia — Product Paper · finos by Swift</title>
-<meta name="description" content="Launching OneSphere's remittance-linked lending business in Malaysia — built as a Domain on EDX, under a KPKT online-moneylending approval." />
+<meta name="description" content="Launching OneSphere's remittance-linked lending business in Malaysia — built on Swift LendingOS, under a KPKT online-moneylending approval." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -95,11 +95,11 @@
   <div class="mx-auto max-w-content px-6 py-20 lg:py-28">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-6">Product paper · 2026-08-25 · for OneSphere &amp; Swift leadership</p>
     <h1 class="text-[32px] lg:text-[48px] leading-[1.06] tracking-tightest font-semibold max-w-[20ch]">Launching OneSphere's lending business in Malaysia.</h1>
-    <p class="mt-6 text-[18px] leading-relaxed text-white/70 max-w-[62ch]">A remittance-linked credit product, built as a <span class="text-white">Domain on EDX</span>, under a <span class="text-white">KPKT online-moneylending approval</span> — reusing the corridor lending machinery that is already substantially built.</p>
+    <p class="mt-6 text-[18px] leading-relaxed text-white/70 max-w-[62ch]">A remittance-linked credit product, built on <span class="text-white">Swift LendingOS</span>, under a <span class="text-white">KPKT online-moneylending approval</span> — reusing the corridor lending machinery that is already substantially built.</p>
     <div class="mt-9 grid sm:grid-cols-3 gap-4 max-w-4xl">
       <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">1 · Fund Phase 0</p><p class="text-[13.5px] text-white/70 leading-relaxed">A bounded 2–3 week pass to close the four make-or-break questions — before scope or budget is fixed.</p></div>
       <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">2 · SNPL-first</p><p class="text-[13.5px] text-white/70 leading-relaxed">Adopt Send Now Pay Later as the launch product; defer the Pay Day Loan until it is viable under the rate cap.</p></div>
-      <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">3 · Build on EDX</p><p class="text-[13.5px] text-white/70 leading-relaxed">Reuse the corridor SNPL machinery on EDX rather than commissioning a greenfield lending stack.</p></div>
+      <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">3 · Build on Swift LendingOS</p><p class="text-[13.5px] text-white/70 leading-relaxed">Reuse the corridor SNPL machinery on Swift LendingOS rather than commissioning a greenfield lending stack.</p></div>
     </div>
     <p class="mt-8 text-[13.5px] text-white/45 max-w-[70ch]">The launch is gated by a licence and four legal questions — not by engineering velocity. So this paper asks for a gate-by-gate commitment, and the first gate is cheap.</p>
   </div>
@@ -116,7 +116,7 @@
       </div>
       <div>
         <h3 class="text-[18px] font-semibold tracking-tighter">The vehicle already exists</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">The launch product is the <span class="text-ink font-medium">same mechanic as Swift's SNPL</span> for the UK→Nepal and Korea→Nepal corridors, same partner. Built as a Domain on EDX, ~10 enterprise services — identity, documents, notifications, integration, metadata UI, MLOps — are <span class="text-ink font-medium">reused, not rebuilt.</span> Swift builds the lending Domain, not a platform.</p>
+        <p class="mt-2 text-[15px] leading-relaxed text-mute">The launch product is the <span class="text-ink font-medium">same mechanic as Swift's SNPL</span> for the UK→Nepal and Korea→Nepal corridors, same partner. Built on Swift LendingOS, the lending core and its supporting components — identity, documents, notifications, integration, borrower and admin UI, MLOps — are <span class="text-ink font-medium">reused across corridors, not rebuilt.</span></p>
       </div>
       <div>
         <h3 class="text-[18px] font-semibold tracking-tighter">The gating is regulatory — and honest work</h3>
@@ -124,7 +124,7 @@
       </div>
       <div>
         <h3 class="text-[18px] font-semibold tracking-tighter">The recommendation</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">Proceed — SNPL-first, on Swift LendingOS on EDX — and treat the four questions as the plan's spine, not its footnotes. A launch that resolves them is defensible, differentiated, and reuses machinery already largely built.</p>
+        <p class="mt-2 text-[15px] leading-relaxed text-mute">Proceed — SNPL-first, on Swift LendingOS — and treat the four questions as the plan's spine, not its footnotes. A launch that resolves them is defensible, differentiated, and reuses machinery already largely built.</p>
       </div>
     </div>
   </div>
@@ -188,19 +188,18 @@
   <div class="mx-auto max-w-content px-6 py-16 lg:py-24">
     <div class="max-w-3xl mb-12 reveal">
       <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The platform</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">Swift LendingOS — the Financial Services Domain EDX already names.</h2>
-      <p class="mt-5 text-[16px] leading-relaxed text-white/65">EDX's own architecture defines four layers and assigns "the Financial Services Platform" as a Domain built on EDX. Swift LendingOS <span class="text-white">is</span> that Domain — not a platform built from scratch.</p>
+      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">Swift LendingOS — a standalone lending platform, already built for the corridors.</h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-white/65">The lending core and its supporting components are shared across every corridor. Malaysia adds a product configuration and a regulatory pack — <span class="text-white">not a new platform.</span></p>
     </div>
-    <div class="grid md:grid-cols-4 gap-px bg-white/10 rounded-xl overflow-hidden reveal mb-10">
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Platform · EDX</p><p class="text-[13px] text-white/65 leading-relaxed">Identity, documents, notifications, integration, task &amp; process, metadata UI, AI framework — <span class="text-white">configured, not built.</span></p></div>
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Domain · Swift LendingOS</p><p class="text-[13px] text-white/65 leading-relaxed">Credit kernel, decisioning, servicing ledger, payments, collections, covenants, regulatory packs — <span class="text-white">what Swift builds.</span></p></div>
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Product</p><p class="text-[13px] text-white/65 leading-relaxed">SNPL — configured on the Domain, the same design as corridor SNPL.</p></div>
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Solution</p><p class="text-[13px] text-white/65 leading-relaxed">OneSphere Malaysia — client release, config, and the Malaysia/KPKT pack.</p></div>
+    <div class="grid md:grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden reveal mb-10">
+      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Supporting components</p><p class="text-[13px] text-white/65 leading-relaxed">Identity, documents, notifications, integration, task &amp; process, borrower and admin UI, AI framework — <span class="text-white">shared across corridors.</span></p></div>
+      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Lending core</p><p class="text-[13px] text-white/65 leading-relaxed">Credit kernel, decisioning, servicing ledger, payments, collections, covenants, regulatory packs — <span class="text-white">reused across corridors.</span></p></div>
+      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">OneSphere Malaysia</p><p class="text-[13px] text-white/65 leading-relaxed">SNPL configuration (the same design as corridor SNPL), the client release, and the Malaysia/KPKT pack.</p></div>
     </div>
     <div class="grid lg:grid-cols-2 gap-8 reveal">
       <div>
-        <h3 class="text-[17px] font-semibold tracking-tighter">Why on EDX, not standalone</h3>
-        <p class="mt-2 text-[14.5px] leading-relaxed text-white/60">For a time-pressured new-market launch, EDX-on-top reuses ~10 platform services, ships one metadata-driven codebase for Flutter + web, integrates natively with Ria and the rails, and inherits mature, regulated-production controls. Standalone would mean Swift operating <span class="text-white">two platforms</span> — none of which makes lending better.</p>
+        <h3 class="text-[17px] font-semibold tracking-tighter">The reuse map — cheaper and more credible than greenfield</h3>
+        <p class="mt-2 text-[14.5px] leading-relaxed text-white/60">The honest vendor position is <span class="text-white">requirement → existing Swift LendingOS capability → gap to build</span>, not a greenfield quote. Onboarding, KYC, documents, notifications, integration and the lending core already exist from the corridor build; the Malaysia/KPKT pack is a new, swappable pack alongside NRB, SEBON and FCA — not a fork of the core.</p>
       </div>
       <div>
         <h3 class="text-[17px] font-semibold tracking-tighter">The control that matters for a licence</h3>
@@ -281,7 +280,7 @@
         <thead><tr class="text-left text-mute-2 border-b border-line [&_th]:px-5 [&_th]:py-3 [&_th]:font-medium"><th class="w-[16%]">Phase</th><th>Scope</th><th class="w-[26%]">Exit gate</th></tr></thead>
         <tbody class="[&_td]:px-5 [&_td]:py-3.5 [&_td]:align-top [&_tr]:border-b [&_tr]:border-line/60">
           <tr><td class="font-medium">Phase 0 — Resolve<br><span class="text-mute-2 font-normal">2–3 wks</span></td><td class="text-mute">Put the four questions to KPKT/counsel in writing; read the full Garis Panduan; drive the conventional licence toward full issue; solution-design SNPL; produce a defensible estimate.</td><td class="text-mute">Four questions answered; SNPL economics confirmed; go/no-go on the migrant segment.</td></tr>
-          <tr><td class="font-medium">Phase 1 — Build SNPL on EDX</td><td class="text-mute">SNPL Domain config on EDX (reuse map); RemitScore v1 (rule-based, replayable); Malaysia/KPKT pack (18% cap + s.23 + s.27 flow as guardrails); Ria integration as lender-only; documented journey + security certificate.</td><td class="text-mute">Conditional → full KPKT online approval; platform pilot-ready.</td></tr>
+          <tr><td class="font-medium">Phase 1 — Build SNPL on Swift LendingOS</td><td class="text-mute">SNPL configuration on Swift LendingOS (reuse map); RemitScore v1 (rule-based, replayable); Malaysia/KPKT pack (18% cap + s.23 + s.27 flow as guardrails); Ria integration as lender-only; documented journey + security certificate.</td><td class="text-mute">Conditional → full KPKT online approval; platform pilot-ready.</td></tr>
           <tr><td class="font-medium">Pilot — SNPL-first</td><td class="text-mute">Bounded borrower cohort; test the remittance-signal thesis; <span class="text-ink font-medium">explicit stop criteria</span> — max loss appetite, DPD ceiling, scorecard floor, kill switch.</td><td class="text-mute">Thesis validated on real repayment before any scale.</td></tr>
           <tr><td class="font-medium">Phase 2 — Scale / extend</td><td class="text-mute">Scale SNPL; re-evaluate Pay Day Loan only if viable; consider an Islamic variant and the CCA-2028 migration.</td><td class="text-mute">Commercial envelope met; regulatory posture stable.</td></tr>
         </tbody>
@@ -305,7 +304,7 @@
           <tr><td>Licence issuance / online approval slips &gt; 1 year</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Critical path; drive premises + police screening now; no build commitment until clear.</td></tr>
           <tr><td>Rate cap makes Pay Day Loan (and thin SNPL) unviable</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">SNPL-first at larger tickets; defer PDL; confirm flat-vs-reducing.</td></tr>
           <tr><td>Remittance leg triggers MSB licensing</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Ria as remitter of record; counsel + BNM view before design freeze.</td></tr>
-          <tr><td>Data residency blocks Kathmandu processing</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Assess in Phase 0; EDX multi-region; anonymised UAT data.</td></tr>
+          <tr><td>Data residency blocks Kathmandu processing</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Assess in Phase 0; Malaysia-region hosting; anonymised UAT data.</td></tr>
           <tr><td>Migrant flight-risk (borrower leaves Malaysia)</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Tenure ≤ remaining permit validity; permit-expiry early warning; real write-off policy.</td></tr>
           <tr><td>RemitScore thesis unproven / endogenous</td><td class="text-mute">Med-High</td><td class="text-mute">Pilot explicitly tests it; flag debt-funded remittance; no scale until validated.</td></tr>
         </tbody>
@@ -319,8 +318,8 @@
   <div class="mx-auto max-w-content px-6 py-20 lg:py-24">
     <div class="reveal max-w-3xl">
       <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-5">Recommendation</p>
-      <h2 class="text-[28px] lg:text-[38px] leading-[1.12] tracking-tightest font-semibold max-w-[22ch]">Proceed — SNPL-first, on Swift LendingOS on EDX. Fund Phase 0 now.</h2>
-      <p class="mt-6 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">The opportunity is genuine and OneSphere is uniquely placed to serve it. The vehicle is largely built — the launch product is the corridor SNPL, and Swift LendingOS is the Domain EDX already names — so the reuse and the time-to-market advantage are real.</p>
+      <h2 class="text-[28px] lg:text-[38px] leading-[1.12] tracking-tightest font-semibold max-w-[22ch]">Proceed — SNPL-first, on Swift LendingOS. Fund Phase 0 now.</h2>
+      <p class="mt-6 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">The opportunity is genuine and OneSphere is uniquely placed to serve it. The vehicle is largely built — the launch product is the corridor SNPL, and it runs on the same Swift LendingOS core — so the reuse and the time-to-market advantage are real.</p>
       <p class="mt-4 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">The constraints are equally real — the citizenship advisory, the s.27 attestation, the rate cap, and the MSB question decide the business — but they are <span class="text-white">answerable, and the plan is built around answering them first, cheaply, before any scope is frozen.</span></p>
       <p class="mt-4 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">Don't launch a Pay Day Loan into a rate cap that makes it unviable. Do launch SNPL — a differentiated, purpose-linked product on a proprietary signal — as a pilot that tests its thesis, on a platform whose guardrails make the licence defensible and whose reuse makes the launch fast.</p>
     </div>
@@ -338,7 +337,7 @@
         <span class="text-[12px] text-white/40">by</span>
         <span class="text-[13px] text-white/70 font-medium">Swift LendingOS</span>
       </div>
-      <p class="text-[11.5px] text-white/40 max-w-[52ch]">Product paper for OneSphere &amp; Swift leadership. Grounded in the KPKT licence-readiness strategy, the OneSphere BRD reviews, and the EDX / Swift LendingOS architecture. Regulatory positions require confirmation by Malaysian counsel.</p>
+      <p class="text-[11.5px] text-white/40 max-w-[52ch]">Product paper for OneSphere &amp; Swift leadership. Grounded in the KPKT licence-readiness strategy, the OneSphere BRD reviews, and the Swift LendingOS architecture. Regulatory positions require confirmation by Malaysian counsel.</p>
     </div>
   </div>
 </footer>
