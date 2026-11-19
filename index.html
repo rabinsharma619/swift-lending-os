@@ -455,6 +455,7 @@
           <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="2">Wallet BNPL</button>
           <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="3">Retail term loan</button>
           <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="4">Margin facility</button>
+          <button class="fl-prod rounded-md px-3 py-1.5 text-[13px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" data-p="5">Hire purchase</button>
         </div>
         <div class="flex items-center gap-1.5">
           <button id="fl-prev" class="rounded-md border border-line px-2.5 py-1.5 text-[13px] text-mute hover:text-ink hover:bg-surface-2 transition-colors" aria-label="Previous stage">←</button>
@@ -559,7 +560,7 @@
     </div>
 
     <p class="mt-5 text-[13.5px] text-mute-2 reveal">
-      Illustrative figures. The point is the shape: four different products, one lifecycle, and every
+      Illustrative figures. The point is the shape: six different products, one lifecycle, and every
       balance change arriving as a discrete, audited credit operation rather than an update in place.
     </p>
 
@@ -598,7 +599,7 @@
 
     <div class="overflow-x-auto rounded-xl border border-line reveal">
       <table class="w-full text-[14px] min-w-[880px] bg-white">
-        <caption class="sr-only">The four Swift estates, their lending vertical, integration seam, design partner and delivery phase</caption>
+        <caption class="sr-only">The Swift estates and the hire-purchase vertical, their lending vertical, integration seam, design partner and delivery phase</caption>
         <thead>
           <tr class="border-b border-line text-left align-bottom">
             <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Estate</th>
@@ -643,6 +644,13 @@
             <td class="px-5 py-4 text-mute">Event bridge over the margin platform's existing loan topics; depository adapters for pledged collateral</td>
             <td class="px-5 py-4 text-mute">Sani Securities</td>
             <td class="px-5 py-4"><span class="font-medium">Phase 3 · bridge</span></td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left"><a href="#hire-purchase" class="hover:text-accent transition-colors">Hire purchase</a></th>
+            <td class="px-5 py-4 text-mute">Vehicle and heavy-equipment hire purchase</td>
+            <td class="px-5 py-4 text-mute">Dealer portal and field app as origination surfaces; transport-office lien registration; wallet and IPS biller API for EMIs</td>
+            <td class="px-5 py-4 text-mute">NRB-licensed finance companies</td>
+            <td class="px-5 py-4"><span class="font-medium">To be phased</span></td>
           </tr>
         </tbody>
       </table>
@@ -2958,11 +2966,54 @@
         l: 'Balance zero, history retained and attributable to the policy that produced it.',
         o: 'CLOSURE · balance 0 · history retained',
         st: ['Closed', 'RM 800', 'RM 0', '—', '0'],
-        h: 'Good repayment becomes a named variable, so the limit grows without a new build.' } ] }
+        h: 'Good repayment becomes a named variable, so the limit grows without a new build.' } ] },
+    { who: 'Suman · pickup buyer at a dealer', stages: [
+      { c: 'Picks a pickup truck at a dealer\'s showroom and puts 30% down. The dealer enters him through the dealer portal — citizenship, driving licence and the vehicle\'s chassis and engine numbers.',
+        s: 'The application lands in the single applicant master keyed on citizenship number, so a repeat customer or a guarantor links across loans. It locks on submit — the dealer can no longer edit it.',
+        l: 'Nothing yet. An application is not an obligation.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'Dealer and branch applications share one form and one pipeline, so the same rules apply wherever the loan starts.' },
+      { c: 'A field officer visits his home and his business; his brother signs as guarantor.',
+        s: 'Verification moves through configurable stages — documents, a geo-tagged field visit, income, a credit-bureau pull. A rule he fails is tagged as a deviation and routed to the authority that can approve it.',
+        l: 'Decision recorded with the bureau report, the deviation and the policy versions that produced it.',
+        o: 'decision recorded · deviation approved · policy versions pinned',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'A deviation is approved by name, never quietly overridden — and it stays on the loan for the auditor.' },
+      { c: 'Sees 60 EMIs of NPR 55,730 on a Bikram Sambat schedule, and signs the Nepali deed set.',
+        s: 'The approval matrix routes by amount and risk grade. The agreement, promissory note, guarantee deed and delivery order generate in Devanagari from the record — nothing is retyped.',
+        l: 'Terms locked against the offer. Still no balance.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'NPR 2,450,000', '—', '—', '—'],
+        h: 'Documents come from data, so the deed can never disagree with the loan it describes.' },
+      { c: 'Drives the pickup off the lot. The dealer is paid.',
+        s: 'The delivery order releases the vehicle, hypothecation is registered with the transport office, and the insurance policy is recorded against the asset.',
+        l: 'The first credit operation books principal against the dealer payable, and the journal posts in real time.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Dealer payable',
+        st: ['Active', 'NPR 2,450,000', 'NPR 2,450,000', 'in 30 days', '0'],
+        h: 'The lien is part of the loan record, so closing the loan can release it automatically.' },
+      { c: 'Pays each EMI from the wallet app he already uses.',
+        s: 'The wallet posts into the loan through a biller API and reconciles at day end. Interest accrues daily; insurance renewal is tracked against the vehicle; the central-bank classification recalculates every night.',
+        l: 'Accrual posts daily. Every change is an operation, never an update in place.',
+        o: 'INTEREST_ACCRUAL · daily · classification: Pass',
+        st: ['Active', 'NPR 2,450,000', 'NPR 2,212,900', 'in 5 days', '0'],
+        h: 'Lapsed insurance on the asset raises a work item before it becomes an uninsured loss.' },
+      { c: 'Misses two EMIs in the off-season. After a recovery officer\'s visit he promises to pay, and catches up.',
+        s: 'At 45 days past due the loan classifies as Watchlist and joins a recovery queue. The visit is geo-tagged and the promise-to-pay is tracked. Had it slid to Doubtful, repossession and auction would run on this same loan.',
+        l: 'The payment allocates penal interest, then interest, then principal. The classification returns to Pass.',
+        o: 'PAYMENT · penal → interest → principal · Watchlist cured',
+        st: ['Active · cured', 'NPR 2,450,000', 'NPR 1,612,400', 'in 30 days', '0'],
+        h: 'The cure is recorded alongside the breach — both stay in the loan\'s history.' },
+      { c: 'The final EMI clears and he collects a no-objection letter.',
+        s: 'Closure generates the letter in Nepali and instructs the transport office to release hypothecation on the vehicle.',
+        l: 'Balance zero; the history is retained and attributable to the policies that produced it.',
+        o: 'CLOSURE · balance 0 · hypothecation released',
+        st: ['Closed', 'NPR 2,450,000', 'NPR 0', '—', '0'],
+        h: 'The lien is released by the balance reaching zero, not by someone remembering to file it.' } ] }
   ];
 
-  // Display order for the product tabs: SNPL, Payday, Wallet BNPL, Retail, Margin -> index into FL
-  const ORD = [1, 4, 0, 2, 3];
+  // Display order for the product tabs: SNPL, Payday, Wallet BNPL, Retail, Margin, Hire purchase -> index into FL
+  const ORD = [1, 4, 0, 2, 3, 5];
 
   const fl = {
     prods: [...document.querySelectorAll('.fl-prod')],
