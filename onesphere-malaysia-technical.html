@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OneSphere Malaysia — Technical Paper · finos by Swift</title>
-<meta name="description" content="Technical product paper: building OneSphere's SNPL lending business on Swift LendingOS — architecture, delivery timeline, engineering organisation." />
+<title>OneSphere Malaysia — Technical Paper · finOS by Swift</title>
+<meta name="description" content="Technical product paper: building OneSphere's SNPL lending business on finOS — architecture, delivery timeline, engineering organisation." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -65,7 +65,7 @@
     </a>
     <a href="index.html#top" class="hidden sm:inline-flex items-center gap-1 text-[12.5px] text-mute hover:text-ink transition-colors">
       <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3m0 0l3.5 3.5M3 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Swift LendingOS
+      finOS
     </a>
     <nav class="ml-auto hidden lg:flex items-center gap-1 text-[13px] text-mute">
       <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#architecture">Architecture</a>
@@ -84,7 +84,7 @@
   <div class="mx-auto max-w-content px-6 py-16 lg:py-24">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-6">Technical paper · 2026-08-25 · engineering &amp; architecture review</p>
     <h1 class="text-[30px] lg:text-[44px] leading-[1.08] tracking-tightest font-semibold max-w-[22ch]">OneSphere Malaysia, as an engineering build.</h1>
-    <p class="mt-6 text-[17px] leading-relaxed text-white/70 max-w-[64ch]">The SNPL lending business built on <span class="text-white">Swift LendingOS</span> — architecture (C4 + kernel), the Malaysia solution topology (Ria, DuitNow, the KPKT pack), the delivery timeline, and the engineering organisation.</p>
+    <p class="mt-6 text-[17px] leading-relaxed text-white/70 max-w-[64ch]">The SNPL lending business built on <span class="text-white">finOS</span> — architecture (C4 + kernel), the Malaysia solution topology (Ria, DuitNow, the KPKT pack), the delivery timeline, and the engineering organisation.</p>
     <p class="mt-6 text-[13.5px] text-white/45 max-w-[70ch]">The platform architecture is reused from the corridor programme; everything Malaysia-specific — the regulatory pack, the rails, data residency — is called out. The go-live is gated by the KPKT licence, not by engineering.</p>
   </div>
 </section>
@@ -93,13 +93,13 @@
 <section id="architecture" class="border-b border-line">
   <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
     <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">1 · Architecture overview</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Swift LendingOS — the platform stack</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">Swift LendingOS is a standalone lending platform. OneSphere Malaysia is a client configuration of the SNPL product, which runs on the Swift LendingOS lending core and its supporting components — <span class="text-ink">both reused from the corridor programme</span>, not rebuilt for Malaysia.</p>
+    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">finOS — the platform stack</h2>
+    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">finOS is a standalone lending platform. OneSphere Malaysia is a client configuration of the SNPL product, which runs on the finOS lending core and its supporting components — <span class="text-ink">both reused from the corridor programme</span>, not rebuilt for Malaysia.</p>
     <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
     S["Client configuration — OneSphere Malaysia&lt;br/&gt;Malaysia/KPKT pack · Ria · DuitNow · MYR · data residency"]
     P["Product — SNPL (Send Now Pay Later)&lt;br/&gt;same design as corridor SNPL"]
-    D["Lending core — Swift LendingOS&lt;br/&gt;credit kernel · decisioning · servicing · payments · collections · regulatory packs"]
-    E["Supporting components — Swift LendingOS&lt;br/&gt;identity · documents · notifications · integration · borrower + admin UI · AI/ML"]
+    D["Lending core — finOS&lt;br/&gt;credit kernel · decisioning · servicing · payments · collections · regulatory packs"]
+    E["Supporting components — finOS&lt;br/&gt;identity · documents · notifications · integration · borrower + admin UI · AI/ML"]
     S --&gt; P --&gt; D --&gt; E</pre></div>
   </div>
 </section>
@@ -114,7 +114,7 @@
     <div class="mt-3 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
     B["Migrant borrower&lt;br/&gt;(Nepali work-permit holder)"]
     OP["OneSphere operator&lt;br/&gt;(ops · risk · compliance)"]
-    SYS(["OneSphere Malaysia lending system&lt;br/&gt;Swift LendingOS"])
+    SYS(["OneSphere Malaysia lending system&lt;br/&gt;finOS"])
     RIA["Ria&lt;br/&gt;(remittance · remitter of record)"]
     RAIL["DuitNow AutoDebit&lt;br/&gt;(repayment rail)"]
     KYC["eKYC · AML · OCR providers"]
@@ -323,7 +323,7 @@
 
         <div class="gsec">Build</div>
         <div class="grow"><div class="glabel">Phase 0 — Foundations</div><div class="gtrack"><div class="gbar bg-accent" style="left:0%;width:15.38%"></div></div></div>
-        <div class="grow"><div class="glabel">Phase 1 — SNPL build on Swift LendingOS</div><div class="gtrack"><div class="gbar bg-accent" style="left:15.38%;width:46.15%"></div></div></div>
+        <div class="grow"><div class="glabel">Phase 1 — SNPL build on finOS</div><div class="gtrack"><div class="gbar bg-accent" style="left:15.38%;width:46.15%"></div></div></div>
         <div class="grow"><div class="glabel">Pilot — SNPL-first</div><div class="gtrack"><div class="gbar bg-accent" style="left:61.54%;width:30.77%"></div></div></div>
 
         <div class="gsec">Licence track · critical path</div>
@@ -351,7 +351,7 @@
         <thead><tr><th class="w-[18%]">Phase</th><th>Scope</th><th class="w-[26%]">Exit gate</th></tr></thead>
         <tbody>
           <tr><td class="font-medium">0 · Resolve &amp; foundations<br><span class="text-mute-2 font-normal">8 wk</span></td><td class="text-mute">Close the four make-or-break questions in writing; solution-design SNPL; stand up the platform (reuse) + regpack-malaysia v0; prove the guardrail blocks an over-cap loan.</td><td class="text-mute"><b>G0</b> — questions answered; Malaysia guardrail proven; go/no-go on the migrant segment.</td></tr>
-          <tr><td class="font-medium">1 · SNPL build on Swift LendingOS<br><span class="text-mute-2 font-normal">24 wk</span></td><td class="text-mute">SNPL product config; RemitScore v1 (replayable); regpack-malaysia v1; ria-edge + duitnow-edge; portal; documented KPKT journey + security certificate.</td><td class="text-mute">conditional → <b>full</b> KPKT online approval; pilot-ready.</td></tr>
+          <tr><td class="font-medium">1 · SNPL build on finOS<br><span class="text-mute-2 font-normal">24 wk</span></td><td class="text-mute">SNPL product config; RemitScore v1 (replayable); regpack-malaysia v1; ria-edge + duitnow-edge; portal; documented KPKT journey + security certificate.</td><td class="text-mute">conditional → <b>full</b> KPKT online approval; pilot-ready.</td></tr>
           <tr><td class="font-medium">Pilot · SNPL-first<br><span class="text-mute-2 font-normal">16 wk</span></td><td class="text-mute">Bounded cohort; test the remittance-signal thesis; explicit stop criteria (loss appetite, DPD ceiling, scorecard floor, kill switch).</td><td class="text-mute"><b>G1</b> — thesis validated on real repayment, or stopped cleanly.</td></tr>
         </tbody>
       </table>
@@ -455,7 +455,7 @@
   <div class="mx-auto max-w-content px-6 py-10 flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between">
     <div class="flex items-center gap-2.5 text-white">
       <svg viewBox="0 0 392 87" class="h-[18px] w-auto"><use href="#finos-star" fill="#4E9BEA"/><use href="#finos-wordmark" fill="currentColor"/></svg>
-      <span class="text-[12px] text-white/40">by</span><span class="text-[13px] text-white/70 font-medium">Swift LendingOS</span>
+      <span class="text-[12px] text-white/40">by</span><span class="text-[13px] text-white/70 font-medium">Swift</span>
     </div>
     <p class="text-[11.5px] text-white/40 max-w-[56ch]">Technical companion to the OneSphere Malaysia business paper. Grounded in the C4 architecture, the delivery roadmap and estimates, and the KPKT licence-readiness strategy. Regulatory positions require confirmation by Malaysian counsel.</p>
   </div>
