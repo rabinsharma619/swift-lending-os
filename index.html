@@ -10,7 +10,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -18,16 +18,17 @@
     theme: {
       extend: {
         colors: {
-          ink:    { DEFAULT: '#0A0F1C', 2: '#111827' },
-          navy:   { DEFAULT: '#001133', 700: '#062044', 600: '#0B2A55' },
-          accent: { DEFAULT: '#0E71DB', hover: '#0B5AAF', soft: '#EAF3FD' },
-          mute:   { DEFAULT: '#5A6478', 2: '#8B94A6' },
-          line:   { DEFAULT: '#E6EAF1', 2: '#EFF2F7' },
-          surface:{ DEFAULT: '#FFFFFF', 2: '#FAFBFD' },
+          ink:    { DEFAULT: '#16181F', 2: '#282C35' },
+          navy:   { DEFAULT: '#1B2160', 700: '#242B78', 600: '#2E3790' },
+          accent: { DEFAULT: '#3859F9', hover: '#2441D6', soft: '#EEF2FF' },
+          mute:   { DEFAULT: '#55534E', 2: '#85817A' },
+          line:   { DEFAULT: '#E0DEDC', 2: '#EEE9DF' },
+          surface:{ DEFAULT: '#FFFFFF', 2: '#F9F8F6' },
+          oat:    { DEFAULT: '#F9F8F6', 50: '#FFFCFA', 200: '#F3F2ED', 300: '#EEE9DF', 400: '#DAD4C8' },
           signal: { amber: '#9A6510', amberbg: '#FDF6E8', green: '#12704A', greenbg: '#EDF7F2', red: '#A3312A', redbg: '#FCEFED' }
         },
         fontFamily: {
-          sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+          sans: ['Instrument Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
           mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
         },
         letterSpacing: { tightest: '-.035em', tighter: '-.025em' },
@@ -41,18 +42,18 @@
   :root { --ease: cubic-bezier(.16,1,.3,1); }
 
   body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  ::selection { background: #0E71DB; color: #fff; }
+  ::selection { background: #3859F9; color: #fff; }
 
   /* Purposeful motion — one reveal, once, on entry */
   .reveal { opacity: 0; transform: translateY(10px); }
   .reveal.in { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
 
   /* Focus discipline */
-  :focus-visible { outline: 2px solid #0E71DB; outline-offset: 3px; border-radius: 3px; }
+  :focus-visible { outline: 2px solid #3859F9; outline-offset: 3px; border-radius: 3px; }
   .no-ring:focus-visible { outline-offset: -2px; }
 
   /* Hairline dividers that survive fractional DPR */
-  .hair { box-shadow: inset 0 -1px 0 #E6EAF1; }
+  .hair { box-shadow: inset 0 -1px 0 #E0DEDC; }
 
   /* Numeric tabular alignment for data */
   .tnum { font-variant-numeric: tabular-nums; }
@@ -60,15 +61,15 @@
   /* Nav underline indicator */
   .navlink { position: relative; }
   .navlink[aria-current="true"]::after {
-    content: ''; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 1.5px; background: #0A0F1C;
+    content: ''; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 1.5px; background: #16181F;
   }
 
   /* Scroll progress */
   #progress { transform-origin: 0 50%; transform: scaleX(0); }
 
   /* Segmented control */
-  .seg[aria-selected="true"] { background: #0A0F1C; color: #fff; }
-  .seg[aria-selected="true"] .segdot { background: #0E71DB; }
+  .seg[aria-selected="true"] { background: #16181F; color: #fff; }
+  .seg[aria-selected="true"] .segdot { background: #3859F9; }
 
   /* Module row expansion */
   .mod-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
@@ -86,18 +87,18 @@
   #lc-branch-path, #lc-branch-dot, #lc-branch-label { transition: stroke .4s var(--ease), fill .4s var(--ease); }
 
   /* Follow-one-loan controls */
-  .fl-prod[aria-selected="true"] { background: #0A0F1C; color: #fff; }
+  .fl-prod[aria-selected="true"] { background: #16181F; color: #fff; }
   .fl-step { transition: background .25s var(--ease); }
   .fl-step[aria-selected="true"] { background: #fff; }
-  .fl-step[aria-selected="true"] > span:last-child { color: #0A0F1C; }
+  .fl-step[aria-selected="true"] > span:last-child { color: #16181F; }
   .fl-step[aria-selected="true"]::before {
-    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: #0E71DB;
+    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c, #3859F9);
   }
-  .fl-step[data-done="true"] > span:first-child { color: #0E71DB; }
+  .fl-step[data-done="true"] > span:first-child { color: var(--c, #3859F9); }
 
   /* swiftAI at-work demo */
-  .ai-scn[aria-selected="true"] { background: #0A0F1C; color: #fff; border-color: #0A0F1C; }
-  .ai-agent.on   { border-color: #0E71DB; background: #EAF3FD; color: #0A0F1C; font-weight: 500; }
+  .ai-scn[aria-selected="true"] { background: #7934F0; color: #fff; border-color: #7934F0; }
+  .ai-agent.on   { border-color: #7934F0; background: #F1EBFF; color: #16181F; font-weight: 500; }
   .ai-agent.used { color: #3C4759; }
   .ai-gate.on    { color: #1F7A4D; }
   .ai-gate.on .ai-dot      { background: #1F7A4D; }
@@ -116,6 +117,71 @@
   .layer { transition: opacity .35s var(--ease); }
   .dim .layer:not(.on) { opacity: .22; }
 
+  /* ── Clay-style system ─────────────────────────────────────────
+     Warm oat page; each chapter is a rounded pastel card that overlaps
+     the one before it. --c is the chapter colour, --tone the second
+     line of a two-tone headline. */
+  :root { --c: #16181F; --c-ink: #fff; --c-bg: transparent; --tone: #85817A; }
+  html { background: #F9F8F6; }
+  body { background: #F9F8F6; font-feature-settings: "ss01", "cv11"; }
+  h1, h2 { font-weight: 500 !important; letter-spacing: -0.04em !important; text-wrap: balance; }
+  h3, h4 { letter-spacing: -0.015em; }
+  .tone { color: var(--tone); }
+
+  .chapter { position: relative; margin: 0 10px; border-radius: 28px; background: var(--c-bg);
+             box-shadow: 0 -1px 0 rgba(22,24,31,.04), 0 -18px 40px -30px rgba(22,24,31,.35); }
+  @media (min-width: 640px)  { .chapter { margin: 0 16px; border-radius: 36px; } }
+  @media (min-width: 1280px) { .chapter { margin: 0 28px; border-radius: 44px; } }
+  .chapter + .chapter { margin-top: -44px; }
+  .chapter-blue  { --c: #3859F9; --c-bg: #EEF4FF; --tone: #3859F9; }
+  .chapter-lime  { --c: #5F6E00; --c-bg: #F8FAE3; --tone: #6A7A00; }
+  .chapter-tang  { --c: #C2410C; --c-bg: #FDF1EA; --tone: #C2410C; }
+  .chapter-ube   { --c: #7934F0; --c-bg: #F4F0FF; --tone: #7934F0; }
+  .chapter-drag  { --c: #B0078A; --c-bg: #FCEFF7; --tone: #B0078A; }
+  .chapter-lemon { --c: #A15C07; --c-bg: #FFF8D9; --tone: #A15C07; }
+  .chapter-paper { --c: #16181F; --c-bg: #FFFFFF; --tone: #85817A; }
+  .chapter-dark  { --c: #FADF7C; --c-ink: #16181F; --c-bg: #16181F; --tone: #FADF7C; }
+  .text-chap { color: var(--c); }
+
+  /* Pill eyebrow with trailing ghost discs */
+  .eyebrow { display: inline-flex; align-items: center; isolation: isolate; }
+  .eyebrow > span { order: 1; position: relative; z-index: 2; background: var(--c); color: var(--c-ink);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 13px 6px 14px; border-radius: 999px; line-height: 1.3; }
+  .eyebrow::before, .eyebrow::after { content: ''; width: 26px; height: 26px; border-radius: 999px;
+    margin-left: -16px; background: var(--c); }
+  .eyebrow::before { order: 2; opacity: .32; z-index: 1; }
+  .eyebrow::after  { order: 3; opacity: .16; }
+
+  /* Buttons */
+  .btn-chap { background: var(--c); color: var(--c-ink); }
+  .btn-chap:hover { filter: brightness(.92); }
+
+  /* Toy panels and the hero stage */
+  .toy { border-radius: 24px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(22,24,31,.05); }
+  .toy svg { display: block; }
+  @media (min-width: 1024px) { .toy { border-radius: 28px; } }
+  .frame-lines { background-image: linear-gradient(#E0DEDC,#E0DEDC), linear-gradient(#E0DEDC,#E0DEDC);
+    background-size: 1px 100%, 1px 100%; background-position: left top, right top; background-repeat: no-repeat; }
+  .frost { background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -24px rgba(22,24,31,.35), 0 0 0 1px rgba(22,24,31,.05); }
+
+  /* Logo-wall tiles */
+  .wall { background: rgba(255,255,255,.55); border: 1px solid #fff; border-radius: 28px;
+    box-shadow: 0 24px 60px -36px rgba(22,24,31,.3); }
+  .wall-tile { border-radius: 18px; box-shadow: 0 0 0 1px rgba(22,24,31,.05); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .wall-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 14px 30px -18px rgba(22,24,31,.35); }
+  .mode-badge { font-size: 30px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: #3859F9; white-space: nowrap; }
+
+  /* Softer geometry everywhere inside the page */
+  main .rounded-xl { border-radius: 20px; }
+  main .rounded-lg { border-radius: 12px; }
+  main .rounded-md { border-radius: 10px; }
+  .seg, .fl-prod, .ai-scn { border-radius: 999px !important; }
+  [aria-label="Architecture views"] { border-radius: 999px !important; }
+
+  @media (prefers-reduced-motion: reduce) { .wall-tile { transition: none; } }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
@@ -126,7 +192,7 @@
 </style>
 </head>
 
-<body class="bg-surface text-ink font-sans antialiased">
+<body class="bg-oat text-ink font-sans antialiased">
 
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-3 focus:left-3 focus:bg-ink focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:text-sm">Skip to content</a>
 
@@ -159,9 +225,9 @@
 </svg>
 
 <!-- ══════════ NAV ══════════ -->
-<header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md hair">
+<header class="sticky top-0 z-50 bg-[#FFFCFA]/80 backdrop-blur-md hair">
   <div class="h-px bg-line/60 absolute inset-x-0 bottom-0"></div>
-  <div id="progress" class="absolute inset-x-0 bottom-0 h-[1.5px] bg-accent z-10"></div>
+  <div id="progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-accent z-10"></div>
 
   <nav class="mx-auto max-w-content px-6 lg:px-8" aria-label="Primary">
     <div class="flex h-16 items-center gap-8">
@@ -178,17 +244,17 @@
       </a>
 
       <ul class="hidden lg:flex items-center gap-0.5 ml-auto text-[13.5px] text-mute" id="navlist">
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#who">Who it's for</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#platform">Platform</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#core-banking">Core banking</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#architecture">Architecture</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#swiftai">swiftAI</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#trust">Trust</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md hover:text-ink transition-colors" href="#pricing">Pricing</a></li>
-        <li><a class="navlink px-2.5 py-2 rounded-md text-accent font-medium hover:text-accent-hover transition-colors" href="#malaysia">Malaysia</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#who">Who it's for</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#platform">Platform</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#core-banking">Core banking</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#architecture">Architecture</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#swiftai">swiftAI</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#trust">Trust</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#pricing">Pricing</a></li>
+        <li><a class="navlink ml-2 px-4 py-1.5 rounded-lg bg-ink text-white font-medium hover:bg-ink-2 transition-colors" href="#malaysia">Malaysia</a></li>
       </ul>
 
-      <button id="menuBtn" class="lg:hidden ml-auto inline-flex items-center gap-2 rounded-md border border-line px-3 py-1.5 text-[13px] font-medium"
+      <button id="menuBtn" class="lg:hidden ml-auto inline-flex items-center gap-2 rounded-lg border border-line bg-white px-3 py-1.5 text-[13px] font-medium"
               aria-expanded="false" aria-controls="mobileNav">
         <span>Menu</span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1.5 3h9M1.5 6h9M1.5 9h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -219,48 +285,49 @@
 <span id="top"></span>
 
 <!-- ══════════ HERO ══════════ -->
-<section class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 lg:px-8 pt-20 pb-16 lg:pt-28 lg:pb-24">
-    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-
-      <div class="lg:col-span-7 reveal">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-6">
-          Lending OS · Any lender · Any market · With or without a core bank
-        </p>
-        <h1 class="text-[38px] sm:text-[52px] lg:text-[60px] leading-[1.04] tracking-tightest font-semibold text-ink">
-          Origination to closure, on one credit kernel you configure.
+<section class="relative">
+  <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+    <div class="frame-lines px-2 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-10 lg:pb-14 text-center">
+      <div class="reveal">
+        <p class="eyebrow mb-7"><span>Lending OS · Any lender · Any market · With or without a core bank</span></p>
+        <h1 class="mx-auto max-w-[17ch] text-[40px] sm:text-[56px] lg:text-[72px] leading-[1.0] tracking-tightest text-ink">
+          Origination to closure, <span class="text-accent">on one credit kernel you configure.</span>
         </h1>
-        <p class="mt-7 text-[18px] lg:text-[19px] leading-relaxed text-mute max-w-[54ch]">
+        <p class="mx-auto mt-7 text-[17.5px] lg:text-[19px] leading-relaxed text-mute max-w-[58ch]">
           One platform for the whole lending business — origination, decisioning, servicing,
           payments, collections, accounting and reporting — assembled into the workflow you run on,
           then reshaped as your products, markets and regulations evolve.
         </p>
 
-        <p class="mt-6 pt-6 border-t border-line text-[15px] leading-relaxed text-mute max-w-[54ch]">
-          <span class="font-medium text-ink">Built for any lender</span> — banks, finance and
-          hire-purchase companies, MFIs and cooperatives, licensed moneylenders, wallet and remittance
-          operators, brokers. In your environment or on finOS SaaS, implemented and supported by Swift.
-        </p>
-
-        <div class="mt-9 flex flex-wrap items-center gap-3">
-          <a href="#platform" class="inline-flex items-center gap-1.5 rounded-lg bg-ink px-5 py-2.5 text-[14.5px] font-medium text-white hover:bg-ink-2 transition-colors">
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <a href="#platform" class="inline-flex items-center gap-1.5 rounded-lg bg-accent px-5 py-3 text-[15px] font-medium text-white hover:bg-accent-hover transition-colors">
             Explore the platform
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#architecture" class="inline-flex items-center rounded-lg border border-line px-5 py-2.5 text-[14.5px] font-medium text-ink hover:bg-surface-2 transition-colors">
+          <a href="#architecture" class="inline-flex items-center rounded-lg bg-white px-5 py-3 text-[15px] font-medium text-ink shadow-[0_0_0_1px_rgba(22,24,31,.08)] hover:bg-oat-200 transition-colors">
             See the architecture
           </a>
         </div>
 
-        <p class="mt-8 text-[14px] text-mute-2">
+        <p class="mx-auto mt-8 text-[14.5px] leading-relaxed text-mute max-w-[62ch]">
+          <span class="font-medium text-ink">Built for any lender</span> — banks, finance and
+          hire-purchase companies, MFIs and cooperatives, licensed moneylenders, wallet and remittance
+          operators, brokers. In your environment or on finOS SaaS, implemented and supported by Swift.
+        </p>
+        <p class="mt-4 text-[14px] text-mute-2">
           First deployment: <a href="#malaysia" class="font-medium text-accent hover:text-accent-hover">OneSphere Malaysia, a KPKT-licensed lender →</a>
           <span class="block mt-1.5">Powered by <span class="font-medium text-ink">swiftAI</span>, your AI implementation agent.</span>
         </p>
       </div>
+    </div>
 
-      <!-- Product visualisation: platform layering -->
-      <div class="lg:col-span-5 reveal">
-        <figure class="rounded-xl border border-line bg-surface-2 p-5 sm:p-6">
+    <!-- Stage: the credit contraption, with the live lifecycle card floating over it -->
+    <div class="relative pb-16 lg:pb-24 reveal">
+      <div class="toy rounded-[28px] lg:rounded-[40px] h-[360px] sm:h-[440px] lg:h-[600px]" id="hero-stage">
+        <svg viewBox="0 0 1200 600" class="block w-full h-full" preserveAspectRatio="xMinYMid slice" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hx-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hx-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hx-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hx-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><radialGradient id="hx-balle5479f" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#f3acd4"/><stop offset=".45" stop-color="#e5479f"/><stop offset="1" stop-color="#952e67"/></radialGradient><radialGradient id="hx-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><radialGradient id="hx-ball0dac65" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#92daba"/><stop offset=".45" stop-color="#0dac65"/><stop offset="1" stop-color="#087042"/></radialGradient><radialGradient id="hx-ballfdad15" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#feda96"/><stop offset=".45" stop-color="#fdad15"/><stop offset="1" stop-color="#a4700e"/></radialGradient><radialGradient id="hx-balle0393e" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#f1a6a8"/><stop offset=".45" stop-color="#e0393e"/><stop offset="1" stop-color="#922528"/></radialGradient><linearGradient id="hx-cyl7" x1="0" x2="1"><stop offset="0" stop-color="#506dfa"/><stop offset=".55" stop-color="#3859f9"/><stop offset="1" stop-color="#2840b3"/></linearGradient><linearGradient id="hx-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9d4ff"/><stop offset=".75" stop-color="#e3f1ff"/><stop offset="1" stop-color="#f3f8ff"/></linearGradient><linearGradient id="hx-h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ecbd"/><stop offset="1" stop-color="#6fd48f"/></linearGradient><linearGradient id="hx-h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd08a"/><stop offset="1" stop-color="#18a865"/></linearGradient><linearGradient id="hx-h3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fbf74"/><stop offset="1" stop-color="#078a52"/></linearGradient></defs><rect width="1200" height="600" fill="url(#hx-sky)"/><g fill="#fff" opacity=".9"><ellipse cx="250" cy="90" rx="70" ry="22"/><ellipse cx="300" cy="78" rx="48" ry="26"/><ellipse cx="930" cy="70" rx="80" ry="22"/><ellipse cx="980" cy="58" rx="46" ry="24"/><ellipse cx="620" cy="130" rx="44" ry="14"/></g><path d="M0 330 C180 250 360 280 520 320 C700 365 860 250 1200 290 V600 H0z" fill="url(#hx-h1)"/><path d="M0 420 C160 360 330 400 470 430 C640 470 800 380 1200 400 V600 H0z" fill="url(#hx-h2)"/><path d="M0 520 C220 470 420 500 600 520 C800 545 1000 480 1200 500 V600 H0z" fill="url(#hx-h3)"/><path d="M880 300 l30 -70 l30 70z" fill="#ff9fcf"/><path d="M910 230 l30 70 h-12z" fill="#e06aa8"/><path d="M984.0 300.0 v-54 a26 13.0 0 0 0 52 0 v54 a26 13.0 0 0 1 -52 0z" fill="url(#hx-cyl0)"/><ellipse cx="1010" cy="246" rx="26" ry="13.0" fill="#fec250"/><path d="M1080 330 v-46 a32 32 0 0 1 64 0 v46 h-18 v-40 a14 14 0 0 0 -28 0 v40z" fill="#7d97ff"/><g transform="translate(36 84) scale(.78)"><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><polygon points="586,430 610,384 634,430" fill="#8b5cf6"/><polygon points="610,384 634,430 626,430" fill="#6a3fd6"/><g transform="rotate(16 588 376)"><rect x="520" y="368" width="140" height="14" rx="5" fill="#b9a2ff"/><rect x="520" y="368" width="140" height="5" rx="2.5" fill="#e2d8ff"/></g><ellipse cx="610.0" cy="436.0" rx="44" ry="8" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><g class="hero-balls"><circle cx="0" cy="0" r="13" fill="url(#hx-ballfa6900)" opacity="0"><set attributeName="opacity" to="1" begin="0.0s"/><animateMotion dur="9.6s" begin="0.0s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-balle5479f)" opacity="0"><set attributeName="opacity" to="1" begin="1.6s"/><animateMotion dur="9.6s" begin="1.6s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ball3859f9)" opacity="0"><set attributeName="opacity" to="1" begin="3.2s"/><animateMotion dur="9.6s" begin="3.2s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ball0dac65)" opacity="0"><set attributeName="opacity" to="1" begin="4.800000000000001s"/><animateMotion dur="9.6s" begin="4.800000000000001s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ballfdad15)" opacity="0"><set attributeName="opacity" to="1" begin="6.4s"/><animateMotion dur="9.6s" begin="6.4s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-balle0393e)" opacity="0"><set attributeName="opacity" to="1" begin="8.0s"/><animateMotion dur="9.6s" begin="8.0s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle></g><ellipse cx="150.0" cy="210.0" rx="40" ry="8" fill="#5b4a33" opacity="0.2" filter="url(#hx-blur)"/><path d="M96 112 L204 112 L166 176 L166 200 L134 200 L134 176 Z" fill="#fa6900"/><path d="M150 112 L204 112 L166 176 L166 200 L150 200 Z" fill="#d85a00"/><ellipse cx="150" cy="112" rx="54" ry="15" fill="#ff9a52"/><ellipse cx="150" cy="113" rx="44" ry="10" fill="#b84b00"/><ellipse cx="336.0" cy="283.0" rx="54.0" ry="21.6" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><polygon points="289.2,277.0 336.0,304.0 336.0,242.0 289.2,215.0" fill="#18b26c"/><polygon points="336.0,304.0 382.8,277.0 382.8,215.0 336.0,242.0" fill="#138e56"/><polygon points="336.0,188.0 382.8,215.0 336.0,242.0 289.2,215.0" fill="#4bc38c"/><polyline points="289.2,215.0 336.0,242.0 382.8,215.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><ellipse cx="804.0" cy="474.0" rx="46.2" ry="24.200000000000003" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><path d="M756.0 468.0 v-52 a44 22.0 0 0 0 88 0 v52 a44 22.0 0 0 1 -88 0z" fill="url(#hx-cyl7)"/><ellipse cx="800" cy="416" rx="44" ry="22.0" fill="#6a82fa"/><ellipse cx="800" cy="416" rx="34" ry="13" fill="#1d3bc4"/><line x1="150" y1="70" x2="150" y2="96" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="122.9" y="48.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="150" y="63.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Apply</text><line x1="336" y1="200" x2="336" y2="200" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="305.2" y="178.5" width="61.5" height="25.5" rx="12.8" fill="#fff"/><text x="336" y="193.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Decide</text><line x1="560" y1="300" x2="560" y2="326" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="522.0" y="278.5" width="76.0" height="25.5" rx="12.8" fill="#fff"/><text x="560" y="293.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Disburse</text><line x1="712" y1="360" x2="712" y2="386" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="684.9" y="338.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="712" y="353.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Repay</text><line x1="800" y1="370" x2="800" y2="370" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="772.9" y="348.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="800" y="363.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Close</text></g><rect width="1200" height="600" filter="url(#hx-grain)" pointer-events="none"/></svg>
+      </div>
+      <div class="relative -mt-14 mx-2 sm:mx-auto sm:max-w-[440px] lg:absolute lg:right-8 lg:top-8 lg:mt-0 lg:mx-0 lg:w-[400px]">
+        <figure class="frost rounded-[24px] p-5 sm:p-6">
           <figcaption class="mb-4 flex items-baseline justify-between gap-4">
             <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2">Loan lifecycle</span>
             <span class="text-[11px] text-mute-2">one kernel · every product</span>
@@ -270,29 +337,29 @@
             <title id="lc-title">The loan lifecycle through finOS</title>
             <desc id="lc-desc">Every product — digital moneylending, hire purchase, wallet micro-loans and BNPL, Send-Now-Pay-Later, retail and corporate loans, and margin facilities — runs the same seven-stage lifecycle: apply, decide, offer, disburse, service, repay and close, with a product-specific exception branch off the servicing stage.</desc>
 
-            <g font-family="Inter, sans-serif">
+            <g font-family="Instrument Sans, sans-serif">
               <!-- Product header -->
-              <text id="lc-prod" x="0" y="18" font-size="15" font-weight="600" fill="#0A0F1C">Digital moneylender loan</text>
+              <text id="lc-prod" x="0" y="18" font-size="15" font-weight="600" fill="#16181F">Digital moneylender loan</text>
               <text id="lc-sub" x="0" y="36" font-size="10.5" fill="#5A6478">In-app · eKYC · statutory rate ceiling</text>
 
               <!-- Product cycle indicator -->
               <g id="lc-pips">
-                <rect class="lc-pip" x="0" y="48" width="34" height="2.5" rx="1.25" fill="#0E71DB"/>
-                <rect class="lc-pip" x="39" y="48" width="34" height="2.5" rx="1.25" fill="#DDE3EC"/>
-                <rect class="lc-pip" x="78" y="48" width="34" height="2.5" rx="1.25" fill="#DDE3EC"/>
-                <rect class="lc-pip" x="117" y="48" width="34" height="2.5" rx="1.25" fill="#DDE3EC"/>
-                <rect class="lc-pip" x="156" y="48" width="34" height="2.5" rx="1.25" fill="#DDE3EC"/>
-                <rect class="lc-pip" x="195" y="48" width="34" height="2.5" rx="1.25" fill="#DDE3EC"/>
+                <rect class="lc-pip" x="0" y="48" width="34" height="2.5" rx="1.25" fill="#3859F9"/>
+                <rect class="lc-pip" x="39" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
+                <rect class="lc-pip" x="78" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
+                <rect class="lc-pip" x="117" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
+                <rect class="lc-pip" x="156" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
+                <rect class="lc-pip" x="195" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
               </g>
 
               <!-- Rail -->
-              <line x1="11" y1="78" x2="11" y2="294" stroke="#DDE3EC" stroke-width="2" stroke-linecap="round"/>
-              <line id="lc-fill" x1="11" y1="78" x2="11" y2="78" stroke="#0E71DB" stroke-width="2" stroke-linecap="round"/>
+              <line x1="11" y1="78" x2="11" y2="294" stroke="#E4DFD6" stroke-width="2" stroke-linecap="round"/>
+              <line id="lc-fill" x1="11" y1="78" x2="11" y2="78" stroke="#3859F9" stroke-width="2" stroke-linecap="round"/>
 
               <!-- Exception branch (activates at servicing) -->
               <path id="lc-branch-path" d="M13 226 C 58 258 116 300 182 316" fill="none"
-                    stroke="#DDE3EC" stroke-width="1.6" stroke-dasharray="3 3"/>
-              <circle id="lc-branch-dot" cx="188" cy="317" r="4.5" fill="#fff" stroke="#DDE3EC" stroke-width="1.6"/>
+                    stroke="#E4DFD6" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <circle id="lc-branch-dot" cx="188" cy="317" r="4.5" fill="#fff" stroke="#E4DFD6" stroke-width="1.6"/>
               <text id="lc-branch-label" x="200" y="321" font-size="10.5" fill="#8B94A6">Collections</text>
 
               <!-- Stages -->
@@ -332,31 +399,30 @@
             </g>
           </svg>
 
-          <p class="mt-4 pt-4 border-t border-line text-[12.5px] leading-relaxed text-mute">
+          <p class="mt-4 pt-4 border-t border-black/[0.07] text-[12.5px] leading-relaxed text-mute">
             <span id="lc-kernel" class="font-medium text-ink">Every stage writes through the credit kernel</span> —
             one ledger, one transactional boundary, whichever product it is.
           </p>
         </figure>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- ══════════ VALUE STRIP ══════════ -->
-<section class="border-b border-line bg-surface-2">
+<section>
   <div class="mx-auto max-w-content px-6 lg:px-8">
-    <dl class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line">
-      <div class="py-10 md:pr-10 reveal">
-        <dt class="text-[16px] font-semibold tracking-tighter">Your Deployment, Your Choice</dt>
+    <dl class="grid md:grid-cols-3 gap-3 pb-6">
+      <div class="wall-tile bg-white p-7 reveal">
+        <dt class="text-[17px] font-semibold tracking-tighter">Your Deployment, Your Choice</dt>
         <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">finOS SaaS — shared or dedicated, in your region — or self-hosted in your own environment. Your governance, your data, and you stay the lender of record.</dd>
       </div>
-      <div class="py-10 md:px-10 reveal">
-        <dt class="text-[16px] font-semibold tracking-tighter">Launch in Weeks. Not Months.</dt>
+      <div class="wall-tile bg-white p-7 reveal">
+        <dt class="text-[17px] font-semibold tracking-tighter">Launch in Weeks. Not Months.</dt>
         <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Prebuilt lending modules assembled and configured rather than written. Products ship as configuration, not engineering releases.</dd>
       </div>
-      <div class="py-10 md:pl-10 reveal">
-        <dt class="text-[16px] font-semibold tracking-tighter">Compliance Built Into the Architecture</dt>
+      <div class="wall-tile bg-white p-7 reveal">
+        <dt class="text-[17px] font-semibold tracking-tighter">Compliance Built Into the Architecture</dt>
         <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Statutory limits, audit trail, decision replay and data residency are structural properties, and each market arrives as a regulatory pack — not a fork.</dd>
       </div>
     </dl>
@@ -364,15 +430,13 @@
 </section>
 
 <!-- ══════════ WHO IT'S FOR ══════════ -->
-<section id="who" class="scroll-mt-16 border-b border-line">
+<section id="who" class="scroll-mt-16">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Who it's for</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          One lending OS, whatever kind of lender you are
-        </h2>
+        <p class="eyebrow mb-6"><span>Who it's for</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">One lending OS, <span class="tone">whatever kind of lender you are</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -382,9 +446,9 @@
       </div>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line rounded-xl overflow-hidden border border-line reveal">
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">Banks</h3>
+    <div class="wall grid sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3 reveal">
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">Banks</h3><span class="mode-badge" aria-hidden="true">C/D</span></div>
         <p class="mt-1 text-[13px] text-mute-2">Retail, SME and corporate lending</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">Alongside the core you already run — mirrored into it, or origination only.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -392,8 +456,8 @@
           <dt class="text-mute-2">Leans on</dt><dd class="text-ink">Core banking port · collateral · covenants · maker-checker</dd>
         </dl>
       </div>
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">Finance & hire-purchase companies</h3>
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">Finance & hire-purchase companies</h3><span class="mode-badge" aria-hidden="true">A</span></div>
         <p class="mt-1 text-[13px] text-mute-2">Vehicle and equipment finance, term loans</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">No core bank behind you, so finOS keeps the loan book and the company's books.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -401,8 +465,8 @@
           <dt class="text-mute-2">Leans on</dt><dd class="text-ink">Accounting · dealer portal · field app · repossession</dd>
         </dl>
       </div>
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">MFIs & cooperatives</h3>
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">MFIs & cooperatives</h3><span class="mode-badge" aria-hidden="true">A</span></div>
         <p class="mt-1 text-[13px] text-mute-2">Group and individual micro-loans</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">Field-first lending with full books. Member savings stay in your savings system and integrate.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -410,8 +474,8 @@
           <dt class="text-mute-2">Leans on</dt><dd class="text-ink">Accounting · field app · collections</dd>
         </dl>
       </div>
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">Licensed moneylenders & digital lenders</h3>
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">Licensed moneylenders & digital lenders</h3><span class="mode-badge" aria-hidden="true">A</span></div>
         <p class="mt-1 text-[13px] text-mute-2">Short-tenure personal and salary-linked loans</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">App-first lending inside a statutory rate ceiling, with the regulator's returns built in.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -419,8 +483,8 @@
           <dt class="text-mute-2">Leans on</dt><dd class="text-ink">Regulatory pack · borrower app · eKYC</dd>
         </dl>
       </div>
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">Wallets & remittance operators</h3>
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">Wallets & remittance operators</h3><span class="mode-badge" aria-hidden="true">A/B</span></div>
         <p class="mt-1 text-[13px] text-mute-2">BNPL, micro-loans, Send-Now-Pay-Later</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">Credit inside your own flow, with a licensed partner as lender of record.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -428,8 +492,8 @@
           <dt class="text-mute-2">Leans on</dt><dd class="text-ink">Widgets · headless API · partner programmes</dd>
         </dl>
       </div>
-      <div class="bg-white p-7 flex flex-col">
-        <h3 class="text-[17px] font-semibold tracking-tighter">Brokers</h3>
+      <div class="wall-tile bg-white p-7 flex flex-col">
+        <div class="flex items-start justify-between gap-4"><h3 class="text-[17px] font-semibold tracking-tighter">Brokers</h3><span class="mode-badge" aria-hidden="true">B</span></div>
         <p class="mt-1 text-[13px] text-mute-2">Margin and securities-backed facilities</p>
         <p class="mt-4 text-[14.5px] leading-relaxed text-mute flex-1">Pledged collateral marked to market, with margin calls as first-class events.</p>
         <dl class="mt-5 pt-4 border-t border-line grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
@@ -440,14 +504,14 @@
     </div>
 
     <div class="mt-6 grid md:grid-cols-2 gap-5 reveal">
-      <div class="rounded-lg border border-line bg-surface-2 px-6 py-5">
+      <div class="rounded-[20px] bg-white px-6 py-5 shadow-[0_0_0_1px_rgba(22,24,31,.05)]">
         <p class="text-[14.5px] leading-relaxed text-mute">
           <span class="font-medium text-ink">Any market.</span> Each jurisdiction arrives as a
           versioned regulatory pack — Nepal and Malaysia first, with Islamic finance as its own
           pack — over a core that never forks.
         </p>
       </div>
-      <div class="rounded-lg border border-line bg-surface-2 px-6 py-5">
+      <div class="rounded-[20px] bg-white px-6 py-5 shadow-[0_0_0_1px_rgba(22,24,31,.05)]">
         <p class="text-[14.5px] leading-relaxed text-mute">
           <span class="font-medium text-ink">You stay the lender of record.</span> Swift provides
           the software, implements it and supports it. It never lends, never holds funds and never
@@ -460,15 +524,13 @@
 </section>
 
 <!-- ══════════ THE PROBLEM ══════════ -->
-<section id="problem" class="scroll-mt-16 border-b border-line">
+<section id="problem" class="scroll-mt-16">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">The operational problem</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Most lending stacks make change expensive and truth negotiable
-        </h2>
+        <p class="eyebrow mb-6"><span>The operational problem</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Most lending stacks make change expensive <span class="tone">and truth negotiable</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -531,15 +593,13 @@
 </section>
 
 <!-- ══════════ FOLLOW ONE LOAN ══════════ -->
-<section id="follow" class="scroll-mt-16 bg-surface-2 border-b border-line">
+<section id="follow" class="scroll-mt-16 chapter chapter-paper">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-10 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Follow one loan</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          From tapping "apply" to a zero balance
-        </h2>
+        <p class="eyebrow mb-6"><span>Follow one loan</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">From tapping "apply" <span class="tone">to a zero balance</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -672,22 +732,19 @@
 </section>
 
 <!-- ══════════ PLATFORM / MODULES ══════════ -->
-<section id="platform" class="scroll-mt-16 border-b border-line">
+<section id="platform" class="scroll-mt-16 chapter chapter-blue">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
-    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">The Building Platform</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Prebuilt modules over one credit kernel
-        </h2>
-      </div>
-      <div class="lg:col-span-5">
-        <p class="text-[15.5px] leading-relaxed text-mute">
+        <p class="eyebrow mb-6"><span>The Building Platform</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Prebuilt modules <span class="tone">over one credit kernel</span></h2>
+        <p class="mt-6 text-[16.5px] leading-relaxed text-mute max-w-[52ch]">
           The kernel owns what must be <span class="text-ink font-medium">correct</span>. The modules
           and configuration own what must be <span class="text-ink font-medium">fast to change</span>.
         </p>
       </div>
+      <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tp-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tp-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tp-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><radialGradient id="tp-ball8b5cf6" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#cbb6fb"/><stop offset=".45" stop-color="#8b5cf6"/><stop offset="1" stop-color="#5a3ca0"/></radialGradient><radialGradient id="tp-ballfdad15" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#feda96"/><stop offset=".45" stop-color="#fdad15"/><stop offset="1" stop-color="#a4700e"/></radialGradient><linearGradient id="tp-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3eee6"/><stop offset="1" stop-color="#ebe4d8"/></linearGradient><linearGradient id="tp-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4dccd"/><stop offset="1" stop-color="#d8cfbe"/></linearGradient><linearGradient id="tp-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tp-wall)"/><rect y="250" width="480" height="170" fill="url(#tp-floor)"/><rect y="220" width="480" height="44" fill="url(#tp-hz)"/><path d="M500 140 C430 140 400 172 380 196" fill="none" stroke="#b9ae9c" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/><path d="M500 140 C430 140 400 172 380 196" fill="none" stroke="#f4efe7" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M500 140 C430 140 400 172 380 196" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.9" stroke-linecap="round" transform="translate(-1.5 -3.5)"/><circle cx="424" cy="152" r="11" fill="url(#tp-ballfa6900)"/><ellipse cx="240.0" cy="277.0" rx="150.0" ry="60.0" fill="#5b4a33" opacity="0.28" filter="url(#tp-blur)"/><polygon points="110.1,271.0 240.0,346.0 240.0,306.0 110.1,231.0" fill="#24317a"/><polygon points="240.0,346.0 369.9,271.0 369.9,231.0 240.0,306.0" fill="#1d2762"/><polygon points="240.0,156.0 369.9,231.0 240.0,306.0 110.1,231.0" fill="#545e97"/><polyline points="110.1,231.0 240.0,306.0 369.9,231.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><text transform="matrix(0.866 0.500 0 1 117.0 259.6)" font-size="13" font-weight="600" letter-spacing=".04em" fill="#dfe6ff">CREDIT KERNEL</text><polygon points="137.8,229.0 188.0,258.0 188.0,212.0 137.8,183.0" fill="#3859f9"/><polygon points="188.0,258.0 292.0,198.0 292.0,152.0 188.0,212.0" fill="#2d47c7"/><polygon points="241.7,123.0 292.0,152.0 188.0,212.0 137.8,183.0" fill="#647efa"/><polyline points="137.8,183.0 188.0,212.0 292.0,152.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><text transform="matrix(0.866 0.500 0 1 144.7 214.6)" font-size="13" font-weight="600" letter-spacing=".04em" fill="#fff">Credit</text><polygon points="196.7,263.0 246.9,292.0 246.9,246.0 196.7,217.0" fill="#7d97ff"/><polygon points="246.9,292.0 350.9,232.0 350.9,186.0 246.9,246.0" fill="#6479cc"/><polygon points="300.6,157.0 350.9,186.0 246.9,246.0 196.7,217.0" fill="#9aaeff"/><polyline points="196.7,217.0 246.9,246.0 350.9,186.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><text transform="matrix(0.866 0.500 0 1 203.6 248.6)" font-size="13" font-weight="600" letter-spacing=".04em" fill="#fff">Books</text><polygon points="220.9,141.0 240.0,152.0 240.0,130.0 220.9,119.0" fill="#fa6900"/><polygon points="240.0,152.0 259.1,141.0 259.1,119.0 240.0,130.0" fill="#c85400"/><polygon points="240.0,108.0 259.1,119.0 240.0,130.0 220.9,119.0" fill="#fb8a38"/><polyline points="220.9,119.0 240.0,130.0 259.1,119.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="200.2,177.0 219.2,188.0 219.2,166.0 200.2,155.0" fill="#e5479f"/><polygon points="219.2,188.0 238.3,177.0 238.3,155.0 219.2,166.0" fill="#b7397f"/><polygon points="219.2,144.0 238.3,155.0 219.2,166.0 200.2,155.0" fill="#eb6fb4"/><polyline points="200.2,155.0 219.2,166.0 238.3,155.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="260.8,186.0 279.8,197.0 279.8,175.0 260.8,164.0" fill="#fdad15"/><polygon points="279.8,197.0 298.9,186.0 298.9,164.0 279.8,175.0" fill="#ca8a11"/><polygon points="279.8,153.0 298.9,164.0 279.8,175.0 260.8,164.0" fill="#fdbf48"/><polyline points="260.8,164.0 279.8,175.0 298.9,164.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="234.8,225.0 253.9,236.0 253.9,214.0 234.8,203.0" fill="#0dac65"/><polygon points="253.9,236.0 272.9,225.0 272.9,203.0 253.9,214.0" fill="#0a8a51"/><polygon points="253.9,192.0 272.9,203.0 253.9,214.0 234.8,203.0" fill="#42be87"/><polyline points="234.8,203.0 253.9,214.0 272.9,203.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><ellipse cx="383.9" cy="396.4" rx="12.35" ry="3.9" fill="#5b4a33" opacity="0.35" filter="url(#tp-blur)"/><circle cx="380" cy="384" r="13" fill="url(#tp-ball8b5cf6)"/><ellipse cx="87.0" cy="369.5" rx="9.5" ry="3.0" fill="#5b4a33" opacity="0.35" filter="url(#tp-blur)"/><circle cx="84" cy="360" r="10" fill="url(#tp-ballfdad15)"/><rect width="480" height="420" filter="url(#tp-grain)" pointer-events="none"/></svg></div></div>
     </div>
 
     <!-- Kernel -->
@@ -1036,20 +1093,21 @@
 </section>
 
 <!-- ══════════ CORE BANKING ══════════ -->
-<section id="core-banking" class="scroll-mt-16 bg-surface-2 border-b border-line">
+<section id="core-banking" class="scroll-mt-16 chapter chapter-lime">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
-    <div class="max-w-3xl mb-12 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Core banking</p>
-      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-        With a core banking system, or without one
-      </h2>
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-12 reveal">
+    <div class="lg:col-span-7">
+      <p class="eyebrow mb-6"><span>Core banking</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">With a core banking system, <span class="tone">or without one</span></h2>
       <p class="mt-6 text-[16.5px] leading-relaxed text-mute">
         A bank's first question is whether this works with the core it already runs. It does — and a
         finance company, MFI or moneylender with no core at all runs on finOS alone. <span class="text-ink font-medium">The
         lender chooses, per product, which records finOS keeps: the loan, the customer's money and the
         accounting books.</span>
       </p>
+    </div>
+    <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tc-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tc-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="tc-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#98a62e"/><stop offset=".55" stop-color="#8a9a12"/><stop offset="1" stop-color="#636f0d"/></linearGradient><linearGradient id="tc-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#506dfa"/><stop offset=".55" stop-color="#3859f9"/><stop offset="1" stop-color="#2840b3"/></linearGradient><linearGradient id="tc-cyl2" x1="0" x2="1"><stop offset="0" stop-color="#fb7b1f"/><stop offset=".55" stop-color="#fa6900"/><stop offset="1" stop-color="#b44c00"/></linearGradient><linearGradient id="tc-cyl3" x1="0" x2="1"><stop offset="0" stop-color="#e85dab"/><stop offset=".55" stop-color="#e5479f"/><stop offset="1" stop-color="#a53372"/></linearGradient><linearGradient id="tc-cyl4" x1="0" x2="1"><stop offset="0" stop-color="#9970f7"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6442b1"/></linearGradient><linearGradient id="tc-cyl5" x1="0" x2="1"><stop offset="0" stop-color="#f5f1ea"/><stop offset=".55" stop-color="#f4efe7"/><stop offset="1" stop-color="#b0aca6"/></linearGradient><radialGradient id="tc-balld0dc12" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#eaef94"/><stop offset=".45" stop-color="#d0dc12"/><stop offset="1" stop-color="#878f0c"/></radialGradient><radialGradient id="tc-ball0dac65" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#92daba"/><stop offset=".45" stop-color="#0dac65"/><stop offset="1" stop-color="#087042"/></radialGradient><linearGradient id="tc-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1e4"/><stop offset="1" stop-color="#ece8d4"/></linearGradient><linearGradient id="tc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4dccd"/><stop offset="1" stop-color="#d8cfbe"/></linearGradient><linearGradient id="tc-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tc-wall)"/><rect y="250" width="480" height="170" fill="url(#tc-floor)"/><rect y="220" width="480" height="44" fill="url(#tc-hz)"/><ellipse cx="244.0" cy="324.0" rx="178.5" ry="93.50000000000001" fill="#5b4a33" opacity="0.28" filter="url(#tc-blur)"/><path d="M70.0 318.0 v-26 a170 85.0 0 0 0 340 0 v26 a170 85.0 0 0 1 -340 0z" fill="url(#tc-cyl0)"/><ellipse cx="240" cy="292" rx="170" ry="85.0" fill="#a7b34d"/><path d="M86.0 288.0 v-12 a30 15.0 0 0 0 60 0 v12 a30 15.0 0 0 1 -60 0z" fill="url(#tc-cyl1)"/><ellipse cx="116" cy="276" rx="30" ry="15.0" fill="#6a82fa"/><text x="116" y="281" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">A</text><path d="M210.0 252.0 v-12 a30 15.0 0 0 0 60 0 v12 a30 15.0 0 0 1 -60 0z" fill="url(#tc-cyl2)"/><ellipse cx="240" cy="240" rx="30" ry="15.0" fill="#fb8e40"/><text x="240" y="245" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">B</text><path d="M334.0 288.0 v-12 a30 15.0 0 0 0 60 0 v12 a30 15.0 0 0 1 -60 0z" fill="url(#tc-cyl3)"/><ellipse cx="364" cy="276" rx="30" ry="15.0" fill="#ec75b7"/><text x="364" y="281" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">C</text><path d="M210.0 336.0 v-12 a30 15.0 0 0 0 60 0 v12 a30 15.0 0 0 1 -60 0z" fill="url(#tc-cyl4)"/><ellipse cx="240" cy="324" rx="30" ry="15.0" fill="#a885f8"/><text x="240" y="329" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">D</text><path d="M224.0 300.0 v-76 a16 8.0 0 0 0 32 0 v76 a16 8.0 0 0 1 -32 0z" fill="url(#tc-cyl5)"/><ellipse cx="240" cy="224" rx="16" ry="8.0" fill="#f7f3ed"/><g transform="rotate(-16 240 226)"><rect x="140" y="218" width="100" height="16" rx="8" fill="#e8e1d4"/><rect x="140" y="218" width="100" height="6" rx="3" fill="#fff" opacity=".7"/></g><circle cx="240" cy="214" r="16" fill="url(#tc-balld0dc12)"/><circle cx="96" cy="262" r="13" fill="url(#tc-ball0dac65)"/><rect width="480" height="420" filter="url(#tc-grain)" pointer-events="none"/></svg></div></div>
     </div>
 
     <div class="reveal">
@@ -1142,23 +1200,20 @@
 </section>
 
 <!-- ══════════ HIRE PURCHASE ══════════ -->
-<section id="hire-purchase" class="scroll-mt-16 border-b border-line">
+<section id="hire-purchase" class="scroll-mt-16 chapter chapter-tang">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
-    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Asset finance</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Hire purchase — dealer-originated vehicle finance on the same kernel
-        </h2>
-      </div>
-      <div class="lg:col-span-5">
-        <p class="text-[15.5px] leading-relaxed text-mute">
+        <p class="eyebrow mb-6"><span>Asset finance</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Hire purchase — dealer-originated vehicle finance <span class="tone">on the same kernel</span></h2>
+        <p class="mt-6 text-[16.5px] leading-relaxed text-mute max-w-[52ch]">
           Vehicle and heavy-equipment hire purchase is the most common lending shape among Nepal's
           licensed finance companies: originated at the dealer's showroom, secured on the asset,
           amortised in EMIs, and recovered — when it goes wrong — by repossession and auction.
         </p>
       </div>
+      <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="th-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="th-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="th-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="th-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="th-cyl2" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="th-cyl3" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="th-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><linearGradient id="th-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6ede4"/><stop offset="1" stop-color="#efe2d5"/></linearGradient><linearGradient id="th-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4dccd"/><stop offset="1" stop-color="#d8cfbe"/></linearGradient><linearGradient id="th-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#th-wall)"/><rect y="250" width="480" height="170" fill="url(#th-floor)"/><rect y="220" width="480" height="44" fill="url(#th-hz)"/><ellipse cx="250.0" cy="330.0" rx="130" ry="26" fill="#5b4a33" opacity="0.32" filter="url(#th-blur)"/><polygon points="177.3,248.0 307.2,323.0 307.2,277.0 177.3,202.0" fill="#fa6900"/><polygon points="307.2,323.0 379.9,281.0 379.9,235.0 307.2,277.0" fill="#c85400"/><polygon points="250.0,160.0 379.9,235.0 307.2,277.0 177.3,202.0" fill="#fb8a38"/><polyline points="177.3,202.0 307.2,277.0 379.9,235.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="217.1,213.0 279.4,249.0 279.4,207.0 217.1,171.0" fill="#ffd9bd"/><polygon points="279.4,249.0 331.4,219.0 331.4,177.0 279.4,207.0" fill="#ccae97"/><polygon points="269.1,141.0 331.4,177.0 279.4,207.0 217.1,171.0" fill="#ffe1cc"/><polyline points="217.1,171.0 279.4,207.0 331.4,177.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><g transform="matrix(0.866 0.500 0 1 203.2 265.0)"><circle r="19" fill="#2b2622"/><circle r="8" fill="#a99c8a"/></g><g transform="matrix(0.866 0.500 0 1 278.6 308.5)"><circle r="19" fill="#2b2622"/><circle r="8" fill="#a99c8a"/></g><text transform="matrix(0.866 0.500 0 1 230.9 265.0)" font-size="15" font-weight="700" fill="#fff">EMI</text><ellipse cx="396.0" cy="370.0" rx="27.3" ry="14.3" fill="#5b4a33" opacity="0.28" filter="url(#th-blur)"/><path d="M366.0 364.0 v-10 a26 13.0 0 0 0 52 0 v10 a26 13.0 0 0 1 -52 0z" fill="url(#th-cyl0)"/><ellipse cx="392" cy="354" rx="26" ry="13.0" fill="#ffe08a"/><path d="M366.0 352.0 v-10 a26 13.0 0 0 0 52 0 v10 a26 13.0 0 0 1 -52 0z" fill="url(#th-cyl1)"/><ellipse cx="392" cy="342" rx="26" ry="13.0" fill="#ffe08a"/><path d="M366.0 340.0 v-10 a26 13.0 0 0 0 52 0 v10 a26 13.0 0 0 1 -52 0z" fill="url(#th-cyl2)"/><ellipse cx="392" cy="330" rx="26" ry="13.0" fill="#ffe08a"/><path d="M366.0 328.0 v-10 a26 13.0 0 0 0 52 0 v10 a26 13.0 0 0 1 -52 0z" fill="url(#th-cyl3)"/><ellipse cx="392" cy="318" rx="26" ry="13.0" fill="#ffe08a"/><ellipse cx="87.6" cy="371.4" rx="11.399999999999999" ry="3.5999999999999996" fill="#5b4a33" opacity="0.35" filter="url(#th-blur)"/><circle cx="84" cy="360" r="12" fill="url(#th-ball3859f9)"/><rect width="480" height="420" filter="url(#th-grain)" pointer-events="none"/></svg></div></div>
     </div>
 
     <ol class="grid sm:grid-cols-2 lg:grid-cols-6 gap-px bg-line rounded-xl overflow-hidden border border-line reveal">
@@ -1236,20 +1291,18 @@
 </section>
 
 <!-- ══════════ ARCHITECTURE ══════════ -->
-<section id="architecture" class="scroll-mt-16 bg-surface-2 border-b border-line">
+<section id="architecture" class="scroll-mt-16 chapter chapter-paper">
   <span id="decision" class="block scroll-mt-16"></span><span id="deployment" class="block scroll-mt-16"></span>
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="max-w-3xl mb-12 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Architecture</p>
-      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-        Organised so what changes fastest is furthest from what must never break
-      </h2>
+      <p class="eyebrow mb-6"><span>Architecture</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Organised so what changes fastest <span class="tone">is furthest from what must never break</span></h2>
     </div>
 
     <!-- Tabs -->
     <div class="reveal">
-      <div class="inline-flex rounded-lg border border-line bg-white p-1 gap-1" role="tablist" aria-label="Architecture views">
+      <div class="inline-flex flex-wrap rounded-full bg-oat-200 p-1 gap-1" role="tablist" aria-label="Architecture views">
         <button class="seg rounded-md px-4 py-2 text-[13.5px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="true" aria-controls="tp-planes" id="tb-planes">System</button>
         <button class="seg rounded-md px-4 py-2 text-[13.5px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" aria-controls="tp-kernel" id="tb-kernel">Transaction boundary</button>
         <button class="seg rounded-md px-4 py-2 text-[13.5px] font-medium text-mute hover:text-ink transition-colors" role="tab" aria-selected="false" aria-controls="tp-topo" id="tb-topo">Deployment</button>
@@ -1261,7 +1314,7 @@
           <div class="lg:col-span-7">
             <figure class="rounded-xl border border-line bg-white p-4 sm:p-6">
               <svg viewBox="0 0 460 380" class="hidden sm:block w-full h-auto" role="img" aria-label="finOS system architecture. Client apps call the lending core, a modular monolith with an API layer, the lending modules, one transactional boundary holding credit, accounting and the kernel, and the regulatory packs and platform services. Extracted services run beside it. The integration edge holds the core banking port and edge adapters. Data and infrastructure sit beneath, with optional components. External systems sit outside.">
-                <g font-family="Inter, sans-serif">
+                <g font-family="Instrument Sans, sans-serif">
                   <rect x="6" y="6" width="448" height="36" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
                   <text x="18" y="20" font-size="8.5" font-weight="600" fill="#9A6510" letter-spacing="1">CLIENT APPS</text>
                   <text x="18" y="34" font-size="9.5" fill="#5A4A2A">Admin console · portals · widgets · mobile apps · public API + webhooks</text>
@@ -1303,7 +1356,7 @@
               </svg>
               <!-- Stacked version for phones -->
               <svg viewBox="0 0 300 626" class="sm:hidden w-full h-auto" role="img" aria-label="finOS system architecture, stacked. Client apps call the lending core: an API layer, the lending modules, one transactional boundary holding credit, accounting and the kernel, and the regulatory packs and platform services. Extracted services, data, the integration edge and external systems follow.">
-                <g font-family="Inter, sans-serif">
+                <g font-family="Instrument Sans, sans-serif">
                   <rect x="4" y="4" width="292" height="52" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
                   <text x="14" y="20" font-size="9.5" font-weight="600" fill="#9A6510" letter-spacing="1">CLIENT APPS</text>
                   <text x="14" y="36" font-size="11" fill="#5A4A2A">Admin console · portals · widgets</text>
@@ -1372,7 +1425,7 @@
           <div class="lg:col-span-7">
             <figure class="rounded-xl border border-line bg-white p-6">
               <svg viewBox="0 0 460 300" class="w-full h-auto" role="img" aria-label="The transaction boundary. Other modules use eventual consistency. Credit operations, balances, schedules, allocation, accounting journals and audit commit in one ACID transaction with no saga inside. External edges — payment rails, core banking posting, remittance legs — use saga with compensating transactions.">
-                <g font-family="Inter, sans-serif">
+                <g font-family="Instrument Sans, sans-serif">
                   <rect x="6" y="6" width="448" height="52" rx="6" fill="#FAFBFD" stroke="#E6EAF1"/>
                   <text x="18" y="22" font-size="9" font-weight="600" fill="#8B94A6" letter-spacing="1">OTHER MODULES — eventual consistency is fine</text>
                   <g font-size="9.5" fill="#5A6478">
@@ -1583,20 +1636,19 @@
 </section>
 
 <!-- ══════════ swiftAI ══════════ -->
-<section id="swiftai" class="scroll-mt-16 border-b border-line">
+<section id="swiftai" class="scroll-mt-16 chapter chapter-ube">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
-    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Powered by swiftAI</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Your AI implementation agent</h2>
-      </div>
-      <div class="lg:col-span-5">
-        <p class="text-[15.5px] leading-relaxed text-mute">
+        <p class="eyebrow mb-6"><span>Powered by swiftAI</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Your AI <span class="tone">implementation agent</span></h2>
+        <p class="mt-6 text-[16.5px] leading-relaxed text-mute max-w-[52ch]">
           swiftAI compresses the slowest part of any lending programme — turning business intent into
           working, tested configuration — without ever coming near a credit decision.
         </p>
       </div>
+      <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="ta-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="ta-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="ta-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><radialGradient id="ta-ball0dac65" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#92daba"/><stop offset=".45" stop-color="#0dac65"/><stop offset="1" stop-color="#087042"/></radialGradient><linearGradient id="ta-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2eff6"/><stop offset="1" stop-color="#e9e4ee"/></linearGradient><linearGradient id="ta-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2dbe0"/><stop offset="1" stop-color="#d6ced6"/></linearGradient><linearGradient id="ta-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#ta-wall)"/><rect y="250" width="480" height="170" fill="url(#ta-floor)"/><rect y="220" width="480" height="44" fill="url(#ta-hz)"/><ellipse cx="240.0" cy="372.0" rx="110" ry="30" fill="#5b4a33" opacity="0.3" filter="url(#ta-blur)"/><polygon points="144.7,315.0 240.0,370.0 240.0,300.0 144.7,245.0" fill="#c9b6ff"/><polygon points="240.0,370.0 335.3,315.0 335.3,245.0 240.0,300.0" fill="#a192cc"/><polygon points="240.0,190.0 335.3,245.0 240.0,300.0 144.7,245.0" fill="#d5c6ff"/><polyline points="144.7,245.0 240.0,300.0 335.3,245.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="158.6,245.0 240.0,292.0 240.0,218.0 158.6,171.0" fill="#e9e1ff"/><polygon points="240.0,292.0 321.4,245.0 321.4,171.0 240.0,218.0" fill="#bab4cc"/><polygon points="240.0,124.0 321.4,171.0 240.0,218.0 158.6,171.0" fill="#eee8ff"/><polyline points="158.6,171.0 240.0,218.0 321.4,171.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="169.0,237.0 229.6,272.0 229.6,224.0 169.0,189.0" fill="#221a33"/><ellipse cx="186.3" cy="223.0" rx="10" ry="12" fill="#e5479f"/><ellipse cx="212.3" cy="238.0" rx="10" ry="12" fill="#fa6900"/><rect x="237.0" y="127.0" width="6" height="44" rx="3" fill="#a48bf0"/><path d="M214.0 121.0 a26 12 0 0 0 52 0 z" fill="#fa6900"/><ellipse cx="240.0" cy="121.0" rx="26" ry="9" fill="#ffb27a"/><circle cx="240.0" cy="113.0" r="6" fill="#fa6900"/><ellipse cx="407.6" cy="371.4" rx="11.399999999999999" ry="3.5999999999999996" fill="#5b4a33" opacity="0.35" filter="url(#ta-blur)"/><circle cx="404" cy="360" r="12" fill="url(#ta-ball3859f9)"/><ellipse cx="81.0" cy="349.5" rx="9.5" ry="3.0" fill="#5b4a33" opacity="0.35" filter="url(#ta-blur)"/><circle cx="78" cy="340" r="10" fill="url(#ta-ball0dac65)"/><rect width="480" height="420" filter="url(#ta-grain)" pointer-events="none"/></svg></div></div>
     </div>
 
     <!-- Doctrine -->
@@ -1801,65 +1853,68 @@
 </section>
 
 <!-- ══════════ COMPLIANCE ══════════ -->
-<section id="compliance" class="scroll-mt-16 bg-navy text-white border-b border-navy">
+<section id="compliance" class="scroll-mt-16 chapter chapter-drag">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
-    <div class="max-w-3xl mb-14 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-5">Compliance built into the architecture</p>
-      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Structural, not bolted on</h2>
-      <p class="mt-6 text-[17px] leading-relaxed text-white/65">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-14 reveal">
+    <div class="lg:col-span-7">
+      <p class="eyebrow mb-6"><span>Compliance built into the architecture</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Structural, <span class="tone">not bolted on</span></h2>
+      <p class="mt-6 text-[17px] leading-relaxed text-ink/80">
         Audit trail, decision reproducibility, statutory limits and data residency are properties of
         how the platform is built — which is why they cannot be switched off by a configuration
         mistake.
       </p>
     </div>
+    <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tg-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tg-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tg-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><linearGradient id="tg-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#704462"/><stop offset=".55" stop-color="#5c2a4d"/><stop offset="1" stop-color="#421e37"/></linearGradient><linearGradient id="tg-cyl2" x1="0" x2="1"><stop offset="0" stop-color="#f5f1ea"/><stop offset=".55" stop-color="#f4efe7"/><stop offset="1" stop-color="#b0aca6"/></linearGradient><radialGradient id="tg-ballf4efe7" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#faf8f4"/><stop offset=".45" stop-color="#f4efe7"/><stop offset="1" stop-color="#9f9b96"/></radialGradient><linearGradient id="tg-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6eef2"/><stop offset="1" stop-color="#efe3ea"/></linearGradient><linearGradient id="tg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6d9de"/><stop offset="1" stop-color="#dacbd1"/></linearGradient><linearGradient id="tg-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tg-wall)"/><rect y="250" width="480" height="170" fill="url(#tg-floor)"/><rect y="220" width="480" height="44" fill="url(#tg-hz)"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#b9ae9c" stroke-width="23" stroke-linecap="round" stroke-linejoin="round"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#f4efe7" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3.2" stroke-linecap="round" transform="translate(-1.5 -4.0)"/><ellipse cx="300.0" cy="237.0" rx="18.0" ry="7.2" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="284.4,231.0 300.0,240.0 300.0,130.0 284.4,121.0" fill="#cc089e"/><polygon points="300.0,240.0 315.6,231.0 315.6,121.0 300.0,130.0" fill="#a3067e"/><polygon points="300.0,112.0 315.6,121.0 300.0,130.0 284.4,121.0" fill="#d73eb3"/><polyline points="284.4,121.0 300.0,130.0 315.6,121.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><ellipse cx="380.0" cy="283.0" rx="18.0" ry="7.2" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="364.4,277.0 380.0,286.0 380.0,176.0 364.4,167.0" fill="#cc089e"/><polygon points="380.0,286.0 395.6,277.0 395.6,167.0 380.0,176.0" fill="#a3067e"/><polygon points="380.0,158.0 395.6,167.0 380.0,176.0 364.4,167.0" fill="#d73eb3"/><polyline points="364.4,167.0 380.0,176.0 395.6,167.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="296,150 400,206 400,226 296,170" fill="#ff7cd0"/><polygon points="296,150 400,206 400,212 296,156" fill="#ffc2ea"/><ellipse cx="254.5" cy="276.2" rx="14.25" ry="4.5" fill="#5b4a33" opacity="0.35" filter="url(#tg-blur)"/><circle cx="250" cy="262" r="15" fill="url(#tg-ball3859f9)"/><ellipse cx="128.7" cy="346.0" rx="80.0" ry="32.0" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="59.4,335.0 137.3,380.0 137.3,376.0 59.4,331.0" fill="#ffffff"/><polygon points="137.3,380.0 197.9,345.0 197.9,341.0 137.3,376.0" fill="#cccccc"/><polygon points="120.0,296.0 197.9,341.0 137.3,376.0 59.4,331.0" fill="#ffffff"/><polyline points="59.4,331.0 137.3,376.0 197.9,341.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><g transform="matrix(.866 .5 -.866 .5 104 340)"><circle r="20" fill="none" stroke="#cc089e" stroke-width="4"/><path d="M-9 0 l6 7 l12 -14" fill="none" stroke="#cc089e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g><ellipse cx="74.0" cy="306.0" rx="27.3" ry="14.3" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><path d="M44.0 300.0 v-22 a26 13.0 0 0 0 52 0 v22 a26 13.0 0 0 1 -52 0z" fill="url(#tg-cyl1)"/><ellipse cx="70" cy="278" rx="26" ry="13.0" fill="#855f7a"/><path d="M61.0 274.0 v-34 a9 4.5 0 0 0 18 0 v34 a9 4.5 0 0 1 -18 0z" fill="url(#tg-cyl2)"/><ellipse cx="70" cy="240" rx="9" ry="4.5" fill="#f7f3ed"/><circle cx="70" cy="232" r="15" fill="url(#tg-ballf4efe7)"/><rect width="480" height="420" filter="url(#tg-grain)" pointer-events="none"/></svg></div></div>
+    </div>
 
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 reveal">
       <div>
         <h3 class="text-[19px] font-semibold tracking-tighter">Guardrails execute outside policy scripts</h3>
-        <p class="mt-3 text-[15px] leading-relaxed text-white/60">
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
           A pricing script may propose any rate. The guardrail layer clamps or rejects it — and
           records that it did. If statutory caps lived inside the scripts business users edit, a
           well-meaning change could breach a rate ceiling, a tenor limit or a fee prohibition.
         </p>
-        <ul class="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-2 text-[13.5px] text-white/55">
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Interest and profit-rate ceilings</li>
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Permitted fees, and prohibitions</li>
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Default-charge limits and basis</li>
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Amount caps and tenor limits</li>
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Mandated allocation order</li>
-          <li class="flex gap-2.5"><span class="text-accent">—</span>Contact caps and quiet hours</li>
+        <ul class="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-2 text-[13.5px] text-mute">
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Interest and profit-rate ceilings</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Permitted fees, and prohibitions</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Default-charge limits and basis</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Amount caps and tenor limits</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Mandated allocation order</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Contact caps and quiet hours</li>
         </ul>
       </div>
       <div>
         <h3 class="text-[19px] font-semibold tracking-tighter">Any decision, replayed exactly, years later</h3>
-        <p class="mt-3 text-[15px] leading-relaxed text-white/60">
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
           "Why was this application declined in March?" is a question the architecture answers
           directly — not one that starts a project.
         </p>
-        <dl class="mt-6 divide-y divide-white/10 border-t border-white/10 text-[14px]">
-          <div class="py-3.5"><dt class="font-medium">Inputs are stored, not re-fetched</dt><dd class="mt-1 text-white/55">Replay uses recorded provider responses, so no paid call is repeated and the answer cannot drift.</dd></div>
-          <div class="py-3.5"><dt class="font-medium">Policy versions are pinned</dt><dd class="mt-1 text-white/55">Scorecard, workflow, pricing script and guardrail pack — each resolved to what was live then.</dd></div>
-          <div class="py-3.5"><dt class="font-medium">The rule path is preserved</dt><dd class="mt-1 text-white/55">Which rules fired, on which values, against which thresholds — plus any human decision taken.</dd></div>
+        <dl class="mt-6 divide-y divide-black/10 border-t border-black/10 text-[14px]">
+          <div class="py-3.5"><dt class="font-medium">Inputs are stored, not re-fetched</dt><dd class="mt-1 text-mute">Replay uses recorded provider responses, so no paid call is repeated and the answer cannot drift.</dd></div>
+          <div class="py-3.5"><dt class="font-medium">Policy versions are pinned</dt><dd class="mt-1 text-mute">Scorecard, workflow, pricing script and guardrail pack — each resolved to what was live then.</dd></div>
+          <div class="py-3.5"><dt class="font-medium">The rule path is preserved</dt><dd class="mt-1 text-mute">Which rules fired, on which values, against which thresholds — plus any human decision taken.</dd></div>
         </dl>
       </div>
     </div>
 
-    <div class="mt-14 grid md:grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden reveal">
-      <div class="bg-navy p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Entity history</h4><p class="mt-2 text-[13.5px] leading-relaxed text-white/55">What this loan, application or client looked like over time. Nothing is silently overwritten — a rollback preserves the original allocation.</p></div>
-      <div class="bg-navy p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Activity log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-white/55">Who did what, across which records. Logins, views, approvals, edits, overrides and permission changes.</p></div>
-      <div class="bg-navy p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Exception log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-white/55">Where the system itself is failing, with grouping, retry and escalation. A failed statutory notice is an incident, not a log line.</p></div>
+    <div class="mt-14 grid md:grid-cols-3 gap-px bg-black/[0.07] rounded-xl overflow-hidden reveal">
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Entity history</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">What this loan, application or client looked like over time. Nothing is silently overwritten — a rollback preserves the original allocation.</p></div>
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Activity log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Who did what, across which records. Logins, views, approvals, edits, overrides and permission changes.</p></div>
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Exception log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Where the system itself is failing, with grouping, retry and escalation. A failed statutory notice is an incident, not a log line.</p></div>
     </div>
 
-    <div class="mt-6 rounded-xl bg-navy-700 border border-white/10 p-7 lg:p-8 reveal">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-3">Tamper-evident, not merely append-only</p>
-      <p class="text-[15.5px] leading-relaxed text-white/75 max-w-[86ch]">
+    <div class="mt-6 rounded-xl bg-white/70 border border-black/10 p-7 lg:p-8 reveal">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-3">Tamper-evident, not merely append-only</p>
+      <p class="text-[15.5px] leading-relaxed text-ink/80 max-w-[86ch]">
         "Immutable" is easy to claim and rarely mechanised. Here the audit record is append-only by
         database enforcement, hash-chained so that each entry commits to its predecessor, and
         anchored externally — so even a privileged insider rewriting history breaks the chain
         visibly rather than silently.
       </p>
-      <p class="mt-3 text-[14.5px] leading-relaxed text-white/55 max-w-[86ch]">
+      <p class="mt-3 text-[14.5px] leading-relaxed text-mute max-w-[86ch]">
         The threat being designed against is an administrator with database access, not a
         distributed-consensus problem — which is why this is a hash chain with external anchoring
         rather than a blockchain.
@@ -1869,13 +1924,13 @@
     <div class="mt-14 grid lg:grid-cols-2 gap-10 lg:gap-14 reveal">
       <div>
         <h3 class="text-[19px] font-semibold tracking-tighter">Regulatory packs, not forks</h3>
-        <p class="mt-3 text-[15px] leading-relaxed text-white/60">
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
           The core stays market-agnostic. Guardrail rules, prescribed templates, rate conventions,
           bureau formats, supervisory returns and conduct rules live in a versioned, effective-dated
           pack — so a historical evaluation resolves against the pack in force at the time, and
           adding a market never destabilises an existing one.
         </p>
-        <p class="mt-3 text-[14px] leading-relaxed text-white/50">
+        <p class="mt-3 text-[14px] leading-relaxed text-mute">
           Concretely: Malaysia's moneylending pack — the statutory rate ceiling, prohibited fees and the attestation step — and Nepal's NRB and SEBON packs — the enacted Margin Trading Directive 2082, with
           a 5× net-worth cap, a 10%-of-facility single-client limit and a 4.5× funding-leverage cap —
           the UK FCA corridor pack, and, where a Gulf corridor or an Islamic product is added, a
@@ -1884,20 +1939,20 @@
       </div>
       <div>
         <h3 class="text-[19px] font-semibold tracking-tighter">Shariah compliance is a ledger property</h3>
-        <p class="mt-3 text-[15px] leading-relaxed text-white/60">
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
           Under a compliant sale-based contract the customer owes a fixed sale price from inception —
           profit is recognised over time, but nothing accrues. That reaches the ledger, so it is
           modelled in the kernel as a contract type rather than as a skin over an interest engine.
         </p>
-        <p class="mt-3 text-[15px] leading-relaxed text-white/60">
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
           The sharpest consequence is late payment. Compensation for actual loss may be recognised
           as income; a punitive penalty may not — it must go to charity. So the platform carries a
-          <span class="text-white font-medium">charity payable balance distinct from income</span>,
+          <span class="text-ink font-medium">charity payable balance distinct from income</span>,
           with its own disbursement, reconciliation and reporting. That is a first-class ledger
           concept, not a memo field, and it invalidates any design that treats late fees as ordinary
           revenue. Rebate on early settlement is likewise a real operation, not a discount.
         </p>
-        <p class="mt-3 text-[13.5px] text-white/45">Applicable rates are jurisdiction-pack configuration, never hard-coded — and the permitted contract set itself differs by market, so a structure accepted in Malaysia may be disfavoured in the Gulf. Product structures and market-specific rules require confirmation by a qualified adviser and local counsel.</p>
+        <p class="mt-3 text-[13.5px] text-mute-2">Applicable rates are jurisdiction-pack configuration, never hard-coded — and the permitted contract set itself differs by market, so a structure accepted in Malaysia may be disfavoured in the Gulf. Product structures and market-specific rules require confirmation by a qualified adviser and local counsel.</p>
       </div>
     </div>
 
@@ -1905,15 +1960,13 @@
 </section>
 
 <!-- ══════════ TRUST ══════════ -->
-<section id="trust" class="scroll-mt-16 border-b border-line">
+<section id="trust" class="scroll-mt-16">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Why an enterprise can rely on it</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Claims you can check, not claims you have to accept
-        </h2>
+        <p class="eyebrow mb-6"><span>Why an enterprise can rely on it</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Claims you can check, <span class="tone">not claims you have to accept</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -1975,14 +2028,12 @@
 </section>
 
 <!-- ══════════ AGAINST THE ALTERNATIVES ══════════ -->
-<section id="compare" class="scroll-mt-16 bg-surface-2 border-b border-line">
+<section id="compare" class="scroll-mt-16 chapter chapter-paper">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="max-w-3xl mb-12 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Against the alternatives</p>
-      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-        Three ways to run lending. Each trades away something you need.
-      </h2>
+      <p class="eyebrow mb-6"><span>Against the alternatives</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Three ways to run lending. <span class="tone">Each trades away something you need.</span></h2>
       <p class="mt-6 text-[16.5px] leading-relaxed text-mute">
         A legacy core gives you stability without agility. Point SaaS gives you speed without
         ownership. A custom build gives you both, then charges you for a platform you now maintain
@@ -2077,15 +2128,13 @@
 </section>
 
 <!-- ══════════ PRICING ══════════ -->
-<section id="pricing" class="scroll-mt-16 border-b border-line">
+<section id="pricing" class="scroll-mt-16">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Commercial model</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Priced on the size of your book — never per loan, per transaction or per user
-        </h2>
+        <p class="eyebrow mb-6"><span>Commercial model</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Priced on the size of your book — <span class="tone">never per loan, per transaction or per user</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -2197,19 +2246,14 @@
 </section>
 
 <!-- ══════════ FIRST INITIATIVE · MALAYSIA ══════════ -->
-<section id="malaysia" class="scroll-mt-16 border-b border-line bg-ink text-white">
-  <div class="mx-auto max-w-content px-6 lg:px-8 py-16 lg:py-20">
+<section id="malaysia" class="scroll-mt-16 chapter chapter-lemon">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
       <div class="lg:col-span-7 reveal">
-        <p class="inline-flex items-center gap-2 text-[11.5px] font-semibold tracking-[0.14em] uppercase text-white/55 mb-6">
-          <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span>
-          First deployment · In build
-        </p>
-        <h2 class="text-[30px] sm:text-[38px] lg:text-[44px] leading-[1.07] tracking-tightest font-semibold">
-          OneSphere Malaysia — Send Now Pay Later, on finOS.
-        </h2>
-        <p class="mt-6 text-[16.5px] leading-relaxed text-white/70 max-w-[56ch]">
+        <p class="eyebrow mb-6"><span>First deployment · In build</span></p>
+        <h2 class="text-[30px] sm:text-[38px] lg:text-[44px] leading-[1.07] tracking-tightest font-semibold">OneSphere Malaysia — <span class="tone">Send Now Pay Later, on finOS.</span></h2>
+        <p class="mt-6 text-[16.5px] leading-relaxed text-ink/80 max-w-[56ch]">
           The first lending business assembled on finOS: a KPKT-licensed
           Pay Later for Malaysia's migrant workforce — settled through Ria as remitter
           of record, decisioned on RemitScore, and run on finOS.
@@ -2217,18 +2261,18 @@
         </p>
 
         <ul class="mt-7 flex flex-wrap gap-2">
-          <li class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12.5px] text-white/80">KPKT online-lending</li>
-          <li class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12.5px] text-white/80">SNPL · Ria remitter-of-record</li>
-          <li class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12.5px] text-white/80">finOS</li>
-          <li class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12.5px] text-white/80">Migrant corridor</li>
+          <li class="rounded-full bg-white px-3 py-1 shadow-[0_0_0_1px_rgba(22,24,31,.06)] text-[12.5px] text-ink/80">KPKT online-lending</li>
+          <li class="rounded-full bg-white px-3 py-1 shadow-[0_0_0_1px_rgba(22,24,31,.06)] text-[12.5px] text-ink/80">SNPL · Ria remitter-of-record</li>
+          <li class="rounded-full bg-white px-3 py-1 shadow-[0_0_0_1px_rgba(22,24,31,.06)] text-[12.5px] text-ink/80">finOS</li>
+          <li class="rounded-full bg-white px-3 py-1 shadow-[0_0_0_1px_rgba(22,24,31,.06)] text-[12.5px] text-ink/80">Migrant corridor</li>
         </ul>
 
         <div class="mt-9 flex flex-wrap items-center gap-3">
-          <a href="./onesphere-malaysia-business.html" class="inline-flex items-center gap-1.5 rounded-lg bg-white px-5 py-2.5 text-[14.5px] font-medium text-ink hover:bg-white/90 transition-colors">
+          <a href="./onesphere-malaysia-business.html" class="inline-flex items-center gap-1.5 rounded-lg btn-chap px-5 py-2.5 text-[14.5px] font-medium transition-colors">
             Read the business case
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="./onesphere-malaysia-technical.html" class="inline-flex items-center gap-1.5 rounded-lg border border-white/25 px-5 py-2.5 text-[14.5px] font-medium text-white hover:bg-white/10 transition-colors">
+          <a href="./onesphere-malaysia-technical.html" class="inline-flex items-center gap-1.5 rounded-lg bg-white border border-black/10 px-5 py-2.5 text-[14.5px] font-medium text-ink hover:bg-white transition-colors">
             Read the technical paper
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -2237,19 +2281,20 @@
 
       <!-- delivery proof panel -->
       <div class="lg:col-span-5 reveal">
-        <figure class="rounded-xl border border-white/12 bg-white/[0.04] p-5 sm:p-6">
+        <div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tm-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tm-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tm-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><linearGradient id="tm-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="tm-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf5dd"/><stop offset="1" stop-color="#f4ebc9"/></linearGradient><linearGradient id="tm-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8dfc3"/><stop offset="1" stop-color="#ddd2b1"/></linearGradient><linearGradient id="tm-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tm-wall)"/><rect y="250" width="480" height="170" fill="url(#tm-floor)"/><rect y="220" width="480" height="44" fill="url(#tm-hz)"/><path d="M-10 300 C80 250 150 260 230 290 C300 316 360 250 490 270 V420 H-10z" fill="#6fd48f"/><path d="M-10 340 C90 310 200 330 280 350 C360 370 420 330 490 336 V420 H-10z" fill="#0dac65"/><path d="M60 400 C120 350 200 372 250 340 C300 308 340 300 392 262" fill="none" stroke="#fff6dc" stroke-width="12" stroke-linecap="round"/><circle cx="160" cy="356" r="13" fill="url(#tm-ballfa6900)"/><line x1="392" y1="262" x2="392" y2="178" stroke="#7a6a52" stroke-width="4" stroke-linecap="round"/><path d="M394 180 h66 l-14 18 l14 18 h-66z" fill="#e0393e"/><text x="402" y="204" font-size="14" font-weight="700" fill="#fff">MY</text><ellipse cx="114.0" cy="306.0" rx="23.1" ry="12.100000000000001" fill="#5b4a33" opacity="0.28" filter="url(#tm-blur)"/><path d="M88.0 300.0 v-40 a22 11.0 0 0 0 44 0 v40 a22 11.0 0 0 1 -44 0z" fill="url(#tm-cyl1)"/><ellipse cx="110" cy="260" rx="22" ry="11.0" fill="#fec250"/><path d="M270 300 l26 -56 l26 56z" fill="#ff8cc6"/><path d="M296 244 l26 56 h-10z" fill="#d9579c"/><rect width="480" height="420" filter="url(#tm-grain)" pointer-events="none"/></svg></div>
+        <figure class="relative -mt-20 mx-3 sm:mx-5 rounded-[20px] bg-white p-5 sm:p-6 shadow-[0_24px_50px_-28px_rgba(22,24,31,.45)]">
           <figcaption class="mb-4 flex items-baseline justify-between gap-4">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">Malaysia pod · delivery</span>
-            <span class="text-[11px] text-white/40">gated by licence, not engineering</span>
+            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute">Malaysia pod · delivery</span>
+            <span class="text-[11px] text-mute-2">gated by licence, not engineering</span>
           </figcaption>
           <dl class="space-y-3.5 text-[13.5px]">
-            <div class="flex justify-between gap-4"><dt class="text-white/55">Product</dt><dd class="text-white text-right">Send Now Pay Later (SNPL)</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-white/55">Licence</dt><dd class="text-white text-right">KPKT moneylending licence · online approval via the finOS system plan</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-white/55">Remitter of record</dt><dd class="text-white text-right">Ria</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-white/55">Platform</dt><dd class="text-white text-right">finOS (reuse)</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-white/55">Pilot-ready</dt><dd class="text-white text-right">≈ month 8</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mute">Product</dt><dd class="text-ink text-right">Send Now Pay Later (SNPL)</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mute">Licence</dt><dd class="text-ink text-right">KPKT moneylending licence · online approval via the finOS system plan</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mute">Remitter of record</dt><dd class="text-ink text-right">Ria</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mute">Platform</dt><dd class="text-ink text-right">finOS (reuse)</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mute">Pilot-ready</dt><dd class="text-ink text-right">≈ month 8</dd></div>
           </dl>
-          <p class="mt-5 pt-4 border-t border-white/12 text-[12.5px] leading-relaxed text-white/55">
+          <p class="mt-5 pt-4 border-t border-black/10 text-[12.5px] leading-relaxed text-mute">
             Two hires are non-negotiable from day zero — a credit-operations domain expert
             and a Malaysia regulatory lead.
           </p>
@@ -2261,15 +2306,13 @@
 </section>
 
 <!-- ══════════ IN PRACTICE ══════════ -->
-<section id="practice" class="scroll-mt-16 bg-surface-2 border-b border-line">
+<section id="practice" class="scroll-mt-16 chapter chapter-paper">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">The platform in practice</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          Building the OneSphere pilot on finOS
-        </h2>
+        <p class="eyebrow mb-6"><span>The platform in practice</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Building the OneSphere pilot <span class="tone">on finOS</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -2317,7 +2360,7 @@
         <div class="lg:col-span-7">
           <figure class="rounded-xl border border-line bg-white p-6">
             <svg viewBox="0 0 460 320" class="w-full h-auto" role="img" aria-label="The OneSphere pilot stack. From top: borrower, agent and partner channels; the finOS lending domain containing the credit kernel, origination, decisioning, servicing, payments, collections and the Malaysia regulatory pack; the finOS platform services including identity, documents, notifications, process and task management, integration, reference data and model serving; and the runtime and infrastructure.">
-              <g font-family="Inter, sans-serif">
+              <g font-family="Instrument Sans, sans-serif">
                 <rect x="6" y="6" width="448" height="44" rx="6" fill="#FAFBFD" stroke="#E6EAF1"/>
                 <text x="18" y="22" font-size="9" font-weight="600" fill="#8B94A6" letter-spacing="1">CHANNELS</text>
                 <g font-size="9" fill="#5A6478">
@@ -2653,15 +2696,13 @@
   </div>
 </section>
 <!-- ══════════ SCOPE — WHERE IT RUNS FIRST ══════════ -->
-<section id="scope" class="scroll-mt-16 border-b border-line">
+<section id="scope" class="scroll-mt-16">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
 
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
-        <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-5">Where it runs first</p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">
-          OneSphere Malaysia first, then four of Swift's own platforms
-        </h2>
+        <p class="eyebrow mb-6"><span>Where it runs first</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">OneSphere Malaysia first, <span class="tone">then four of Swift's own platforms</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
@@ -2827,62 +2868,61 @@
 </section>
 
 <!-- ══════════ CLOSE ══════════ -->
-<section class="bg-ink text-white">
-  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+<section class="chapter chapter-dark text-white overflow-hidden mb-4 sm:mb-6">
+  <div class="mx-auto max-w-content px-6 lg:px-8 pt-20 lg:pt-28 pb-10">
     <div class="grid lg:grid-cols-12 gap-10 items-end reveal">
       <div class="lg:col-span-8">
-        <h2 class="text-[28px] lg:text-[36px] leading-[1.12] tracking-tightest font-semibold max-w-[24ch]">
-          Assemble it once. Reshape it as the business changes.
-        </h2>
+        <h2 class="text-[28px] lg:text-[36px] leading-[1.12] tracking-tightest font-semibold max-w-[24ch]">Assemble it once. <span class="tone">Reshape it as the business changes.</span></h2>
         <p class="mt-5 text-[16px] leading-relaxed text-white/60 max-w-[62ch]">
           The complete lending business on one configurable platform — the speed of SaaS, the
           control of your own deployment, and compliance built into the architecture.
         </p>
       </div>
       <div class="lg:col-span-4 flex lg:justify-end">
-        <a href="#platform" class="inline-flex items-center gap-1.5 rounded-lg bg-white px-5 py-2.5 text-[14.5px] font-medium text-ink hover:bg-white/90 transition-colors">
+        <a href="#platform" class="inline-flex items-center gap-1.5 rounded-lg btn-chap px-5 py-3 text-[15px] font-medium transition-colors">
           Back to the platform
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 11V3m0 0L3.5 6.5M7 3l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
     </div>
   </div>
+  <div class="px-3 pb-3 sm:px-4 sm:pb-4"><div class="toy rounded-[24px] lg:rounded-[32px]"><svg viewBox="0 0 1200 220" class="block w-full h-auto" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hs-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hs-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hs-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient></defs><rect width="1200" height="220" fill="#1f2330"/><path d="M0 120 C200 60 380 90 560 120 C760 150 920 70 1200 100 V220 H0z" fill="#2f6b4c"/><path d="M0 170 C220 130 420 150 640 170 C860 190 1000 140 1200 150 V220 H0z" fill="#0dac65"/><path d="M700 112 l26 -54 l26 54z" fill="#ff9fcf"/><path d="M300 150 v-34 a26 26 0 0 1 52 0 v34 h-14 v-30 a12 12 0 0 0 -24 0 v30z" fill="#7d97ff"/><path d="M960.0 120.0 v-40 a20 10.0 0 0 0 40 0 v40 a20 10.0 0 0 1 -40 0z" fill="url(#hs-cyl0)"/><ellipse cx="980" cy="80" rx="20" ry="10.0" fill="#fec250"/><circle cx="520" cy="150" r="13" fill="url(#hs-ballfa6900)"/><rect width="1200" height="220" filter="url(#hs-grain)" pointer-events="none"/></svg></div></div>
 </section>
 
 </main>
 
 <!-- ══════════ FOOTER ══════════ -->
-<footer class="bg-ink text-white/50 border-t border-white/10">
+<footer class="text-mute">
   <div class="mx-auto max-w-content px-6 lg:px-8 py-10">
     <div class="flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between text-[13.5px]">
-      <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-white">
+      <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-ink">
         <svg viewBox="0 0 392 87" class="h-[19px] w-auto" role="img" aria-label="finOS by Swift" focusable="false">
-          <use href="#finos-star" fill="#4E9BEA"/>
+          <use href="#finos-star" fill="#0E71DB"/>
           <use href="#finos-wordmark" fill="currentColor"/>
         </svg>
-        <span class="text-[12px] text-white/40 font-normal">by</span>
+        <span class="text-[12px] text-mute-2 font-normal">by</span>
         <svg viewBox="0 0 439 98" class="h-[15px] w-auto" aria-hidden="true" focusable="false">
-          <use href="#swift-mark" fill="#4E9BEA"/>
+          <use href="#swift-mark" fill="#0E71DB"/>
           <use href="#swift-wordmark" fill="currentColor"/>
         </svg>
-        <span class="h-3.5 w-px bg-white/20 ml-1" aria-hidden="true"></span>
-        <span class="text-white/50 font-normal">Powered by swiftAI</span>
+        <span class="h-3.5 w-px bg-black/[0.07] ml-1" aria-hidden="true"></span>
+        <span class="text-mute font-normal">Powered by swiftAI</span>
       </div>
       <nav aria-label="Footer">
         <ul class="flex flex-wrap gap-x-6 gap-y-2">
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#who">Who it's for</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#follow">Follow a loan</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#platform">Platform</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#core-banking">Core banking</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#hire-purchase">Hire purchase</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#architecture">Architecture</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#swiftai">swiftAI</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#compliance">Compliance</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#trust">Trust</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#compare">Compare</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#pricing">Pricing</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#malaysia">Malaysia</a></li>
-          <li><a class="inline-block py-1 hover:text-white transition-colors" href="#scope">Where it runs first</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#who">Who it's for</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#follow">Follow a loan</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#platform">Platform</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#core-banking">Core banking</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#hire-purchase">Hire purchase</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#architecture">Architecture</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#swiftai">swiftAI</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#compliance">Compliance</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#trust">Trust</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#compare">Compare</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#pricing">Pricing</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#malaysia">Malaysia</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="#scope">Where it runs first</a></li>
         </ul>
       </nav>
     </div>
@@ -2893,6 +2933,10 @@
 (() => {
   'use strict';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Hero contraption: SMIL ignores CSS motion preferences, so freeze it mid-journey */
+  const stage = document.querySelector('#hero-stage svg');
+  if (reduce && stage && stage.pauseAnimations) { stage.setCurrentTime(6); stage.pauseAnimations(); }
 
   /* ---------- Hero: loan lifecycle ----------
      Motion with a job: it shows that six different products run one lifecycle. State is driven
@@ -2937,15 +2981,15 @@
       lc.prod.textContent = prod.n;
       lc.sub.textContent  = prod.s;
       lc.bLabel.textContent = prod.b;
-      lc.pips.forEach((pip, i) => pip.setAttribute('fill', i === p ? '#0E71DB' : '#DDE3EC'));
+      lc.pips.forEach((pip, i) => pip.setAttribute('fill', i === p ? '#3859F9' : '#E4DFD6'));
 
       lc.stages.forEach((g, i) => {
         const c = g.querySelector('circle'), t = g.querySelector('text');
         const done = i < stage, now = i === stage;
-        c.setAttribute('fill',   done || now ? '#0E71DB' : '#fff');
-        c.setAttribute('stroke', done || now ? '#0E71DB' : '#C3CCDA');
+        c.setAttribute('fill',   done || now ? '#3859F9' : '#fff');
+        c.setAttribute('stroke', done || now ? '#3859F9' : '#C9C2B6');
         c.setAttribute('r',      now ? '7' : '5.5');
-        t.setAttribute('fill',   now ? '#0A0F1C' : done ? '#5A6478' : '#8B94A6');
+        t.setAttribute('fill',   now ? '#16181F' : done ? '#55534E' : '#85817A');
         t.setAttribute('font-weight', now ? '600' : '400');
       });
 
@@ -2955,8 +2999,8 @@
       lc.note.setAttribute('y', y + 4);
 
       const branchOn = stage >= SERVICE;
-      lc.bPath.setAttribute('stroke', branchOn ? '#9A6510' : '#DDE3EC');
-      lc.bDot.setAttribute('stroke',  branchOn ? '#9A6510' : '#DDE3EC');
+      lc.bPath.setAttribute('stroke', branchOn ? '#C2410C' : '#E4DFD6');
+      lc.bDot.setAttribute('stroke',  branchOn ? '#C2410C' : '#E4DFD6');
       lc.bDot.setAttribute('fill',    branchOn ? '#FDF6E8' : '#fff');
       lc.bLabel.setAttribute('fill',  branchOn ? '#9A6510' : '#8B94A6');
     };
