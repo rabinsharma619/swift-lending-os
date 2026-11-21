@@ -1259,8 +1259,8 @@
       <div id="tp-planes" role="tabpanel" aria-labelledby="tb-planes" tabindex="0" class="mt-8">
         <div class="grid lg:grid-cols-12 gap-10">
           <div class="lg:col-span-7">
-            <figure class="rounded-xl border border-line bg-white p-6">
-              <svg viewBox="0 0 460 380" class="w-full h-auto" role="img" aria-label="finOS system architecture. Client apps call the lending core, a modular monolith with an API layer, the lending modules, one transactional boundary holding credit, accounting and the kernel, and the regulatory packs and platform services. Extracted services run beside it. The integration edge holds the core banking port and edge adapters. Data and infrastructure sit beneath, with optional components. External systems sit outside.">
+            <figure class="rounded-xl border border-line bg-white p-4 sm:p-6">
+              <svg viewBox="0 0 460 380" class="hidden sm:block w-full h-auto" role="img" aria-label="finOS system architecture. Client apps call the lending core, a modular monolith with an API layer, the lending modules, one transactional boundary holding credit, accounting and the kernel, and the regulatory packs and platform services. Extracted services run beside it. The integration edge holds the core banking port and edge adapters. Data and infrastructure sit beneath, with optional components. External systems sit outside.">
                 <g font-family="Inter, sans-serif">
                   <rect x="6" y="6" width="448" height="36" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
                   <text x="18" y="20" font-size="8.5" font-weight="600" fill="#9A6510" letter-spacing="1">CLIENT APPS</text>
@@ -1299,6 +1299,57 @@
 
                   <g stroke="#C3CCDA" stroke-width="1.2"><path d="M230 42v8M230 218v8M116 262v8M344 262v8M116 310v8"/></g>
                   <text x="6" y="372" font-size="9.5" fill="#8B94A6">Saga only at the integration edge. Kafka, cache and search switch on per deployment.</text>
+                </g>
+              </svg>
+              <!-- Stacked version for phones -->
+              <svg viewBox="0 0 300 626" class="sm:hidden w-full h-auto" role="img" aria-label="finOS system architecture, stacked. Client apps call the lending core: an API layer, the lending modules, one transactional boundary holding credit, accounting and the kernel, and the regulatory packs and platform services. Extracted services, data, the integration edge and external systems follow.">
+                <g font-family="Inter, sans-serif">
+                  <rect x="4" y="4" width="292" height="52" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
+                  <text x="14" y="20" font-size="9.5" font-weight="600" fill="#9A6510" letter-spacing="1">CLIENT APPS</text>
+                  <text x="14" y="36" font-size="11" fill="#5A4A2A">Admin console · portals · widgets</text>
+                  <text x="14" y="50" font-size="11" fill="#5A4A2A">Mobile apps · public API + webhooks</text>
+
+                  <rect x="4" y="66" width="292" height="282" rx="6" fill="#001133"/>
+                  <text x="14" y="84" font-size="9.5" font-weight="600" fill="#5FA8EE" letter-spacing="1">LENDING CORE — modular monolith</text>
+                  <rect x="14" y="92" width="272" height="24" rx="3" fill="#0B2A55"/>
+                  <text x="22" y="108" font-size="10.5" fill="#C9D8F5">API · authorization · finOS identity</text>
+                  <rect x="14" y="122" width="272" height="38" rx="3" fill="#0B2A55"/>
+                  <text x="22" y="137" font-size="10.5" fill="#C9D8F5">Origination · Products · Servicing</text>
+                  <text x="22" y="152" font-size="10.5" fill="#C9D8F5">Payments · Collections · Covenants</text>
+                  <rect x="14" y="166" width="272" height="130" rx="4" fill="#0E71DB"/>
+                  <text x="24" y="181" font-size="9.5" font-weight="600" fill="#fff" letter-spacing="0.8">ONE TRANSACTIONAL BOUNDARY</text>
+                  <text x="24" y="193" font-size="9.5" fill="#DCE8FD">no saga inside</text>
+                  <g font-size="11" fill="#fff">
+                    <rect x="24" y="200" width="252" height="26" rx="3" fill="#0A5BB8"/><text x="32" y="217" font-weight="600">Credit</text><text x="108" y="217" font-size="10" fill="#DCE8FD">balances · schedules</text>
+                    <rect x="24" y="231" width="252" height="26" rx="3" fill="#0A5BB8"/><text x="32" y="248" font-weight="600">Accounting</text><text x="108" y="248" font-size="10" fill="#DCE8FD">GL · sub-ledgers · close</text>
+                    <rect x="24" y="262" width="252" height="26" rx="3" fill="#0A5BB8"/><text x="32" y="279" font-weight="600">Kernel</text><text x="108" y="279" font-size="10" fill="#DCE8FD">workflow · audit · outbox</text>
+                  </g>
+                  <rect x="14" y="302" width="272" height="38" rx="3" fill="#0B2A55"/>
+                  <text x="22" y="317" font-size="10.5" fill="#C9D8F5">Regulatory packs: Nepal · Malaysia · Islamic</text>
+                  <text x="22" y="332" font-size="10.5" fill="#C9D8F5">Comms · Reference data · Documents</text>
+
+                  <rect x="4" y="358" width="292" height="52" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
+                  <text x="14" y="374" font-size="9.5" font-weight="600" fill="#9A6510" letter-spacing="1">EXTRACTED SERVICES</text>
+                  <text x="14" y="390" font-size="11" fill="#5A4A2A">Decisioning · document rendering</text>
+                  <text x="14" y="404" font-size="11" fill="#5A4A2A">Connectors · batch · reporting</text>
+
+                  <rect x="4" y="420" width="292" height="52" rx="6" fill="#FAFBFD" stroke="#C3CCDA"/>
+                  <text x="14" y="436" font-size="9.5" font-weight="600" fill="#8B94A6" letter-spacing="1">DATA</text>
+                  <text x="14" y="452" font-size="11" fill="#5A6478">PostgreSQL · standby · replica</text>
+                  <text x="14" y="466" font-size="11" fill="#5A6478">S3 storage · optional bus, cache, search</text>
+
+                  <rect x="4" y="482" width="292" height="40" rx="6" fill="#FFF7EC" stroke="#F1D3A6"/>
+                  <text x="14" y="498" font-size="9.5" font-weight="600" fill="#9A6510" letter-spacing="1">INTEGRATION EDGE</text>
+                  <text x="14" y="514" font-size="11" fill="#5A4A2A">Core banking port · edge adapters</text>
+
+                  <rect x="4" y="532" width="292" height="52" rx="6" fill="#EDEFF3" stroke="#C3CCDA"/>
+                  <text x="14" y="548" font-size="9.5" font-weight="600" fill="#6C6C6C" letter-spacing="1">EXTERNAL SYSTEMS</text>
+                  <text x="14" y="564" font-size="11" fill="#5A6478">Core banking · rails &amp; wallets</text>
+                  <text x="14" y="578" font-size="11" fill="#5A6478">Bureaus &amp; KYC · e-sign · SMS</text>
+
+                  <g stroke="#C3CCDA" stroke-width="1.2"><path d="M150 56v10M150 348v10M150 410v10M150 472v10M150 522v10"/></g>
+                  <text x="4" y="604" font-size="10.5" fill="#8B94A6">Saga only at the integration edge.</text>
+                  <text x="4" y="618" font-size="10.5" fill="#8B94A6">Kafka, cache and search switch on per deployment.</text>
                 </g>
               </svg>
             </figure>
