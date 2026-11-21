@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>finOS — origination to closure on one credit kernel</title>
-<meta name="description" content="finOS covers the complete loan lifecycle — origination, decisioning, servicing, payments, collections, accounting and analytics — on one credit kernel you configure. Core-banking agnostic, deployable anywhere.">
+<meta name="description" content="finOS covers the complete loan lifecycle — origination, decisioning, servicing, payments, collections, accounting and analytics — on one credit kernel you configure. Works with or without a core banking system, deployable anywhere.">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NyA4NyI+PHBhdGggZD0iTTQ2LjU1NTcgMC4wMDc4MTI1TDQ2LjUxODYgMjguMzg3N0w1Ny4zODg3IDIuMTcxODhMNjIuOTMxNiA0LjQ2OTczTDUxLjk3NDYgMzAuODk0NUw3Mi4zMDY2IDEwLjc3MTVMNzYuNTI3MyAxNS4wMzUyTDU2LjQ0NDMgMzQuOTEyMUw4Mi41NjE1IDI0LjEyNkw4NC44NTE2IDI5LjY3MTlMNTguNjI0IDQwLjUwMzlIODdWNDYuNTAzOUg1OC41NTU3TDg0LjgyNzEgNTcuNDA3Mkw4Mi41MjczIDYyLjk0ODJMNTYuMjU4OCA1Mi4wNDU5TDc2LjM0NDcgNzIuMTgyNkw3Mi4wOTY3IDc2LjQxOTlMNTIuMDk1NyA1Ni4zNjkxTDYyLjk2NjggODIuNTIwNUw1Ny40MjY4IDg0LjgyMzJMNDYuNDgxNCA1OC40OTIyTDQ2LjQ0NTMgODcuMDA3OEw0MC40NDUzIDg3TDQwLjQ4MTQgNTguNjE1MkwyOS42MTA0IDg0LjgzNTlMMjQuMDY4NCA4Mi41MzgxTDM1LjAyNDQgNTYuMTEyM0wxNC42OTM0IDc2LjIzNjNMMTAuNDcyNyA3MS45NzI3TDMwLjU1NDcgNTIuMDk1N0w0LjQzOTQ1IDYyLjg4MThMMi4xNDk0MSA1Ny4zMzU5TDI4LjM3NyA0Ni41MDM5SDBWNDAuNTAzOUgyOC40NDczTDIuMTcyODUgMjkuNTk5Nkw0LjQ3MjY2IDI0LjA1ODZMMzAuNzQyMiAzNC45NjA5TDEwLjY1NjIgMTQuODI0MkwxNC45MDQzIDEwLjU4NjlMMzQuOTAxNCAzMC42MzQ4TDI0LjAzMzIgNC40ODczTDI5LjU3MzIgMi4xODQ1N0w0MC41MTg2IDI4LjUxNzZMNDAuNTU1NyAwTDQ2LjU1NTcgMC4wMDc4MTI1WiIgZmlsbD0iIzBFNzFEQiIvPjwvc3ZnPg==">
 
@@ -228,7 +228,7 @@
 
       <div class="lg:col-span-7 reveal">
         <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-6">
-          Lending platform · Credit kernel · Any core banking system
+          Lending platform · Credit kernel · With or without a core bank
         </p>
         <h1 class="text-[38px] sm:text-[52px] lg:text-[60px] leading-[1.04] tracking-tightest font-semibold text-ink">
           Origination to closure, on one credit kernel you configure.
@@ -824,12 +824,12 @@
 
     <div class="mt-6 rounded-lg border border-signal-amber/25 bg-signal-amberbg px-6 py-5 reveal">
       <p class="text-[14.5px] leading-relaxed text-ink/80">
-        <span class="font-semibold">The honest note — a finance company has no core bank behind it.</span>
+        <span class="font-semibold">A finance company has no core bank behind it — so finOS keeps the books.</span>
         A bank posts to its core system; a hire-purchase company expects the lending platform to
         carry its general ledger and financial statements, branch tills and post-dated cheques, and
-        the borrowings that fund its book. Today the kernel posts to a ledger of record rather than
-        being one. Serving finance companies means adding that back office as its own pack — a
-        scope decision, made deliberately, not an afterthought.
+        the borrowings that fund its book. finOS native accounting does exactly that, posting in the
+        same transaction as each loan event, so the books and the loan book cannot drift apart.
+        Payroll and fixed assets post in from the systems that already run them.
       </p>
     </div>
 
@@ -1022,7 +1022,7 @@
             <td class="px-5 py-4 text-mute">Yours, in their schema</td>
             <td class="px-5 py-4 text-mute">Multi-tenant, exportable at best</td>
             <td class="px-5 py-4 text-mute">Yours</td>
-            <td class="px-5 py-4 bg-accent-soft/40">Yours, with full export. Dedicated single-tenant by default; hosted multi-lender is a deployment choice, not a migration</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Yours, with full export. Dedicated or shared SaaS, or self-hosted; moving between them is a deployment choice, not a migration</td>
           </tr>
           <tr>
             <th scope="row" class="px-5 py-4 font-medium text-left">Deployment</th>
@@ -1036,15 +1036,16 @@
             <td class="px-5 py-4 text-mute">Vendor services engagement</td>
             <td class="px-5 py-4 text-mute">Whatever the API exposes</td>
             <td class="px-5 py-4 text-mute">Unlimited — and entirely yours to maintain</td>
-            <td class="px-5 py-4 bg-accent-soft/40">Open SDK; your code in your repository</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Documented extension points, built and maintained by Swift against stable interfaces</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <p class="mt-5 text-[13.5px] text-mute-2 reveal">
-      The honest trade: finOS asks you to own and operate a platform. In return, nothing
-      about your lending business is decided by someone else's roadmap.
+      The honest trade: finOS gives you a platform rather than a service contract. Swift implements
+      and supports it, in your environment or ours — and nothing about your lending business is
+      decided by someone else's roadmap.
     </p>
 
   </div>
@@ -1312,8 +1313,8 @@
         </div>
         <div class="bg-white p-6">
           <span class="font-mono text-[11px] text-accent">C</span>
-          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Native mobile module</h4>
-          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">The same micro-flows packaged for embedding in wallet, bank and investor apps — built on the estates' existing mobile standard.</p>
+          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">White-label mobile apps</h4>
+          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">React Native apps for borrowers, field officers and recovery agents, themed per lender. The same micro-flows can also be embedded in a host wallet or bank app.</p>
         </div>
         <div class="bg-white p-6">
           <span class="font-mono text-[11px] text-accent">D</span>
@@ -1334,34 +1335,42 @@
 
     <!-- Core-banking agnostic -->
     <div class="mt-20 reveal">
-      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Core-banking agnostic, by rule</h3>
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">With a core banking system, or without one</h3>
       <p class="mt-3 text-[15.5px] leading-relaxed text-mute max-w-[78ch]">
-        A bank's first question is whether this works with the core it already runs. It does, because
-        the platform is built to a rule rather than to a vendor: <span class="text-ink font-medium">it
-        never assumes it is the ledger of record, and the mapping to the lender's chart of accounts
-        is configuration rather than code.</span>
+        A bank's first question is whether this works with the core it already runs. It does — and a
+        finance company, MFI or moneylender with no core at all runs on finOS alone. <span class="text-ink font-medium">The
+        lender chooses, per product, which records finOS keeps: the loan, the customer's money and the
+        accounting books.</span>
       </p>
 
       <div class="mt-8 grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
         <div class="lg:col-span-7 min-w-0">
           <div class="rounded-xl border border-line bg-white overflow-hidden">
             <div class="px-6 py-4 border-b border-line bg-surface-2">
-              <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2">Which record is authoritative for what</p>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2">Four ways to run it</p>
             </div>
             <dl class="divide-y divide-line text-[14.5px]">
               <div class="px-6 py-4 grid sm:grid-cols-3 gap-2">
-                <dt class="font-medium">The platform</dt>
-                <dd class="sm:col-span-2 text-mute">System of record for <span class="text-ink">the loan</span> — every credit operation, balance, schedule and allocation.</dd>
+                <dt class="font-medium"><span class="font-mono text-[12px] text-accent mr-1.5">A</span>Standalone</dt>
+                <dd class="sm:col-span-2 text-mute">finOS keeps <span class="text-ink">the loan, the cash and the books</span>. Money moves on payment rails and wallets. For finance companies, MFIs, moneylenders and fintechs.</dd>
               </div>
               <div class="px-6 py-4 grid sm:grid-cols-3 gap-2">
-                <dt class="font-medium">Your core</dt>
-                <dd class="sm:col-span-2 text-mute">Remains the <span class="text-ink">accounting record</span> and the customer's account. Postings arrive as derived, reconciled projections of credit operations — never a second source of truth.</dd>
+                <dt class="font-medium"><span class="font-mono text-[12px] text-accent mr-1.5">B</span>Accounting elsewhere</dt>
+                <dd class="sm:col-span-2 text-mute">finOS keeps <span class="text-ink">the loan</span>; summarised journals go to your core or ERP, which stays the accounting record.</dd>
               </div>
               <div class="px-6 py-4 grid sm:grid-cols-3 gap-2">
-                <dt class="font-medium">The posting map</dt>
-                <dd class="sm:col-span-2 text-mute">Ships as a template, then becomes versioned configuration per deployment: each operation type mapped to a debit and a credit account in <em>your</em> chart of accounts.</dd>
+                <dt class="font-medium"><span class="font-mono text-[12px] text-accent mr-1.5">C</span>Full mirror</dt>
+                <dd class="sm:col-span-2 text-mute">finOS keeps <span class="text-ink">the loan</span>; your core holds the customer's account, a mirror of the loan for its channels and statements, and the general ledger.</dd>
+              </div>
+              <div class="px-6 py-4 grid sm:grid-cols-3 gap-2">
+                <dt class="font-medium"><span class="font-mono text-[12px] text-accent mr-1.5">D</span>Origination only</dt>
+                <dd class="sm:col-span-2 text-mute">finOS <span class="text-ink">originates and decides</span>; your core books and services the loan, and finOS follows it for collections and monitoring.</dd>
               </div>
             </dl>
+            <p class="px-6 py-4 border-t border-line text-[13.5px] leading-relaxed text-mute">
+              Wherever postings leave finOS, the posting map ships as a template and becomes versioned
+              configuration — each operation type mapped to accounts in <em>your</em> chart of accounts.
+            </p>
           </div>
         </div>
 
@@ -1370,9 +1379,11 @@
           <p class="text-[14.5px] leading-relaxed text-mute">
             Modern cores speak REST and JSON, older ones SOAP and XML, and some only exchange files
             overnight. All three sit behind a single internal contract, so the lending domain is
-            written once and the difference is an adapter — not a variant of the product.
+            written once and the difference is a certified driver behind one port, tested against
+            the same conformance kit — not a variant of the product.
           </p>
-          <ul class="mt-5 space-y-2.5 text-[14px] leading-relaxed text-mute">
+          <p class="mt-4 text-[12px] font-semibold uppercase tracking-[0.1em] text-mute-2">Where a core is connected</p>
+          <ul class="mt-3 space-y-2.5 text-[14px] leading-relaxed text-mute">
             <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="text-ink font-medium">Loan mirroring</span> so the customer sees the loan in the banking channels and statements they already use</span></li>
             <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="text-ink font-medium">Disbursement posting</span> to the customer's deposit account</span></li>
             <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="text-ink font-medium">Repayment intake</span> from standing orders and branch deposits</span></li>
@@ -1547,8 +1558,8 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-line">
-              <tr><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T1 · Single node</th><td class="px-6 py-5 text-mute align-top">One command brings up application, database, cache, object store, event bus and seeded data</td><td class="px-6 py-5 text-mute align-top">Development, demonstration, pilot</td></tr>
-              <tr><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T2 · Standard</th><td class="px-6 py-5 text-mute align-top">Multi-zone orchestration, primary with synchronous standby, reporting replica, HA cache and bus</td><td class="px-6 py-5 text-mute align-top">The default for most institutions</td></tr>
+              <tr><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T1 · Single node</th><td class="px-6 py-5 text-mute align-top">One command brings up the application, database, identity and document rendering, with seeded data; optional components stay off</td><td class="px-6 py-5 text-mute align-top">Development, demonstration, pilot</td></tr>
+              <tr><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T2 · Standard</th><td class="px-6 py-5 text-mute align-top">Multi-zone orchestration, primary with synchronous standby, reporting replica; cache and event bus when load requires them</td><td class="px-6 py-5 text-mute align-top">The default for most institutions</td></tr>
               <tr><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T3 · High volume</th><td class="px-6 py-5 text-mute align-top">Autoscaled decisioning, connector pool isolation, replica reads, partitioned batch</td><td class="px-6 py-5 text-mute align-top">Checkout-latency lending at scale</td></tr>
               <tr class="bg-accent-soft/50"><th scope="row" class="px-6 py-5 font-medium text-left align-top whitespace-nowrap">T4 · Air-gapped</th><td class="px-6 py-5 text-mute align-top">Mirrored registry, local object storage, <span class="text-ink font-medium">no outbound dependency</span> for runtime or licensing; signed offline bundles</td><td class="px-6 py-5 text-mute align-top">Institutions that cannot accept connected deployment</td></tr>
             </tbody>
@@ -2009,11 +2020,11 @@
       </div>
       <div class="bg-white p-7">
         <dt class="text-[16px] font-semibold tracking-tighter">No runtime you can be locked out of</dt>
-        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">A standard stack, extension points that are documented interfaces, and source escrow on request. There is no proprietary runtime, and no licence call-home — the air-gapped topology has no outbound dependency at all.</dd>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">A standard stack, extension points that are documented interfaces, and source escrow on request, at extra cost. There is no proprietary runtime, and no licence call-home — the air-gapped topology has no outbound dependency at all.</dd>
       </div>
       <div class="bg-white p-7">
         <dt class="text-[16px] font-semibold tracking-tighter">Upgrades are not merge conflicts</dt>
-        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Each deployment's extensions live in their own module, against interfaces rather than platform internals. An upgrade is a dependency bump and a CI run.</dd>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Each deployment's extensions are built and maintained by Swift in their own module, against interfaces rather than platform internals. An upgrade is a dependency bump and a CI run.</dd>
       </div>
       <div class="bg-white p-7">
         <dt class="text-[16px] font-semibold tracking-tighter">The AI cannot decide anything</dt>
@@ -2024,8 +2035,8 @@
         <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">The security design carries a control-by-control mapping to the SOC 2 trust services criteria, alongside ISO 27001, PCI and data-protection mappings and a maintained threat model — so an assurance exercise starts from a document, not a discovery phase.</dd>
       </div>
       <div class="bg-white p-7">
-        <dt class="text-[16px] font-semibold tracking-tighter">It does not try to become your core</dt>
-        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">The platform is the system of record for the loan and nothing more. Your core keeps the customer account and the accounting record, the chart-of-accounts mapping is configuration, and postings arrive as reconciled projections — so adopting it does not mean replacing anything.</dd>
+        <dt class="text-[16px] font-semibold tracking-tighter">It becomes your core only if you want it to</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Alongside a bank's core, finOS keeps the loan and posts reconciled projections to your chart of accounts. Without one, its native books are the accounting record. Either way, adopting it does not force you to replace anything you already run.</dd>
       </div>
       <div class="bg-white p-7">
         <dt class="text-[16px] font-semibold tracking-tighter">Every claim carries its evidence grade</dt>
@@ -2387,7 +2398,7 @@
                   <rect x="192" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="200" y="132">Servicing</text>
                   <rect x="279" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="287" y="132">Payments</text>
                   <rect x="366" y="119" width="76" height="20" rx="3" fill="#0B2A55"/><text x="374" y="132">Collections</text>
-                  <rect x="18" y="143" width="424" height="20" rx="3" fill="#0B2A55"/><text x="26" y="156">Malaysia regulatory pack — rate ceiling · no compounding · no additional fees · attestation · prescribed documents</text>
+                  <rect x="18" y="143" width="424" height="20" rx="3" fill="#0B2A55"/><text x="26" y="156">Malaysia pack — rate ceiling · no compounding · no extra fees · attestation · accounting</text>
                 </g>
 
                 <rect x="6" y="178" width="448" height="62" rx="6" fill="#EAF3FD" stroke="#0E71DB" stroke-opacity=".3"/>
@@ -2405,7 +2416,7 @@
 
                 <rect x="6" y="248" width="448" height="44" rx="6" fill="#FAFBFD" stroke="#E6EAF1"/>
                 <text x="18" y="264" font-size="9" font-weight="600" fill="#8B94A6" letter-spacing="1">RUNTIME &amp; INFRASTRUCTURE</text>
-                <text x="18" y="278" font-size="9" fill="#5A6478">Spring Boot · Kafka · Vault · Keycloak · PostgreSQL · MinIO · Prometheus &amp; Grafana · Kubernetes</text>
+                <text x="18" y="278" font-size="9" fill="#5A6478">Spring Boot · PostgreSQL · Keycloak · Vault · S3 storage · Grafana · Kubernetes · optional Kafka</text>
 
                 <text x="6" y="308" font-size="9.5" fill="#8B94A6">Navy is the lending domain. Pale blue is platform capability configured rather than written.</text>
               </g>
@@ -2529,7 +2540,9 @@
               The compliance-critical spine, plus the documentation the application requires:
               onboarding with KYC and consent, agreement generation with the attestation step
               designed in, the credit kernel and servicing ledger under the Malaysian guardrail
-              pack, the audit trio, and access control. Commercially rich modules are deliberately
+              pack, native accounting (general ledger, cash and bank, financial statements, since
+              OneSphere has no accounting system of its own), the audit trio, and access control.
+              Commercially rich modules are deliberately
               deferred. Deliverables include the customer-journey and technology plan, the security
               certificate evidence, and a registered <span class="font-mono text-[13px]">.my</span>
               domain with a named application.

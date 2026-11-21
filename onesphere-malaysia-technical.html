@@ -141,6 +141,7 @@
       PA["payments / Allocation Hub"]
       CO["collections"]
       RP["regpack-malaysia (KPKT)"]
+      AC["accounting&lt;br/&gt;(GL · cash · statements)"]
       API["public + admin API"]
     end
     subgraph ext["Extracted deployables"]
@@ -152,11 +153,12 @@
     RE["ria-edge"]
     DE["duitnow-edge"]
     PG[("PostgreSQL 16")]
-    KA[("Kafka / Redpanda")]
+    KA[("Kafka (optional)")]
     GW --&gt; API
     OR --&gt; K
     CR --&gt; K
     PA --&gt; CR
+    CR --&gt; AC
     RP --&gt; K
     API --&gt; DEC
     DEC --&gt; CN
@@ -235,9 +237,9 @@
           <tbody>
             <tr><td class="font-medium">Runtime</td><td class="text-mute">Java 21 · Spring Boot 3.3+ · virtual threads</td></tr>
             <tr><td class="font-medium">Database</td><td class="text-mute">PostgreSQL 16 — OLTP + reporting replica; Flyway</td></tr>
-            <tr><td class="font-medium">Eventing</td><td class="text-mute">Kafka 3.7 (KRaft) + outbox; Redpanda for small</td></tr>
+            <tr><td class="font-medium">Eventing</td><td class="text-mute">Outbox; webhooks by default, Kafka when needed</td></tr>
             <tr><td class="font-medium">Expression</td><td class="text-mute">GraalVM 24 — sandboxed, budgeted, no I/O</td></tr>
-            <tr><td class="font-medium">Frontend</td><td class="text-mute">React 19 (admin) · Next.js 15 (portal) · Tailwind 4</td></tr>
+            <tr><td class="font-medium">Frontend</td><td class="text-mute">React 19 + Vite (admin, portal) · Tailwind 4</td></tr>
             <tr><td class="font-medium">Identity</td><td class="text-mute">Keycloak 25 (OIDC/SAML) + policy RBAC</td></tr>
             <tr><td class="font-medium">Observability</td><td class="text-mute">OpenTelemetry → Prometheus · Loki · Tempo</td></tr>
             <tr><td class="font-medium">CI/CD</td><td class="text-mute">Harbor · Argo CD (GitOps) · Argo Rollouts (canary)</td></tr>
@@ -266,7 +268,7 @@
     end
     subgraph data_ns["data — in-Malaysia (PDPA)"]
       PG[("PostgreSQL")]
-      KA[("Kafka")]
+      KA[("Kafka (optional)")]
     end
     GW --&gt; LC
     RE &lt;--&gt; LC
@@ -283,7 +285,7 @@
     <div class="mt-6 grid lg:grid-cols-[1fr_1.1fr] gap-6 items-start">
       <div class="rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart LR
     LC["lending-core"] --&gt;|commit| OB[("outbox_event")]
-    OB --&gt;|publisher| K[("Kafka · lending.*")]
+    OB --&gt;|publisher| K[("events · lending.*")]
     K --&gt; BW["batch-workers&lt;br/&gt;accrual · past-due · reports"]
     K --&gt; RPT["reporting-ETL"]
     K --&gt; CM["comms"]
