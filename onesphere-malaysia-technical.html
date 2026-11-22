@@ -1,126 +1,271 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OneSphere Malaysia — Technical Paper · finOS by Swift</title>
-<meta name="description" content="Technical product paper: building OneSphere's RNPL lending business on finOS — architecture, delivery timeline, engineering organisation." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneSphere Malaysia — Technical paper · finOS</title>
+<meta name="description" content="Technical paper: building OneSphere's Remit Now Pay Later lending business on finOS — architecture, deployment, delivery timeline and engineering organisation.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NyA4NyI+PHBhdGggZD0iTTQ2LjU1NTcgMC4wMDc4MTI1TDQ2LjUxODYgMjguMzg3N0w1Ny4zODg3IDIuMTcxODhMNjIuOTMxNiA0LjQ2OTczTDUxLjk3NDYgMzAuODk0NUw3Mi4zMDY2IDEwLjc3MTVMNzYuNTI3MyAxNS4wMzUyTDU2LjQ0NDMgMzQuOTEyMUw4Mi41NjE1IDI0LjEyNkw4NC44NTE2IDI5LjY3MTlMNTguNjI0IDQwLjUwMzlIODdWNDYuNTAzOUg1OC41NTU3TDg0LjgyNzEgNTcuNDA3Mkw4Mi41MjczIDYyLjk0ODJMNTYuMjU4OCA1Mi4wNDU5TDc2LjM0NDcgNzIuMTgyNkw3Mi4wOTY3IDc2LjQxOTlMNTIuMDk1NyA1Ni4zNjkxTDYyLjk2NjggODIuNTIwNUw1Ny40MjY4IDg0LjgyMzJMNDYuNDgxNCA1OC40OTIyTDQ2LjQ0NTMgODcuMDA3OEw0MC40NDUzIDg3TDQwLjQ4MTQgNTguNjE1MkwyOS42MTA0IDg0LjgzNTlMMjQuMDY4NCA4Mi41MzgxTDM1LjAyNDQgNTYuMTEyM0wxNC42OTM0IDc2LjIzNjNMMTAuNDcyNyA3MS45NzI3TDMwLjU1NDcgNTIuMDk1N0w0LjQzOTQ1IDYyLjg4MThMMi4xNDk0MSA1Ny4zMzU5TDI4LjM3NyA0Ni41MDM5SDBWNDAuNTAzOUgyOC40NDczTDIuMTcyODUgMjkuNTk5Nkw0LjQ3MjY2IDI0LjA1ODZMMzAuNzQyMiAzNC45NjA5TDEwLjY1NjIgMTQuODI0MkwxNC45MDQzIDEwLjU4NjlMMzQuOTAxNCAzMC42MzQ4TDI0LjAzMzIgNC40ODczTDI5LjU3MzIgMi4xODQ1N0w0MC41MTg2IDI4LjUxNzZMNDAuNTU1NyAwTDQ2LjU1NTcgMC4wMDc4MTI1WiIgZmlsbD0iIzBFNzFEQiIvPjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-  tailwind.config = { theme: { extend: {
-    colors: {
-      ink:{DEFAULT:'#0A0F1C',2:'#111827'}, navy:{DEFAULT:'#001133',700:'#062044',600:'#0B2A55'},
-      accent:{DEFAULT:'#0E71DB',hover:'#0B5AAF',soft:'#EAF3FD'}, mute:{DEFAULT:'#5A6478',2:'#8B94A6'},
-      line:{DEFAULT:'#E6EAF1',2:'#EFF2F7'}, surface:{DEFAULT:'#FFFFFF',2:'#FAFBFD'},
-      signal:{amber:'#9A6510',amberbg:'#FDF6E8',green:'#12704A',greenbg:'#EDF7F2',red:'#A3312A',redbg:'#FCEFED',blue:'#0E71DB',bluebg:'#EAF3FD'}
-    },
-    fontFamily:{sans:['Inter','system-ui','sans-serif'],mono:['JetBrains Mono','ui-monospace','monospace']},
-    letterSpacing:{tightest:'-.035em',tighter:'-.025em'}, maxWidth:{content:'74rem'}
-  }}}
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    { DEFAULT: '#16181F', 2: '#282C35' },
+          navy:   { DEFAULT: '#1B2160', 700: '#242B78', 600: '#2E3790' },
+          accent: { DEFAULT: '#3859F9', hover: '#2441D6', soft: '#EEF2FF' },
+          mute:   { DEFAULT: '#55534E', 2: '#85817A' },
+          line:   { DEFAULT: '#E0DEDC', 2: '#EEE9DF' },
+          surface:{ DEFAULT: '#FFFFFF', 2: '#F9F8F6' },
+          oat:    { DEFAULT: '#F9F8F6', 50: '#FFFCFA', 200: '#F3F2ED', 300: '#EEE9DF', 400: '#DAD4C8' },
+          signal: { amber: '#9A6510', amberbg: '#FDF6E8', green: '#12704A', greenbg: '#EDF7F2', red: '#A3312A', redbg: '#FCEFED' }
+        },
+        fontFamily: {
+          sans: ['Instrument Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+        },
+        letterSpacing: { tightest: '-.035em', tighter: '-.025em' },
+        maxWidth: { content: '76rem' }
+      }
+    }
+  }
 </script>
 <style>
-  body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-  ::selection{background:#0E71DB;color:#fff;}
-  .tnum{font-variant-numeric:tabular-nums;}
-  :focus-visible{outline:2px solid #0E71DB;outline-offset:3px;border-radius:3px;}
-  #progress{transform-origin:0 50%;transform:scaleX(0);position:fixed;top:0;left:0;right:0;height:2px;background:#0E71DB;z-index:60;}
-  html{scroll-behavior:smooth;} section[id]{scroll-margin-top:4.5rem;}
-  .mermaid{display:flex;justify-content:center;}
-  .mermaid svg{max-width:100%;height:auto;}
-  table.tbl{width:100%;font-size:13px;border-collapse:collapse;}
-  table.tbl th{text-align:left;color:#5A6478;font-weight:500;padding:8px 12px;border-bottom:1px solid #E6EAF1;}
-  table.tbl td{padding:8px 12px;border-bottom:1px solid #EFF2F7;vertical-align:top;}
-  /* Custom Gantt (13 months, Oct 2026 → Oct 2027) */
-  .grow{display:grid;grid-template-columns:210px 1fr;align-items:center;}
-  .grow .glabel{font-size:12px;color:#5A6478;padding:2px 10px 2px 0;}
-  .gtrack{position:relative;height:24px;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/13 - 1px),#EFF2F7 calc(100%/13 - 1px),#EFF2F7 calc(100%/13));}
-  .gbar{position:absolute;top:5px;height:14px;border-radius:5px;}
-  .gdiamond{position:absolute;top:5px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);}
-  .gsec{font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:#5A6478;background:#FAFBFD;padding:4px 8px;margin-top:6px;border-radius:5px;}
+  :root { --ease: cubic-bezier(.16,1,.3,1); }
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  ::selection { background: #3859F9; color: #fff; }
+  :focus-visible { outline: 2px solid #3859F9; outline-offset: 3px; border-radius: 3px; }
+  html { scroll-behavior: smooth; } section[id] { scroll-margin-top: 5rem; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .hair { box-shadow: inset 0 -1px 0 #E0DEDC; }
+  #progress { transform-origin: 0 50%; transform: scaleX(0); }
+  .reveal { opacity: 0; transform: translateY(10px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+/* ── Clay-style system ─────────────────────────────────────────
+     Warm oat page; each chapter is a rounded pastel card that overlaps
+     the one before it. --c is the chapter colour, --tone the second
+     line of a two-tone headline. */
+  :root { --c: #16181F; --c-ink: #fff; --c-bg: transparent; --tone: #85817A; }
+  html { background: #F9F8F6; }
+  body { background: #F9F8F6; font-feature-settings: "ss01", "cv11"; }
+  h1, h2 { font-weight: 500 !important; letter-spacing: -0.04em !important; text-wrap: balance; }
+  h3, h4 { letter-spacing: -0.015em; }
+  .tone { color: var(--tone); }
+
+  .chapter { position: relative; margin: 0 10px; border-radius: 28px; background: var(--c-bg);
+             box-shadow: 0 -1px 0 rgba(22,24,31,.04), 0 -18px 40px -30px rgba(22,24,31,.35); }
+  @media (min-width: 640px)  { .chapter { margin: 0 16px; border-radius: 36px; } }
+  @media (min-width: 1280px) { .chapter { margin: 0 28px; border-radius: 44px; } }
+  .chapter + .chapter { margin-top: -44px; }
+  .chapter-blue  { --c: #3859F9; --c-bg: #EEF4FF; --tone: #3859F9; }
+  .chapter-lime  { --c: #5F6E00; --c-bg: #F8FAE3; --tone: #6A7A00; }
+  .chapter-tang  { --c: #C2410C; --c-bg: #FDF1EA; --tone: #C2410C; }
+  .chapter-ube   { --c: #7934F0; --c-bg: #F4F0FF; --tone: #7934F0; }
+  .chapter-drag  { --c: #B0078A; --c-bg: #FCEFF7; --tone: #B0078A; }
+  .chapter-lemon { --c: #A15C07; --c-bg: #FFF8D9; --tone: #A15C07; }
+  .chapter-paper { --c: #16181F; --c-bg: #FFFFFF; --tone: #85817A; }
+  .chapter-dark  { --c: #FADF7C; --c-ink: #16181F; --c-bg: #16181F; --tone: #FADF7C; }
+  .text-chap { color: var(--c); }
+
+  /* Pill eyebrow with trailing ghost discs */
+  .eyebrow { display: inline-flex; align-items: center; isolation: isolate; }
+  .eyebrow > span { order: 1; position: relative; z-index: 2; background: var(--c); color: var(--c-ink);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 13px 6px 14px; border-radius: 999px; line-height: 1.3; }
+  .eyebrow::before, .eyebrow::after { content: ''; width: 26px; height: 26px; border-radius: 999px;
+    margin-left: -16px; background: var(--c); }
+  .eyebrow::before { order: 2; opacity: .32; z-index: 1; }
+  .eyebrow::after  { order: 3; opacity: .16; }
+
+  /* Buttons */
+  .btn-chap { background: var(--c); color: var(--c-ink); }
+  .btn-chap:hover { filter: brightness(.92); }
+
+  /* Toy panels and the hero stage */
+  .toy { border-radius: 24px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(22,24,31,.05); }
+  .toy svg { display: block; }
+  @media (min-width: 1024px) { .toy { border-radius: 28px; } }
+  .frame-lines { background-image: linear-gradient(#E0DEDC,#E0DEDC), linear-gradient(#E0DEDC,#E0DEDC);
+    background-size: 1px 100%, 1px 100%; background-position: left top, right top; background-repeat: no-repeat; }
+  .frost { background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -24px rgba(22,24,31,.35), 0 0 0 1px rgba(22,24,31,.05); }
+
+  /* Logo-wall tiles */
+  .wall { background: rgba(255,255,255,.55); border: 1px solid #fff; border-radius: 28px;
+    box-shadow: 0 24px 60px -36px rgba(22,24,31,.3); }
+  .wall-tile { border-radius: 18px; box-shadow: 0 0 0 1px rgba(22,24,31,.05); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .wall-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 14px 30px -18px rgba(22,24,31,.35); }
+  .mode-badge { font-size: 30px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: #3859F9; white-space: nowrap; }
+
+  /* Softer geometry everywhere inside the page */
+  main .rounded-xl { border-radius: 20px; }
+  main .rounded-lg { border-radius: 12px; }
+  main .rounded-md { border-radius: 10px; }
+  .seg, .fl-prod, .ai-scn { border-radius: 999px !important; }
+  [aria-label="Architecture views"] { border-radius: 999px !important; }
+
+  
+  /* Paper components */
+  .card { background: #fff; border-radius: 20px; box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 18px 40px -32px rgba(22,24,31,.35); }
+  .chapter-dark .card { background: rgba(255,255,255,.06); box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+  .card-h { padding: 14px 20px; font-size: 13px; font-weight: 600; box-shadow: inset 0 -1px 0 #EEE9DF; }
+  .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.tbl { width: 100%; font-size: 13.5px; border-collapse: collapse; }
+  .scroll-x > table.tbl { min-width: 560px; }
+  table.tbl th { text-align: left; color: #85817A; font-weight: 500; font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 12px 16px; border-bottom: 1px solid #E0DEDC; white-space: nowrap; }
+  table.tbl td { padding: 12px 16px; border-bottom: 1px solid #EEE9DF; vertical-align: top; color: #55534E; line-height: 1.55; }
+  table.tbl td:first-child { color: #16181F; font-weight: 500; }
+  table.tbl tr:last-child td { border-bottom: 0; }
+  table.tbl td b, table.tbl td strong { color: #16181F; font-weight: 600; }
+  .code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .86em; background: rgba(22,24,31,.05);
+    padding: 1px 5px; border-radius: 6px; color: #16181F; overflow-wrap: anywhere; }
+  .sev { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .sev-crit { background: #FCEFED; color: #A3312A; } .sev-high { background: #FDF6E8; color: #9A6510; }
+  .sev-med { background: #EEF2FF; color: #2441D6; }
+  .note { border-radius: 16px; padding: 14px 18px; font-size: 13px; line-height: 1.6; background: rgba(255,255,255,.7);
+    box-shadow: inset 0 0 0 1px rgba(22,24,31,.07); color: #55534E; }
+  .note b { color: #16181F; }
+  .diagram { background: #fff; border-radius: 20px; padding: 20px; overflow-x: auto;
+    box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 18px 40px -32px rgba(22,24,31,.35); }
+  .mermaid { display: flex; justify-content: center; margin: 0; min-height: 80px; color: transparent; }
+  .mermaid[data-processed] { color: inherit; }
+  .mermaid svg { max-width: 100%; height: auto; }
+  .num { font-size: 44px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: var(--c); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: #fff; padding: 4px 12px;
+    font-size: 12.5px; color: rgba(22,24,31,.8); box-shadow: 0 0 0 1px rgba(22,24,31,.06); }
+  .switch a { padding: 6px 14px; border-radius: 999px; font-size: 13px; color: #55534E; transition: background .2s, color .2s; }
+  .switch a:hover { color: #16181F; }
+  .switch a[aria-current="page"] { background: #16181F; color: #fff; }
+  /* Relative Gantt (12 months from T0) */
+  .grow { display: grid; grid-template-columns: 220px 1fr; align-items: center; }
+  .glabel { font-size: 12.5px; color: #55534E; padding: 3px 12px 3px 0; }
+  .gtrack { position: relative; height: 28px;
+    background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100%/12 - 1px), #EEE9DF calc(100%/12 - 1px), #EEE9DF calc(100%/12)); }
+  .gbar { position: absolute; top: 6px; height: 16px; border-radius: 999px; }
+  .gdia { position: absolute; top: 8px; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg); border-radius: 2px; }
+  .gsec { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: #85817A; margin: 14px 0 4px; }
+  .gnow { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed #16181F; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 </head>
-<body class="bg-surface-2 text-ink font-sans">
+<body class="text-ink font-sans">
 
-<svg width="0" height="0" class="absolute" aria-hidden="true" style="position:absolute"><defs>
-  <path id="finos-star" d="M46.5557 0.0078125L46.5186 28.3877L57.3887 2.17188L62.9316 4.46973L51.9746 30.8945L72.3066 10.7715L76.5273 15.0352L56.4443 34.9121L82.5615 24.126L84.8516 29.6719L58.624 40.5039H87V46.5039H58.5557L84.8271 57.4072L82.5273 62.9482L56.2588 52.0459L76.3447 72.1826L72.0967 76.4199L52.0957 56.3691L62.9668 82.5205L57.4268 84.8232L46.4814 58.4922L46.4453 87.0078L40.4453 87L40.4814 58.6152L29.6104 84.8359L24.0684 82.5381L35.0244 56.1123L14.6934 76.2363L10.4727 71.9727L30.5547 52.0957L4.43945 62.8818L2.14941 57.3359L28.377 46.5039H0V40.5039H28.4473L2.17285 29.5996L4.47266 24.0586L30.7422 34.9609L10.6562 14.8242L14.9043 10.5869L34.9014 30.6348L24.0332 4.4873L29.5732 2.18457L40.5186 28.5176L40.5557 0L46.5557 0.0078125Z"/>
-  <g id="finos-wordmark">
-    <path d="M116.96 68.056H131.552V40.6H116V29.56H131.552V22.36C131.552 18.136 132.768 14.712 135.2 12.088C137.696 9.4 141.536 8.056 146.72 8.056H163.52V19.096H145.76V29.56H163.52V40.6H145.76V68.056H161.312V79.096H116.96V68.056Z"/>
-    <path d="M199.578 23.224C196.378 23.224 194.139 22.584 192.859 21.304C191.643 19.96 191.035 18.36 191.035 16.504V13.72C191.035 11.8 191.643 10.2 192.859 8.92C194.139 7.64 196.378 7 199.578 7C202.778 7 204.986 7.64 206.202 8.92C207.483 10.2 208.123 11.8 208.123 13.72V16.504C208.123 18.36 207.483 19.96 206.202 21.304C204.986 22.584 202.778 23.224 199.578 23.224ZM176.73 68.056H192.475V40.6H176.73V29.56H206.683V68.056H221.275V79.096H176.73V68.056Z"/>
-    <path d="M231.509 79.096V29.56H245.717V38.584H246.293C246.869 37.176 247.573 35.864 248.405 34.648C249.237 33.432 250.229 32.376 251.381 31.48C252.597 30.52 253.973 29.784 255.509 29.272C257.109 28.696 258.901 28.408 260.885 28.408C263.253 28.408 265.429 28.824 267.413 29.656C269.397 30.424 271.093 31.608 272.501 33.208C273.909 34.808 274.997 36.76 275.765 39.064C276.597 41.368 277.013 44.024 277.013 47.032V79.096H262.805V48.952C262.805 42.552 260.021 39.352 254.453 39.352C253.365 39.352 252.277 39.512 251.189 39.832C250.165 40.088 249.237 40.536 248.405 41.176C247.573 41.752 246.901 42.488 246.389 43.384C245.941 44.28 245.717 45.336 245.717 46.552V79.096H231.509Z"/>
-    <path d="M311.632 80.248C307.792 80.248 304.336 79.672 301.264 78.52C298.192 77.304 295.567 75.576 293.391 73.336C291.279 71.096 289.647 68.376 288.495 65.176C287.343 61.976 286.768 58.36 286.768 54.328C286.768 50.296 287.343 46.68 288.495 43.48C289.647 40.28 291.279 37.56 293.391 35.32C295.567 33.08 298.192 31.384 301.264 30.232C304.336 29.016 307.792 28.408 311.632 28.408C315.472 28.408 318.927 29.016 321.999 30.232C325.071 31.384 327.663 33.08 329.775 35.32C331.951 37.56 333.616 40.28 334.768 43.48C335.92 46.68 336.495 50.296 336.495 54.328C336.495 58.36 335.92 61.976 334.768 65.176C333.616 68.376 331.951 71.096 329.775 73.336C327.663 75.576 325.071 77.304 321.999 78.52C318.927 79.672 315.472 80.248 311.632 80.248ZM311.632 69.688C314.832 69.688 317.328 68.696 319.12 66.712C320.912 64.728 321.807 61.912 321.807 58.264V50.392C321.807 46.744 320.912 43.928 319.12 41.944C317.328 39.96 314.832 38.968 311.632 38.968C308.431 38.968 305.935 39.96 304.143 41.944C302.351 43.928 301.456 46.744 301.456 50.392V58.264C301.456 61.912 302.351 64.728 304.143 66.712C305.935 68.696 308.431 69.688 311.632 69.688Z"/>
-    <path d="M368.618 80.248C363.114 80.248 358.314 79.416 354.218 77.752C350.186 76.088 347.146 73.816 345.098 70.936L353.066 63.544C354.986 65.656 357.226 67.32 359.786 68.536C362.41 69.688 365.386 70.264 368.714 70.264C371.53 70.264 373.738 69.848 375.338 69.016C376.938 68.12 377.738 66.776 377.738 64.984C377.738 63.576 377.194 62.616 376.106 62.104C375.018 61.528 373.514 61.08 371.594 60.76L363.626 59.512C361.386 59.192 359.306 58.712 357.386 58.072C355.466 57.368 353.802 56.44 352.394 55.288C350.986 54.136 349.866 52.728 349.034 51.064C348.202 49.4 347.786 47.384 347.786 45.016C347.786 39.832 349.77 35.768 353.738 32.824C357.706 29.88 363.274 28.408 370.442 28.408C375.306 28.408 379.434 29.08 382.826 30.424C386.282 31.704 389.034 33.56 391.082 35.992L383.978 44.056C382.506 42.456 380.618 41.112 378.314 40.024C376.01 38.936 373.226 38.392 369.962 38.392C364.458 38.392 361.706 40.056 361.706 43.384C361.706 44.856 362.25 45.88 363.338 46.456C364.426 46.968 365.93 47.384 367.85 47.704L375.722 48.952C377.962 49.272 380.042 49.784 381.962 50.488C383.882 51.128 385.546 52.024 386.954 53.176C388.426 54.328 389.578 55.736 390.41 57.4C391.242 59.064 391.658 61.08 391.658 63.448C391.658 68.632 389.642 72.728 385.61 75.736C381.642 78.744 375.978 80.248 368.618 80.248Z"/>
-  </g>
-</defs></svg>
+<svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <path id="finos-star" d="M46.5557 0.0078125L46.5186 28.3877L57.3887 2.17188L62.9316 4.46973L51.9746 30.8945L72.3066 10.7715L76.5273 15.0352L56.4443 34.9121L82.5615 24.126L84.8516 29.6719L58.624 40.5039H87V46.5039H58.5557L84.8271 57.4072L82.5273 62.9482L56.2588 52.0459L76.3447 72.1826L72.0967 76.4199L52.0957 56.3691L62.9668 82.5205L57.4268 84.8232L46.4814 58.4922L46.4453 87.0078L40.4453 87L40.4814 58.6152L29.6104 84.8359L24.0684 82.5381L35.0244 56.1123L14.6934 76.2363L10.4727 71.9727L30.5547 52.0957L4.43945 62.8818L2.14941 57.3359L28.377 46.5039H0V40.5039H28.4473L2.17285 29.5996L4.47266 24.0586L30.7422 34.9609L10.6562 14.8242L14.9043 10.5869L34.9014 30.6348L24.0332 4.4873L29.5732 2.18457L40.5186 28.5176L40.5557 0L46.5557 0.0078125Z"/>
+    <g id="finos-wordmark">
+      <path d="M116.96 68.056H131.552V40.6H116V29.56H131.552V22.36C131.552 18.136 132.768 14.712 135.2 12.088C137.696 9.4 141.536 8.056 146.72 8.056H163.52V19.096H145.76V29.56H163.52V40.6H145.76V68.056H161.312V79.096H116.96V68.056Z"/>
+      <path d="M199.578 23.224C196.378 23.224 194.139 22.584 192.859 21.304C191.643 19.96 191.035 18.36 191.035 16.504V13.72C191.035 11.8 191.643 10.2 192.859 8.92C194.139 7.64 196.378 7 199.578 7C202.778 7 204.986 7.64 206.202 8.92C207.483 10.2 208.123 11.8 208.123 13.72V16.504C208.123 18.36 207.483 19.96 206.202 21.304C204.986 22.584 202.778 23.224 199.578 23.224ZM176.73 68.056H192.475V40.6H176.73V29.56H206.683V68.056H221.275V79.096H176.73V68.056Z"/>
+      <path d="M231.509 79.096V29.56H245.717V38.584H246.293C246.869 37.176 247.573 35.864 248.405 34.648C249.237 33.432 250.229 32.376 251.381 31.48C252.597 30.52 253.973 29.784 255.509 29.272C257.109 28.696 258.901 28.408 260.885 28.408C263.253 28.408 265.429 28.824 267.413 29.656C269.397 30.424 271.093 31.608 272.501 33.208C273.909 34.808 274.997 36.76 275.765 39.064C276.597 41.368 277.013 44.024 277.013 47.032V79.096H262.805V48.952C262.805 42.552 260.021 39.352 254.453 39.352C253.365 39.352 252.277 39.512 251.189 39.832C250.165 40.088 249.237 40.536 248.405 41.176C247.573 41.752 246.901 42.488 246.389 43.384C245.941 44.28 245.717 45.336 245.717 46.552V79.096H231.509Z"/>
+      <path d="M311.632 80.248C307.792 80.248 304.336 79.672 301.264 78.52C298.192 77.304 295.567 75.576 293.391 73.336C291.279 71.096 289.647 68.376 288.495 65.176C287.343 61.976 286.768 58.36 286.768 54.328C286.768 50.296 287.343 46.68 288.495 43.48C289.647 40.28 291.279 37.56 293.391 35.32C295.567 33.08 298.192 31.384 301.264 30.232C304.336 29.016 307.792 28.408 311.632 28.408C315.472 28.408 318.927 29.016 321.999 30.232C325.071 31.384 327.663 33.08 329.775 35.32C331.951 37.56 333.616 40.28 334.768 43.48C335.92 46.68 336.495 50.296 336.495 54.328C336.495 58.36 335.92 61.976 334.768 65.176C333.616 68.376 331.951 71.096 329.775 73.336C327.663 75.576 325.071 77.304 321.999 78.52C318.927 79.672 315.472 80.248 311.632 80.248ZM311.632 69.688C314.832 69.688 317.328 68.696 319.12 66.712C320.912 64.728 321.807 61.912 321.807 58.264V50.392C321.807 46.744 320.912 43.928 319.12 41.944C317.328 39.96 314.832 38.968 311.632 38.968C308.431 38.968 305.935 39.96 304.143 41.944C302.351 43.928 301.456 46.744 301.456 50.392V58.264C301.456 61.912 302.351 64.728 304.143 66.712C305.935 68.696 308.431 69.688 311.632 69.688Z"/>
+      <path d="M368.618 80.248C363.114 80.248 358.314 79.416 354.218 77.752C350.186 76.088 347.146 73.816 345.098 70.936L353.066 63.544C354.986 65.656 357.226 67.32 359.786 68.536C362.41 69.688 365.386 70.264 368.714 70.264C371.53 70.264 373.738 69.848 375.338 69.016C376.938 68.12 377.738 66.776 377.738 64.984C377.738 63.576 377.194 62.616 376.106 62.104C375.018 61.528 373.514 61.08 371.594 60.76L363.626 59.512C361.386 59.192 359.306 58.712 357.386 58.072C355.466 57.368 353.802 56.44 352.394 55.288C350.986 54.136 349.866 52.728 349.034 51.064C348.202 49.4 347.786 47.384 347.786 45.016C347.786 39.832 349.77 35.768 353.738 32.824C357.706 29.88 363.274 28.408 370.442 28.408C375.306 28.408 379.434 29.08 382.826 30.424C386.282 31.704 389.034 33.56 391.082 35.992L383.978 44.056C382.506 42.456 380.618 41.112 378.314 40.024C376.01 38.936 373.226 38.392 369.962 38.392C364.458 38.392 361.706 40.056 361.706 43.384C361.706 44.856 362.25 45.88 363.338 46.456C364.426 46.968 365.93 47.384 367.85 47.704L375.722 48.952C377.962 49.272 380.042 49.784 381.962 50.488C383.882 51.128 385.546 52.024 386.954 53.176C388.426 54.328 389.578 55.736 390.41 57.4C391.242 59.064 391.658 61.08 391.658 63.448C391.658 68.632 389.642 72.728 385.61 75.736C381.642 78.744 375.978 80.248 368.618 80.248Z"/>
+    </g>
+    <g id="swift-mark">
+      <path d="M42.2207 1.43464H0V43.6553V48.9515L47.5168 1.43464H42.2207Z"/>
+      <path d="M47.5098 48.9516H95.0266V1.43483L47.5098 48.9516Z"/>
+      <path d="M0 96.4722L47.5168 48.9554H0V96.4722Z"/>
+      <path d="M95.0266 96.4722V48.9554L47.5098 96.4722H95.0266Z"/>
+    </g>
+    <g id="swift-wordmark">
+      <path d="M438.143 26.465V39.3632H424.181V71.6752C424.181 73.6698 424.181 75.1325 424.314 76.0633C424.314 76.9941 424.712 77.9249 425.244 78.9887C425.776 79.9195 426.574 80.5843 427.638 80.8503C428.702 81.1162 430.297 81.2492 432.425 81.2492C434.685 81.2492 436.547 81.2492 438.143 80.9832V95.3441C433.489 95.7431 429.632 95.876 426.707 95.876C418.463 95.876 412.745 94.5463 409.82 91.6209C406.894 88.6956 405.432 83.1108 405.432 74.8666V39.2302H393.996V26.465H405.432V5.72148H424.181V26.465H438.143Z"/>
+      <path d="M390.821 0.398917V14.2279C386.832 14.095 384.837 13.962 384.571 13.962C381.114 13.962 378.853 14.4939 377.79 15.4247C376.726 16.3555 376.194 18.2171 376.194 21.0095V26.4613H389.624V39.2265H376.327V95.0745H357.445V39.2265H346.275V26.4613H357.445V22.8711C357.445 14.8928 359.174 9.04205 362.897 5.45182C366.487 1.8616 372.471 0 380.981 0C381.912 0 382.975 0.13297 384.039 0.13297C385.103 0.13297 386.433 0.265939 387.762 0.265939C389.092 0.398917 390.023 0.398917 390.821 0.398917Z"/>
+      <path d="M335.909 0.397419V16.354H317.027V0.397419H335.909ZM335.909 26.4598V95.073H317.027V26.4598H335.909Z"/>
+      <path d="M199.037 26.4558H219.116L231.881 73.1288L243.45 26.4558H261.667L273.634 72.8628L286.399 26.4558H305.68L284.006 95.069H264.592L252.359 48.928L240.524 95.069H220.977L199.037 26.4558Z"/>
+      <path d="M189.433 46.4056L171.748 46.5385C171.216 43.0813 170.019 40.5548 167.891 39.2251C165.764 37.7624 162.706 37.0976 158.716 37.0976C155.392 37.0976 152.733 37.6295 150.871 38.8262C149.009 40.0229 148.079 41.7516 148.079 43.8791C148.079 46.2726 149.142 48.0012 151.27 49.065C153.398 49.9958 157.254 51.0596 162.706 52.2563C163.769 52.3893 164.434 52.5223 164.833 52.6552C168.024 53.1871 170.684 53.719 172.545 54.2509C174.407 54.7828 176.8 55.5806 179.46 56.6444C182.252 57.7081 184.38 59.0378 185.843 60.3676C187.438 61.6973 188.768 63.5589 189.832 65.8194C191.028 68.2129 191.56 70.8723 191.56 73.7977C191.56 80.9781 188.768 86.6959 183.183 90.818C177.598 95.0731 170.019 97.0676 160.179 97.0676C150.871 97.0676 143.292 95.0731 137.175 91.0839C131.191 87.0948 128.133 80.9781 128 72.7339H145.951C146.616 80.4462 151.536 84.1694 160.578 84.1694C164.434 84.1694 167.492 83.5046 169.753 81.9089C172.014 80.3133 173.077 78.3187 173.077 75.6593C173.077 73.1328 172.146 71.2712 170.019 70.2074C168.024 69.1437 164.301 68.0799 158.716 66.7502C158.317 66.7502 157.919 66.6172 157.653 66.4842C157.121 66.3513 155.658 66.0853 153.53 65.5534C151.403 65.1545 149.94 64.8886 149.142 64.6226C148.345 64.3567 146.882 63.9578 145.02 63.4259C143.159 62.894 141.696 62.4951 140.765 61.9632C139.967 61.4313 138.771 60.8994 137.308 60.1016C135.845 59.3038 134.782 58.506 133.984 57.5752C133.319 56.7773 132.521 55.7136 131.723 54.5168C130.925 53.3201 130.261 51.9904 129.995 50.3947C129.729 48.932 129.596 47.3364 129.596 45.4748C129.596 38.8262 132.122 33.6403 137.441 29.9171C142.627 26.3269 150.073 24.4653 159.647 24.4653C168.157 24.4653 175.205 26.3269 180.79 29.7842C186.241 33.3744 189.167 38.9592 189.433 46.4056Z"/>
+    </g>
+  </defs>
+</svg>
 
-<div id="progress"></div>
-
-<header class="sticky top-0 z-50 bg-surface/90 backdrop-blur border-b border-line">
-  <div class="mx-auto max-w-content px-6 h-14 flex items-center gap-4">
-    <a href="#top" class="flex items-center gap-2.5">
-      <svg viewBox="0 0 392 87" class="h-4 w-auto text-ink"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
-      <span class="text-line">·</span><span class="text-[13px] font-medium">OneSphere Malaysia — Technical</span>
-    </a>
-    <a href="index.html#top" class="hidden sm:inline-flex items-center gap-1 text-[12.5px] text-mute hover:text-ink transition-colors">
-      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3m0 0l3.5 3.5M3 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      finOS
-    </a>
-    <nav class="ml-auto hidden lg:flex items-center gap-1 text-[13px] text-mute">
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#architecture">Architecture</a>
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#c4">C4</a>
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#flow">RNPL flow</a>
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#deploy">Deployment</a>
-      <a class="px-2.5 py-2 rounded-md hover:text-ink" href="#timeline">Timeline</a>
-      <a class="px-3 py-1.5 ml-1 rounded-md bg-ink text-white" href="#team">Team</a>
-    </nav>
-  </div>
+<header class="sticky top-0 z-50 bg-[#FFFCFA]/80 backdrop-blur-md hair">
+  <div id="progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-accent z-10"></div>
+  <nav class="mx-auto max-w-content px-4 sm:px-6 lg:px-8" aria-label="Paper">
+    <div class="flex h-16 items-center gap-3 sm:gap-5">
+      <a href="./index.html#malaysia" class="flex items-center gap-2 shrink-0 text-ink" aria-label="Back to finOS by Swift">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="text-mute"><path d="M11 7H3m0 0l3.5 3.5M3 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 392 87" class="h-[19px] w-auto" aria-hidden="true" focusable="false"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
+        <span class="hidden sm:inline text-[12px] text-mute-2">by</span>
+        <svg viewBox="0 0 439 98" class="hidden sm:block h-[15px] w-auto" aria-hidden="true" focusable="false"><use href="#swift-mark" fill="#0E71DB"/><use href="#swift-wordmark" fill="currentColor"/></svg>
+      </a>
+      <ul class="hidden xl:flex items-center gap-0.5 ml-auto text-[13px] text-mute"><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#architecture">Architecture</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#c4">C4</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#kernel">Kernel</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#flow">RNPL flow</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#stack">Stack</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#deploy">Deployment</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#timeline">Timeline</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#team">Team</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#effort">Effort</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#risks">Risks</a></li></ul>
+      <div class="switch ml-auto xl:ml-2 flex items-center rounded-full bg-black/[0.04] p-1" role="navigation" aria-label="OneSphere papers">
+        <a href="./onesphere-malaysia-business.html">Business</a>
+        <a href="./onesphere-malaysia-technical.html" aria-current="page">Technical</a>
+      </div>
+      <button id="menuBtn" class="xl:hidden inline-flex items-center rounded-full border border-line bg-white px-3 py-1.5 text-[13px] font-medium" aria-expanded="false" aria-controls="mobileNav">Sections</button>
+    </div>
+    <div id="mobileNav" class="hidden xl:hidden pb-4"><ul class="grid sm:grid-cols-2 gap-0.5 text-[15px]"><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#architecture">Architecture</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#c4">C4</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#kernel">Kernel</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#flow">RNPL flow</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#stack">Stack</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#deploy">Deployment</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#timeline">Timeline</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#team">Team</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#effort">Effort</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#risks">Risks</a></li></ul></div>
+  </nav>
 </header>
 
 <main id="top">
 
-<section class="bg-navy text-white">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-24">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-6">Technical paper · 2026-08-25 · engineering &amp; architecture review</p>
-    <h1 class="text-[30px] lg:text-[44px] leading-[1.08] tracking-tightest font-semibold max-w-[22ch]">OneSphere Malaysia, as an engineering build.</h1>
-    <p class="mt-6 text-[17px] leading-relaxed text-white/70 max-w-[64ch]">The RNPL lending business built on <span class="text-white">finOS</span> — architecture (C4 + kernel), the Malaysia solution topology (Ria, DuitNow, the KPKT pack), the delivery timeline, and the engineering organisation.</p>
-    <p class="mt-6 text-[13.5px] text-white/45 max-w-[70ch]">The platform architecture follows the corridor SNPL design, built for OneSphere first and then reused by the corridors; everything Malaysia-specific — the regulatory pack, the rails, data residency — is called out. The go-live is gated by the KPKT licence, not by engineering.</p>
+<section class="relative pb-16 lg:pb-20">
+  <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+    <div class="frame-lines px-2 sm:px-8 pt-14 sm:pt-20 lg:pt-24 pb-6 text-center reveal">
+      <p class="eyebrow mb-7"><span>Technical paper · revised 22 Nov 2026</span></p>
+      <h1 class="mx-auto max-w-[20ch] text-[38px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-tightest text-ink">OneSphere Malaysia, <span class="text-accent">as an engineering build.</span></h1>
+      <p class="mx-auto mt-7 text-[17px] lg:text-[18.5px] leading-relaxed text-mute max-w-[62ch]">The engineering companion to the business paper: the finOS architecture, the Malaysia solution topology — RNPL, Ria, DuitNow and the KPKT regulatory pack — the delivery timeline and the team. Everything Malaysia-specific is called out.</p>
+    </div>
+    <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center mt-8 reveal">
+      <div class="lg:col-span-7"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tm-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tm-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tm-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><linearGradient id="tm-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="tm-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf5dd"/><stop offset="1" stop-color="#f4ebc9"/></linearGradient><linearGradient id="tm-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8dfc3"/><stop offset="1" stop-color="#ddd2b1"/></linearGradient><linearGradient id="tm-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tm-wall)"/><rect y="250" width="480" height="170" fill="url(#tm-floor)"/><rect y="220" width="480" height="44" fill="url(#tm-hz)"/><path d="M-10 300 C80 250 150 260 230 290 C300 316 360 250 490 270 V420 H-10z" fill="#6fd48f"/><path d="M-10 340 C90 310 200 330 280 350 C360 370 420 330 490 336 V420 H-10z" fill="#0dac65"/><path d="M60 400 C120 350 200 372 250 340 C300 308 340 300 392 262" fill="none" stroke="#fff6dc" stroke-width="12" stroke-linecap="round"/><circle cx="160" cy="356" r="13" fill="url(#tm-ballfa6900)"/><line x1="392" y1="262" x2="392" y2="178" stroke="#7a6a52" stroke-width="4" stroke-linecap="round"/><path d="M394 180 h66 l-14 18 l14 18 h-66z" fill="#e0393e"/><text x="402" y="204" font-size="14" font-weight="700" fill="#fff">MY</text><ellipse cx="114.0" cy="306.0" rx="23.1" ry="12.100000000000001" fill="#5b4a33" opacity="0.28" filter="url(#tm-blur)"/><path d="M88.0 300.0 v-40 a22 11.0 0 0 0 44 0 v40 a22 11.0 0 0 1 -44 0z" fill="url(#tm-cyl1)"/><ellipse cx="110" cy="260" rx="22" ry="11.0" fill="#fec250"/><path d="M270 300 l26 -56 l26 56z" fill="#ff8cc6"/><path d="M296 244 l26 56 h-10z" fill="#d9579c"/><rect width="480" height="420" filter="url(#tm-grain)" pointer-events="none"/></svg></div></div>
+      <figure class="lg:col-span-5 -mt-24 lg:mt-0 lg:-ml-24 mx-3 lg:mx-0 relative rounded-[20px] frost p-6">
+        <figcaption class="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute">The build at a glance</figcaption>
+        <dl class="space-y-3 text-[13.5px]"><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Product</dt><dd class="text-ink text-right">Remit Now Pay Later (RNPL)</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Shape</dt><dd class="text-ink text-right">Modular monolith · one PostgreSQL · ACID</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Deployment</dt><dd class="text-ink text-right">Dedicated · Swift-hosted · Malaysian region</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Rails</dt><dd class="text-ink text-right">Ria (remitter of record) · DuitNow AutoDebit</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Regulatory pack</dt><dd class="text-ink text-right">regpack-malaysia (KPKT)</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Status</dt><dd class="text-ink text-right">Phase 0 not started · pilot-ready ≈ month 8</dd></div></dl>
+        <p class="mt-5 pt-4 border-t border-black/10 text-[12.5px] leading-relaxed text-mute">Built by Swift's in-house engineering. Sizing figures predate D13–D15 and carry a re-estimate note (Q68).</p>
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- Architecture -->
-<section id="architecture" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">1 · Architecture overview</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">finOS — the platform stack</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">finOS is a standalone lending platform. OneSphere Malaysia is a client configuration of the RNPL product, which runs on the finOS lending core and its supporting components — <span class="text-ink">both following the corridor SNPL design, built for OneSphere first and then reused by the corridors</span>, not a Malaysia-only fork.</p>
-    <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
-    S["Client configuration — OneSphere Malaysia&lt;br/&gt;Malaysia/KPKT pack · Ria · DuitNow · MYR · data residency"]
-    P["Product — RNPL (Remit-Now-Pay-Later)&lt;br/&gt;the same design as corridor SNPL"]
-    D["Lending core — finOS&lt;br/&gt;credit kernel · decisioning · servicing · payments · collections · regulatory packs"]
-    E["Supporting components — finOS&lt;br/&gt;identity · documents · notifications · integration · borrower + admin UI · AI/ML"]
-    S --&gt; P --&gt; D --&gt; E</pre></div>
+<section id="architecture" class="chapter chapter-paper ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>1 · Architecture overview</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">finOS — <span class="tone">the platform stack.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">finOS is a standalone lending platform. OneSphere Malaysia is a client configuration of the RNPL product, which runs on the finOS lending core and its supporting components.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-7"><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart TB
+    S["&lt;b&gt;Client configuration&lt;/b&gt; — OneSphere Malaysia&lt;br/&gt;Malaysia/KPKT pack · Ria · DuitNow · MYR · data residency"]
+    P["&lt;b&gt;Product&lt;/b&gt; — RNPL (Remit-Now-Pay-Later)&lt;br/&gt;the same design as corridor SNPL"]
+    D["&lt;b&gt;Lending core&lt;/b&gt; — finOS&lt;br/&gt;credit kernel · decisioning · servicing · payments · collections · regulatory packs"]
+    E["&lt;b&gt;Supporting components&lt;/b&gt; — finOS&lt;br/&gt;identity · documents · notifications · integration · borrower + admin UI · AI/ML"]
+    S --&gt; P --&gt; D --&gt; E</pre></div></figure></div>
+      <div class="lg:col-span-5 reveal text-[15px] leading-relaxed text-mute space-y-4">
+        <p><b>The lending core:</b> the credit kernel, decisioning, the servicing ledger, payments, collections, covenants, and the swappable regulatory packs. <b>The supporting components:</b> identity &amp; access, document management, notifications, enterprise integration, process &amp; task management, the borrower and admin UI, and the AI/ML framework. Both are part of finOS and follow the corridor SNPL design — built for OneSphere first and then reused by the corridors, not a Malaysia-only fork.</p>
+      </div>
+    </div></div>
   </div>
 </section>
-
-<!-- C4 -->
-<section id="c4" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">2 · C4 views</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Context, container, and the credit kernel</h2>
-
-    <h3 class="mt-8 text-[15px] font-semibold tracking-tighter">2.1 · Context — who the system talks to</h3>
-    <div class="mt-3 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
+<section id="c4" class="chapter chapter-blue ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>2 · C4 views</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Context, container, <span class="tone">and the components inside the core.</span></h2>
+      
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="space-y-10">
+      <div><h3 class="text-[18px] font-semibold tracking-tighter mb-4">2.1 · Context — who and what the system talks to</h3><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart TB
     B["Migrant borrower&lt;br/&gt;(Nepali work-permit holder)"]
     OP["OneSphere operator&lt;br/&gt;(ops · risk · compliance)"]
     SYS(["OneSphere Malaysia lending system&lt;br/&gt;finOS"])
     RIA["Ria&lt;br/&gt;(remittance · remitter of record)"]
     RAIL["DuitNow AutoDebit&lt;br/&gt;(repayment rail)"]
-    KYC["eKYC · AML · OCR providers"]
+    KYC["eKYC · AML · OCR&lt;br/&gt;providers"]
     LOR["OneSphere — lender of record&lt;br/&gt;(KPKT-licensed moneylender · loan book)"]
     KPKT["KPKT&lt;br/&gt;(Registrar of Moneylenders)"]
-    BNM["BNM&lt;br/&gt;(MSB / PDPA interest)"]
+    BNM["BNM&lt;br/&gt;(MSB boundary)"]
+    PDP["PDP Commissioner&lt;br/&gt;(PDPA)"]
+
     B --&gt; SYS
     OP --&gt; SYS
     SYS &lt;--&gt; RIA
@@ -128,10 +273,9 @@
     SYS &lt;--&gt; KYC
     SYS --&gt; LOR
     SYS -. reporting .-&gt; KPKT
-    SYS -. MSB boundary .-&gt; BNM</pre></div>
-
-    <h3 class="mt-8 text-[15px] font-semibold tracking-tighter">2.2 · Container — the deployment shape</h3>
-    <div class="mt-3 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
+    SYS -. MSB boundary .-&gt; BNM
+    SYS -. data protection .-&gt; PDP</pre></div></figure></div>
+      <div><h3 class="text-[18px] font-semibold tracking-tighter mb-4">2.2 · Container — the deployment shape</h3><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart TB
     GW["API Gateway&lt;br/&gt;mTLS · rate-limit · idempotency"]
     subgraph core["lending-core — modular monolith (one JVM, one DB, ACID)"]
       K["kernel"]
@@ -146,30 +290,72 @@
     end
     subgraph ext["Extracted deployables"]
       DEC["decisioning-service&lt;br/&gt;RemitScore · p95 &amp;lt; 2s"]
-      DOC["doc-renderer"]
+      DOC["doc-renderer&lt;br/&gt;(Gotenberg)"]
       CN["connector-hub"]
       RPT["reporting-ETL"]
     end
-    RE["ria-edge"]
-    DE["duitnow-edge"]
-    PG[("PostgreSQL 16")]
-    KA[("Kafka (optional)")]
+    subgraph edge["Edge adapters"]
+      RE["ria-edge"]
+      DE["duitnow-edge"]
+    end
+    subgraph data["Data (in-Malaysia)"]
+      PG[("PostgreSQL 16")]
+      KA[("Kafka (optional)")]
+      OBJ[("S3 object store&lt;br/&gt;SeaweedFS bundled")]
+    end
+
     GW --&gt; API
+    API --&gt; K
     OR --&gt; K
     CR --&gt; K
+    PR --&gt; K
     PA --&gt; CR
     CR --&gt; AC
+    CO --&gt; K
     RP --&gt; K
     API --&gt; DEC
     DEC --&gt; CN
+    core --&gt; DOC
+    core --&gt;|outbox| KA
     RE &lt;--&gt; API
     DE &lt;--&gt; API
     core --&gt; PG
-    core --&gt;|outbox| KA</pre></div>
-
-    <h3 class="mt-8 text-[15px] font-semibold tracking-tighter">2.3 · The credit kernel &amp; one ledger</h3>
-    <p class="mt-2 text-[14px] leading-relaxed text-mute max-w-[70ch]">A single transactional boundary — one PostgreSQL, ACID. A balance is only ever the sum of <span class="font-mono text-[12.5px]">credit_operation</span> entries (D4). Rails interact via SAGA at the edge, never inside the kernel. This is what makes the 18% cap enforceable and every decision replayable.</p>
-    <div class="mt-3 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart LR
+    RPT --&gt; PG
+    DOC --&gt; OBJ</pre></div><p class="mt-3 text-[12px] text-mute-2 text-center">One modular monolith with one database and ACID transactions; four extracted deployables; two edge adapters.</p></figure></div>
+      <div><h3 class="text-[18px] font-semibold tracking-tighter mb-4">2.3 · Component — inside lending-core</h3><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart LR
+    subgraph kernel["platform-kernel (shared machinery)"]
+      ER["Entity Runtime"]
+      SM["State-Machine Runtime"]
+      EX["Expression Runtime (GraalVM)"]
+      PRG["Policy Registry (versioned)"]
+      WQ["Work Queue (D7)"]
+      SCH["Scheduler"]
+      AUD["Audit trio&lt;br/&gt;history · activity · exception"]
+      OBX["Outbox"]
+      GRD["Guardrail Service (D10)"]
+      IDM["Idempotency"]
+    end
+    subgraph credit["platform-credit (the ledger)"]
+      CAG["Credit aggregate"]
+      OPF["Operation Framework"]
+      CALC["Calculation Pipeline"]
+      ACC["Accrual / Schedule engines"]
+    end
+    domain["origination · products · payments · collections · comms"]
+    domain --&gt; kernel
+    credit --&gt; kernel
+    GRD -. clamps every offer/decision .-&gt; credit</pre></div></figure></div>
+    </div></div>
+  </div>
+</section>
+<section id="kernel" class="chapter chapter-ube ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>3 · The credit kernel</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">One transactional boundary, <span class="tone">one ledger.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">The correctness core is a <b>single transactional boundary</b> — one PostgreSQL, ACID. A balance is only ever the sum of <span class="code">credit_operation</span> entries against it (decision <b>D4</b>); there is no "update balance". External rails and partners interact through <b>SAGA at the edges only</b> — never inside the kernel.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart LR
     subgraph ACID["Single transactional boundary — one PostgreSQL, ACID"]
       OPS["credit_operation&lt;br/&gt;(deterministic order · EOD-aware)"]
       BAL["obligation balances"]
@@ -177,309 +363,315 @@
       ALLOC["payment allocation (waterfall)"]
       AUDT["audit trio (append-only, hash-chained)"]
     end
-    RAIL["Ria · DuitNow rails"] -. SAGA at edge .-&gt; ALLOC
+    RIA["Ria · DuitNow rails"] -. SAGA at edge .-&gt; ALLOC
     SCHD --&gt; OPS
     ALLOC --&gt; OPS
     OPS --&gt; BAL
-    OPS --&gt; AUDT</pre></div>
+    OPS --&gt; AUDT</pre></div></figure>
+    <div class="mt-6 max-w-[48rem]">
+      <div class="reveal card p-7">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-3">Why it matters for the licence</p>
+        <p class="text-[15px] leading-relaxed text-mute">This is what makes the KPKT licence defensible: the <b>18% cap, the no-compounding rule and the fee prohibition are enforced by the Guardrail Service outside policy scripts</b>, and any decision or balance <b>replays exactly from stored inputs</b>, years later.</p>
+      </div>
+    </div></div>
   </div>
 </section>
-
-<!-- RNPL flow -->
-<section id="flow" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">3 · Solution topology</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">The RNPL request, end to end</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">The remittance is disbursed by <span class="text-ink">Ria as remitter of record</span> (keeping OneSphere out of money transmission); repayment lands via <span class="text-ink">DuitNow AutoDebit</span> as a <span class="font-mono text-[12.5px]">PAYMENT</span> operation allocated by the servicing waterfall.</p>
-    <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">sequenceDiagram
+<section id="flow" class="chapter chapter-lime ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>4 · Solution topology</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">The RNPL request, <span class="tone">end to end.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">A single RNPL request, end-to-end. The remittance is disbursed by <b>Ria as remitter of record</b> (keeping OneSphere out of money transmission); repayment is collected by <b>DuitNow AutoDebit</b> and lands as a <span class="code">PAYMENT</span> operation allocated by the servicing waterfall.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><figure class="reveal "><div class="diagram"><pre class="mermaid">sequenceDiagram
     autonumber
     participant B as Borrower
-    participant P as OneSphere app
+    participant P as OneSphere app / portal
     participant G as API Gateway
     participant L as lending-core
-    participant D as decisioning
+    participant D as decisioning (RemitScore)
     participant C as connector-hub
-    participant R as Ria (remitter)
-    participant N as DuitNow
-    B->>P: Request RNPL (amount, remittance)
-    P->>G: POST /api/v1/applications (idempotent)
-    G->>L: create application
-    L->>D: decide (remittance signal + features)
-    D->>C: eKYC · AML · remittance history
-    C-->>D: results
-    D-->>L: decision + offer (clamped ≤ 18% p.a.)
-    L-->>P: offer + schedule (Key Facts, s.16)
-    B->>P: Accept (attestation per s.27)
-    P->>L: accept offer
-    L->>R: disburse remittance (Ria = remitter of record)
-    L->>L: book loan — DISBURSEMENT operation (D4)
-    N-->>L: DuitNow auto-debit → PAYMENT (waterfall)
-    L-->>P: receipt · balances (replayable)</pre></div>
-    <div class="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[12.5px]">
-      <div class="rounded-lg border border-line bg-surface p-3"><span class="font-medium">Regulatory pack</span><br><span class="text-mute">regpack-malaysia (KPKT) — 18% cap, s.23, s.27, citizenship</span></div>
-      <div class="rounded-lg border border-line bg-surface p-3"><span class="font-medium">Rails</span><br><span class="text-mute">ria-edge (disbursement) · duitnow-edge (repayment)</span></div>
-      <div class="rounded-lg border border-line bg-surface p-3"><span class="font-medium">Currency</span><br><span class="text-mute">loan MYR · remittance NPR (FX at the edge)</span></div>
-      <div class="rounded-lg border border-line bg-surface p-3"><span class="font-medium">Data residency</span><br><span class="text-mute">data plane in Malaysia (PDPA)</span></div>
-    </div>
+    participant R as Ria (remitter of record)
+    participant N as DuitNow (repayment)
+
+    B-&gt;&gt;P: Request RNPL (amount, remittance to Nepal)
+    P-&gt;&gt;G: POST /api/v1/applications (idempotent)
+    G-&gt;&gt;L: create application
+    L-&gt;&gt;D: decide (remittance signal + features)
+    D-&gt;&gt;C: eKYC · AML · remittance history
+    C--&gt;&gt;D: results
+    D--&gt;&gt;L: decision + offer (guardrail-clamped ≤ 18% p.a.)
+    L--&gt;&gt;P: offer + schedule (Key Facts, s.16)
+    B-&gt;&gt;P: Accept (attestation per s.27)
+    P-&gt;&gt;L: accept offer
+    L-&gt;&gt;R: disburse remittance (Ria = remitter of record)
+    L-&gt;&gt;L: book loan — DISBURSEMENT operation (D4)
+    N--&gt;&gt;L: DuitNow auto-debit → PAYMENT operation (waterfall)
+    L--&gt;&gt;P: receipt · updated balances (replayable)</pre></div></figure>
+    <h3 class="mt-10 mb-4 text-[16px] font-semibold tracking-tighter reveal">Malaysia-specific bindings</h3>
+    <div class="grid sm:grid-cols-2 gap-3 reveal"><div class="card p-5 text-[13.5px] leading-relaxed text-mute"><b>Regulatory pack:</b> <span class="code">regpack-malaysia</span> (KPKT) — the 18% cap, s.23 fee prohibition, s.27 attestation gate, and the citizenship guardrail, all enforced outside policy scripts.</div><div class="card p-5 text-[13.5px] leading-relaxed text-mute"><b>Rails:</b> <span class="code">ria-edge</span> (remittance disbursement) + <span class="code">duitnow-edge</span> (repayment). No connectIPS/NCHL.</div><div class="card p-5 text-[13.5px] leading-relaxed text-mute"><b>Currency:</b> loan in MYR; remittance value in NPR (FX handled at the Ria edge, not in the ledger).</div><div class="card p-5 text-[13.5px] leading-relaxed text-mute"><b>Data residency:</b> the data plane is hosted <b>in Malaysia</b> for PDPA; Kathmandu engineers work against anonymised/masked non-production data.</div></div></div>
   </div>
 </section>
-
-<!-- Stack + Deployment -->
-<section id="deploy" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">4 · Stack &amp; deployment</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Runtime, topology, and the event bus</h2>
-
-    <div class="mt-6 grid lg:grid-cols-2 gap-6">
-      <div class="rounded-xl border border-line bg-surface overflow-hidden">
-        <div class="px-4 py-3 border-b border-line text-[13px] font-semibold">Technology stack</div>
-        <table class="tbl">
-          <tbody>
-            <tr><td class="font-medium">Runtime</td><td class="text-mute">Java 21 · Spring Boot 3.3+ · virtual threads</td></tr>
-            <tr><td class="font-medium">Database</td><td class="text-mute">PostgreSQL 16 — OLTP + reporting replica; Flyway</td></tr>
-            <tr><td class="font-medium">Eventing</td><td class="text-mute">Outbox; webhooks by default, Kafka when needed</td></tr>
-            <tr><td class="font-medium">Expression</td><td class="text-mute">GraalVM 24 — sandboxed, budgeted, no I/O</td></tr>
-            <tr><td class="font-medium">Frontend</td><td class="text-mute">React 19 + Vite (admin, portal) · Tailwind 4</td></tr>
-            <tr><td class="font-medium">Identity</td><td class="text-mute">Keycloak 25 (OIDC/SAML) + policy RBAC</td></tr>
-            <tr><td class="font-medium">Observability</td><td class="text-mute">OpenTelemetry → Prometheus · Loki · Tempo</td></tr>
-            <tr><td class="font-medium">CI/CD</td><td class="text-mute">Harbor · Argo CD (GitOps) · Argo Rollouts (canary)</td></tr>
-            <tr><td class="font-medium">Testing</td><td class="text-mute">jqwik (financial invariants) · ArchUnit · Playwright</td></tr>
-            <tr><td class="font-medium">Orchestration</td><td class="text-mute">Kubernetes 1.28 · CloudNativePG · Helm · Terraform</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart TB
-    subgraph edge_ns["edge (DMZ)"]
-      GW["api-gateway"]
-      RE["ria-edge"]
-      DE["duitnow-edge"]
+<section id="stack" class="chapter chapter-paper ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>5 · Technology stack</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Inherited from the platform, <span class="tone">aligned to the accepted ADRs.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">Versions follow <span class="code">architecture/18-engineering-stack.md</span>; component choices follow the accepted decisions in <span class="code">deliverables/technology-decisions.md</span>.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="card overflow-hidden reveal"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:22%">Layer</th><th>Choice</th></tr></thead><tbody><tr><td>Runtime</td><td><b>Java 21 LTS</b> (Temurin) · <b>Spring Boot 3.3+</b> · Spring Cloud 2023.0+ · virtual threads for connector fan-out</td></tr><tr><td>Database</td><td><b>PostgreSQL 16+</b> — one OLTP primary + sync standby + async reporting replica (D8); monthly-partitioned operation tables; Flyway migrations</td></tr><tr><td>Cache / locks</td><td>PostgreSQL first (ShedLock for batch coordination); <b>Valkey 8</b> added only when load requires it</td></tr><tr><td>Eventing</td><td>Transactional outbox; signed webhooks by default, <b>Kafka (KRaft)</b> when volume or integrations require it</td></tr><tr><td>Expression runtime</td><td><b>GraalVM 24</b> — one sandbox, scoped bindings (decision / feature / pricing / metric), CPU + wall-clock budgets, no I/O</td></tr><tr><td>Frontend</td><td><b>React 19 + TypeScript + Vite</b> (admin SPA and borrower portal — static bundles, no Node server; ADR-17) · <b>Tailwind 4</b> · shared <span class="code">@finos/ui</span></td></tr><tr><td>Mobile</td><td><b>React Native (Expo)</b> sharing the TypeScript SDK (ADR-27) — only if a white-label borrower app is in OS-R1 (open)</td></tr><tr><td>Documents</td><td><b>Gotenberg</b> (pinned Chromium, ADR-25) — deterministic PDF; OTP click-wrap acceptance evidence</td></tr><tr><td>Object storage</td><td>S3 API — <b>SeaweedFS</b> bundled by default, any S3 store accepted (ADR-26)</td></tr><tr><td>Identity</td><td><b>Keycloak 25+</b> (OIDC/SAML federation) + platform RBAC in the policy registry</td></tr><tr><td>Observability</td><td><b>OpenTelemetry</b> → Prometheus · Loki · Tempo; RED/USE; structured JSON logs</td></tr><tr><td>CI/CD</td><td>GitLab CI / Jenkins · Harbor (image scan + signature) · <b>Argo CD</b> (GitOps) · <b>Argo Rollouts</b> (canary for decisioning)</td></tr><tr><td>Testing</td><td>JUnit 5 · <b>Testcontainers</b> · <b>jqwik</b> (property-based financial invariants) · <b>ArchUnit</b> (module boundaries) · Playwright (E2E)</td></tr><tr><td>Orchestration</td><td><b>Kubernetes 1.28+</b> · CloudNativePG · Strimzi (only when Kafka is enabled) · <b>Helm</b> umbrella + subcharts · Terraform IaC</td></tr></tbody></table></div></div></div>
+  </div>
+</section>
+<section id="deploy" class="chapter chapter-blue ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>6 · Deployment &amp; runtime</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">A dedicated deployment, <span class="tone">hosted by Swift in Malaysia.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">OneSphere runs as a <b>dedicated finOS deployment, hosted by Swift on Kubernetes in a Malaysian region</b> (ADR-24). The code is multi-tenant-ready from day one (<span class="code">tenant_id</span> + row-level security), but OneSphere shares its deployment with no other lender. Default-deny between namespaces; only <span class="code">integration</span> has internet egress (per-provider allow-list); the data plane is hosted <b>in Malaysia</b> for PDPA.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="space-y-10">
+      <div><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart TB
+    subgraph edge_ns["namespace: edge (DMZ)"]
+      GW["api-gateway (2)"]
+      RE["ria-edge (2)"]
+      DE["duitnow-edge (2)"]
     end
-    subgraph core_ns["core (OLTP)"]
+    subgraph core_ns["namespace: core (OLTP)"]
       LC["lending-core (6)"]
-      FE["portal (2)"]
+      FE["frontends — portal (2)"]
     end
-    subgraph comp_ns["compute"]
-      DEC["decisioning (HPA)"]
-      BW["batch-workers"]
+    subgraph comp_ns["namespace: compute"]
+      DEC["decisioning (HPA 8–24)"]
+      DOC["doc-renderer — Gotenberg (4–10)"]
+      BW["batch-workers (2–10)"]
     end
-    subgraph int_ns["integration (egress)"]
-      CH["connector-hub"]
+    subgraph int_ns["namespace: integration (egress only)"]
+      CH["connector-hub (3–8)"]
     end
-    subgraph data_ns["data — in-Malaysia (PDPA)"]
+    subgraph data_ns["namespace: data — in-Malaysia (PDPA)"]
       PG[("PostgreSQL")]
       KA[("Kafka (optional)")]
+      OBJ[("object store (S3 API)")]
     end
+    subgraph ops_ns["namespace: platform-ops"]
+      OTEL["Prometheus · Loki · Tempo"]
+    end
+
     GW --&gt; LC
     RE &lt;--&gt; LC
     DE &lt;--&gt; LC
+    FE --&gt; GW
     LC --&gt; DEC
     LC --&gt; PG
-    LC --&gt; KA
+    LC -. when enabled .-&gt; KA
     DEC --&gt; CH
-    KA --&gt; BW</pre></div>
-        <p class="mt-2 text-[11.5px] text-mute-2 text-center">Kubernetes topology · default-deny between namespaces · only integration has egress</p>
-      </div>
-    </div>
-
-    <div class="mt-6 grid lg:grid-cols-[1fr_1.1fr] gap-6 items-start">
-      <div class="rounded-xl border border-line bg-surface p-5 overflow-x-auto"><pre class="mermaid">flowchart LR
+    BW --&gt; PG</pre></div><p class="mt-3 text-[12px] text-mute-2 text-center">Kubernetes topology · default-deny between namespaces · only integration has egress · replica counts in brackets</p></figure></div>
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-12 reveal">
+          <h3 class="text-[18px] font-semibold tracking-tighter">6.2 · Event bus &amp; the transactional outbox</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[72ch]"><span class="code">lending-core</span> writes domain events to an <span class="code">outbox_event</span> table in the <b>same transaction</b> as the state change; a publisher drains it to signed webhooks by default or, where enabled, Kafka (ADR-10), keyed by aggregate id for ordering. Nothing is lost, nothing double-posts. Batch work (accrual, past-due, reports) is scheduled from PostgreSQL (ShedLock), so it never depends on the bus.</p>
+          <div class="mt-5"><figure class="reveal "><div class="diagram"><pre class="mermaid">flowchart LR
     LC["lending-core"] --&gt;|commit| OB[("outbox_event")]
-    OB --&gt;|publisher| K[("events · lending.*")]
-    K --&gt; BW["batch-workers&lt;br/&gt;accrual · past-due · reports"]
-    K --&gt; RPT["reporting-ETL"]
-    K --&gt; CM["comms"]
-    CH["connector-hub"] --&gt;|callbacks| K</pre></div>
-      <div class="rounded-xl border border-line bg-surface overflow-hidden">
-        <div class="px-4 py-3 border-b border-line text-[13px] font-semibold">Environments</div>
-        <table class="tbl">
-          <tbody>
-            <tr><td class="font-medium">T1 developer</td><td class="text-mute"><span class="font-mono text-[11.5px]">docker compose up</span> — first demo loan &lt; 30 min</td></tr>
-            <tr><td class="font-medium">T2 production</td><td class="text-mute">Kubernetes, Malaysia-hosted (PDPA) — OneSphere prod</td></tr>
-            <tr><td class="font-medium">T3 cloud</td><td class="text-mute">managed K8s + cloud data — scale-up</td></tr>
-            <tr><td class="font-medium">T4 restricted</td><td class="text-mute">firewalled/air-gapped, embedded data</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="mt-6 rounded-xl border border-line bg-surface p-5">
-      <p class="text-[13px] font-semibold">Regulatory-pack architecture</p>
-      <p class="mt-2 text-[13.5px] leading-relaxed text-mute max-w-[80ch]">The core stays market-agnostic; jurisdiction rules live in versioned packs. <span class="font-mono text-[12px]">regpack-malaysia</span> sits alongside the planned NRB/SEBON/FCA packs — a new pack, not a fork. Guardrails run in a <span class="font-mono text-[12px]">Guardrail</span> SPI <span class="text-ink font-medium">outside</span> policy scripts (D10): the <span class="text-ink font-medium">18% cap</span> as a hard rate-ceiling clamp, the <span class="text-ink font-medium">s.23 fee prohibition</span> in the product schema, the <span class="text-ink font-medium">s.27 attestation</span> as a required, audited condition before disbursement, and the citizenship rule as a keyed prohibition.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Timeline -->
-<section id="timeline" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">5 · Delivery timeline</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Gated by the licence, not by engineering</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">Engineering can be pilot-ready around M8; the live date waits on full KPKT online approval. The conventional licence is issued (20 Nov 2026); what remains is conditional → build + MYNIC → full.</p>
-    <div class="mt-6 rounded-xl border border-line bg-surface p-5 overflow-x-auto">
-      <p class="text-[13px] font-semibold mb-3">OneSphere Malaysia RNPL — delivery <span class="text-mute-2 font-normal">· T0 = build start (Oct 2026)</span></p>
-      <div class="min-w-[720px]">
-        <div class="grow"><div></div><div class="grid text-[9.5px] text-mute-2" style="grid-template-columns:repeat(13,1fr);">
-          <div class="text-center">Oct'26</div><div class="text-center">Nov</div><div class="text-center">Dec</div><div class="text-center">Jan'27</div><div class="text-center">Feb</div><div class="text-center">Mar</div><div class="text-center">Apr</div><div class="text-center">May</div><div class="text-center">Jun</div><div class="text-center">Jul</div><div class="text-center">Aug</div><div class="text-center">Sep</div><div class="text-center">Oct'27</div>
-        </div></div>
-
-        <div class="gsec">Build</div>
-        <div class="grow"><div class="glabel">Phase 0 — Foundations</div><div class="gtrack"><div class="gbar bg-accent" style="left:0%;width:15.38%"></div></div></div>
-        <div class="grow"><div class="glabel">Phase 1 — RNPL build on finOS</div><div class="gtrack"><div class="gbar bg-accent" style="left:15.38%;width:46.15%"></div></div></div>
-        <div class="grow"><div class="glabel">Pilot — RNPL-first</div><div class="gtrack"><div class="gbar bg-accent" style="left:61.54%;width:30.77%"></div></div></div>
-
-        <div class="gsec">Licence track · critical path</div>
-        <div class="grow"><div class="glabel">Conventional licence issued ✓</div><div class="gtrack"><div class="gbar" style="left:0%;width:13.46%;background:#12704A"></div></div></div>
-        <div class="grow"><div class="glabel">Conditional online approval</div><div class="gtrack"><div class="gbar" style="left:13.46%;width:23.08%;background:#9A6510"></div></div></div>
-        <div class="grow"><div class="glabel">Build + MYNIC + full approval</div><div class="gtrack"><div class="gbar" style="left:36.54%;width:30.77%;background:#9A6510"></div></div></div>
-
-        <div class="gsec">Externals</div>
-        <div class="grow"><div class="glabel">Ria integration</div><div class="gtrack"><div class="gbar" style="left:7.69%;width:38.46%;background:#8B94A6"></div></div></div>
-        <div class="grow"><div class="glabel">Data residency (Malaysia)</div><div class="gtrack"><div class="gbar" style="left:3.85%;width:19.23%;background:#8B94A6"></div></div></div>
-
-        <div class="gsec">Gates</div>
-        <div class="grow"><div class="glabel">OS-G0 · four questions answered</div><div class="gtrack"><div class="gdiamond" style="left:15.38%;background:#001133"></div></div></div>
-        <div class="grow"><div class="glabel">OS-G1 · full approval + pilot-ready</div><div class="gtrack"><div class="gdiamond" style="left:92.3%;background:#0E71DB"></div></div></div>
-      </div>
-      <div class="mt-4 flex flex-wrap gap-4 text-[11px] text-mute-2">
-        <span class="flex items-center gap-1.5"><span class="w-3.5 h-2 rounded-sm bg-accent"></span>Build</span>
-        <span class="flex items-center gap-1.5"><span class="w-3.5 h-2 rounded-sm" style="background:#9A6510"></span>Licence (critical path)</span>
-        <span class="flex items-center gap-1.5"><span class="w-3.5 h-2 rounded-sm" style="background:#8B94A6"></span>Externals</span>
-        <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rotate-45" style="background:#001133"></span>Gate</span>
-      </div>
-    </div>
-    <div class="mt-6 rounded-xl border border-line bg-surface overflow-hidden">
-      <table class="tbl">
-        <thead><tr><th class="w-[18%]">Phase</th><th>Scope</th><th class="w-[26%]">Exit gate</th></tr></thead>
-        <tbody>
-          <tr><td class="font-medium">0 · Resolve &amp; foundations<br><span class="text-mute-2 font-normal">8 wk</span></td><td class="text-mute">Close the four make-or-break questions in writing; solution-design RNPL; stand up the platform (reuse) + regpack-malaysia v0; prove the guardrail blocks an over-cap loan.</td><td class="text-mute"><b>OS-G0</b> — questions answered; Malaysia guardrail proven; go/no-go on the migrant segment.</td></tr>
-          <tr><td class="font-medium">1 · RNPL build on finOS<br><span class="text-mute-2 font-normal">24 wk</span></td><td class="text-mute">RNPL product config; RemitScore v1 (replayable); regpack-malaysia v1; ria-edge + duitnow-edge; portal; native accounting (the OS-R1 books slice, mode A — Q67); documented KPKT journey + security certificate.</td><td class="text-mute">conditional → <b>full</b> KPKT online approval; pilot-ready.</td></tr>
-          <tr><td class="font-medium">Pilot · RNPL-first<br><span class="text-mute-2 font-normal">16 wk</span></td><td class="text-mute">Bounded cohort; test the remittance-signal thesis; explicit stop criteria (loss appetite, DPD ceiling, scorecard floor, kill switch).</td><td class="text-mute"><b>OS-G1</b> — thesis validated on real repayment, or stopped cleanly.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Team -->
-<section id="team" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">6 · Engineering organisation</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">A solution build plus a Malaysia pod</h2>
-    <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">RNPL follows the corridor SNPL design, which is designed but not yet built — OneSphere builds it first and the corridors reuse it. The plan sizes this as a solution build plus a Malaysia pod. Two hires are non-negotiable from day zero: a credit-operations domain expert and a Malaysia regulatory lead.</p>
-
-    <div class="mt-6 space-y-6">
-      <div class="rounded-xl border border-line bg-surface p-6">
-        <div class="flex justify-center gap-3 mb-5">
-          <div class="rounded-lg border border-accent/40 bg-accent-soft px-5 py-2 text-center text-[13px] font-semibold">Chief architect</div>
-          <div class="rounded-lg border border-accent/40 bg-accent-soft px-5 py-2 text-center text-[13px] font-semibold">Product manager</div>
+    OB --&gt;|publisher| WH["signed webhooks&lt;br/&gt;(default)"]
+    OB -. when enabled .-&gt; K[("Kafka · lending.*")]
+    WH --&gt; CM["comms"]
+    WH --&gt; RPT["reporting-ETL"]
+    K -.-&gt; RPT
+    CH["connector-hub"] --&gt;|callbacks| LC
+    SCH["scheduler (ShedLock)"] --&gt; BW["batch-workers&lt;br/&gt;(accrual · past-due · reports)"]</pre></div></figure></div>
         </div>
-        <div class="grid md:grid-cols-3 gap-5">
-          <div>
-            <p class="gsec text-center">Build squads</p>
-            <div class="mt-2 space-y-2">
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Kernel &amp; Servicing</p><p class="text-[11px] text-mute-2">platform reuse + config</p></div>
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Decisioning &amp; Policy</p><p class="text-[11px] text-mute-2">RemitScore</p></div>
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Experience</p><p class="text-[11px] text-mute-2">portal + admin</p></div>
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Rails &amp; Connectors</p><p class="text-[11px] text-mute-2">Ria · DuitNow · KYC</p></div>
-            </div>
-          </div>
-          <div>
-            <p class="gsec text-center">Assurance</p>
-            <div class="mt-2 space-y-2">
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Regulatory &amp; Domain</p><p class="text-[11px] text-mute-2">regpack-malaysia + counsel</p></div>
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">QA automation</p></div>
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Platform / SRE</p><p class="text-[11px] text-mute-2">Malaysia hosting · PDPA</p></div>
-            </div>
-          </div>
-          <div>
-            <p class="gsec text-center">Delivery &amp; domain</p>
-            <div class="mt-2 space-y-2">
-              <div class="rounded-lg border border-line bg-surface-2 px-3 py-2"><p class="text-[12.5px] font-medium">Program &amp; Implementation</p><p class="text-[11px] text-mute-2">KPKT liaison · Ria</p></div>
-              <div class="rounded-lg border border-signal-amber/30 bg-signal-amberbg px-3 py-2"><p class="text-[12.5px] font-medium">Credit-ops domain expert</p><p class="text-[11px] text-signal-amber">non-negotiable · day zero</p></div>
-              <div class="rounded-lg border border-signal-amber/30 bg-signal-amberbg px-3 py-2"><p class="text-[12.5px] font-medium">Malaysia regulatory lead</p><p class="text-[11px] text-signal-amber">non-negotiable · day zero</p></div>
-            </div>
-          </div>
+        <div class="lg:col-span-8 reveal">
+          <h3 class="text-[18px] font-semibold tracking-tighter">6.3 · Environments</h3>
+          <div class="card overflow-hidden mt-4"><div class="scroll-x"><table class="tbl"><thead><tr><th>Tier</th><th>Shape</th><th>Use</th></tr></thead><tbody><tr><td><b>T1 — developer</b></td><td><span class="code">docker compose up</span>, one replica each</td><td>laptop; first demo loan in &lt; 30 min</td></tr><tr><td><b>T2 — production (in-country)</b></td><td>Kubernetes, 3–6 core replicas, decisioning autoscaled</td><td>OneSphere Malaysia production (Malaysia-hosted, PDPA)</td></tr><tr><td><b>T3 — cloud</b></td><td>managed K8s + cloud-native data</td><td>high-volume scale-up</td></tr><tr><td><b>T4 — restricted</b></td><td>firewalled / air-gapped, embedded data services</td><td>compliance sandbox</td></tr></tbody></table></div></div>
         </div>
       </div>
-      <div class="rounded-xl border border-line bg-surface overflow-hidden">
-        <div class="px-4 py-3 border-b border-line text-[13px] font-semibold">Headcount by phase <span class="text-mute-2 font-normal">(assuming platform reuse)</span></div>
-        <table class="tbl">
-          <thead><tr><th>Role</th><th class="text-right">P0</th><th class="text-right">P1</th><th class="text-right">Pilot</th></tr></thead>
-          <tbody class="[&_td:not(:first-child)]:text-right [&_td:not(:first-child)]:tnum">
-            <tr><td>Chief architect</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>Kernel &amp; Servicing</td><td>2</td><td>3</td><td>2</td></tr>
-            <tr><td>Decisioning &amp; Policy</td><td>1</td><td>3</td><td>2</td></tr>
-            <tr><td>Experience</td><td>1</td><td>3</td><td>2</td></tr>
-            <tr><td>Rails &amp; Connectors</td><td>1</td><td>3</td><td>2</td></tr>
-            <tr><td>Regulatory &amp; Domain</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>QA automation</td><td>—</td><td>2</td><td>2</td></tr>
-            <tr><td>Platform / SRE</td><td>1</td><td>2</td><td>2</td></tr>
-            <tr><td>Credit-ops domain expert</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>Malaysia regulatory lead</td><td>1</td><td>1</td><td>1</td></tr>
-            <tr><td>PM / delivery</td><td>1</td><td>2</td><td>1</td></tr>
-            <tr class="font-semibold"><td>Total FTE</td><td>≈11</td><td>≈22</td><td>≈17</td></tr>
-          </tbody>
-        </table>
+    </div></div>
+  </div>
+</section>
+<section id="regpack" class="chapter chapter-lemon ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>7 · Regulatory-pack architecture</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Statutory limits enforced by the platform, <span class="tone">not by configuration.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">The core stays market-agnostic; every jurisdiction's rules live in a <b>versioned, effective-dated pack</b>. OneSphere Malaysia adds <span class="code">regpack-malaysia</span> alongside the planned NRB, SEBON, and FCA packs — a new pack, not a fork of the core. Guardrails execute in a <span class="code">Guardrail</span> SPI <b>outside</b> the policy scripts business users edit (D10), so a configuration mistake cannot breach a statutory limit.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 reveal card p-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-4">regpack-malaysia encodes</p><ul class="space-y-3 text-[14px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Interest cap</b> — 18% p.a. unsecured / 12% secured (s.17A) as a hard <span class="code">RATE_CEILING</span> clamp; breach is impossible to persist.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Fee prohibition</b> — s.23: no arrangement/platform/service fees; the product schema forbids them.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>No compounding</b> — structurally guaranteed by the fixed-schedule ledger.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Attestation gate</b> — s.27: an application cannot reach <span class="code">DISBURSING</span> until the attestation step is evidenced (a required, audited condition).</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Borrower-eligibility rule</b> — the citizenship/permit-status check as a <span class="code">PROHIBITION</span> keyed to the KPKT position confirmed in Phase 0.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Reporting</b> — the KPKT online-lending returns generated from the reporting mart.</span></li></ul></div>
+      <div class="lg:col-span-7 reveal grid grid-cols-2 gap-3 self-stretch">
+        <div class="card p-6"><p class="num">18%</p><p class="mt-3 text-[13px] text-mute">p.a. unsecured ceiling (12% secured), s.17A — a hard rate-ceiling clamp</p></div>
+        <div class="card p-6"><p class="num">s.23</p><p class="mt-3 text-[13px] text-mute">no other fees — forbidden by the product schema</p></div>
+        <div class="card p-6"><p class="num">s.27</p><p class="mt-3 text-[13px] text-mute">attestation evidenced before an application can reach disbursal</p></div>
+        <div class="card p-6"><p class="num">D10</p><p class="mt-3 text-[13px] text-mute">guardrails run outside the policy scripts business users edit</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+<section id="timeline" class="chapter chapter-tang ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>8 · Delivery timeline</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Gated by the licence, <span class="tone">not by engineering.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">The go-live is <b>gated by the KPKT licence track, not by engineering.</b> Phase 0 has not started; months count from its start (T0, date not yet set), and Swift staffs the build from its in-house engineering team. Engineering can be pilot-ready around month 8; the live date waits on full online approval. The conventional licence is <b>issued (2026-11-20)</b>, before T0; what remains is conditional → build → full, with the online application lodged during Phase 0.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="card p-5 sm:p-6 reveal">
+  <p class="text-[13px] font-semibold mb-1">OneSphere Malaysia RNPL — delivery</p>
+  <p class="text-[12px] text-mute-2 mb-4">M1 = first month of Phase 0 · T0 not yet set · durations in weeks from the phase table</p>
+  <div class="scroll-x"><div class="min-w-[720px]">
+    <div class="grow"><div></div><div class="grid text-[10.5px] text-mute-2" style="grid-template-columns:repeat(12,1fr)"><div class="text-center">M1</div><div class="text-center">M2</div><div class="text-center">M3</div><div class="text-center">M4</div><div class="text-center">M5</div><div class="text-center">M6</div><div class="text-center">M7</div><div class="text-center">M8</div><div class="text-center">M9</div><div class="text-center">M10</div><div class="text-center">M11</div><div class="text-center">M12</div></div></div>
+    <p class="gsec">Build</p>
+    <div class="grow"><div class="glabel">Phase 0 — resolve &amp; foundations · 8 wk</div><div class="gtrack"><div class="gbar" style="left:0.00%;width:15.34%;background:#3859F9"></div></div></div>
+    <div class="grow"><div class="glabel">Phase 1 — RNPL build on finOS · 24 wk</div><div class="gtrack"><div class="gbar" style="left:15.34%;width:46.03%;background:#3859F9"></div></div></div>
+    <div class="grow"><div class="glabel">Pilot — RNPL-first · 16 wk</div><div class="gtrack"><div class="gbar" style="left:61.37%;width:30.68%;background:#7934F0"></div></div></div>
+    <p class="gsec">Licence track · critical path</p>
+    <div class="grow"><div class="glabel">Conventional licence ✓ issued 20 Nov 2026</div><div class="gtrack"><div class="gdia" style="left:0.00%;background:#12704A"></div></div></div>
+    <div class="grow"><div class="glabel">Conditional online approval · 12 wk</div><div class="gtrack"><div class="gbar" style="left:0.00%;width:23.01%;background:#C2410C"></div></div></div>
+    <div class="grow"><div class="glabel">Build + MYNIC + full approval · 16 wk</div><div class="gtrack"><div class="gbar" style="left:23.01%;width:30.68%;background:#C2410C"></div></div></div>
+    <p class="gsec">Externals</p>
+    <div class="grow"><div class="glabel">Ria integration · 20 wk</div><div class="gtrack"><div class="gbar" style="left:8.33%;width:38.36%;background:#85817A"></div></div></div>
+    <div class="grow"><div class="glabel">Data residency (Malaysia) · 10 wk</div><div class="gtrack"><div class="gbar" style="left:3.83%;width:19.18%;background:#85817A"></div></div></div>
+    <p class="gsec">Gates</p>
+    <div class="grow"><div class="glabel">OS-G0 · four questions answered</div><div class="gtrack"><div class="gdia" style="left:15.34%;background:#16181F"></div></div></div>
+    <div class="grow"><div class="glabel">Pilot-ready ≈ month 8</div><div class="gtrack"><div class="gdia" style="left:61.37%;background:#3859F9"></div></div></div>
+    <div class="grow"><div class="glabel">OS-G1 · thesis validated</div><div class="gtrack"><div class="gdia" style="left:92.05%;background:#7934F0"></div></div></div>
+  </div></div>
+  <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[11.5px] text-mute">
+    <span class="flex items-center gap-1.5"><span class="w-4 h-2 rounded-full" style="background:#3859F9"></span>Build</span>
+    <span class="flex items-center gap-1.5"><span class="w-4 h-2 rounded-full" style="background:#7934F0"></span>Pilot</span>
+    <span class="flex items-center gap-1.5"><span class="w-4 h-2 rounded-full" style="background:#C2410C"></span>Licence (critical path)</span>
+    <span class="flex items-center gap-1.5"><span class="w-4 h-2 rounded-full" style="background:#85817A"></span>Externals</span>
+    <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rotate-45 rounded-[2px] bg-ink"></span>Gate / milestone</span>
+  </div>
+</div>
+    <div class="card overflow-hidden mt-6 reveal"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:16%">Phase</th><th style="width:8%">Weeks</th><th>Scope</th><th style="width:28%">Exit gate</th></tr></thead><tbody><tr><td><b>0 — Resolve &amp; foundations</b></td><td>8</td><td>Close the four make-or-break questions in writing (KPKT citizenship, s.27 attestation, rate-cap computation, MSB); solution-design RNPL; stand up the finOS kernel + <span class="code">regpack-malaysia</span> v0; prove the guardrail blocks an over-cap loan outside the script</td><td><b>OS-G0</b> — questions answered; kernel + Malaysia guardrail proven; go/no-go on the migrant segment</td></tr><tr><td><b>1 — RNPL build on finOS</b></td><td>24</td><td>RNPL product config; RemitScore v1 (rule-based, replayable); <span class="code">regpack-malaysia</span> v1; <span class="code">ria-edge</span> + <span class="code">duitnow-edge</span>; borrower portal; native accounting (the OS-R1 books slice, mode A — Q67); documented KPKT customer journey + system security certificate</td><td>conditional → <b>full</b> KPKT online approval; platform pilot-ready</td></tr><tr><td><b>Pilot — RNPL-first</b></td><td>16</td><td>Bounded cohort; test the remittance-signal thesis; <b>explicit stop criteria</b> (loss appetite, DPD ceiling, scorecard floor, kill switch)</td><td><b>OS-G1</b> — thesis validated on real repayment, or stopped cleanly</td></tr></tbody></table></div></div>
+    <p class="mt-5 text-[14px] leading-relaxed text-mute max-w-[80ch] reveal"><b>Long-lead externals on the critical path:</b> conditional → full online approval (the conventional licence is already issued); Ria integration; and Malaysia-resident hosting. These — not story points — set the live date.</p></div>
+  </div>
+</section>
+<section id="team" class="chapter chapter-lime ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>9 · Engineering organisation</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">A solution build <span class="tone">plus a Malaysia pod.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">The squad model from the platform applies. RNPL follows the corridor SNPL design, which is designed but not yet built — OneSphere builds it first and the corridors reuse it. The plan below sizes the OneSphere Malaysia build as a <b>solution build plus a Malaysia pod</b>.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="card p-6 sm:p-7 reveal">
+  <div class="flex flex-wrap justify-center gap-3 mb-6">
+    <div class="rounded-full btn-chap px-5 py-2 text-[13px] font-semibold">Chief architect</div>
+    <div class="rounded-full btn-chap px-5 py-2 text-[13px] font-semibold">Product manager</div>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5">
+    <div><p class="gsec text-center">Build squads</p><div class="space-y-2 mt-2">
+      <div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Kernel &amp; Servicing</p><p class="text-[11.5px] text-mute-2">kernel build + config</p></div><div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Decisioning &amp; Policy</p><p class="text-[11.5px] text-mute-2">RemitScore</p></div><div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Experience</p><p class="text-[11.5px] text-mute-2">borrower portal + admin</p></div><div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Rails &amp; Connectors</p><p class="text-[11.5px] text-mute-2">Ria · DuitNow · KYC/AML</p></div></div></div>
+    <div><p class="gsec text-center">Assurance</p><div class="space-y-2 mt-2">
+      <div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Regulatory &amp; Domain</p><p class="text-[11.5px] text-mute-2">regpack-malaysia + counsel</p></div><div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">QA automation</p></div><div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Platform Eng / SRE</p><p class="text-[11.5px] text-mute-2">Malaysia hosting · PDPA</p></div></div></div>
+    <div><p class="gsec text-center">Delivery &amp; domain</p><div class="space-y-2 mt-2">
+      <div class="rounded-[14px] bg-oat px-4 py-2.5"><p class="text-[13px] font-medium">Program &amp; Implementation</p><p class="text-[11.5px] text-mute-2">KPKT liaison · Ria</p></div><div class="rounded-[14px] bg-signal-amberbg px-4 py-2.5"><p class="text-[13px] font-medium">Credit-ops domain expert</p><p class="text-[11.5px] text-signal-amber">non-negotiable · day zero</p></div><div class="rounded-[14px] bg-signal-amberbg px-4 py-2.5"><p class="text-[13px] font-medium">Malaysia regulatory lead</p><p class="text-[11.5px] text-signal-amber">non-negotiable · day zero</p></div></div></div>
+  </div>
+</div>
+    <div class="grid lg:grid-cols-12 gap-8 mt-8 items-start">
+      <div class="lg:col-span-7 reveal">
+        <div class="card overflow-hidden"><div class="card-h">Headcount by phase <span class="font-normal text-mute-2">· indicative pre-Q68 sizing, which assumed platform reuse that does not exist yet</span></div><div class="scroll-x"><table class="tbl"><thead><tr><th>Role</th><th class="text-right">Phase 0</th><th class="text-right">Phase 1</th><th class="text-right">Pilot</th></tr></thead><tbody><tr><td>Chief architect</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td></tr><tr><td>Kernel &amp; Servicing (kernel build + config)</td><td class="text-right tnum">2</td><td class="text-right tnum">3</td><td class="text-right tnum">2</td></tr><tr><td>Decisioning &amp; Policy (RemitScore)</td><td class="text-right tnum">1</td><td class="text-right tnum">3</td><td class="text-right tnum">2</td></tr><tr><td>Experience (portal + admin)</td><td class="text-right tnum">1</td><td class="text-right tnum">3</td><td class="text-right tnum">2</td></tr><tr><td>Rails &amp; Connectors (Ria · DuitNow · KYC)</td><td class="text-right tnum">1</td><td class="text-right tnum">3</td><td class="text-right tnum">2</td></tr><tr><td>Regulatory &amp; Domain (Malaysia pack)</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td></tr><tr><td>QA automation</td><td class="text-right tnum">—</td><td class="text-right tnum">2</td><td class="text-right tnum">2</td></tr><tr><td>Platform / SRE (Malaysia hosting)</td><td class="text-right tnum">1</td><td class="text-right tnum">2</td><td class="text-right tnum">2</td></tr><tr><td><b>Credit-ops domain expert</b> <i>(non-negotiable, day zero)</i></td><td class="text-right tnum">1</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td></tr><tr><td><b>Malaysia regulatory lead</b> <i>(non-negotiable, day zero)</i></td><td class="text-right tnum">1</td><td class="text-right tnum">1</td><td class="text-right tnum">1</td></tr><tr><td>Product manager / delivery</td><td class="text-right tnum">1</td><td class="text-right tnum">2</td><td class="text-right tnum">1</td></tr><tr class="font-semibold"><td><b>Total FTE</b></td><td class="text-right tnum"><b>≈ 11</b></td><td class="text-right tnum"><b>≈ 22</b></td><td class="text-right tnum"><b>≈ 17</b></td></tr></tbody></table></div></div>
+        <p class="mt-4 text-[13px] leading-relaxed text-mute"><i>Excludes Ria/partner-side integration effort and external Malaysian counsel, which are committed via MoU/retainer, not in the platform headcount. All roles are staffed from Swift's in-house engineering; there is no external funding line. The credit kernel is <b>not</b> yet built — the corridor SNPL machinery is designed, not built — so these numbers understate Phase 0 and Phase 1 until the Q68 re-estimate sizes the kernel build.</i></p>
+        <div class="note mt-4"><b>Re-estimate pending (Q68).</b> This figure predates D13–D15 and excludes native accounting, the Malaysia pack, the lending CRM, mobile apps and SaaS operations, and assumes corridor SNPL machinery that is not yet built. See Appendix B, Q68.</div>
+      </div>
+      <div class="lg:col-span-5 reveal card p-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-4">The mix, and why it matters here</p><ul class="space-y-3 text-[14px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Kernel/domain correctness is the highest bar</b> — the ledger's property-test suite is ~half of the credit module's effort; a defect here is a licence problem, not a bug.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Regulatory is a standing function with commit rights</b>, not advisory — the Malaysia pack (D10) must be authored and reviewed by the regulatory lead + counsel, not guessed by engineers.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Estate/partner liaison (Ria, DuitNow, KYC) is heavier than pure build</b> — much of Rails &amp; Connectors is integration and certification, not coding.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Two non-negotiable hires from day zero:</b> a credit-operations domain expert and a Malaysia regulatory lead. "Every failed lending platform was built by engineers guessing at what an accrual convention — or a rate cap — is."</span></li></ul></div>
+    </div></div>
+  </div>
+</section>
+<section id="effort" class="chapter chapter-paper ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>10 · Effort &amp; sizing</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">The RNPL build, <span class="tone">sized before the re-estimate.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">Indicative person-months for the RNPL solution. <i>These figures assume identity &amp; access, notifications and process management come from the corridor build and are not sized here; that machinery is designed, not built, so they must be sized for OneSphere, which builds it first.</i></p>
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-8 reveal"><div class="card overflow-hidden"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:44%">Module</th><th style="width:14%">Complexity</th><th style="width:12%">Est. PM</th><th>Owner</th></tr></thead><tbody><tr><td>platform-credit / ledger (config + invariants)</td><td>5</td><td>12</td><td>Kernel &amp; Servicing</td></tr><tr><td>platform-decisioning + RemitScore v1</td><td>4</td><td>14</td><td>Decisioning &amp; Policy</td></tr><tr><td>regpack-malaysia (KPKT guardrails, D10)</td><td>4</td><td>12</td><td>Regulatory &amp; Domain</td></tr><tr><td>payments / Allocation Hub + <span class="code">duitnow-edge</span></td><td>4</td><td>12</td><td>Kernel &amp; Servicing / Rails</td></tr><tr><td>origination + offer engine (RNPL products)</td><td>3</td><td>8</td><td>Kernel &amp; Servicing</td></tr><tr><td>connector-hub (eKYC · AML · OCR)</td><td>3</td><td>10</td><td>Rails &amp; Connectors</td></tr><tr><td><span class="code">ria-edge</span> (remittance disbursement)</td><td>3</td><td>8</td><td>Rails &amp; Connectors</td></tr><tr><td>borrower portal (React + Vite) + admin core</td><td>4</td><td>14</td><td>Experience</td></tr><tr><td>documents (agreement, Key Facts, OTP click-wrap)</td><td>2</td><td>5</td><td>Rails &amp; Connectors</td></tr><tr><td>reporting mart + KPKT return v1</td><td>3</td><td>8</td><td>Data &amp; Reporting</td></tr><tr class="font-semibold"><td><b>Total (Phase 1 RNPL build)</b></td><td></td><td><b>≈ 103 PM</b></td><td></td></tr></tbody></table></div></div></div>
+      <div class="lg:col-span-4 reveal space-y-4">
+        <div class="card p-6"><p class="num" style="--c:#16181F">≈ 103 PM</p><p class="mt-3 text-[13px] text-mute">Phase 1 RNPL build, as sized before D13–D15</p></div>
+        <p class="text-[13px] leading-relaxed text-mute"><i>Not yet in this total: native accounting (general ledger, cash and bank, financial statements, Malaysian statement and tax packs). It is now in Phase 1 scope because OneSphere has no accounting system of its own (Q67); the re-estimate is pending. The Data &amp; Reporting owner of the reporting mart line has no row in the headcount table above; its staffing is part of the same re-estimate.</i></p>
       </div>
     </div>
-    <p class="mt-4 text-[12px] text-mute-2 max-w-[80ch]">Excludes Ria/partner integration and external counsel (committed via MoU/retainer). The credit kernel is not yet built — the corridor SNPL machinery is designed, not built — so the Phase-0 kernel squad applies: P0 → ~10, P1 → ~28.</p>
-    <p class="mt-2 text-[12px] text-mute-2 max-w-[80ch]"><span class="font-medium text-mute">Re-estimate pending (Q68).</span> This figure predates D13–D15 and excludes native accounting, the Malaysia pack, the lending CRM, mobile apps and SaaS operations, and assumes corridor SNPL machinery that is not yet built. See Appendix B, Q68.</p>
+    <div class="note mt-4"><b>Re-estimate pending (Q68).</b> This figure predates D13–D15 and excludes native accounting, the Malaysia pack, the lending CRM, mobile apps and SaaS operations, and assumes corridor SNPL machinery that is not yet built. See Appendix B, Q68.</div></div>
   </div>
 </section>
-
-<!-- Risks -->
-<section id="risks" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-14 lg:py-16">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-3">7 · Risks &amp; critical path</p>
-    <h2 class="text-[24px] lg:text-[30px] tracking-tightest font-semibold">Stated openly, with mitigations</h2>
-    <div class="mt-6 rounded-xl border border-line bg-surface overflow-hidden">
-      <table class="tbl">
-        <thead><tr><th class="w-[34%]">Risk</th><th class="w-[14%]">Type</th><th>Mitigation</th></tr></thead>
-        <tbody>
-          <tr><td>KPKT declines online lending to work-permit holders</td><td><span class="text-signal-red font-medium">Regulatory · critical</span></td><td class="text-mute">Ask in writing at OS-G0; hold scope; fallback citizen/PR segment.</td></tr>
-          <tr><td>Licence issuance / online approval slips &gt; 1 year</td><td class="text-signal-amber font-medium">Delivery · high</td><td class="text-mute">Licence track is the critical path; conventional licence issued 2026-11-20, online approval pending.</td></tr>
-          <tr><td>s.27 attestation cannot be satisfied remotely</td><td class="text-signal-amber font-medium">Regulatory · high</td><td class="text-mute">Reverse-engineer an approved Schedule J; confirm with KPKT before UX freeze.</td></tr>
-          <tr><td>Rate cap uneconomic (fees illegal, s.23)</td><td class="text-signal-amber font-medium">Commercial · high</td><td class="text-mute">RNPL at larger tickets; confirm flat-vs-reducing at OS-G0.</td></tr>
-          <tr><td>Remittance leg triggers MSB licensing</td><td class="text-signal-amber font-medium">Regulatory · high</td><td class="text-mute">Ria = remitter of record; counsel + BNM view before freeze.</td></tr>
-          <tr><td>Data residency blocks Kathmandu processing</td><td class="text-signal-amber font-medium">Architecture · high</td><td class="text-mute">Malaysia-resident data plane; masked non-prod data.</td></tr>
-          <tr><td>Ledger correctness defect reaches production</td><td><span class="text-signal-red font-medium">Engineering · severe</span></td><td class="text-mute">Property-based invariants from Phase 0; daily reconciliation tripwire; every correction operation-sourced (D4).</td></tr>
-          <tr><td>Migrant flight-risk (borrower leaves Malaysia)</td><td class="text-signal-amber font-medium">Credit · high</td><td class="text-mute">Tenure ≤ remaining permit validity; permit-expiry early warning; real write-off policy.</td></tr>
-        </tbody>
-      </table>
+<section id="risks" class="chapter chapter-drag ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>11 · Risks &amp; critical path</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Stated openly, <span class="tone">with the mitigation next to each.</span></h2>
+      
     </div>
-    <p class="mt-4 text-[13px] text-mute-2 max-w-[80ch]"><span class="font-medium text-mute">Critical path:</span> Phase 0 (four questions) → conditional approval → build + MYNIC → full approval → pilot (conventional licence issued 20 Nov 2026). Engineering runs in parallel and is not the binding constraint.</p>
+    <div class="mt-10 lg:mt-12"><div class="card overflow-hidden reveal"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:8%">#</th><th style="width:30%">Risk</th><th style="width:16%">Type</th><th>Mitigation</th></tr></thead><tbody><tr><td><span class="code">MY-R1</span></td><td>KPKT declines online lending to work-permit holders</td><td><span class="sev sev-crit">Regulatory · critical</span></td><td>Ask in writing at OS-G0; hold scope; fallback citizen/PR segment</td></tr><tr><td><span class="code">MY-R2</span></td><td>Licence issuance / online approval slips &gt; 1 year</td><td><span class="sev sev-high">Delivery · high</span></td><td>Licence track is the critical path; conventional licence issued 2026-11-20, online approval pending; no live date until clear</td></tr><tr><td><span class="code">MY-R3</span></td><td>s.27 attestation cannot be satisfied remotely</td><td><span class="sev sev-high">Regulatory · high</span></td><td>Reverse-engineer an approved licensee's Schedule J; confirm with KPKT before UX freeze</td></tr><tr><td><span class="code">MY-R4</span></td><td>Rate cap makes the product uneconomic (fees illegal, s.23)</td><td><span class="sev sev-high">Commercial · high</span></td><td>RNPL at larger tickets/longer tenures; confirm flat-vs-reducing computation at OS-G0</td></tr><tr><td><span class="code">MY-R5</span></td><td>Remittance leg triggers MSB licensing</td><td><span class="sev sev-high">Regulatory · high</span></td><td>Ria = remitter of record; OneSphere lends only; counsel + BNM view before design freeze</td></tr><tr><td><span class="code">MY-R6</span></td><td>Data residency blocks Kathmandu processing</td><td><span class="sev sev-high">Architecture · high</span></td><td>Malaysia-resident data plane; masked non-production data; assess at OS-G0</td></tr><tr><td><span class="code">MY-R7</span></td><td>Ledger correctness defect reaches production</td><td><span class="sev sev-crit">Engineering · severe</span></td><td>Property-based invariant tests from Phase 0; daily reconciliation tripwire; every correction operation-sourced (D4)</td></tr><tr><td><span class="code">MY-R8</span></td><td>Migrant flight-risk (borrower leaves Malaysia)</td><td><span class="sev sev-high">Credit · high</span></td><td>Tenure ≤ remaining permit validity minus buffer; permit-expiry early warning; real write-off policy</td></tr></tbody></table></div></div>
+    <div class="note mt-5 reveal"><b>Critical path:</b> <span class="code">Phase 0 (four questions) → conditional online approval → build + MYNIC → full approval → pilot</span> (conventional licence issued 2026-11-20). Engineering runs in parallel and is not the binding constraint.</div></div>
   </div>
 </section>
-
+<section id="references" class="chapter chapter-dark text-white overflow-hidden mb-4 sm:mb-6">
+  <div class="mx-auto max-w-content px-6 lg:px-8 pt-20 lg:pt-24 pb-12">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>12 · Diagram index &amp; references</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Where every figure <span class="tone">in this paper comes from.</span></h2>
+      
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid md:grid-cols-2 gap-4 reveal"><div class="card p-6 text-[13.5px] leading-relaxed text-white/70 [&_b]:text-white [&_.code]:bg-white/10 [&_.code]:text-white [&_.code]:whitespace-normal"><b>Diagrams (this paper):</b> platform stack (§1) · C4 Context / Container / Component (§2) · credit-kernel boundary (§3) · RNPL request sequence (§4) · K8s deployment topology (§6.1) · event-bus/outbox (§6.2) · delivery Gantt (§8) · engineering org chart (§9). Stack decisions: <span class="code">deliverables/technology-decisions.md</span> (ADR-10, 17, 24–28, 30).</div><div class="card p-6 text-[13.5px] leading-relaxed text-white/70 [&_b]:text-white [&_.code]:bg-white/10 [&_.code]:text-white [&_.code]:whitespace-normal"><b>Source docs:</b> <span class="code">architecture/02-system-architecture.md</span> (C4, five-plane) · <span class="code">architecture/16-devops.md</span> (topology, environments) · <span class="code">architecture/18-engineering-stack.md</span> (version matrix) · <span class="code">architecture/19-roadmap.md</span> (phases, squads, headcount) · <span class="code">deliverables/estimates.md</span>, <span class="code">sprint-plan.md</span>, <span class="code">module-breakdown.md</span> (effort, sprints) · <span class="code">architecture diagram/standalone-architecture.md</span> (standalone architecture) · <span class="code">reviews/ekpkt-licence-readiness-strategy.md</span> (KPKT) · <span class="code">research/09-migrant-corridor-lending.md</span> (licensing) · <span class="code">ONESPHERE-MALAYSIA-PRODUCT-PAPER.md</span> (business companion).</div></div>
+    <div class="mt-10 flex flex-wrap gap-3 reveal">
+      <a href="./onesphere-malaysia-business.html" class="inline-flex items-center gap-1.5 rounded-lg btn-chap px-5 py-2.5 text-[14.5px] font-medium">Read the business paper →</a>
+      <a href="./index.html#malaysia" class="inline-flex items-center gap-1.5 rounded-lg border border-white/20 px-5 py-2.5 text-[14.5px] font-medium text-white hover:bg-white/10">Back to finOS</a>
+    </div></div>
+  </div>
+<div class="px-3 pb-3 sm:px-4 sm:pb-4"><div class="toy rounded-[24px] lg:rounded-[32px]"><svg viewBox="0 0 1200 220" class="block w-full h-auto" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hs-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hs-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hs-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient></defs><rect width="1200" height="220" fill="#1f2330"/><path d="M0 120 C200 60 380 90 560 120 C760 150 920 70 1200 100 V220 H0z" fill="#2f6b4c"/><path d="M0 170 C220 130 420 150 640 170 C860 190 1000 140 1200 150 V220 H0z" fill="#0dac65"/><path d="M700 112 l26 -54 l26 54z" fill="#ff9fcf"/><path d="M300 150 v-34 a26 26 0 0 1 52 0 v34 h-14 v-30 a12 12 0 0 0 -24 0 v30z" fill="#7d97ff"/><path d="M960.0 120.0 v-40 a20 10.0 0 0 0 40 0 v40 a20 10.0 0 0 1 -40 0z" fill="url(#hs-cyl0)"/><ellipse cx="980" cy="80" rx="20" ry="10.0" fill="#fec250"/><circle cx="520" cy="150" r="13" fill="url(#hs-ballfa6900)"/><rect width="1200" height="220" filter="url(#hs-grain)" pointer-events="none"/></svg></div></div>
+</section>
 </main>
 
-<footer class="bg-ink text-white/50 border-t border-white/10">
-  <div class="mx-auto max-w-content px-6 py-10 flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between">
-    <div class="flex items-center gap-2.5 text-white">
-      <svg viewBox="0 0 392 87" class="h-[18px] w-auto"><use href="#finos-star" fill="#4E9BEA"/><use href="#finos-wordmark" fill="currentColor"/></svg>
-      <span class="text-[12px] text-white/40">by</span><span class="text-[13px] text-white/70 font-medium">Swift</span>
+<footer class="text-mute">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-6 md:items-center md:justify-between text-[13px]">
+    <div class="flex items-center gap-2.5 text-ink shrink-0">
+      <svg viewBox="0 0 392 87" class="h-[19px] w-auto" role="img" aria-label="finOS" focusable="false"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
+      <span class="text-[12px] text-mute-2">by</span>
+      <svg viewBox="0 0 439 98" class="h-[15px] w-auto" aria-hidden="true" focusable="false"><use href="#swift-mark" fill="#0E71DB"/><use href="#swift-wordmark" fill="currentColor"/></svg>
     </div>
-    <p class="text-[11.5px] text-white/40 max-w-[56ch]">Technical companion to the OneSphere Malaysia business paper. Grounded in the C4 architecture, the delivery roadmap and estimates, and the KPKT licence-readiness strategy. Regulatory positions require confirmation by Malaysian counsel.</p>
+    <p class="text-[12.5px] leading-relaxed text-mute-2 max-w-[70ch]">Technical companion to the OneSphere Malaysia business paper. Grounded in the finOS architecture, the delivery roadmap and estimates, and the KPKT licence-readiness strategy. Regulatory positions require confirmation by Malaysian counsel.</p>
+    <a class="shrink-0 hover:text-ink transition-colors" href="./onesphere-malaysia-business.html">Read the business paper →</a>
   </div>
 </footer>
 
 <script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';
   mermaid.initialize({
-    startOnLoad: true,
-    securityLevel: 'loose',
-    theme: 'neutral',
-    themeVariables: { fontFamily: 'Inter, system-ui, sans-serif', fontSize: '13px', primaryColor: '#EAF3FD', primaryBorderColor: '#0E71DB', primaryTextColor: '#0A0F1C', lineColor: '#5A6478', secondaryColor: '#FAFBFD', tertiaryColor: '#FFFFFF' },
+    startOnLoad: false, securityLevel: 'strict', theme: 'base',
+    themeVariables: { fontFamily: 'Instrument Sans, system-ui, sans-serif', fontSize: '13px',
+      primaryColor: '#EEF4FF', primaryBorderColor: '#3859F9', primaryTextColor: '#16181F',
+      secondaryColor: '#F9F8F6', tertiaryColor: '#FFFFFF', lineColor: '#85817A',
+      clusterBkg: '#F9F8F6', clusterBorder: '#DAD4C8', noteBkgColor: '#FFF8D9', noteBorderColor: '#A15C07',
+      actorBkg: '#EEF4FF', actorBorder: '#3859F9', signalColor: '#55534E', signalTextColor: '#16181F' },
     flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true },
-    sequence: { useMaxWidth: true, actorMargin: 40 },
-    gantt: { useMaxWidth: true, barHeight: 18, fontSize: 11, sectionFontSize: 12 }
+    sequence: { useMaxWidth: true, actorMargin: 40 }
   });
+  // Render one at a time with our own ids: the default ids are time-based and can collide.
+  const blocks = [...document.querySelectorAll('pre.mermaid')];
+  for (const [i, el] of blocks.entries()) {
+    try {
+      const { svg, bindFunctions } = await mermaid.render('os-diagram-' + i, el.textContent);
+      el.innerHTML = svg; el.setAttribute('data-processed', 'true'); bindFunctions?.(el);
+    } catch (err) { console.error('diagram', i, err); el.setAttribute('data-processed', 'error'); }
+  }
 </script>
 <script>
+(() => {
+  'use strict';
   const bar = document.getElementById('progress');
-  const onScroll = () => { const h = document.documentElement; bar.style.transform = 'scaleX(' + (h.scrollTop/(h.scrollHeight-h.clientHeight||1)) + ')'; };
+  const onScroll = () => { const h = document.documentElement; bar.style.transform = 'scaleX(' + (h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1)) + ')'; };
   document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  const btn = document.getElementById('menuBtn'), menu = document.getElementById('mobileNav');
+  btn.addEventListener('click', () => { const open = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!open)); menu.classList.toggle('hidden', open); });
+  menu.addEventListener('click', e => { if (e.target.closest('a')) { btn.setAttribute('aria-expanded', 'false'); menu.classList.add('hidden'); } });
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+})();
 </script>
 </body>
 </html>

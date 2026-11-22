@@ -1,55 +1,165 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OneSphere Malaysia — Product Paper · finOS by Swift</title>
-<meta name="description" content="Launching OneSphere's remittance-linked lending business in Malaysia — built on finOS, under a KPKT online-moneylending approval." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneSphere Malaysia — Business paper · finOS</title>
+<meta name="description" content="Launching OneSphere's Remit Now Pay Later lending business in Malaysia — built by Swift on finOS, under a KPKT online-moneylending approval.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NyA4NyI+PHBhdGggZD0iTTQ2LjU1NTcgMC4wMDc4MTI1TDQ2LjUxODYgMjguMzg3N0w1Ny4zODg3IDIuMTcxODhMNjIuOTMxNiA0LjQ2OTczTDUxLjk3NDYgMzAuODk0NUw3Mi4zMDY2IDEwLjc3MTVMNzYuNTI3MyAxNS4wMzUyTDU2LjQ0NDMgMzQuOTEyMUw4Mi41NjE1IDI0LjEyNkw4NC44NTE2IDI5LjY3MTlMNTguNjI0IDQwLjUwMzlIODdWNDYuNTAzOUg1OC41NTU3TDg0LjgyNzEgNTcuNDA3Mkw4Mi41MjczIDYyLjk0ODJMNTYuMjU4OCA1Mi4wNDU5TDc2LjM0NDcgNzIuMTgyNkw3Mi4wOTY3IDc2LjQxOTlMNTIuMDk1NyA1Ni4zNjkxTDYyLjk2NjggODIuNTIwNUw1Ny40MjY4IDg0LjgyMzJMNDYuNDgxNCA1OC40OTIyTDQ2LjQ0NTMgODcuMDA3OEw0MC40NDUzIDg3TDQwLjQ4MTQgNTguNjE1MkwyOS42MTA0IDg0LjgzNTlMMjQuMDY4NCA4Mi41MzgxTDM1LjAyNDQgNTYuMTEyM0wxNC42OTM0IDc2LjIzNjNMMTAuNDcyNyA3MS45NzI3TDMwLjU1NDcgNTIuMDk1N0w0LjQzOTQ1IDYyLjg4MThMMi4xNDk0MSA1Ny4zMzU5TDI4LjM3NyA0Ni41MDM5SDBWNDAuNTAzOUgyOC40NDczTDIuMTcyODUgMjkuNTk5Nkw0LjQ3MjY2IDI0LjA1ODZMMzAuNzQyMiAzNC45NjA5TDEwLjY1NjIgMTQuODI0MkwxNC45MDQzIDEwLjU4NjlMMzQuOTAxNCAzMC42MzQ4TDI0LjAzMzIgNC40ODczTDI5LjU3MzIgMi4xODQ1N0w0MC41MTg2IDI4LjUxNzZMNDAuNTU1NyAwTDQ2LjU1NTcgMC4wMDc4MTI1WiIgZmlsbD0iIzBFNzFEQiIvPjwvc3ZnPg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
-    theme: { extend: {
-      colors: {
-        ink:    { DEFAULT: '#0A0F1C', 2: '#111827' },
-        navy:   { DEFAULT: '#001133', 700: '#062044', 600: '#0B2A55' },
-        accent: { DEFAULT: '#0E71DB', hover: '#0B5AAF', soft: '#EAF3FD' },
-        mute:   { DEFAULT: '#5A6478', 2: '#8B94A6' },
-        line:   { DEFAULT: '#E6EAF1', 2: '#EFF2F7' },
-        surface:{ DEFAULT: '#FFFFFF', 2: '#FAFBFD' },
-        signal: { amber: '#9A6510', amberbg: '#FDF6E8', green: '#12704A', greenbg: '#EDF7F2', red: '#A3312A', redbg: '#FCEFED', blue: '#0E71DB', bluebg: '#EAF3FD' }
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
-      },
-      letterSpacing: { tightest: '-.035em', tighter: '-.025em' },
-      maxWidth: { content: '72rem' }
-    } }
+    theme: {
+      extend: {
+        colors: {
+          ink:    { DEFAULT: '#16181F', 2: '#282C35' },
+          navy:   { DEFAULT: '#1B2160', 700: '#242B78', 600: '#2E3790' },
+          accent: { DEFAULT: '#3859F9', hover: '#2441D6', soft: '#EEF2FF' },
+          mute:   { DEFAULT: '#55534E', 2: '#85817A' },
+          line:   { DEFAULT: '#E0DEDC', 2: '#EEE9DF' },
+          surface:{ DEFAULT: '#FFFFFF', 2: '#F9F8F6' },
+          oat:    { DEFAULT: '#F9F8F6', 50: '#FFFCFA', 200: '#F3F2ED', 300: '#EEE9DF', 400: '#DAD4C8' },
+          signal: { amber: '#9A6510', amberbg: '#FDF6E8', green: '#12704A', greenbg: '#EDF7F2', red: '#A3312A', redbg: '#FCEFED' }
+        },
+        fontFamily: {
+          sans: ['Instrument Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+        },
+        letterSpacing: { tightest: '-.035em', tighter: '-.025em' },
+        maxWidth: { content: '76rem' }
+      }
+    }
   }
 </script>
 <style>
   :root { --ease: cubic-bezier(.16,1,.3,1); }
   body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  ::selection { background: #0E71DB; color: #fff; }
+  ::selection { background: #3859F9; color: #fff; }
+  :focus-visible { outline: 2px solid #3859F9; outline-offset: 3px; border-radius: 3px; }
+  html { scroll-behavior: smooth; } section[id] { scroll-margin-top: 5rem; }
   .tnum { font-variant-numeric: tabular-nums; }
-  /* Content is always visible; the fade is a pure enhancement that never hides content. */
-  .reveal { animation: fadeup .6s var(--ease) both; }
-  @keyframes fadeup { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .reveal { animation: none; } }
-  :focus-visible { outline: 2px solid #0E71DB; outline-offset: 3px; border-radius: 3px; }
-  #progress { transform-origin: 0 50%; transform: scaleX(0); position: fixed; top: 0; left: 0; right: 0; height: 2px; background: #0E71DB; z-index: 60; }
-  .navlink[aria-current="true"] { color: #0A0F1C; }
-  html { scroll-behavior: smooth; }
-  section[id] { scroll-margin-top: 4.5rem; }
+  .hair { box-shadow: inset 0 -1px 0 #E0DEDC; }
+  #progress { transform-origin: 0 50%; transform: scaleX(0); }
+  .reveal { opacity: 0; transform: translateY(10px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+/* ── Clay-style system ─────────────────────────────────────────
+     Warm oat page; each chapter is a rounded pastel card that overlaps
+     the one before it. --c is the chapter colour, --tone the second
+     line of a two-tone headline. */
+  :root { --c: #16181F; --c-ink: #fff; --c-bg: transparent; --tone: #85817A; }
+  html { background: #F9F8F6; }
+  body { background: #F9F8F6; font-feature-settings: "ss01", "cv11"; }
+  h1, h2 { font-weight: 500 !important; letter-spacing: -0.04em !important; text-wrap: balance; }
+  h3, h4 { letter-spacing: -0.015em; }
+  .tone { color: var(--tone); }
+
+  .chapter { position: relative; margin: 0 10px; border-radius: 28px; background: var(--c-bg);
+             box-shadow: 0 -1px 0 rgba(22,24,31,.04), 0 -18px 40px -30px rgba(22,24,31,.35); }
+  @media (min-width: 640px)  { .chapter { margin: 0 16px; border-radius: 36px; } }
+  @media (min-width: 1280px) { .chapter { margin: 0 28px; border-radius: 44px; } }
+  .chapter + .chapter { margin-top: -44px; }
+  .chapter-blue  { --c: #3859F9; --c-bg: #EEF4FF; --tone: #3859F9; }
+  .chapter-lime  { --c: #5F6E00; --c-bg: #F8FAE3; --tone: #6A7A00; }
+  .chapter-tang  { --c: #C2410C; --c-bg: #FDF1EA; --tone: #C2410C; }
+  .chapter-ube   { --c: #7934F0; --c-bg: #F4F0FF; --tone: #7934F0; }
+  .chapter-drag  { --c: #B0078A; --c-bg: #FCEFF7; --tone: #B0078A; }
+  .chapter-lemon { --c: #A15C07; --c-bg: #FFF8D9; --tone: #A15C07; }
+  .chapter-paper { --c: #16181F; --c-bg: #FFFFFF; --tone: #85817A; }
+  .chapter-dark  { --c: #FADF7C; --c-ink: #16181F; --c-bg: #16181F; --tone: #FADF7C; }
+  .text-chap { color: var(--c); }
+
+  /* Pill eyebrow with trailing ghost discs */
+  .eyebrow { display: inline-flex; align-items: center; isolation: isolate; }
+  .eyebrow > span { order: 1; position: relative; z-index: 2; background: var(--c); color: var(--c-ink);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 13px 6px 14px; border-radius: 999px; line-height: 1.3; }
+  .eyebrow::before, .eyebrow::after { content: ''; width: 26px; height: 26px; border-radius: 999px;
+    margin-left: -16px; background: var(--c); }
+  .eyebrow::before { order: 2; opacity: .32; z-index: 1; }
+  .eyebrow::after  { order: 3; opacity: .16; }
+
+  /* Buttons */
+  .btn-chap { background: var(--c); color: var(--c-ink); }
+  .btn-chap:hover { filter: brightness(.92); }
+
+  /* Toy panels and the hero stage */
+  .toy { border-radius: 24px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(22,24,31,.05); }
+  .toy svg { display: block; }
+  @media (min-width: 1024px) { .toy { border-radius: 28px; } }
+  .frame-lines { background-image: linear-gradient(#E0DEDC,#E0DEDC), linear-gradient(#E0DEDC,#E0DEDC);
+    background-size: 1px 100%, 1px 100%; background-position: left top, right top; background-repeat: no-repeat; }
+  .frost { background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -24px rgba(22,24,31,.35), 0 0 0 1px rgba(22,24,31,.05); }
+
+  /* Logo-wall tiles */
+  .wall { background: rgba(255,255,255,.55); border: 1px solid #fff; border-radius: 28px;
+    box-shadow: 0 24px 60px -36px rgba(22,24,31,.3); }
+  .wall-tile { border-radius: 18px; box-shadow: 0 0 0 1px rgba(22,24,31,.05); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .wall-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 14px 30px -18px rgba(22,24,31,.35); }
+  .mode-badge { font-size: 30px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: #3859F9; white-space: nowrap; }
+
+  /* Softer geometry everywhere inside the page */
+  main .rounded-xl { border-radius: 20px; }
+  main .rounded-lg { border-radius: 12px; }
+  main .rounded-md { border-radius: 10px; }
+  .seg, .fl-prod, .ai-scn { border-radius: 999px !important; }
+  [aria-label="Architecture views"] { border-radius: 999px !important; }
+
+  
+  /* Paper components */
+  .card { background: #fff; border-radius: 20px; box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 18px 40px -32px rgba(22,24,31,.35); }
+  .chapter-dark .card { background: rgba(255,255,255,.06); box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+  .card-h { padding: 14px 20px; font-size: 13px; font-weight: 600; box-shadow: inset 0 -1px 0 #EEE9DF; }
+  .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.tbl { width: 100%; font-size: 13.5px; border-collapse: collapse; }
+  .scroll-x > table.tbl { min-width: 560px; }
+  table.tbl th { text-align: left; color: #85817A; font-weight: 500; font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 12px 16px; border-bottom: 1px solid #E0DEDC; white-space: nowrap; }
+  table.tbl td { padding: 12px 16px; border-bottom: 1px solid #EEE9DF; vertical-align: top; color: #55534E; line-height: 1.55; }
+  table.tbl td:first-child { color: #16181F; font-weight: 500; }
+  table.tbl tr:last-child td { border-bottom: 0; }
+  table.tbl td b, table.tbl td strong { color: #16181F; font-weight: 600; }
+  .code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .86em; background: rgba(22,24,31,.05);
+    padding: 1px 5px; border-radius: 6px; color: #16181F; overflow-wrap: anywhere; }
+  .sev { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .sev-crit { background: #FCEFED; color: #A3312A; } .sev-high { background: #FDF6E8; color: #9A6510; }
+  .sev-med { background: #EEF2FF; color: #2441D6; }
+  .note { border-radius: 16px; padding: 14px 18px; font-size: 13px; line-height: 1.6; background: rgba(255,255,255,.7);
+    box-shadow: inset 0 0 0 1px rgba(22,24,31,.07); color: #55534E; }
+  .note b { color: #16181F; }
+  .diagram { background: #fff; border-radius: 20px; padding: 20px; overflow-x: auto;
+    box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 18px 40px -32px rgba(22,24,31,.35); }
+  .mermaid { display: flex; justify-content: center; margin: 0; min-height: 80px; color: transparent; }
+  .mermaid[data-processed] { color: inherit; }
+  .mermaid svg { max-width: 100%; height: auto; }
+  .num { font-size: 44px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: var(--c); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: #fff; padding: 4px 12px;
+    font-size: 12.5px; color: rgba(22,24,31,.8); box-shadow: 0 0 0 1px rgba(22,24,31,.06); }
+  .switch a { padding: 6px 14px; border-radius: 999px; font-size: 13px; color: #55534E; transition: background .2s, color .2s; }
+  .switch a:hover { color: #16181F; }
+  .switch a[aria-current="page"] { background: #16181F; color: #fff; }
+  /* Relative Gantt (12 months from T0) */
+  .grow { display: grid; grid-template-columns: 220px 1fr; align-items: center; }
+  .glabel { font-size: 12.5px; color: #55534E; padding: 3px 12px 3px 0; }
+  .gtrack { position: relative; height: 28px;
+    background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100%/12 - 1px), #EEE9DF calc(100%/12 - 1px), #EEE9DF calc(100%/12)); }
+  .gbar { position: absolute; top: 6px; height: 16px; border-radius: 999px; }
+  .gdia { position: absolute; top: 8px; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg); border-radius: 2px; }
+  .gsec { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: #85817A; margin: 14px 0 4px; }
+  .gnow { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed #16181F; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 </head>
-<body class="bg-surface-2 text-ink font-sans">
+<body class="text-ink font-sans">
 
-<!-- Brand assets -->
-<svg width="0" height="0" class="absolute" aria-hidden="true" style="position:absolute">
+<svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false" style="position:absolute">
   <defs>
     <path id="finos-star" d="M46.5557 0.0078125L46.5186 28.3877L57.3887 2.17188L62.9316 4.46973L51.9746 30.8945L72.3066 10.7715L76.5273 15.0352L56.4443 34.9121L82.5615 24.126L84.8516 29.6719L58.624 40.5039H87V46.5039H58.5557L84.8271 57.4072L82.5273 62.9482L56.2588 52.0459L76.3447 72.1826L72.0967 76.4199L52.0957 56.3691L62.9668 82.5205L57.4268 84.8232L46.4814 58.4922L46.4453 87.0078L40.4453 87L40.4814 58.6152L29.6104 84.8359L24.0684 82.5381L35.0244 56.1123L14.6934 76.2363L10.4727 71.9727L30.5547 52.0957L4.43945 62.8818L2.14941 57.3359L28.377 46.5039H0V40.5039H28.4473L2.17285 29.5996L4.47266 24.0586L30.7422 34.9609L10.6562 14.8242L14.9043 10.5869L34.9014 30.6348L24.0332 4.4873L29.5732 2.18457L40.5186 28.5176L40.5557 0L46.5557 0.0078125Z"/>
     <g id="finos-wordmark">
@@ -59,306 +169,284 @@
       <path d="M311.632 80.248C307.792 80.248 304.336 79.672 301.264 78.52C298.192 77.304 295.567 75.576 293.391 73.336C291.279 71.096 289.647 68.376 288.495 65.176C287.343 61.976 286.768 58.36 286.768 54.328C286.768 50.296 287.343 46.68 288.495 43.48C289.647 40.28 291.279 37.56 293.391 35.32C295.567 33.08 298.192 31.384 301.264 30.232C304.336 29.016 307.792 28.408 311.632 28.408C315.472 28.408 318.927 29.016 321.999 30.232C325.071 31.384 327.663 33.08 329.775 35.32C331.951 37.56 333.616 40.28 334.768 43.48C335.92 46.68 336.495 50.296 336.495 54.328C336.495 58.36 335.92 61.976 334.768 65.176C333.616 68.376 331.951 71.096 329.775 73.336C327.663 75.576 325.071 77.304 321.999 78.52C318.927 79.672 315.472 80.248 311.632 80.248ZM311.632 69.688C314.832 69.688 317.328 68.696 319.12 66.712C320.912 64.728 321.807 61.912 321.807 58.264V50.392C321.807 46.744 320.912 43.928 319.12 41.944C317.328 39.96 314.832 38.968 311.632 38.968C308.431 38.968 305.935 39.96 304.143 41.944C302.351 43.928 301.456 46.744 301.456 50.392V58.264C301.456 61.912 302.351 64.728 304.143 66.712C305.935 68.696 308.431 69.688 311.632 69.688Z"/>
       <path d="M368.618 80.248C363.114 80.248 358.314 79.416 354.218 77.752C350.186 76.088 347.146 73.816 345.098 70.936L353.066 63.544C354.986 65.656 357.226 67.32 359.786 68.536C362.41 69.688 365.386 70.264 368.714 70.264C371.53 70.264 373.738 69.848 375.338 69.016C376.938 68.12 377.738 66.776 377.738 64.984C377.738 63.576 377.194 62.616 376.106 62.104C375.018 61.528 373.514 61.08 371.594 60.76L363.626 59.512C361.386 59.192 359.306 58.712 357.386 58.072C355.466 57.368 353.802 56.44 352.394 55.288C350.986 54.136 349.866 52.728 349.034 51.064C348.202 49.4 347.786 47.384 347.786 45.016C347.786 39.832 349.77 35.768 353.738 32.824C357.706 29.88 363.274 28.408 370.442 28.408C375.306 28.408 379.434 29.08 382.826 30.424C386.282 31.704 389.034 33.56 391.082 35.992L383.978 44.056C382.506 42.456 380.618 41.112 378.314 40.024C376.01 38.936 373.226 38.392 369.962 38.392C364.458 38.392 361.706 40.056 361.706 43.384C361.706 44.856 362.25 45.88 363.338 46.456C364.426 46.968 365.93 47.384 367.85 47.704L375.722 48.952C377.962 49.272 380.042 49.784 381.962 50.488C383.882 51.128 385.546 52.024 386.954 53.176C388.426 54.328 389.578 55.736 390.41 57.4C391.242 59.064 391.658 61.08 391.658 63.448C391.658 68.632 389.642 72.728 385.61 75.736C381.642 78.744 375.978 80.248 368.618 80.248Z"/>
     </g>
+    <g id="swift-mark">
+      <path d="M42.2207 1.43464H0V43.6553V48.9515L47.5168 1.43464H42.2207Z"/>
+      <path d="M47.5098 48.9516H95.0266V1.43483L47.5098 48.9516Z"/>
+      <path d="M0 96.4722L47.5168 48.9554H0V96.4722Z"/>
+      <path d="M95.0266 96.4722V48.9554L47.5098 96.4722H95.0266Z"/>
+    </g>
+    <g id="swift-wordmark">
+      <path d="M438.143 26.465V39.3632H424.181V71.6752C424.181 73.6698 424.181 75.1325 424.314 76.0633C424.314 76.9941 424.712 77.9249 425.244 78.9887C425.776 79.9195 426.574 80.5843 427.638 80.8503C428.702 81.1162 430.297 81.2492 432.425 81.2492C434.685 81.2492 436.547 81.2492 438.143 80.9832V95.3441C433.489 95.7431 429.632 95.876 426.707 95.876C418.463 95.876 412.745 94.5463 409.82 91.6209C406.894 88.6956 405.432 83.1108 405.432 74.8666V39.2302H393.996V26.465H405.432V5.72148H424.181V26.465H438.143Z"/>
+      <path d="M390.821 0.398917V14.2279C386.832 14.095 384.837 13.962 384.571 13.962C381.114 13.962 378.853 14.4939 377.79 15.4247C376.726 16.3555 376.194 18.2171 376.194 21.0095V26.4613H389.624V39.2265H376.327V95.0745H357.445V39.2265H346.275V26.4613H357.445V22.8711C357.445 14.8928 359.174 9.04205 362.897 5.45182C366.487 1.8616 372.471 0 380.981 0C381.912 0 382.975 0.13297 384.039 0.13297C385.103 0.13297 386.433 0.265939 387.762 0.265939C389.092 0.398917 390.023 0.398917 390.821 0.398917Z"/>
+      <path d="M335.909 0.397419V16.354H317.027V0.397419H335.909ZM335.909 26.4598V95.073H317.027V26.4598H335.909Z"/>
+      <path d="M199.037 26.4558H219.116L231.881 73.1288L243.45 26.4558H261.667L273.634 72.8628L286.399 26.4558H305.68L284.006 95.069H264.592L252.359 48.928L240.524 95.069H220.977L199.037 26.4558Z"/>
+      <path d="M189.433 46.4056L171.748 46.5385C171.216 43.0813 170.019 40.5548 167.891 39.2251C165.764 37.7624 162.706 37.0976 158.716 37.0976C155.392 37.0976 152.733 37.6295 150.871 38.8262C149.009 40.0229 148.079 41.7516 148.079 43.8791C148.079 46.2726 149.142 48.0012 151.27 49.065C153.398 49.9958 157.254 51.0596 162.706 52.2563C163.769 52.3893 164.434 52.5223 164.833 52.6552C168.024 53.1871 170.684 53.719 172.545 54.2509C174.407 54.7828 176.8 55.5806 179.46 56.6444C182.252 57.7081 184.38 59.0378 185.843 60.3676C187.438 61.6973 188.768 63.5589 189.832 65.8194C191.028 68.2129 191.56 70.8723 191.56 73.7977C191.56 80.9781 188.768 86.6959 183.183 90.818C177.598 95.0731 170.019 97.0676 160.179 97.0676C150.871 97.0676 143.292 95.0731 137.175 91.0839C131.191 87.0948 128.133 80.9781 128 72.7339H145.951C146.616 80.4462 151.536 84.1694 160.578 84.1694C164.434 84.1694 167.492 83.5046 169.753 81.9089C172.014 80.3133 173.077 78.3187 173.077 75.6593C173.077 73.1328 172.146 71.2712 170.019 70.2074C168.024 69.1437 164.301 68.0799 158.716 66.7502C158.317 66.7502 157.919 66.6172 157.653 66.4842C157.121 66.3513 155.658 66.0853 153.53 65.5534C151.403 65.1545 149.94 64.8886 149.142 64.6226C148.345 64.3567 146.882 63.9578 145.02 63.4259C143.159 62.894 141.696 62.4951 140.765 61.9632C139.967 61.4313 138.771 60.8994 137.308 60.1016C135.845 59.3038 134.782 58.506 133.984 57.5752C133.319 56.7773 132.521 55.7136 131.723 54.5168C130.925 53.3201 130.261 51.9904 129.995 50.3947C129.729 48.932 129.596 47.3364 129.596 45.4748C129.596 38.8262 132.122 33.6403 137.441 29.9171C142.627 26.3269 150.073 24.4653 159.647 24.4653C168.157 24.4653 175.205 26.3269 180.79 29.7842C186.241 33.3744 189.167 38.9592 189.433 46.4056Z"/>
+    </g>
   </defs>
 </svg>
 
-<div id="progress"></div>
-
-<!-- Header -->
-<header class="sticky top-0 z-50 bg-surface/90 backdrop-blur border-b border-line">
-  <div class="mx-auto max-w-content px-6 h-14 flex items-center gap-4">
-    <a href="#top" class="flex items-center gap-2.5">
-      <svg viewBox="0 0 392 87" class="h-4 w-auto text-ink" aria-label="finOS"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
-      <span class="text-line">·</span>
-      <span class="text-[13px] font-medium">OneSphere Malaysia</span>
-    </a>
-    <a href="index.html#top" class="hidden sm:inline-flex items-center gap-1 text-[12.5px] text-mute hover:text-ink transition-colors">
-      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3m0 0l3.5 3.5M3 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      finOS
-    </a>
-    <nav class="ml-auto hidden lg:flex items-center gap-1 text-[13px] text-mute">
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#opportunity">Opportunity</a>
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#product">Product</a>
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#platform">Platform</a>
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#regulatory">Regulatory</a>
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#questions">The four questions</a>
-      <a class="navlink px-2.5 py-2 rounded-md hover:text-ink" href="#plan">Plan</a>
-      <a class="px-3 py-1.5 ml-1 rounded-md bg-ink text-white hover:bg-ink-2" href="#recommendation">Recommendation</a>
-    </nav>
-  </div>
+<header class="sticky top-0 z-50 bg-[#FFFCFA]/80 backdrop-blur-md hair">
+  <div id="progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-accent z-10"></div>
+  <nav class="mx-auto max-w-content px-4 sm:px-6 lg:px-8" aria-label="Paper">
+    <div class="flex h-16 items-center gap-3 sm:gap-5">
+      <a href="./index.html#malaysia" class="flex items-center gap-2 shrink-0 text-ink" aria-label="Back to finOS by Swift">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="text-mute"><path d="M11 7H3m0 0l3.5 3.5M3 7l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 392 87" class="h-[19px] w-auto" aria-hidden="true" focusable="false"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
+        <span class="hidden sm:inline text-[12px] text-mute-2">by</span>
+        <svg viewBox="0 0 439 98" class="hidden sm:block h-[15px] w-auto" aria-hidden="true" focusable="false"><use href="#swift-mark" fill="#0E71DB"/><use href="#swift-wordmark" fill="currentColor"/></svg>
+      </a>
+      <ul class="hidden xl:flex items-center gap-0.5 ml-auto text-[13px] text-mute"><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#decision">Decision</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#summary">Summary</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#opportunity">Opportunity</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#product">Product</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#platform">Platform</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#regulatory">Regulatory</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#questions">Questions</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#plan">Plan</a></li><li><a class="px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="#risks">Risks</a></li></ul>
+      <div class="switch ml-auto xl:ml-2 flex items-center rounded-full bg-black/[0.04] p-1" role="navigation" aria-label="OneSphere papers">
+        <a href="./onesphere-malaysia-business.html" aria-current="page">Business</a>
+        <a href="./onesphere-malaysia-technical.html">Technical</a>
+      </div>
+      <button id="menuBtn" class="xl:hidden inline-flex items-center rounded-full border border-line bg-white px-3 py-1.5 text-[13px] font-medium" aria-expanded="false" aria-controls="mobileNav">Sections</button>
+    </div>
+    <div id="mobileNav" class="hidden xl:hidden pb-4"><ul class="grid sm:grid-cols-2 gap-0.5 text-[15px]"><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#decision">Decision</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#summary">Summary</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#opportunity">Opportunity</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#product">Product</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#platform">Platform</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#regulatory">Regulatory</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#questions">Questions</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#plan">Plan</a></li><li><a class="block px-3 py-2.5 rounded-md hover:bg-black/[0.04]" href="#risks">Risks</a></li></ul></div>
+  </nav>
 </header>
 
 <main id="top">
 
-<!-- Hero -->
-<section class="bg-navy text-white">
-  <div class="mx-auto max-w-content px-6 py-20 lg:py-28">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-6">Product paper · 2026-08-25 · for OneSphere &amp; Swift leadership</p>
-    <h1 class="text-[32px] lg:text-[48px] leading-[1.06] tracking-tightest font-semibold max-w-[20ch]">Launching OneSphere's lending business in Malaysia.</h1>
-    <p class="mt-6 text-[18px] leading-relaxed text-white/70 max-w-[62ch]">A remittance-linked credit product, built on <span class="text-white">finOS</span>, under a <span class="text-white">KPKT online-moneylending approval</span> — following the corridor SNPL design, built for OneSphere first and then reused by the corridors.</p>
-    <div class="mt-9 grid sm:grid-cols-3 gap-4 max-w-4xl">
-      <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">1 · Fund Phase 0</p><p class="text-[13.5px] text-white/70 leading-relaxed">A bounded 8-week pass to close the four make-or-break questions — before scope or budget is fixed.</p></div>
-      <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">2 · RNPL-first</p><p class="text-[13.5px] text-white/70 leading-relaxed">Adopt Remit-Now-Pay-Later (RNPL) as the launch product; defer the Pay Day Loan until it is viable under the rate cap.</p></div>
-      <div class="rounded-xl bg-navy-700 border border-white/10 p-5"><p class="text-[12px] text-accent font-semibold mb-1.5">3 · Build on finOS</p><p class="text-[13.5px] text-white/70 leading-relaxed">Follow the corridor SNPL design on finOS — built for OneSphere first and then reused by the corridors — rather than commissioning a greenfield lending stack.</p></div>
+<section class="relative pb-16 lg:pb-20">
+  <div class="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+    <div class="frame-lines px-2 sm:px-8 pt-14 sm:pt-20 lg:pt-24 pb-6 text-center reveal">
+      <p class="eyebrow mb-7"><span>Business paper · revised 22 Nov 2026</span></p>
+      <h1 class="mx-auto max-w-[20ch] text-[38px] sm:text-[52px] lg:text-[64px] leading-[1.02] tracking-tightest text-ink">Launching OneSphere's lending business <span class="text-accent">in Malaysia.</span></h1>
+      <p class="mx-auto mt-7 text-[17px] lg:text-[18.5px] leading-relaxed text-mute max-w-[62ch]">A remittance-linked lending business, built by Swift on <b class="text-ink font-medium">finOS</b>, under a KPKT online-moneylending approval — the corridor SNPL design, built for OneSphere first and then reused by the corridors.</p>
     </div>
-    <p class="mt-8 text-[13.5px] text-white/45 max-w-[70ch]">The launch is gated by a licence and four legal questions — not by engineering velocity. So this paper asks for a gate-by-gate commitment, and the first gate is cheap.</p>
-  </div>
-</section>
-
-<!-- Executive summary -->
-<section id="summary" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-mute-2 mb-4 reveal">Executive summary</p>
-    <div class="grid lg:grid-cols-2 gap-x-14 gap-y-8 reveal">
-      <div>
-        <h3 class="text-[18px] font-semibold tracking-tighter">The opportunity is real and specific</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">Hundreds of thousands of Nepali migrant workers in Malaysia are thin-file, income-earning, and remittance-dependent — underserved because they have no local bureau footprint. Their <span class="text-ink font-medium">remittance behaviour is a verifiable, proprietary cash-flow signal.</span> OneSphere, as IME Group's arm with Ria as partner, is unusually well placed to lend against it.</p>
-      </div>
-      <div>
-        <h3 class="text-[18px] font-semibold tracking-tighter">The vehicle is designed</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">The launch product, RNPL, is the <span class="text-ink font-medium">same mechanic as Swift's SNPL</span> designed for the UK→Nepal and Korea→Nepal corridors, same partner. Built on finOS, the lending core and its supporting components — identity, documents, notifications, integration, borrower and admin UI, MLOps — follow the corridor SNPL design: <span class="text-ink font-medium">built for OneSphere first and then reused by the corridors.</span></p>
-      </div>
-      <div>
-        <h3 class="text-[18px] font-semibold tracking-tighter">The gating is regulatory — and honest work</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">Three findings shape the whole plan: KPKT <span class="text-ink font-medium">advises lending only to citizens/PRs</span> (points at the migrant market); every agreement needs <span class="text-ink font-medium">human attestation</span> under s.27; and the <span class="text-ink font-medium">18% rate cap</span> makes the Pay Day Loan unviable while RNPL works.</p>
-      </div>
-      <div>
-        <h3 class="text-[18px] font-semibold tracking-tighter">The recommendation</h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-mute">Proceed — RNPL-first, on finOS — and treat the four questions as the plan's spine, not its footnotes. A launch that resolves them is defensible, differentiated, and builds the corridor SNPL design once — for OneSphere first, then reused by the corridors.</p>
-      </div>
+    <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center mt-8 reveal">
+      <div class="lg:col-span-7"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tm-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tm-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tm-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><linearGradient id="tm-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><linearGradient id="tm-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf5dd"/><stop offset="1" stop-color="#f4ebc9"/></linearGradient><linearGradient id="tm-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8dfc3"/><stop offset="1" stop-color="#ddd2b1"/></linearGradient><linearGradient id="tm-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tm-wall)"/><rect y="250" width="480" height="170" fill="url(#tm-floor)"/><rect y="220" width="480" height="44" fill="url(#tm-hz)"/><path d="M-10 300 C80 250 150 260 230 290 C300 316 360 250 490 270 V420 H-10z" fill="#6fd48f"/><path d="M-10 340 C90 310 200 330 280 350 C360 370 420 330 490 336 V420 H-10z" fill="#0dac65"/><path d="M60 400 C120 350 200 372 250 340 C300 308 340 300 392 262" fill="none" stroke="#fff6dc" stroke-width="12" stroke-linecap="round"/><circle cx="160" cy="356" r="13" fill="url(#tm-ballfa6900)"/><line x1="392" y1="262" x2="392" y2="178" stroke="#7a6a52" stroke-width="4" stroke-linecap="round"/><path d="M394 180 h66 l-14 18 l14 18 h-66z" fill="#e0393e"/><text x="402" y="204" font-size="14" font-weight="700" fill="#fff">MY</text><ellipse cx="114.0" cy="306.0" rx="23.1" ry="12.100000000000001" fill="#5b4a33" opacity="0.28" filter="url(#tm-blur)"/><path d="M88.0 300.0 v-40 a22 11.0 0 0 0 44 0 v40 a22 11.0 0 0 1 -44 0z" fill="url(#tm-cyl1)"/><ellipse cx="110" cy="260" rx="22" ry="11.0" fill="#fec250"/><path d="M270 300 l26 -56 l26 56z" fill="#ff8cc6"/><path d="M296 244 l26 56 h-10z" fill="#d9579c"/><rect width="480" height="420" filter="url(#tm-grain)" pointer-events="none"/></svg></div></div>
+      <figure class="lg:col-span-5 -mt-24 lg:mt-0 lg:-ml-24 mx-3 lg:mx-0 relative rounded-[20px] frost p-6">
+        <figcaption class="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute">At a glance</figcaption>
+        <dl class="space-y-3 text-[13.5px]"><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Launch product</dt><dd class="text-ink text-right">Remit Now Pay Later (RNPL)</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Lender of record</dt><dd class="text-ink text-right">OneSphere · KPKT licence issued 20 Nov 2026</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Remitter of record</dt><dd class="text-ink text-right">Ria</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Platform</dt><dd class="text-ink text-right">finOS · built by Swift in-house</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Next step</dt><dd class="text-ink text-right">Phase 0 · 8 weeks · not started</dd></div><div class="flex justify-between gap-4"><dt class="text-mute shrink-0">Pilot-ready</dt><dd class="text-ink text-right">≈ month 8 from Phase 0 start</dd></div></dl>
+        <p class="mt-5 pt-4 border-t border-black/10 text-[12.5px] leading-relaxed text-mute">Built by Swift's in-house engineering — no gate is a funding request. Gated by a licence and four legal questions, not by engineering.</p>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- Opportunity -->
-<section id="opportunity" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-10 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The opportunity</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">A creditworthy market, invisible to conventional credit.</h2>
+<section id="decision" class="chapter chapter-dark text-white ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>1 · The decision requested</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Approve a phased, RNPL-first launch — <span class="tone">starting with Phase 0.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-white/65 max-w-[68ch]">Approve a <b>phased, RNPL-first launch</b> of OneSphere's Malaysia lending business, built by Swift on <b>finOS</b> and operated under a <b>KPKT online-moneylending approval</b>. Concretely, three decisions:</p>
     </div>
-    <div class="grid md:grid-cols-3 gap-5 reveal">
-      <div class="rounded-xl border border-line bg-surface p-6"><h4 class="text-[15px] font-semibold tracking-tighter">The customer</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Documented Nepali work-permit holders earning a wage and remitting home on a regular cadence — <span class="text-ink">thin-file by definition</span>, excluded from mainstream credit despite being creditworthy on cash flow.</p></div>
-      <div class="rounded-xl border border-line bg-surface p-6"><h4 class="text-[15px] font-semibold tracking-tighter">The signal</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Remittance regularity, consistency and amount-stability are a <span class="text-ink">cash-flow proxy no generic lender has</span>. OneSphere sees it natively through Ria.</p></div>
-      <div class="rounded-xl border border-line bg-surface p-6"><h4 class="text-[15px] font-semibold tracking-tighter">The edge — RNPL</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Purpose-linked and verifiable (proceeds fund a real remittance), differentiated (proprietary signal on a proprietary rail), and the <span class="text-ink">fourth instance of one corridor product design</span>, not a one-off.</p></div>
-    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid md:grid-cols-3 gap-4 reveal"><div class="card p-6"><p class="num" style="font-size:34px">01</p><p class="mt-4 text-[15px] leading-relaxed text-white/75 [&_b]:text-white"><b>Start a bounded Phase 0</b> (8 weeks), staffed by Swift's in-house team, to close the four make-or-break questions in §7 — before scope is fixed. Phase 0 has not started yet.</p></div><div class="card p-6"><p class="num" style="font-size:34px">02</p><p class="mt-4 text-[15px] leading-relaxed text-white/75 [&_b]:text-white"><b>Adopt RNPL (Remit-Now-Pay-Later) as the launch product</b>, and <b>defer the Pay Day Loan</b> until its unit economics are proven under the interest-rate cap.</p></div><div class="card p-6"><p class="num" style="font-size:34px">03</p><p class="mt-4 text-[15px] leading-relaxed text-white/75 [&_b]:text-white"><b>Build on finOS</b>, following the corridor SNPL design — built for OneSphere first and then reused by the corridors — rather than commissioning a greenfield lending stack.</p></div></div>
+    <p class="mt-8 text-[15.5px] leading-relaxed text-white/65 max-w-[72ch] [&_b]:text-white reveal">This is not a request to approve a multi-quarter build up front. The launch is <b>gated by a licence and four legal questions, not by engineering velocity</b> — so the paper asks for a gate-by-gate commitment, with the first gate being small. Swift builds finOS and the RNPL solution with its own in-house engineers, so no gate is a funding request.</p></div>
   </div>
 </section>
-
-<!-- Product -->
-<section id="product" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-10 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The product</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">RNPL first. Pay Day Loan deferred, deliberately.</h2>
+<section id="summary" class="chapter chapter-paper ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>2 · Executive summary</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">A real opportunity, <span class="tone">gated by answerable questions.</span></h2>
+      
     </div>
-    <div class="grid lg:grid-cols-2 gap-6 reveal">
-      <div class="rounded-xl border border-line bg-surface p-6">
-        <div class="flex items-center gap-2"><h3 class="text-[16px] font-semibold tracking-tighter">RNPL — Remit-Now-Pay-Later</h3><span class="ml-auto inline-flex px-2 py-0.5 rounded-md bg-signal-greenbg text-signal-green text-[11px] font-medium border border-signal-green/20">Launch product</span></div>
-        <table class="w-full mt-4 text-[13px]">
-          <tbody class="[&_td]:py-1.5 [&_td:first-child]:text-mute-2 [&_td:last-child]:text-right [&_td:last-child]:tnum [&_td:last-child]:font-medium [&_tr]:border-b [&_tr]:border-line/60">
-            <tr><td>Principal</td><td>RM 300 – 2,000</td></tr>
-            <tr><td>Tenure</td><td>1 – 6 months</td></tr>
-            <tr><td>Purpose</td><td>Remittance (purpose-linked)</td></tr>
-            <tr><td>Repayment</td><td>DuitNow AutoDebit</td></tr>
-            <tr><td>Gross interest @ 18% cap</td><td>RM 2,000 / 6mo ≈ RM 180</td></tr>
-          </tbody>
-        </table>
-        <p class="mt-4 text-[13px] leading-relaxed text-mute"><span class="text-ink font-medium">RemitScore</span> blends remittance consistency &amp; relationship depth, behavioural reliability, and an affordability cushion — <span class="text-ink">rule-based and reproducible at launch</span>, with reason codes, not a black box.</p>
-      </div>
-      <div class="space-y-4">
-        <div class="rounded-xl border border-signal-amber/25 bg-signal-amberbg p-6">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-amber mb-2">Two cautions the pilot must resolve</p>
-          <ul class="text-[13px] leading-relaxed text-ink/80 space-y-2">
-            <li><span class="font-medium">The remittance signal is partly endogenous.</span> RNPL lends to fund remittance; a borrower remitting out of income and one remitting on credit look alike but are different risks. The pilot must flag debt-funded remittance and prove the signal predicts repayment before the weights are trusted.</li>
-            <li><span class="font-medium">Affordability shares a root with the signal</span> (income inferred from remittance). Treated as independent inputs, scores over-separate. The model must not double-count.</li>
-          </ul>
-        </div>
-        <div class="rounded-xl border border-signal-red/20 bg-signal-redbg p-6">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-red mb-2">Pay Day Loan — deferred</p>
-          <p class="text-[13px] leading-relaxed text-ink/80">At 18% p.a., a RM500 / 30-day advance earns <span class="font-medium tnum">~RM 7.40</span> gross — below its own eKYC cost — and <span class="font-medium">s.23 makes fee workarounds illegal</span>. Worst regulatory optics into a new regime; confounds the pilot. It re-enters scope only if the numbers work.</p>
-        </div>
-      </div>
+    <div class="mt-10 lg:mt-12"><div class="grid md:grid-cols-2 gap-4 reveal"><div class="card p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">The opportunity is real and specific</p><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">Hundreds of thousands of Nepali migrant workers in Malaysia are thin-file, income-earning, and remittance-dependent — underserved by conventional credit because they have no local bureau footprint. Their <b>remittance behaviour is a verifiable, proprietary cash-flow signal</b>. OneSphere, as IME Group's financial-services arm with Ria as remittance partner, is unusually well placed to lend against it.</p></div><div class="card p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">The vehicle is designed</p><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">OneSphere's launch product — RNPL — is the <i>same mechanic</i> as Swift's SNPL (Send-Now-Pay-Later) designed for the UK→Nepal and Korea→Nepal corridors, with the same partner. Built on finOS, the credit kernel, decisioning, servicing ledger and collections — and the supporting components (identity, documents, notifications, integration, borrower and admin UI, and native accounting) — follow the corridor SNPL design: <b>built for OneSphere first and then reused by the corridors</b>, not a Malaysia-only build.</p></div></div>
+    <div class="grid lg:grid-cols-12 gap-4 mt-4 reveal">
+      <div class="lg:col-span-7 card p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">The gating is regulatory, and it is honest work</p>
+        <p class="text-[14.5px] leading-relaxed text-mute mb-4">Three findings shape the entire plan, and none of them is an engineering problem:</p><ul class="space-y-3 text-[14px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>KPKT advises that online loans be given only to Malaysian citizens and permanent residents</b> (FAQ Q5). This is advisory, not statutory — but it points directly at the migrant target market, and approval runs through a discretionary committee. <b>This one question must be put to KPKT in writing before the product is designed.</b> Nothing else matters if the answer is no.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Every loan agreement requires human attestation</b> under s.27 of the Moneylenders Act 1951; an unattested agreement is void. This is the hardest constraint on a fully remote journey, and the BRD is silent on it.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>The interest-rate cap (18% p.a. unsecured) makes the Pay Day Loan look unviable</b> — a RM500 / 30-day advance earns ~RM7.40 gross, which does not cover its eKYC check. RNPL at larger tickets and longer tenures (RM2,000 / 6 months ≈ RM180 gross) is the workable product.</span></li></ul></div>
+      <div class="lg:col-span-5"><div class="card p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">The recommendation</p><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">Proceed — RNPL-first, on finOS — and <b>treat the four questions in §7 as the plan's spine, not its footnotes.</b> A launch paper that hid them would be worthless; a launch that resolves them is defensible, differentiated, and builds the corridor SNPL design once — for OneSphere first, then reused by the corridors.</p></div></div>
     </div>
+    <div class="note mt-5 reveal [&_.code]:whitespace-normal"><b>Evidence discipline.</b> Every regulatory figure and product parameter here is drawn from the primary-source reviews already in this repository — the KPKT licence-readiness strategy (<span class="code">reviews/ekpkt-licence-readiness-strategy.md</span>), the OneSphere BRD review and critique (<span class="code">reviews/onesphere-malaysia-brd-*.md</span>), and the finOS architecture (<span class="code">architecture/</span>, <span class="code">architecture diagram/standalone-architecture.md</span>). Where a number is a regulator's stated service standard rather than an observed one, or a legal position that still needs counsel, it is flagged. This paper does not invent figures to fill gaps.</div></div>
   </div>
 </section>
-
-<!-- Platform -->
-<section id="platform" class="bg-navy text-white border-b border-navy">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-24">
-    <div class="max-w-3xl mb-12 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The platform</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">finOS — a standalone lending platform, designed for the corridors and built for OneSphere first.</h2>
-      <p class="mt-5 text-[16px] leading-relaxed text-white/65">The lending core and its supporting components are shared across every corridor. Malaysia adds a product configuration and a regulatory pack — <span class="text-white">not a new platform.</span></p>
+<section id="opportunity" class="chapter chapter-lime ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>3 · The opportunity</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">A creditworthy market, <span class="tone">invisible to conventional credit.</span></h2>
+      
     </div>
-    <div class="grid md:grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden reveal mb-10">
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Supporting components</p><p class="text-[13px] text-white/65 leading-relaxed">Identity, documents, notifications, integration, task &amp; process, borrower and admin UI, AI framework — <span class="text-white">shared across corridors.</span></p></div>
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">Lending core</p><p class="text-[13px] text-white/65 leading-relaxed">Credit kernel, decisioning, servicing ledger, payments, collections, covenants, regulatory packs — <span class="text-white">shared with the corridors.</span></p></div>
-      <div class="bg-navy p-6"><p class="text-[11px] text-accent font-semibold mb-1">OneSphere Malaysia</p><p class="text-[13px] text-white/65 leading-relaxed">RNPL configuration (the same design as corridor SNPL), the client release, and the Malaysia/KPKT pack.</p></div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-4 reveal">
+      <div class="lg:col-span-5 space-y-4"><div class="card p-6"><p class="text-[15px] font-semibold tracking-tighter mb-2">The customer</p><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">Nepali migrant workers in Malaysia: documented work-permit holders, earning a wage, sending money home on a regular cadence. They are <b>thin-file by definition</b> — no CCRIS/CTOS history, no local credit relationship — and therefore excluded from mainstream credit despite being creditworthy on a cash-flow basis.</p></div><div class="card p-6"><p class="text-[15px] font-semibold tracking-tighter mb-2">The signal</p><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">Remittance regularity, consistency, and amount-stability are a <b>cash-flow proxy no generic lender has</b>. OneSphere sees it natively through Ria. A borrower who has remitted a stable sum every month for a year is demonstrating exactly the behaviour a lender wants to underwrite.</p></div></div>
+      <div class="lg:col-span-7 card p-7"><p class="text-[15px] font-semibold tracking-tighter mb-2">The product with the edge — RNPL</p>
+        <p class="text-[14.5px] leading-relaxed text-mute mb-5">Remit-Now-Pay-Later advances the remittance and collects it back over 1–6 months. It is:</p><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Purpose-linked and verifiable</b> — proceeds fund a real, observed transaction (a remittance to family), not unrestricted cash. That is strong purpose control and defensible regulatory optics.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Differentiated</b> — it is a proprietary signal on a proprietary rail, not a commodity loan.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>A corridor, not a one-off</b> — the identical mechanic is designed for UK→Nepal and Korea→Nepal. Malaysia is the first build of one corridor product design, which those corridors then reuse.</span></li></ul></div>
     </div>
-    <div class="grid lg:grid-cols-2 gap-8 reveal">
-      <div>
-        <h3 class="text-[17px] font-semibold tracking-tighter">The reuse map — cheaper and more credible than greenfield</h3>
-        <p class="mt-2 text-[14.5px] leading-relaxed text-white/60">The honest vendor position is <span class="text-white">requirement → existing finOS capability → gap to build</span>, not a greenfield quote. Onboarding, KYC, documents, notifications, integration and the lending core are built for OneSphere first and then reused by the corridors; the Malaysia/KPKT pack is a new, swappable pack alongside the planned NRB, SEBON and FCA packs — not a fork of the core.</p>
+    <div class="note mt-5 reveal"><b>Market direction of travel.</b> The migrant-lending opportunity is real but ethically and regulatorily sensitive (ILO/IOM flag migrant over-indebtedness). RNPL's purpose-linkage is exactly the structure that survives that scrutiny; an unrestricted payday product is exactly the structure that invites it. The opportunity and the recommended product shape point the same way.</div></div>
+  </div>
+</section>
+<section id="product" class="chapter chapter-blue ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>4 · The product</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">RNPL first. <span class="tone">Pay Day Loan deferred, deliberately.</span></h2>
+      
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-6 items-start">
+      <div class="lg:col-span-7 reveal">
+        <div class="card overflow-hidden"><div class="card-h flex items-center justify-between gap-3"><span>4.1 · RNPL — Remit-Now-Pay-Later</span><span class="rounded-full btn-chap px-3 py-0.5 text-[11px] font-semibold">Launch product</span></div><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:34%">Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Principal</td><td>RM 300 – 2,000</td></tr><tr><td>Tenure</td><td>1 – 6 months</td></tr><tr><td>Purpose</td><td>Remittance to Nepal (purpose-linked, proceeds tied to a verified transaction)</td></tr><tr><td>Repayment</td><td>DuitNow AutoDebit / direct-debit mandate</td></tr><tr><td>Underwriting</td><td><b>RemitScore</b> — alternative-data, cash-flow-based, rule-based and explainable at v1</td></tr><tr><td>Gross interest at the 18% p.a. cap</td><td>RM 2,000 / 6 months ≈ <b>RM 180</b>; RM 300 / 1 month ≈ RM 4.44</td></tr></tbody></table></div></div>
+        <p class="mt-5 text-[14.5px] leading-relaxed text-mute [&_b]:text-ink"><b>RemitScore</b> blends remittance consistency, remittance-relationship depth, behavioural reliability, an affordability cushion, and (over time) prior OneSphere repayment. It is deliberately <b>rule-based and reproducible at launch</b>, not a black box — decisions must replay from stored inputs and carry reason codes, which the licence and responsible-lending posture both require.</p>
       </div>
-      <div>
-        <h3 class="text-[17px] font-semibold tracking-tighter">The control that matters for a licence</h3>
-        <p class="mt-2 text-[14.5px] leading-relaxed text-white/60">Regulatory guardrails execute <span class="text-white">outside</span> policy scripts. The <span class="text-white">18% cap, the no-compounding rule and the fee prohibition are enforced by the platform and cannot be overridden</span> by a configuration mistake — and every decision replays exactly, years later, as regulator-facing evidence.</p>
+      <div class="lg:col-span-5 reveal card p-7">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-4">Two analytical cautions the pilot must resolve — stated plainly</p>
+        <div class="[&_b]:text-ink"><ul class="space-y-3 text-[14px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>The remittance signal is partly endogenous.</b> RNPL lends <i>to fund</i> remittance, and the score is driven by remittance history. A borrower remitting out of income and one remitting on OneSphere credit look similar to the model but are different risks. The pilot must flag debt-funded remittance and test whether the signal predicts repayment <i>before</i> the weights are trusted.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Affordability shares a root with the remittance signal</b> (income is inferred from remittance). Treated as independent inputs they will over-separate scores. The model must not double-count.</span></li></ul></div>
+        <p class="mt-5 pt-4 border-t border-black/10 text-[13.5px] leading-relaxed text-mute [&_b]:text-ink">These are not reasons to delay; they are the reason the launch is a <b>pilot that tests a thesis</b>, not a scale-up that assumes one.</p>
       </div>
     </div>
+    <div class="mt-6 reveal card p-7 lg:p-8 grid lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-4"><h3 class="text-[19px] font-semibold tracking-tighter ">4.2 · Pay Day Loan — deferred</h3><p class="mt-3 text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">The BRD proposes a parallel Pay Day Loan (RM 200–1,500, 14–45 days, unrestricted cash). The evidence says <b>defer it</b>:</p></div>
+      <div class="lg:col-span-8 [&_b]:text-ink"><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Unit economics fail at the cap.</b> At 18% p.a., a RM500 / 30-day advance earns ~RM7.40 gross — below the cost of the eKYC check alone. Fees cannot bridge the gap: <b>s.23 makes any other charge illegal, and sums paid are set off against the principal.</b></span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Worst regulatory optics in consumer credit</b>, into a brand-new CCA 2025 regime that invites scrutiny, with documented debt-spiral risk and no rollover cap in the BRD.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>It confounds the pilot</b> — its risk profile is nothing like RNPL's, so launching both together muddies the learnings and attaches payday's liability to RNPL's launch.</span></li></ul><p class="mt-4 text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">Deferring it is not abandoning it: it re-enters scope <b>only if</b> the flat-vs-reducing interest computation and a defensible fee position make the numbers work.</p></div>
+    </div></div>
   </div>
 </section>
-
-<!-- Regulatory -->
-<section id="regulatory" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-10 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The regulatory path — KPKT online moneylending</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">An endorsement on a moneylending licence — not an "eKPKT licence".</h2>
-      <p class="mt-5 text-[15px] leading-relaxed text-mute">There is no separate "eKPKT licence." OneSphere needs the Registrar's approval to conduct online moneylending — an additional condition endorsed on an existing Act 400 (PPW) licence. ~79 companies hold it today; all carry an ordinary <span class="font-mono text-[12.5px]">WL####/##/##</span> number.</p>
+<section id="platform" class="chapter chapter-ube ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>5 · The platform</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">finOS — <span class="tone">designed for the corridors, built for OneSphere first.</span></h2>
+      
     </div>
-    <div class="rounded-xl border border-line bg-surface p-5 mb-8 reveal">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-mute-2 mb-3">The sequence</p>
-      <div class="flex flex-col sm:flex-row items-stretch gap-2 text-[12.5px]">
-        <div class="flex-1 rounded-lg bg-signal-greenbg border border-signal-green/20 p-3"><span class="font-medium text-signal-green">1 · Full PPW licence issued ✓</span><br><span class="text-mute-2">premises + police screening cleared; &gt;90 days validity</span></div>
-        <div class="self-center text-line">→</div>
-        <div class="flex-1 rounded-lg bg-surface-2 border border-line p-3"><span class="font-medium">2 · Conditional approval</span><br><span class="text-mute-2">documented journey + system security certificate</span></div>
-        <div class="self-center text-line">→</div>
-        <div class="flex-1 rounded-lg bg-signal-greenbg border border-signal-green/20 p-3"><span class="font-medium text-signal-green">3 · Full approval</span><br><span class="text-mute-2">platform built + MYNIC (.my) domain registered</span></div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-2 gap-4 reveal"><div class="card p-7"><h3 class="text-[19px] font-semibold tracking-tighter ">5.1 · What finOS provides</h3><div class="mt-4"><div class="space-y-5"><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">finOS is a standalone lending platform. For this launch it splits into three parts:</p><div class="[&_b]:text-ink"><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Supporting components:</b> identity &amp; access, reference data, document management, notifications, enterprise integration, process &amp; task management, the borrower and admin UI, and the AI/ML framework — <b>part of finOS, shared across every corridor.</b></span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Lending core:</b> the credit kernel, decisioning, servicing ledger, payments, collections, covenants, the jurisdiction/regulatory packs, and native accounting (general ledger, cash and bank, financial statements — ADR-30), which OneSphere needs because it has no accounting system of its own (Q67).</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>RNPL for OneSphere Malaysia:</b> the product configuration, the client release, and its Malaysia pack.</span></li></ul></div></div></div></div><div class="card p-7"><h3 class="text-[19px] font-semibold tracking-tighter ">5.2 · The reuse map — cheaper and more credible than greenfield</h3><div class="mt-4"><div class="space-y-5"><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink">RNPL is <b>the same design as SNPL</b>, designed for two corridors with the same partner and built for OneSphere first. The honest vendor position is <b>"requirement → finOS capability (built for OneSphere first) → Malaysia-specific gap,"</b> not a greenfield quote:</p><div class="[&_b]:text-ink"><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span>Onboarding, KYC, documents, notifications, integration, multi-language UI, the AI/ML framework — <b>Swift finOS components, built for OneSphere first and then reused by the corridors.</b></span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span>The credit kernel, RemitScore decisioning, the servicing ledger, and collections — <b>the lending core, shared with the corridors.</b></span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span>The <b>Malaysia/KPKT regulatory pack</b> is a new, swappable pack alongside the planned NRB, SEBON, and FCA packs — not a fork of the core.</span></li></ul></div></div></div></div></div>
+    <div class="mt-4 reveal"><div class="card p-7"><h3 class="text-[19px] font-semibold tracking-tighter ">5.3 · The platform advantages that matter here</h3><div class="mt-4"><div class="space-y-5"><div class="[&_b]:text-ink"><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Regulatory guardrails execute outside policy scripts (D10).</b> The <b>18% p.a. cap, the no-compounding rule, and the fee prohibition are enforced by the platform and cannot be overridden by a configuration mistake</b> — the single most important control for a moneylending licence.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Every decision replays exactly, years later</b> — pinned policy versions + stored inputs. This is regulator-facing evidence, not a promise.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Policy is versioned like software</b> — RemitScore weights, templates, and pricing are versioned, effective-dated artifacts; the pilot's re-weighting is a controlled release, not a code change.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>swiftAI compresses configuration</b> — it drafts config and tests as proposals a human approves; it <b>never touches a credit decision.</b></span></li></ul></div></div></div></div></div></div>
+  </div>
+</section>
+<section id="regulatory" class="chapter chapter-lemon ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>6 · The regulatory path — KPKT online moneylending</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">An endorsement on a moneylending licence — <span class="tone">not an “eKPKT licence”.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">There is <b>no "eKPKT licence."</b> What OneSphere needs is <b>approval by the Registrar of Moneylenders to conduct online moneylending — an additional condition endorsed on an existing Act 400 (PPW) moneylending licence.</b> As of the KPKT register, ~79 companies hold this endorsement; all carry an ordinary <span class="code">WL####/##/##</span> licence number. Getting the terminology right matters in every filing.</p>
+    </div>
+    <div class="mt-10 lg:mt-12"><ol class="flex flex-col md:flex-row gap-3 reveal"><li class="card p-5 flex-1"><p class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-green">Step 1 · done ✓</p><p class="mt-2 text-[15px] font-semibold tracking-tighter">Conventional PPW licence fully issued</p><p class="mt-1 text-[13px] text-mute">premises + police screening cleared; &gt;90 days validity</p></li><li class="card p-5 flex-1"><p class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-chap">Step 2</p><p class="mt-2 text-[15px] font-semibold tracking-tighter">Conditional approval</p><p class="mt-1 text-[13px] text-mute">documented customer journey + system security certificate</p></li><li class="card p-5 flex-1"><p class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-chap">Step 3</p><p class="mt-2 text-[15px] font-semibold tracking-tighter">Full approval</p><p class="mt-1 text-[13px] text-mute">build platform + register MYNIC (.my) domain</p></li></ol>
+    <div class="note mt-4 reveal"><b>Update 2026-11-20:</b> OneSphere's <b>KPKT moneylending licence is issued</b> — step 1 is complete. The online application can now be lodged, with the finOS system plan as its documented customer journey and technology description; the stated 3–6-month processing standard runs from a complete application, and backlog remains a risk. More than 90 days of licence validity must remain when it is lodged. <i>(Open: whether the conditional tier still operates in 2026, or was a 2020–21 pioneer mechanism — this decides whether we build before or after applying.)</i></div>
+    <div class="grid lg:grid-cols-12 gap-6 mt-10 items-start">
+      <div class="lg:col-span-7 reveal"><div class="card overflow-hidden"><div class="card-h">6.3 · The hard constraints · Moneylenders Act 1951</div><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:30%">Constraint</th><th>Provision</th></tr></thead><tbody><tr><td><b>Interest cap</b></td><td><b>18% p.a. unsecured</b>, <b>12% p.a. secured</b> (s.17A(1)); breach voids the agreement (s.17A(3))</td></tr><tr><td><b>Compounding / default-rate hike</b></td><td><b>Prohibited</b> (s.17)</td></tr><tr><td><b>Default charge</b></td><td>8% p.a. simple on arrears only; does <b>not</b> count toward the cap</td></tr><tr><td><b>Other fees</b></td><td><b>Illegal (s.23)</b> — arrangement, platform, service, processing fees are not workarounds; sums paid set off against principal</td></tr><tr><td><b>Attestation</b></td><td><b>s.27</b> — a qualified person must explain the terms and certify the borrower appears to understand; <b>unattested = void (s.27(3))</b></td></tr><tr><td><b>Delivery before lending</b></td><td>s.16 — a duly-stamped copy of the (Schedule J/K) agreement delivered to the borrower <b>before</b> money is lent</td></tr><tr><td><b>One premises</b></td><td>s.6/s.8 — business only at the one authorised address; the licence must be displayed there</td></tr><tr><td><b>Borrower eligibility</b></td><td><b>FAQ Q5 advises lending only to citizens / permanent residents</b> (advisory, not statutory)</td></tr></tbody></table></div></div></div>
+      <div class="lg:col-span-5 space-y-4 reveal">
+        <div class="card p-6"><h3 class="text-[19px] font-semibold tracking-tighter ">6.4 · CCA 2025 — not a live deadline</h3><div class="mt-3"><div class="space-y-5"><p class="text-[14px] leading-relaxed text-mute [&_b]:text-ink">The Consumer Credit Act 2025 (Act 873, in force 1 March 2026) is <b>not a live deadline for OneSphere.</b> Phase 1 regulates six <i>previously unregulated</i> activities (BNPL, factoring, leasing, debt collection, impaired-loan acquisition, debt counselling); <b>moneylending under Act 400 is expressly excluded (s.79(1)(b))</b> and stays with KPKT. Migration of moneylending into the new regime is <b>Phase 2 (~2028–2030)</b> — plan for it, don't gate on it. One thing does apply now: CCA Phase 1 <b>expands KPKT's remit to Islamic financing and Ar-Rahnu</b>, so an Islamic product line is a live, KPKT-regulated option (see §8).</p></div></div></div>
+        <div class="card p-6"><h3 class="text-[19px] font-semibold tracking-tighter ">6.5 · Data residency</h3><div class="mt-3"><div class="space-y-5"><p class="text-[14px] leading-relaxed text-mute [&_b]:text-ink">Swift's engineering is in Kathmandu; Malaysia has cross-border data-transfer and PDPA obligations. <b>Hosting is decided:</b> OneSphere runs as a dedicated finOS deployment, hosted by Swift in a Malaysian region (ADR-24). Still open, and assessed in Phase 0: <b>whether Swift engineers in Kathmandu may access production data, and whether production-like UAT data is permissible.</b></p></div></div></div>
       </div>
-      <p class="mt-3 text-[12.5px] text-signal-green">Update 20 Nov 2026: OneSphere's KPKT moneylending licence is issued. The online application can now be lodged, with the finOS system plan as its documented journey; 3–6 months' stated processing from a complete application.</p>
-    </div>
-    <div class="grid lg:grid-cols-[1.3fr_1fr] gap-6 reveal">
-      <div class="rounded-xl border border-line bg-surface overflow-hidden">
-        <div class="px-5 py-3 border-b border-line text-[13px] font-semibold">Hard constraints · Moneylenders Act 1951</div>
-        <table class="w-full text-[13px]">
-          <tbody class="[&_td]:px-5 [&_td]:py-2.5 [&_tr]:border-b [&_tr]:border-line/60 [&_td:first-child]:font-medium [&_td:first-child]:w-[38%]">
-            <tr><td>Interest cap</td><td class="text-mute">18% p.a. unsecured · 12% secured (s.17A); breach voids the agreement</td></tr>
-            <tr><td>Compounding</td><td class="text-mute">Prohibited; no default-triggered rate hike (s.17)</td></tr>
-            <tr><td>Other fees</td><td class="text-mute"><span class="text-signal-red font-medium">Illegal (s.23)</span> — not a workaround; sums paid set off against principal</td></tr>
-            <tr><td>Attestation</td><td class="text-mute">s.27 — a qualified person explains &amp; certifies understanding; <span class="text-signal-red font-medium">unattested = void</span></td></tr>
-            <tr><td>Before lending</td><td class="text-mute">s.16 — stamped agreement delivered before money is lent</td></tr>
-            <tr><td>Premises</td><td class="text-mute">s.6/s.8 — one authorised address only</td></tr>
-            <tr><td>Borrower eligibility</td><td class="text-mute"><span class="text-signal-amber font-medium">FAQ Q5 advises citizens / PRs only</span> (advisory)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="space-y-4">
-        <div class="rounded-xl border border-line bg-surface p-5"><h4 class="text-[14px] font-semibold tracking-tighter">CCA 2025 — not a live deadline</h4><p class="mt-2 text-[13px] leading-relaxed text-mute">Act 873 (in force 1 Mar 2026) regulates six other activities; <span class="text-ink">moneylending stays with KPKT (s.79(1)(b))</span>. Migration is Phase 2 (~2028) — plan for it, don't gate on it. Phase 1 does expand KPKT's remit to Islamic moneylending &amp; Ar-Rahnu.</p></div>
-        <div class="rounded-xl border border-line bg-surface p-5"><h4 class="text-[14px] font-semibold tracking-tighter">Data residency</h4><p class="mt-2 text-[13px] leading-relaxed text-mute">Swift's engineering is in Kathmandu; Malaysia has cross-border + PDPA obligations. This decides hosting, production-data access, and UAT data — assess before build.</p></div>
-      </div>
-    </div>
+    </div></div>
   </div>
 </section>
-
-<!-- The four questions -->
-<section id="questions" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-10 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">The four questions that decide the business</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">Ordered by "nothing downstream matters until this is answered."</h2>
-      <p class="mt-4 text-[15px] text-mute">Phase 0 exists to close them.</p>
+<section id="questions" class="chapter chapter-tang ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>7 · The four questions that decide the business</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Ordered by “nothing downstream matters <span class="tone">until this is answered.”</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">These are the make-or-break inputs. Phase 0 exists to close them. <b>They are ordered by "nothing downstream matters until this is answered."</b></p>
     </div>
-    <div class="grid md:grid-cols-2 gap-5 reveal">
-      <div class="rounded-xl border border-signal-red/20 bg-signal-redbg p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-red mb-2">01 · Citizenship — ask KPKT in writing, now</p><p class="text-[13.5px] leading-relaxed text-ink/80">Will KPKT approve online lending to documented work-permit holders? A firm "no" reshapes the entire thesis. <span class="font-medium">Nothing else matters until this is answered.</span></p></div>
-      <div class="rounded-xl border border-signal-amber/25 bg-signal-amberbg p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-amber mb-2">02 · Attestation (s.27) online</p><p class="text-[13.5px] leading-relaxed text-ink/80">How is human attestation satisfied remotely? Ask KPKT; reverse-engineer from an approved licensee's Schedule J. Shapes the entire UX before it is designed.</p></div>
-      <div class="rounded-xl border border-signal-amber/25 bg-signal-amberbg p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-amber mb-2">03 · Rate-cap unit economics</p><p class="text-[13.5px] leading-relaxed text-ink/80">Is 12%/18% computed flat or on reducing balance? It materially changes yield — and confirms RNPL's economics and the Pay Day Loan's non-viability.</p></div>
-      <div class="rounded-xl border border-signal-amber/25 bg-signal-amberbg p-6"><p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-signal-amber mb-2">04 · MSB exposure on the remittance leg</p><p class="text-[13.5px] leading-relaxed text-ink/80">Structure so Ria is remitter of record and OneSphere merely lends. If OneSphere holds/nets/transmits funds cross-border, a Money Services Business licence is likely in play.</p></div>
-    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid md:grid-cols-2 gap-4 reveal"><div class="card p-6"><p class="num" style="font-size:34px">01</p><p class="mt-4 text-[15.5px] font-semibold tracking-tighter">Citizenship (ask KPKT in writing, immediately)</p><p class="mt-2 text-[14px] leading-relaxed text-mute [&_b]:text-ink"><i>Will KPKT approve online lending to documented work-permit holders?</i> If the answer is a firm no, the migrant thesis needs a citizen/PR segment or a different structure — and everything else waits.</p></div><div class="card p-6"><p class="num" style="font-size:34px">02</p><p class="mt-4 text-[15.5px] font-semibold tracking-tighter">Attestation (s.27) in an online journey</p><p class="mt-2 text-[14px] leading-relaxed text-mute [&_b]:text-ink">How is human attestation satisfied remotely? Ask KPKT; reverse-engineer from an approved licensee's published Schedule J. This shapes the entire UX before it is designed.</p></div><div class="card p-6"><p class="num" style="font-size:34px">03</p><p class="mt-4 text-[15.5px] font-semibold tracking-tighter">Rate-cap unit economics</p><p class="mt-2 text-[14px] leading-relaxed text-mute [&_b]:text-ink">Confirm whether 12%/18% is computed <b>flat or on reducing balance</b> — it materially changes yield — and confirm RNPL's economics and Pay Day Loan's non-viability.</p></div><div class="card p-6"><p class="num" style="font-size:34px">04</p><p class="mt-4 text-[15.5px] font-semibold tracking-tighter">MSB exposure on the remittance leg</p><p class="mt-2 text-[14px] leading-relaxed text-mute [&_b]:text-ink">Structure so <b>Ria is remitter of record</b> and OneSphere merely lends; if OneSphere holds, nets, or transmits customer funds cross-border, a Money Services Business Act 2011 licence is likely in play. KPKT monitors online lenders with BNM — assume BNM interest.</p></div></div>
+    <div class="note mt-5 reveal"><i>(Second-tier, before scope freeze: data residency; the security-certificate definition — digital CA vs security-assurance report; whether the conditional tier still runs; a system-enforced product sandbox gate; and the migrant-specific credit controls in §9.)</i></div></div>
   </div>
 </section>
-
-<!-- Plan -->
-<section id="plan" class="border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-10 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">Delivery plan</p>
-      <h2 class="text-[28px] lg:text-[36px] leading-[1.1] tracking-tightest font-semibold">Gated by the licence and the answers — not by engineering.</h2>
+<section id="islamic" class="chapter chapter-lime ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>8 · Islamic option · Malaysia-specific, optional</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">A Shariah-compliant variant is available — <span class="tone">demand-led, never a rate-cap workaround.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">Because CCA Phase 1 brings Islamic moneylending and Ar-Rahnu under KPKT, a Shariah-compliant RNPL variant is available — and the finOS design models Islamic finance as a <b>contract type in the kernel</b> (fixed sale price, profit recognised not accrued; a first-class charity-payable ledger for late charges), with a <b>Malaysia/BNM Shariah pack</b> distinct from the Gulf/AAOIFI pack.</p>
     </div>
-    <div class="rounded-xl border border-line bg-surface overflow-hidden reveal">
-      <table class="w-full text-[13px]">
-        <thead><tr class="text-left text-mute-2 border-b border-line [&_th]:px-5 [&_th]:py-3 [&_th]:font-medium"><th class="w-[16%]">Phase</th><th>Scope</th><th class="w-[26%]">Exit gate</th></tr></thead>
-        <tbody class="[&_td]:px-5 [&_td]:py-3.5 [&_td]:align-top [&_tr]:border-b [&_tr]:border-line/60">
-          <tr><td class="font-medium">Phase 0 — Resolve<br><span class="text-mute-2 font-normal">8 wks</span></td><td class="text-mute">Put the four questions to KPKT/counsel in writing; read the full Garis Panduan; lodge the online-lending application (conventional licence issued 2026-11-20; online approval pending); solution-design RNPL; produce a defensible estimate.</td><td class="text-mute">Four questions answered; RNPL economics confirmed; go/no-go on the migrant segment.</td></tr>
-          <tr><td class="font-medium">Phase 1 — Build RNPL on finOS</td><td class="text-mute">RNPL configuration on finOS (reuse map); RemitScore v1 (rule-based, replayable); Malaysia/KPKT pack (18% cap + s.23 + s.27 flow as guardrails); native accounting (the OS-R1 books slice, mode A — Q67); Ria integration as lender-only; documented journey + security certificate.</td><td class="text-mute">Conditional → full KPKT online approval; platform pilot-ready.</td></tr>
-          <tr><td class="font-medium">Pilot — RNPL-first</td><td class="text-mute">Bounded borrower cohort; test the remittance-signal thesis; <span class="text-ink font-medium">explicit stop criteria</span> — max loss appetite, DPD ceiling, scorecard floor, kill switch.</td><td class="text-mute">Thesis validated on real repayment before any scale.</td></tr>
-          <tr><td class="font-medium">Phase 2 — Scale / extend</td><td class="text-mute">Scale RNPL; re-evaluate Pay Day Loan only if viable; consider an Islamic variant and the CCA-2028 migration.</td><td class="text-mute">Commercial envelope met; regulatory posture stable.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-12 gap-4 reveal">
+      <div class="lg:col-span-7 card p-7"><p class="text-[14.5px] leading-relaxed text-mute mb-5">Two cautions govern any Islamic move:</p><div class="[&_b]:text-ink"><ul class="space-y-3 text-[14.5px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>It must be demand-led, not a rate-cap workaround.</b> Using an Islamic wrapper to escape the 18% ceiling would be <i>hilah</i> (impermissible artifice) and would draw equal regulatory hostility.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 rounded-full shrink-0" style="background:var(--c)"></span><span><b>Counsel must confirm</b> whether the s.17A cap applies to an Islamic profit rate, whether separate prescribed agreement forms exist, and whether a Shariah Committee is mandatory for a KPKT Islamic moneylender.</span></li></ul></div></div>
+      <div class="lg:col-span-5 card p-7 flex flex-col justify-between"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap">Recommendation</p><p class="mt-3 text-[18px] leading-snug tracking-tighter [&_b]:font-semibold"><b>Conventional RNPL first</b>; scope an Islamic variant only if a genuine market wants it and the questions above are answered.</p></div>
+    </div></div>
   </div>
 </section>
-
-<!-- Risks -->
-<section id="risks" class="bg-surface-2 border-b border-line">
-  <div class="mx-auto max-w-content px-6 py-16 lg:py-20">
-    <div class="max-w-3xl mb-8 reveal">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-4">Top risks</p>
-      <h2 class="text-[26px] lg:text-[32px] leading-[1.1] tracking-tightest font-semibold">Stated openly, with the mitigation next to each.</h2>
+<section id="plan" class="chapter chapter-blue ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>9 · Delivery plan</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Gated by the licence and the answers — <span class="tone">not by engineering.</span></h2>
+      <p class="mt-5 text-[16px] leading-relaxed text-mute max-w-[68ch]">The plan is <b>gated by the licence and the §7 answers, not by engineering.</b> Phase 0 has not started; all timings count from its start (T0, date not yet set). Engineering can be pilot-ready around month 8.</p>
     </div>
-    <div class="rounded-xl border border-line bg-surface overflow-hidden reveal">
-      <table class="w-full text-[13px]">
-        <thead><tr class="text-left text-mute-2 border-b border-line [&_th]:px-5 [&_th]:py-3 [&_th]:font-medium"><th class="w-[36%]">Risk</th><th class="w-[12%]">Severity</th><th>Mitigation</th></tr></thead>
-        <tbody class="[&_td]:px-5 [&_td]:py-3 [&_td]:align-top [&_tr]:border-b [&_tr]:border-line/60">
-          <tr><td>KPKT declines online lending to work-permit holders</td><td><span class="text-signal-red font-medium">Critical</span></td><td class="text-mute">Ask in writing first; hold scope; fallback citizen/PR segment.</td></tr>
-          <tr><td>Online approval slips &gt; 1 year</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Critical path; conventional licence issued 2026-11-20, online approval pending; no live date until clear.</td></tr>
-          <tr><td>Rate cap makes Pay Day Loan (and thin RNPL) unviable</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">RNPL-first at larger tickets; defer PDL; confirm flat-vs-reducing.</td></tr>
-          <tr><td>Remittance leg triggers MSB licensing</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Ria as remitter of record; counsel + BNM view before design freeze.</td></tr>
-          <tr><td>Data residency blocks Kathmandu processing</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Assess in Phase 0; Malaysia-region hosting; anonymised UAT data.</td></tr>
-          <tr><td>Migrant flight-risk (borrower leaves Malaysia)</td><td><span class="text-signal-amber font-medium">High</span></td><td class="text-mute">Tenure ≤ remaining permit validity; permit-expiry early warning; real write-off policy.</td></tr>
-          <tr><td>RemitScore thesis unproven / endogenous</td><td class="text-mute">Med-High</td><td class="text-mute">Pilot explicitly tests it; flag debt-funded remittance; no scale until validated.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="mt-10 lg:mt-12"><div class="card overflow-hidden reveal"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:20%">Phase</th><th>Scope</th><th style="width:28%">Exit gate</th></tr></thead><tbody><tr><td><b>Phase 0 — Resolve</b> (8 wks)</td><td>Put the §7 questions to KPKT/counsel in writing; obtain and read the full 27-page Garis Panduan; lodge the online-lending application (conventional licence issued 2026-11-20; online approval pending); solution-design RNPL; produce a defensible estimate</td><td><b>OS-G0</b> — the four questions answered; RNPL economics confirmed; go/no-go on the migrant segment</td></tr><tr><td><b>Phase 1 — Build RNPL on finOS</b> (24 wks)</td><td>RNPL configuration on finOS (§5.2 map); RemitScore v1 (rule-based, replayable); Malaysia/KPKT regulatory pack (18% cap + s.23 + s.27 flow as guardrails); native accounting (the OS-R1 books slice, mode A — Q67); Ria integration as lender-only; documented customer journey + security certificate for KPKT</td><td>Conditional → full KPKT online approval; platform ready for pilot</td></tr><tr><td><b>Pilot — RNPL-first</b> (16 wks)</td><td>Bounded borrower cohort; test the remittance-signal thesis; <b>explicit stop criteria</b> (max loss appetite, DPD ceiling, scorecard-performance floor, kill switch)</td><td><b>OS-G1</b> — thesis validated on real repayment before any scale</td></tr><tr><td><b>Phase 2 — Scale / extend</b></td><td>Scale RNPL; <b>re-evaluate Pay Day Loan only if viable</b>; consider Islamic variant and CCA-2028 migration</td><td>Commercial envelope met; regulatory posture stable</td></tr></tbody></table></div></div>
+    <p class="mt-5 text-[14px] text-mute reveal">The technical paper carries the month-by-month timeline. <a class="text-chap font-medium" href="./onesphere-malaysia-technical.html#timeline">See the delivery timeline →</a></p></div>
   </div>
 </section>
-
-<!-- Recommendation -->
-<section id="recommendation" class="bg-ink text-white">
-  <div class="mx-auto max-w-content px-6 py-20 lg:py-24">
-    <div class="reveal max-w-3xl">
-      <p class="text-[11.5px] font-semibold tracking-[0.14em] uppercase text-accent mb-5">Recommendation</p>
-      <h2 class="text-[28px] lg:text-[38px] leading-[1.12] tracking-tightest font-semibold max-w-[22ch]">Proceed — RNPL-first, on finOS. Fund Phase 0 now.</h2>
-      <p class="mt-6 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">The opportunity is genuine and OneSphere is uniquely placed to serve it. The vehicle is designed — RNPL is the corridor SNPL design on the same finOS core, built for OneSphere first and then reused by the corridors — so the shared design and the time-to-market advantage are real.</p>
-      <p class="mt-4 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">The constraints are equally real — the citizenship advisory, the s.27 attestation, the rate cap, and the MSB question decide the business — but they are <span class="text-white">answerable, and the plan is built around answering them first, cheaply, before any scope is frozen.</span></p>
-      <p class="mt-4 text-[16px] leading-relaxed text-white/65 max-w-[64ch]">Don't launch a Pay Day Loan into a rate cap that makes it unviable. Do launch RNPL — a differentiated, purpose-linked product on a proprietary signal — as a pilot that tests its thesis, on a platform whose guardrails make the licence defensible and whose shared design makes the launch fast.</p>
+<section id="risks" class="chapter chapter-drag ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>10 · Risks and mitigations</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Stated openly, <span class="tone">with the mitigation next to each.</span></h2>
+      
     </div>
+    <div class="mt-10 lg:mt-12"><div class="card overflow-hidden reveal"><div class="scroll-x"><table class="tbl"><thead><tr><th style="width:32%">Risk</th><th style="width:13%">Severity</th><th>Mitigation</th></tr></thead><tbody><tr><td>KPKT declines online lending to work-permit holders</td><td><span class="sev sev-crit">Critical</span></td><td>Ask in writing first (§7.1); hold scope until answered; fallback citizen/PR segment</td></tr><tr><td>Online approval slips &gt;1 year</td><td><span class="sev sev-high">High</span></td><td>Treat as critical path; conventional licence issued 2026-11-20, online approval pending; no live date until the path is clear</td></tr><tr><td>Rate cap makes Pay Day Loan (and thin RNPL tickets) unviable</td><td><span class="sev sev-high">High</span></td><td>RNPL-first at larger tickets; defer PDL; confirm flat-vs-reducing computation</td></tr><tr><td>Remittance leg triggers MSB licensing</td><td><span class="sev sev-high">High</span></td><td>Structure Ria as remitter of record; counsel + BNM view before RNPL design freeze</td></tr><tr><td>Data residency blocks Kathmandu processing</td><td><span class="sev sev-high">High</span></td><td>Malaysia-region hosting decided (ADR-24); production-data access from Kathmandu assessed in Phase 0; anonymised UAT data</td></tr><tr><td>Migrant flight-risk (borrower leaves Malaysia)</td><td><span class="sev sev-high">High</span></td><td>Hard rule: tenure ≤ remaining permit validity (minus buffer); permit-expiry early warning; employment-termination trigger; a real write-off policy</td></tr><tr><td>No bureau (CCRIS/CTOS) check in pilot</td><td><span class="sev sev-med">Medium-High</span></td><td>Cautious limits; self-declared + remittance affordability; add bureau before scale</td></tr><tr><td>RemitScore thesis unproven / endogenous signal</td><td><span class="sev sev-med">Medium-High</span></td><td>Pilot explicitly tests it; flag debt-funded remittance; no scale until validated</td></tr></tbody></table></div></div></div>
   </div>
 </section>
-
+<section id="worked" class="chapter chapter-paper ">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-24">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>11 · How we will know it worked</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Four tests, <span class="tone">set before the pilot starts.</span></h2>
+      
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid md:grid-cols-2 gap-4 reveal"><div class="card p-6 flex gap-4"><span class="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-ink text-white grid place-items-center text-[12px]">✓</span><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink"><b>The four §7 questions are answered</b> and the migrant segment is confirmed approvable.</p></div><div class="card p-6 flex gap-4"><span class="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-ink text-white grid place-items-center text-[12px]">✓</span><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink"><b>KPKT full online approval is granted</b> on the RNPL customer journey.</p></div><div class="card p-6 flex gap-4"><span class="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-ink text-white grid place-items-center text-[12px]">✓</span><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink"><b>The pilot validates the remittance-signal thesis</b> on real repayment — approval rate, 7+/30+ DPD, and score-band separation within pre-set bounds — <b>or the stop criteria halt it cleanly.</b></p></div><div class="card p-6 flex gap-4"><span class="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-ink text-white grid place-items-center text-[12px]">✓</span><p class="text-[14.5px] leading-relaxed text-mute [&_b]:text-ink"><b>RNPL unit economics hold</b> at the rate cap; the platform's guardrails demonstrably prevent a cap or fee breach; every decision replays for a regulator.</p></div></div></div>
+  </div>
+</section>
+<section id="recommendation" class="chapter chapter-dark text-white overflow-hidden mb-4 sm:mb-6">
+  <div class="mx-auto max-w-content px-6 lg:px-8 pt-20 lg:pt-24 pb-12">
+    <div class="reveal max-w-[60rem]">
+      <p class="eyebrow mb-6"><span>12 · Recommendation</span></p>
+      <h2 class="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tightest">Proceed — RNPL-first, on finOS. <span class="tone">Start Phase 0 now.</span></h2>
+      
+    </div>
+    <div class="mt-10 lg:mt-12"><div class="grid lg:grid-cols-2 gap-6 reveal">
+      <p class="text-[16px] leading-relaxed text-white/70 [&_b]:text-white">The opportunity is genuine and OneSphere is uniquely placed to serve it. The vehicle is designed: RNPL is the corridor SNPL design on the same finOS core, built for OneSphere first and then reused by the corridors, so the shared design and the time-to-market advantage are real. The constraints are equally real — the citizenship advisory, the s.27 attestation, the rate cap, and the MSB question decide the business — but they are <b>answerable, and the plan is built around answering them first, cheaply, before any scope is frozen.</b></p>
+      <p class="text-[16px] leading-relaxed text-white/70 [&_b]:text-white">Do not launch the Pay Day Loan into a rate cap that makes it unviable and a new regime that invites scrutiny. Do launch RNPL — a differentiated, purpose-linked product on a proprietary signal — as a pilot that tests its thesis, on a platform whose guardrails make the licence defensible and whose shared design makes the launch fast.</p>
+    </div>
+    <p class="mt-8 text-[12.5px] leading-relaxed text-white/45 max-w-[90ch] [&_.code]:bg-white/10 [&_.code]:text-white/80 reveal"><i>Sources in this repository: <span class="code">reviews/ekpkt-licence-readiness-strategy.md</span> · <span class="code">reviews/onesphere-malaysia-brd-review.md</span> · <span class="code">reviews/onesphere-malaysia-brd-critique.md</span> · <span class="code">architecture diagram/standalone-architecture.md</span> · <span class="code">architecture/01-executive-summary.md</span> · <span class="code">architecture/02-system-architecture.md</span> · <span class="code">architecture/19-roadmap.md</span> · <span class="code">architecture/20-islamic-finance.md</span> · <span class="code">research/09-migrant-corridor-lending.md</span> · <span class="code">PRODUCT-PAPER.md</span>.</i></p>
+    <div class="mt-10 flex flex-wrap gap-3 reveal">
+      <a href="./onesphere-malaysia-technical.html" class="inline-flex items-center gap-1.5 rounded-lg btn-chap px-5 py-2.5 text-[14.5px] font-medium">Read the technical paper →</a>
+      <a href="./index.html#malaysia" class="inline-flex items-center gap-1.5 rounded-lg border border-white/20 px-5 py-2.5 text-[14.5px] font-medium text-white hover:bg-white/10">Back to finOS</a>
+    </div></div>
+  </div>
+<div class="px-3 pb-3 sm:px-4 sm:pb-4"><div class="toy rounded-[24px] lg:rounded-[32px]"><svg viewBox="0 0 1200 220" class="block w-full h-auto" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hs-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hs-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hs-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient></defs><rect width="1200" height="220" fill="#1f2330"/><path d="M0 120 C200 60 380 90 560 120 C760 150 920 70 1200 100 V220 H0z" fill="#2f6b4c"/><path d="M0 170 C220 130 420 150 640 170 C860 190 1000 140 1200 150 V220 H0z" fill="#0dac65"/><path d="M700 112 l26 -54 l26 54z" fill="#ff9fcf"/><path d="M300 150 v-34 a26 26 0 0 1 52 0 v34 h-14 v-30 a12 12 0 0 0 -24 0 v30z" fill="#7d97ff"/><path d="M960.0 120.0 v-40 a20 10.0 0 0 0 40 0 v40 a20 10.0 0 0 1 -40 0z" fill="url(#hs-cyl0)"/><ellipse cx="980" cy="80" rx="20" ry="10.0" fill="#fec250"/><circle cx="520" cy="150" r="13" fill="url(#hs-ballfa6900)"/><rect width="1200" height="220" filter="url(#hs-grain)" pointer-events="none"/></svg></div></div>
+</section>
 </main>
 
-<!-- Footer -->
-<footer class="bg-ink text-white/50 border-t border-white/10">
-  <div class="mx-auto max-w-content px-6 py-10">
-    <div class="flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between">
-      <div class="flex items-center gap-2.5 text-white">
-        <svg viewBox="0 0 392 87" class="h-[18px] w-auto" aria-label="finOS"><use href="#finos-star" fill="#4E9BEA"/><use href="#finos-wordmark" fill="currentColor"/></svg>
-        <span class="text-[12px] text-white/40">by</span>
-        <span class="text-[13px] text-white/70 font-medium">Swift</span>
-      </div>
-      <p class="text-[11.5px] text-white/40 max-w-[52ch]">Product paper for OneSphere &amp; Swift leadership. Grounded in the KPKT licence-readiness strategy, the OneSphere BRD reviews, and the finOS architecture. Regulatory positions require confirmation by Malaysian counsel.</p>
+<footer class="text-mute">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-6 md:items-center md:justify-between text-[13px]">
+    <div class="flex items-center gap-2.5 text-ink shrink-0">
+      <svg viewBox="0 0 392 87" class="h-[19px] w-auto" role="img" aria-label="finOS" focusable="false"><use href="#finos-star" fill="#0E71DB"/><use href="#finos-wordmark" fill="currentColor"/></svg>
+      <span class="text-[12px] text-mute-2">by</span>
+      <svg viewBox="0 0 439 98" class="h-[15px] w-auto" aria-hidden="true" focusable="false"><use href="#swift-mark" fill="#0E71DB"/><use href="#swift-wordmark" fill="currentColor"/></svg>
     </div>
+    <p class="text-[12.5px] leading-relaxed text-mute-2 max-w-[70ch]">Business companion to the OneSphere Malaysia technical paper, for OneSphere and Swift leadership. Regulatory figures come from the primary-source reviews in the finOS repository; legal positions require confirmation by Malaysian counsel.</p>
+    <a class="shrink-0 hover:text-ink transition-colors" href="./onesphere-malaysia-technical.html">Read the technical paper →</a>
   </div>
 </footer>
 
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: false, securityLevel: 'strict', theme: 'base',
+    themeVariables: { fontFamily: 'Instrument Sans, system-ui, sans-serif', fontSize: '13px',
+      primaryColor: '#EEF4FF', primaryBorderColor: '#3859F9', primaryTextColor: '#16181F',
+      secondaryColor: '#F9F8F6', tertiaryColor: '#FFFFFF', lineColor: '#85817A',
+      clusterBkg: '#F9F8F6', clusterBorder: '#DAD4C8', noteBkgColor: '#FFF8D9', noteBorderColor: '#A15C07',
+      actorBkg: '#EEF4FF', actorBorder: '#3859F9', signalColor: '#55534E', signalTextColor: '#16181F' },
+    flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true },
+    sequence: { useMaxWidth: true, actorMargin: 40 }
+  });
+  // Render one at a time with our own ids: the default ids are time-based and can collide.
+  const blocks = [...document.querySelectorAll('pre.mermaid')];
+  for (const [i, el] of blocks.entries()) {
+    try {
+      const { svg, bindFunctions } = await mermaid.render('os-diagram-' + i, el.textContent);
+      el.innerHTML = svg; el.setAttribute('data-processed', 'true'); bindFunctions?.(el);
+    } catch (err) { console.error('diagram', i, err); el.setAttribute('data-processed', 'error'); }
+  }
+</script>
 <script>
-  // Scroll progress
+(() => {
+  'use strict';
   const bar = document.getElementById('progress');
-  const onScroll = () => {
-    const h = document.documentElement;
-    const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-    bar.style.transform = 'scaleX(' + p + ')';
-  };
+  const onScroll = () => { const h = document.documentElement; bar.style.transform = 'scaleX(' + (h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1)) + ')'; };
   document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  // Nav active state
-  const links = [...document.querySelectorAll('header .navlink')];
-  const map = new Map(links.map((l) => [l.getAttribute('href').slice(1), l]));
-  const so = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { const l = map.get(e.target.id); if (l) l.setAttribute('aria-current', e.isIntersecting ? 'true' : 'false'); });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  ['opportunity','product','platform','regulatory','questions','plan'].forEach((id) => { const s = document.getElementById(id); if (s) so.observe(s); });
+  const btn = document.getElementById('menuBtn'), menu = document.getElementById('mobileNav');
+  btn.addEventListener('click', () => { const open = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!open)); menu.classList.toggle('hidden', open); });
+  menu.addEventListener('click', e => { if (e.target.closest('a')) { btn.setAttribute('aria-expanded', 'false'); menu.classList.add('hidden'); } });
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+})();
 </script>
 </body>
 </html>
