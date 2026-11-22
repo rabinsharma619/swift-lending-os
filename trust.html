@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust &amp; compliance · finOS</title>
+<meta name="description" content="Compliance built into the finOS architecture, how the platform earns trust, and how it compares with the alternatives.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NyA4NyI+PHBhdGggZD0iTTQ2LjU1NTcgMC4wMDc4MTI1TDQ2LjUxODYgMjguMzg3N0w1Ny4zODg3IDIuMTcxODhMNjIuOTMxNiA0LjQ2OTczTDUxLjk3NDYgMzAuODk0NUw3Mi4zMDY2IDEwLjc3MTVMNzYuNTI3MyAxNS4wMzUyTDU2LjQ0NDMgMzQuOTEyMUw4Mi41NjE1IDI0LjEyNkw4NC44NTE2IDI5LjY3MTlMNTguNjI0IDQwLjUwMzlIODdWNDYuNTAzOUg1OC41NTU3TDg0LjgyNzEgNTcuNDA3Mkw4Mi41MjczIDYyLjk0ODJMNTYuMjU4OCA1Mi4wNDU5TDc2LjM0NDcgNzIuMTgyNkw3Mi4wOTY3IDc2LjQxOTlMNTIuMDk1NyA1Ni4zNjkxTDYyLjk2NjggODIuNTIwNUw1Ny40MjY4IDg0LjgyMzJMNDYuNDgxNCA1OC40OTIyTDQ2LjQ0NTMgODcuMDA3OEw0MC40NDUzIDg3TDQwLjQ4MTQgNTguNjE1MkwyOS42MTA0IDg0LjgzNTlMMjQuMDY4NCA4Mi41MzgxTDM1LjAyNDQgNTYuMTEyM0wxNC42OTM0IDc2LjIzNjNMMTAuNDcyNyA3MS45NzI3TDMwLjU1NDcgNTIuMDk1N0w0LjQzOTQ1IDYyLjg4MThMMi4xNDk0MSA1Ny4zMzU5TDI4LjM3NyA0Ni41MDM5SDBWNDAuNTAzOUgyOC40NDczTDIuMTcyODUgMjkuNTk5Nkw0LjQ3MjY2IDI0LjA1ODZMMzAuNzQyMiAzNC45NjA5TDEwLjY1NjIgMTQuODI0MkwxNC45MDQzIDEwLjU4NjlMMzQuOTAxNCAzMC42MzQ4TDI0LjAzMzIgNC40ODczTDI5LjU3MzIgMi4xODQ1N0w0MC41MTg2IDI4LjUxNzZMNDAuNTU1NyAwTDQ2LjU1NTcgMC4wMDc4MTI1WiIgZmlsbD0iIzBFNzFEQiIvPjwvc3ZnPg==">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    { DEFAULT: '#16181F', 2: '#282C35' },
+          navy:   { DEFAULT: '#1B2160', 700: '#242B78', 600: '#2E3790' },
+          accent: { DEFAULT: '#3859F9', hover: '#2441D6', soft: '#EEF2FF' },
+          mute:   { DEFAULT: '#55534E', 2: '#85817A' },
+          line:   { DEFAULT: '#E0DEDC', 2: '#EEE9DF' },
+          surface:{ DEFAULT: '#FFFFFF', 2: '#F9F8F6' },
+          oat:    { DEFAULT: '#F9F8F6', 50: '#FFFCFA', 200: '#F3F2ED', 300: '#EEE9DF', 400: '#DAD4C8' },
+          signal: { amber: '#9A6510', amberbg: '#FDF6E8', green: '#12704A', greenbg: '#EDF7F2', red: '#A3312A', redbg: '#FCEFED' }
+        },
+        fontFamily: {
+          sans: ['Instrument Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+        },
+        letterSpacing: { tightest: '-.035em', tighter: '-.025em' },
+        maxWidth: { content: '76rem' }
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { --ease: cubic-bezier(.16,1,.3,1); }
+
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  ::selection { background: #3859F9; color: #fff; }
+
+  /* Purposeful motion — one reveal, once, on entry */
+  .reveal { opacity: 0; transform: translateY(10px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+
+  /* Focus discipline */
+  :focus-visible { outline: 2px solid #3859F9; outline-offset: 3px; border-radius: 3px; }
+  .no-ring:focus-visible { outline-offset: -2px; }
+
+  /* Hairline dividers that survive fractional DPR */
+  .hair { box-shadow: inset 0 -1px 0 #E0DEDC; }
+
+  /* Numeric tabular alignment for data */
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* Nav underline indicator */
+  .navlink { position: relative; }
+  .navlink[aria-current="true"]::after, .navlink[aria-current="page"]::after {
+    content: ''; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 1.5px; background: #16181F;
+  }
+
+  /* Scroll progress */
+  #progress { transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* Segmented control */
+  .seg[aria-selected="true"] { background: #16181F; color: #fff; }
+  .seg[aria-selected="true"] .segdot { background: #3859F9; }
+
+  /* Module row expansion */
+  .mod-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
+  .mod-panel > div { overflow: hidden; }
+  .mod-row[aria-expanded="true"] + .mod-panel { grid-template-rows: 1fr; }
+  .mod-row[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  .chev { transition: transform .3s var(--ease); }
+
+  /* Hero lifecycle — geometry and paint transitions carry the motion */
+  .lc-stage circle { transition: r .35s var(--ease), fill .35s var(--ease), stroke .35s var(--ease); }
+  .lc-stage text   { transition: fill .35s var(--ease); }
+  #lc-fill         { transition: y2 .55s var(--ease); }
+  #lc-note         { transition: y .55s var(--ease); }
+  .lc-pip          { transition: fill .4s var(--ease); }
+  #lc-branch-path, #lc-branch-dot, #lc-branch-label { transition: stroke .4s var(--ease), fill .4s var(--ease); }
+
+  /* Follow-one-loan controls */
+  .fl-prod[aria-selected="true"] { background: #16181F; color: #fff; }
+  .fl-step { transition: background .25s var(--ease); }
+  .fl-step[aria-selected="true"] { background: #fff; }
+  .fl-step[aria-selected="true"] > span:last-child { color: #16181F; }
+  .fl-step[aria-selected="true"]::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c, #3859F9);
+  }
+  .fl-step[data-done="true"] > span:first-child { color: var(--c, #3859F9); }
+
+  /* Swift Intelligence at-work demo */
+  .ai-scn[aria-selected="true"] { background: #7934F0; color: #fff; border-color: #7934F0; }
+  .ai-agent.on   { border-color: #7934F0; background: #F1EBFF; color: #16181F; font-weight: 500; }
+  .ai-agent.used { color: #3C4759; }
+  .ai-gate.on    { color: #1F7A4D; }
+  .ai-gate.on .ai-dot      { background: #1F7A4D; }
+  .ai-gate.pending         { color: #9A6510; }
+  .ai-gate.pending .ai-dot { background: #9A6510; }
+  #ai-log { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.18) transparent; overscroll-behavior: contain; }
+  #ai-log::-webkit-scrollbar { width: 6px; }
+  #ai-log::-webkit-scrollbar-track { background: transparent; }
+  #ai-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); border-radius: 3px; }
+  #ai-log::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
+  .ai-line { animation: ai-in .3s var(--ease) both; }
+  @keyframes ai-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .ai-line { animation: none; } }
+
+  /* Diagram layer emphasis */
+  .layer { transition: opacity .35s var(--ease); }
+  .dim .layer:not(.on) { opacity: .22; }
+
+  /* ── Clay-style system ─────────────────────────────────────────
+     Warm oat page; each chapter is a rounded pastel card that overlaps
+     the one before it. --c is the chapter colour, --tone the second
+     line of a two-tone headline. */
+  :root { --c: #16181F; --c-ink: #fff; --c-bg: transparent; --tone: #85817A; }
+  html { background: #F9F8F6; }
+  body { background: #F9F8F6; font-feature-settings: "ss01", "cv11"; }
+  h1, h2 { font-weight: 500 !important; letter-spacing: -0.04em !important; text-wrap: balance; }
+  h3, h4 { letter-spacing: -0.015em; }
+  .tone { color: var(--tone); }
+
+  .chapter { position: relative; margin: 0 10px; border-radius: 28px; background: var(--c-bg);
+             box-shadow: 0 -1px 0 rgba(22,24,31,.04), 0 -18px 40px -30px rgba(22,24,31,.35); }
+  @media (min-width: 640px)  { .chapter { margin: 0 16px; border-radius: 36px; } }
+  @media (min-width: 1280px) { .chapter { margin: 0 28px; border-radius: 44px; } }
+  .chapter + .chapter { margin-top: -44px; }
+  .chapter-blue  { --c: #3859F9; --c-bg: #EEF4FF; --tone: #3859F9; }
+  .chapter-lime  { --c: #5F6E00; --c-bg: #F8FAE3; --tone: #6A7A00; }
+  .chapter-tang  { --c: #C2410C; --c-bg: #FDF1EA; --tone: #C2410C; }
+  .chapter-ube   { --c: #7934F0; --c-bg: #F4F0FF; --tone: #7934F0; }
+  .chapter-drag  { --c: #B0078A; --c-bg: #FCEFF7; --tone: #B0078A; }
+  .chapter-lemon { --c: #A15C07; --c-bg: #FFF8D9; --tone: #A15C07; }
+  .chapter-paper { --c: #16181F; --c-bg: #FFFFFF; --tone: #85817A; }
+  .chapter-dark  { --c: #FADF7C; --c-ink: #16181F; --c-bg: #16181F; --tone: #FADF7C; }
+  .text-chap { color: var(--c); }
+
+  /* Pill eyebrow with trailing ghost discs */
+  .eyebrow { display: inline-flex; align-items: center; isolation: isolate; }
+  .eyebrow > span { order: 1; position: relative; z-index: 2; background: var(--c); color: var(--c-ink);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 13px 6px 14px; border-radius: 999px; line-height: 1.3; }
+  .eyebrow::before, .eyebrow::after { content: ''; width: 26px; height: 26px; border-radius: 999px;
+    margin-left: -16px; background: var(--c); }
+  .eyebrow::before { order: 2; opacity: .32; z-index: 1; }
+  .eyebrow::after  { order: 3; opacity: .16; }
+
+  /* Buttons */
+  .btn-chap { background: var(--c); color: var(--c-ink); }
+  .btn-chap:hover { filter: brightness(.92); }
+
+  /* Toy panels and the hero stage */
+  .toy { border-radius: 24px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(22,24,31,.05); }
+  .toy svg { display: block; }
+  @media (min-width: 1024px) { .toy { border-radius: 28px; } }
+  .frame-lines { background-image: linear-gradient(#E0DEDC,#E0DEDC), linear-gradient(#E0DEDC,#E0DEDC);
+    background-size: 1px 100%, 1px 100%; background-position: left top, right top; background-repeat: no-repeat; }
+  .frost { background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -24px rgba(22,24,31,.35), 0 0 0 1px rgba(22,24,31,.05); }
+
+  /* Logo-wall tiles */
+  .wall { background: rgba(255,255,255,.55); border: 1px solid #fff; border-radius: 28px;
+    box-shadow: 0 24px 60px -36px rgba(22,24,31,.3); }
+  .wall-tile { border-radius: 18px; box-shadow: 0 0 0 1px rgba(22,24,31,.05); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .wall-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(22,24,31,.06), 0 14px 30px -18px rgba(22,24,31,.35); }
+  .mode-badge { font-size: 30px; line-height: 1; font-weight: 500; letter-spacing: -.04em; color: #3859F9; white-space: nowrap; }
+
+  /* Softer geometry everywhere inside the page */
+  main .rounded-xl { border-radius: 20px; }
+  main .rounded-lg { border-radius: 12px; }
+  main .rounded-md { border-radius: 10px; }
+  .seg, .fl-prod, .ai-scn { border-radius: 999px !important; }
+  [aria-label="Architecture views"] { border-radius: 999px !important; }
+
+  @media (prefers-reduced-motion: reduce) { .wall-tile { transition: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
+    .mod-panel { transition: none; }
+    .chev, .layer { transition: none; }
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+</style>
+</head>
+
+<body class="bg-oat text-ink font-sans antialiased">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-3 focus:left-3 focus:bg-ink focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:text-sm">Skip to content</a>
+
+<!-- Brand assets — declared once, referenced by <use>. The wordmark inherits currentColor
+     so the same lockup works on light and dark surfaces without a second copy. -->
+<svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <path id="finos-star" d="M46.5557 0.0078125L46.5186 28.3877L57.3887 2.17188L62.9316 4.46973L51.9746 30.8945L72.3066 10.7715L76.5273 15.0352L56.4443 34.9121L82.5615 24.126L84.8516 29.6719L58.624 40.5039H87V46.5039H58.5557L84.8271 57.4072L82.5273 62.9482L56.2588 52.0459L76.3447 72.1826L72.0967 76.4199L52.0957 56.3691L62.9668 82.5205L57.4268 84.8232L46.4814 58.4922L46.4453 87.0078L40.4453 87L40.4814 58.6152L29.6104 84.8359L24.0684 82.5381L35.0244 56.1123L14.6934 76.2363L10.4727 71.9727L30.5547 52.0957L4.43945 62.8818L2.14941 57.3359L28.377 46.5039H0V40.5039H28.4473L2.17285 29.5996L4.47266 24.0586L30.7422 34.9609L10.6562 14.8242L14.9043 10.5869L34.9014 30.6348L24.0332 4.4873L29.5732 2.18457L40.5186 28.5176L40.5557 0L46.5557 0.0078125Z"/>
+    <g id="finos-wordmark">
+      <path d="M116.96 68.056H131.552V40.6H116V29.56H131.552V22.36C131.552 18.136 132.768 14.712 135.2 12.088C137.696 9.4 141.536 8.056 146.72 8.056H163.52V19.096H145.76V29.56H163.52V40.6H145.76V68.056H161.312V79.096H116.96V68.056Z"/>
+      <path d="M199.578 23.224C196.378 23.224 194.139 22.584 192.859 21.304C191.643 19.96 191.035 18.36 191.035 16.504V13.72C191.035 11.8 191.643 10.2 192.859 8.92C194.139 7.64 196.378 7 199.578 7C202.778 7 204.986 7.64 206.202 8.92C207.483 10.2 208.123 11.8 208.123 13.72V16.504C208.123 18.36 207.483 19.96 206.202 21.304C204.986 22.584 202.778 23.224 199.578 23.224ZM176.73 68.056H192.475V40.6H176.73V29.56H206.683V68.056H221.275V79.096H176.73V68.056Z"/>
+      <path d="M231.509 79.096V29.56H245.717V38.584H246.293C246.869 37.176 247.573 35.864 248.405 34.648C249.237 33.432 250.229 32.376 251.381 31.48C252.597 30.52 253.973 29.784 255.509 29.272C257.109 28.696 258.901 28.408 260.885 28.408C263.253 28.408 265.429 28.824 267.413 29.656C269.397 30.424 271.093 31.608 272.501 33.208C273.909 34.808 274.997 36.76 275.765 39.064C276.597 41.368 277.013 44.024 277.013 47.032V79.096H262.805V48.952C262.805 42.552 260.021 39.352 254.453 39.352C253.365 39.352 252.277 39.512 251.189 39.832C250.165 40.088 249.237 40.536 248.405 41.176C247.573 41.752 246.901 42.488 246.389 43.384C245.941 44.28 245.717 45.336 245.717 46.552V79.096H231.509Z"/>
+      <path d="M311.632 80.248C307.792 80.248 304.336 79.672 301.264 78.52C298.192 77.304 295.567 75.576 293.391 73.336C291.279 71.096 289.647 68.376 288.495 65.176C287.343 61.976 286.768 58.36 286.768 54.328C286.768 50.296 287.343 46.68 288.495 43.48C289.647 40.28 291.279 37.56 293.391 35.32C295.567 33.08 298.192 31.384 301.264 30.232C304.336 29.016 307.792 28.408 311.632 28.408C315.472 28.408 318.927 29.016 321.999 30.232C325.071 31.384 327.663 33.08 329.775 35.32C331.951 37.56 333.616 40.28 334.768 43.48C335.92 46.68 336.495 50.296 336.495 54.328C336.495 58.36 335.92 61.976 334.768 65.176C333.616 68.376 331.951 71.096 329.775 73.336C327.663 75.576 325.071 77.304 321.999 78.52C318.927 79.672 315.472 80.248 311.632 80.248ZM311.632 69.688C314.832 69.688 317.328 68.696 319.12 66.712C320.912 64.728 321.807 61.912 321.807 58.264V50.392C321.807 46.744 320.912 43.928 319.12 41.944C317.328 39.96 314.832 38.968 311.632 38.968C308.431 38.968 305.935 39.96 304.143 41.944C302.351 43.928 301.456 46.744 301.456 50.392V58.264C301.456 61.912 302.351 64.728 304.143 66.712C305.935 68.696 308.431 69.688 311.632 69.688Z"/>
+      <path d="M368.618 80.248C363.114 80.248 358.314 79.416 354.218 77.752C350.186 76.088 347.146 73.816 345.098 70.936L353.066 63.544C354.986 65.656 357.226 67.32 359.786 68.536C362.41 69.688 365.386 70.264 368.714 70.264C371.53 70.264 373.738 69.848 375.338 69.016C376.938 68.12 377.738 66.776 377.738 64.984C377.738 63.576 377.194 62.616 376.106 62.104C375.018 61.528 373.514 61.08 371.594 60.76L363.626 59.512C361.386 59.192 359.306 58.712 357.386 58.072C355.466 57.368 353.802 56.44 352.394 55.288C350.986 54.136 349.866 52.728 349.034 51.064C348.202 49.4 347.786 47.384 347.786 45.016C347.786 39.832 349.77 35.768 353.738 32.824C357.706 29.88 363.274 28.408 370.442 28.408C375.306 28.408 379.434 29.08 382.826 30.424C386.282 31.704 389.034 33.56 391.082 35.992L383.978 44.056C382.506 42.456 380.618 41.112 378.314 40.024C376.01 38.936 373.226 38.392 369.962 38.392C364.458 38.392 361.706 40.056 361.706 43.384C361.706 44.856 362.25 45.88 363.338 46.456C364.426 46.968 365.93 47.384 367.85 47.704L375.722 48.952C377.962 49.272 380.042 49.784 381.962 50.488C383.882 51.128 385.546 52.024 386.954 53.176C388.426 54.328 389.578 55.736 390.41 57.4C391.242 59.064 391.658 61.08 391.658 63.448C391.658 68.632 389.642 72.728 385.61 75.736C381.642 78.744 375.978 80.248 368.618 80.248Z"/>
+    </g>
+    <g id="swift-mark">
+      <path d="M42.2207 1.43464H0V43.6553V48.9515L47.5168 1.43464H42.2207Z"/>
+      <path d="M47.5098 48.9516H95.0266V1.43483L47.5098 48.9516Z"/>
+      <path d="M0 96.4722L47.5168 48.9554H0V96.4722Z"/>
+      <path d="M95.0266 96.4722V48.9554L47.5098 96.4722H95.0266Z"/>
+    </g>
+    <g id="swift-wordmark">
+      <path d="M438.143 26.465V39.3632H424.181V71.6752C424.181 73.6698 424.181 75.1325 424.314 76.0633C424.314 76.9941 424.712 77.9249 425.244 78.9887C425.776 79.9195 426.574 80.5843 427.638 80.8503C428.702 81.1162 430.297 81.2492 432.425 81.2492C434.685 81.2492 436.547 81.2492 438.143 80.9832V95.3441C433.489 95.7431 429.632 95.876 426.707 95.876C418.463 95.876 412.745 94.5463 409.82 91.6209C406.894 88.6956 405.432 83.1108 405.432 74.8666V39.2302H393.996V26.465H405.432V5.72148H424.181V26.465H438.143Z"/>
+      <path d="M390.821 0.398917V14.2279C386.832 14.095 384.837 13.962 384.571 13.962C381.114 13.962 378.853 14.4939 377.79 15.4247C376.726 16.3555 376.194 18.2171 376.194 21.0095V26.4613H389.624V39.2265H376.327V95.0745H357.445V39.2265H346.275V26.4613H357.445V22.8711C357.445 14.8928 359.174 9.04205 362.897 5.45182C366.487 1.8616 372.471 0 380.981 0C381.912 0 382.975 0.13297 384.039 0.13297C385.103 0.13297 386.433 0.265939 387.762 0.265939C389.092 0.398917 390.023 0.398917 390.821 0.398917Z"/>
+      <path d="M335.909 0.397419V16.354H317.027V0.397419H335.909ZM335.909 26.4598V95.073H317.027V26.4598H335.909Z"/>
+      <path d="M199.037 26.4558H219.116L231.881 73.1288L243.45 26.4558H261.667L273.634 72.8628L286.399 26.4558H305.68L284.006 95.069H264.592L252.359 48.928L240.524 95.069H220.977L199.037 26.4558Z"/>
+      <path d="M189.433 46.4056L171.748 46.5385C171.216 43.0813 170.019 40.5548 167.891 39.2251C165.764 37.7624 162.706 37.0976 158.716 37.0976C155.392 37.0976 152.733 37.6295 150.871 38.8262C149.009 40.0229 148.079 41.7516 148.079 43.8791C148.079 46.2726 149.142 48.0012 151.27 49.065C153.398 49.9958 157.254 51.0596 162.706 52.2563C163.769 52.3893 164.434 52.5223 164.833 52.6552C168.024 53.1871 170.684 53.719 172.545 54.2509C174.407 54.7828 176.8 55.5806 179.46 56.6444C182.252 57.7081 184.38 59.0378 185.843 60.3676C187.438 61.6973 188.768 63.5589 189.832 65.8194C191.028 68.2129 191.56 70.8723 191.56 73.7977C191.56 80.9781 188.768 86.6959 183.183 90.818C177.598 95.0731 170.019 97.0676 160.179 97.0676C150.871 97.0676 143.292 95.0731 137.175 91.0839C131.191 87.0948 128.133 80.9781 128 72.7339H145.951C146.616 80.4462 151.536 84.1694 160.578 84.1694C164.434 84.1694 167.492 83.5046 169.753 81.9089C172.014 80.3133 173.077 78.3187 173.077 75.6593C173.077 73.1328 172.146 71.2712 170.019 70.2074C168.024 69.1437 164.301 68.0799 158.716 66.7502C158.317 66.7502 157.919 66.6172 157.653 66.4842C157.121 66.3513 155.658 66.0853 153.53 65.5534C151.403 65.1545 149.94 64.8886 149.142 64.6226C148.345 64.3567 146.882 63.9578 145.02 63.4259C143.159 62.894 141.696 62.4951 140.765 61.9632C139.967 61.4313 138.771 60.8994 137.308 60.1016C135.845 59.3038 134.782 58.506 133.984 57.5752C133.319 56.7773 132.521 55.7136 131.723 54.5168C130.925 53.3201 130.261 51.9904 129.995 50.3947C129.729 48.932 129.596 47.3364 129.596 45.4748C129.596 38.8262 132.122 33.6403 137.441 29.9171C142.627 26.3269 150.073 24.4653 159.647 24.4653C168.157 24.4653 175.205 26.3269 180.79 29.7842C186.241 33.3744 189.167 38.9592 189.433 46.4056Z"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="sticky top-0 z-50 bg-[#FFFCFA]/80 backdrop-blur-md hair">
+  <div class="h-px bg-line/60 absolute inset-x-0 bottom-0"></div>
+  <div id="progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-accent z-10"></div>
+
+  <nav class="mx-auto max-w-content px-6 lg:px-8" aria-label="Primary">
+    <div class="flex h-16 items-center gap-8">
+      <a href="index.html" class="flex items-center gap-2.5 shrink-0 no-ring text-ink" aria-label="finOS by Swift — home">
+        <svg viewBox="0 0 392 87" class="h-[21px] w-auto" aria-hidden="true" focusable="false">
+          <use href="#finos-star" fill="#0E71DB"/>
+          <use href="#finos-wordmark" fill="currentColor"/>
+        </svg>
+        <span class="text-[12px] text-mute-2 font-normal">by</span>
+        <svg viewBox="0 0 439 98" class="h-[17px] w-auto" aria-hidden="true" focusable="false">
+          <use href="#swift-mark" fill="#0E71DB"/>
+          <use href="#swift-wordmark" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-0.5 ml-auto text-[13.5px] text-mute whitespace-nowrap" id="navlist">
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="who.html">Who it's for</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="platform.html">Platform</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="core-banking.html">Core banking</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="intelligence.html">Intelligence</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="trust.html" aria-current="page">Trust</a></li>
+        <li><a class="navlink px-3 py-1.5 rounded-full hover:text-ink hover:bg-black/[0.04] transition-colors" href="pricing.html">Pricing</a></li>
+        <li><a class="navlink ml-2 px-4 py-1.5 rounded-lg bg-ink text-white font-medium hover:bg-ink-2 transition-colors" href="malaysia.html">Malaysia</a></li>
+      </ul>
+
+      <button id="menuBtn" class="lg:hidden ml-auto inline-flex items-center gap-2 rounded-lg border border-line bg-white px-3 py-1.5 text-[13px] font-medium"
+              aria-expanded="false" aria-controls="mobileNav">
+        <span>Menu</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1.5 3h9M1.5 6h9M1.5 9h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div id="mobileNav" class="hidden lg:hidden pb-4">
+      <ul class="grid gap-0.5 text-[15px]">
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="index.html">Home</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="who.html">Who it's for</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="platform.html">Platform</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="core-banking.html">Core banking</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="architecture.html">Architecture</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="intelligence.html">Intelligence</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2 font-medium" href="trust.html" aria-current="page">Trust</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2" href="pricing.html">Pricing</a></li>
+        <li><a class="block px-3 py-2.5 rounded-md hover:bg-surface-2 text-accent font-medium" href="malaysia.html">Malaysia · first deployment</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main id="main" class="pt-4 sm:pt-6">
+<span id="top"></span>
+<!-- ══════════ COMPLIANCE ══════════ -->
+<section id="compliance" class="scroll-mt-16 chapter chapter-drag">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
+
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-14 reveal">
+    <div class="lg:col-span-7">
+      <p class="eyebrow mb-6"><span>Compliance built into the architecture</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Structural, <span class="tone">not bolted on</span></h2>
+      <p class="mt-6 text-[17px] leading-relaxed text-ink/80">
+        Audit trail, decision reproducibility, statutory limits and data residency are properties of
+        how the platform is built — which is why they cannot be switched off by a configuration
+        mistake.
+      </p>
+    </div>
+    <div class="lg:col-span-5"><div class="toy "><svg viewBox="0 0 480 420" class="w-full h-auto block" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="tg-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="tg-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><radialGradient id="tg-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><linearGradient id="tg-cyl1" x1="0" x2="1"><stop offset="0" stop-color="#704462"/><stop offset=".55" stop-color="#5c2a4d"/><stop offset="1" stop-color="#421e37"/></linearGradient><linearGradient id="tg-cyl2" x1="0" x2="1"><stop offset="0" stop-color="#f5f1ea"/><stop offset=".55" stop-color="#f4efe7"/><stop offset="1" stop-color="#b0aca6"/></linearGradient><radialGradient id="tg-ballf4efe7" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#faf8f4"/><stop offset=".45" stop-color="#f4efe7"/><stop offset="1" stop-color="#9f9b96"/></radialGradient><linearGradient id="tg-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6eef2"/><stop offset="1" stop-color="#efe3ea"/></linearGradient><linearGradient id="tg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6d9de"/><stop offset="1" stop-color="#dacbd1"/></linearGradient><linearGradient id="tg-hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="480" height="250" fill="url(#tg-wall)"/><rect y="250" width="480" height="170" fill="url(#tg-floor)"/><rect y="220" width="480" height="44" fill="url(#tg-hz)"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#b9ae9c" stroke-width="23" stroke-linecap="round" stroke-linejoin="round"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#f4efe7" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M-10 150 C80 150 120 200 200 250 L262 286" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3.2" stroke-linecap="round" transform="translate(-1.5 -4.0)"/><ellipse cx="300.0" cy="237.0" rx="18.0" ry="7.2" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="284.4,231.0 300.0,240.0 300.0,130.0 284.4,121.0" fill="#cc089e"/><polygon points="300.0,240.0 315.6,231.0 315.6,121.0 300.0,130.0" fill="#a3067e"/><polygon points="300.0,112.0 315.6,121.0 300.0,130.0 284.4,121.0" fill="#d73eb3"/><polyline points="284.4,121.0 300.0,130.0 315.6,121.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><ellipse cx="380.0" cy="283.0" rx="18.0" ry="7.2" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="364.4,277.0 380.0,286.0 380.0,176.0 364.4,167.0" fill="#cc089e"/><polygon points="380.0,286.0 395.6,277.0 395.6,167.0 380.0,176.0" fill="#a3067e"/><polygon points="380.0,158.0 395.6,167.0 380.0,176.0 364.4,167.0" fill="#d73eb3"/><polyline points="364.4,167.0 380.0,176.0 395.6,167.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><polygon points="296,150 400,206 400,226 296,170" fill="#ff7cd0"/><polygon points="296,150 400,206 400,212 296,156" fill="#ffc2ea"/><ellipse cx="254.5" cy="276.2" rx="14.25" ry="4.5" fill="#5b4a33" opacity="0.35" filter="url(#tg-blur)"/><circle cx="250" cy="262" r="15" fill="url(#tg-ball3859f9)"/><ellipse cx="128.7" cy="346.0" rx="80.0" ry="32.0" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><polygon points="59.4,335.0 137.3,380.0 137.3,376.0 59.4,331.0" fill="#ffffff"/><polygon points="137.3,380.0 197.9,345.0 197.9,341.0 137.3,376.0" fill="#cccccc"/><polygon points="120.0,296.0 197.9,341.0 137.3,376.0 59.4,331.0" fill="#ffffff"/><polyline points="59.4,331.0 137.3,376.0 197.9,341.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><g transform="matrix(.866 .5 -.866 .5 104 340)"><circle r="20" fill="none" stroke="#cc089e" stroke-width="4"/><path d="M-9 0 l6 7 l12 -14" fill="none" stroke="#cc089e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g><ellipse cx="74.0" cy="306.0" rx="27.3" ry="14.3" fill="#5b4a33" opacity="0.28" filter="url(#tg-blur)"/><path d="M44.0 300.0 v-22 a26 13.0 0 0 0 52 0 v22 a26 13.0 0 0 1 -52 0z" fill="url(#tg-cyl1)"/><ellipse cx="70" cy="278" rx="26" ry="13.0" fill="#855f7a"/><path d="M61.0 274.0 v-34 a9 4.5 0 0 0 18 0 v34 a9 4.5 0 0 1 -18 0z" fill="url(#tg-cyl2)"/><ellipse cx="70" cy="240" rx="9" ry="4.5" fill="#f7f3ed"/><circle cx="70" cy="232" r="15" fill="url(#tg-ballf4efe7)"/><rect width="480" height="420" filter="url(#tg-grain)" pointer-events="none"/></svg></div></div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 reveal">
+      <div>
+        <h3 class="text-[19px] font-semibold tracking-tighter">Guardrails execute outside policy scripts</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
+          A pricing script may propose any rate. The guardrail layer clamps or rejects it — and
+          records that it did. If statutory caps lived inside the scripts business users edit, a
+          well-meaning change could breach a rate ceiling, a tenor limit or a fee prohibition.
+        </p>
+        <ul class="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-2 text-[13.5px] text-mute">
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Interest and profit-rate ceilings</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Permitted fees, and prohibitions</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Default-charge limits and basis</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Amount caps and tenor limits</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Mandated allocation order</li>
+          <li class="flex gap-2.5"><span class="text-chap">—</span>Contact caps and quiet hours</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-[19px] font-semibold tracking-tighter">Any decision, replayed exactly, years later</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
+          "Why was this application declined in March?" is a question the architecture answers
+          directly — not one that starts a project.
+        </p>
+        <dl class="mt-6 divide-y divide-black/10 border-t border-black/10 text-[14px]">
+          <div class="py-3.5"><dt class="font-medium">Inputs are stored, not re-fetched</dt><dd class="mt-1 text-mute">Replay uses recorded provider responses, so no paid call is repeated and the answer cannot drift.</dd></div>
+          <div class="py-3.5"><dt class="font-medium">Policy versions are pinned</dt><dd class="mt-1 text-mute">Scorecard, workflow, pricing script and guardrail pack — each resolved to what was live then.</dd></div>
+          <div class="py-3.5"><dt class="font-medium">The rule path is preserved</dt><dd class="mt-1 text-mute">Which rules fired, on which values, against which thresholds — plus any human decision taken.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="mt-14 grid md:grid-cols-3 gap-px bg-black/[0.07] rounded-xl overflow-hidden reveal">
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Entity history</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">What this loan, application or client looked like over time. Nothing is silently overwritten — a rollback preserves the original allocation.</p></div>
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Activity log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Who did what, across which records. Logins, views, approvals, edits, overrides and permission changes.</p></div>
+      <div class="bg-white p-7"><h4 class="text-[15.5px] font-semibold tracking-tighter">Exception log</h4><p class="mt-2 text-[13.5px] leading-relaxed text-mute">Where the system itself is failing, with grouping, retry and escalation. A failed statutory notice is an incident, not a log line.</p></div>
+    </div>
+
+    <div class="mt-6 rounded-xl bg-white/70 border border-black/10 p-7 lg:p-8 reveal">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-chap mb-3">Tamper-evident, not merely append-only</p>
+      <p class="text-[15.5px] leading-relaxed text-ink/80 max-w-[86ch]">
+        "Immutable" is easy to claim and rarely mechanised. Here the audit record is append-only by
+        database enforcement, hash-chained so that each entry commits to its predecessor, and
+        anchored externally — so even a privileged insider rewriting history breaks the chain
+        visibly rather than silently.
+      </p>
+      <p class="mt-3 text-[14.5px] leading-relaxed text-mute max-w-[86ch]">
+        The threat being designed against is an administrator with database access, not a
+        distributed-consensus problem — which is why this is a hash chain with external anchoring
+        rather than a blockchain.
+      </p>
+    </div>
+
+    <div class="mt-14 grid lg:grid-cols-2 gap-10 lg:gap-14 reveal">
+      <div>
+        <h3 class="text-[19px] font-semibold tracking-tighter">Regulatory packs, not forks</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
+          The core stays market-agnostic. Guardrail rules, prescribed templates, rate conventions,
+          bureau formats, supervisory returns and conduct rules live in a versioned, effective-dated
+          pack — so a historical evaluation resolves against the pack in force at the time, and
+          adding a market never destabilises an existing one.
+        </p>
+        <p class="mt-3 text-[14px] leading-relaxed text-mute">
+          Concretely: Malaysia's moneylending pack — the statutory rate ceiling, prohibited fees and the attestation step — and Nepal's NRB and SEBON packs — the enacted Margin Trading Directive 2082, with
+          a 5× net-worth cap, a 10%-of-facility single-client limit and a 4.5× funding-leverage cap —
+          the UK FCA corridor pack, and, where a Gulf corridor or an Islamic product is added, a
+          distinct AAOIFI Shariah pack that a Malaysia-approved structure could not satisfy.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-[19px] font-semibold tracking-tighter">Shariah compliance is a ledger property</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
+          Under a compliant sale-based contract the customer owes a fixed sale price from inception —
+          profit is recognised over time, but nothing accrues. That reaches the ledger, so it is
+          modelled in the kernel as a contract type rather than as a skin over an interest engine.
+        </p>
+        <p class="mt-3 text-[15px] leading-relaxed text-mute">
+          The sharpest consequence is late payment. Compensation for actual loss may be recognised
+          as income; a punitive penalty may not — it must go to charity. So the platform carries a
+          <span class="text-ink font-medium">charity payable balance distinct from income</span>,
+          with its own disbursement, reconciliation and reporting. That is a first-class ledger
+          concept, not a memo field, and it invalidates any design that treats late fees as ordinary
+          revenue. Rebate on early settlement is likewise a real operation, not a discount.
+        </p>
+        <p class="mt-3 text-[13.5px] text-mute-2">Applicable rates are jurisdiction-pack configuration, never hard-coded — and the permitted contract set itself differs by market, so a structure accepted in Malaysia may be disfavoured in the Gulf. Product structures and market-specific rules require confirmation by a qualified adviser and local counsel.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TRUST ══════════ -->
+<section id="trust" class="scroll-mt-16">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
+
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
+      <div class="lg:col-span-7">
+        <p class="eyebrow mb-6"><span>Why an enterprise can rely on it</span></p>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Claims you can check, <span class="tone">not claims you have to accept</span></h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-[15.5px] leading-relaxed text-mute">
+          Every assurance below is either enforced by a test, visible in the source, or verifiable
+          before you commit. None of it requires trusting a vendor's word.
+        </p>
+      </div>
+    </div>
+
+    <dl class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-line rounded-xl overflow-hidden border border-line reveal">
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">The invariants are tests, not promises</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">A service that writes a balance directly, or floating-point arithmetic in a money path, fails the build. You can read those tests.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">Nothing goes live unproven</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Static validation, dry run, replay against a historical cohort, shadow-run on live traffic, then human sign-off. A policy reaches production only after passing all five.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">The largest assumption is measured first</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Every deployment opens with a fit spike — prove the ledger pattern and the decisioning latency under real connector fan-out, before the architecture is frozen and while it is still cheap to be wrong.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">No runtime you can be locked out of</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">A standard stack, extension points that are documented interfaces, and source escrow on request, at extra cost. There is no proprietary runtime, and no licence call-home — the air-gapped topology has no outbound dependency at all.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">Upgrades are not merge conflicts</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Each deployment's extensions are built and maintained by Swift in their own module, against interfaces rather than platform internals. An upgrade is a dependency bump and a CI run.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">The AI cannot decide anything</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">There is no code path from Swift Intelligence to the decision engine's runtime. It proposes configuration; AI-origin artifacts face stricter gates than human ones, and the platform runs with it absent.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">Control frameworks are already mapped</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">The security design carries a control-by-control mapping to the SOC 2 trust services criteria, alongside ISO 27001, PCI and data-protection mappings and a maintained threat model — so an assurance exercise starts from a document, not a discovery phase.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">It becomes your core only if you want it to</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Alongside a bank's core, finOS keeps the loan and posts reconciled projections to your chart of accounts. Without one, its native books are the accounting record. Either way, adopting it does not force you to replace anything you already run.</dd>
+      </div>
+      <div class="bg-white p-7">
+        <dt class="text-[16px] font-semibold tracking-tighter">Every claim carries its evidence grade</dt>
+        <dd class="mt-2 text-[14.5px] leading-relaxed text-mute">Across the whole document set, each substantive statement is tagged as verified against a primary source or as design inference. Vendor performance figures are recorded as claims to be cleared in a bake-off, never as established fact.</dd>
+      </div>
+    </dl>
+
+    <div class="mt-6 rounded-xl border border-line bg-surface-2 p-7 reveal">
+      <p class="text-[14.5px] leading-relaxed text-mute max-w-[80ch]">
+        <span class="font-medium text-ink">Where the boundary sits.</span> Platform capability and
+        design patterns are shared across every deployment — that is what makes a platform a
+        platform. A lender's own scoring models, data and configuration are theirs, isolated per
+        deployment, and are never reused across programmes.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ AGAINST THE ALTERNATIVES ══════════ -->
+<section id="compare" class="scroll-mt-16 chapter chapter-paper">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-20 lg:py-28">
+
+    <div class="max-w-3xl mb-12 reveal">
+      <p class="eyebrow mb-6"><span>Against the alternatives</span></p>
+      <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">Three ways to run lending. <span class="tone">Each trades away something you need.</span></h2>
+      <p class="mt-6 text-[16.5px] leading-relaxed text-mute">
+        A legacy core gives you stability without agility. Point SaaS gives you speed without
+        ownership. A custom build gives you both, then charges you for a platform you now maintain
+        forever.
+      </p>
+      <p class="mt-4 text-[16.5px] leading-relaxed text-mute">
+        finOS takes a fourth path: prebuilt modules on an open framework, configured rather than
+        written, implemented and supported by Swift — in your environment or ours.
+      </p>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl border border-line reveal">
+      <table class="w-full text-[14px] min-w-[860px] bg-white">
+        <caption class="sr-only">Comparison of lending delivery models across eight dimensions</caption>
+        <thead>
+          <tr class="border-b border-line text-left align-bottom">
+            <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2 w-[19%]"></th>
+            <th scope="col" class="px-5 py-4 text-[12.5px] font-semibold text-mute w-[20%]">Legacy core / LMS</th>
+            <th scope="col" class="px-5 py-4 text-[12.5px] font-semibold text-mute w-[20%]">Point SaaS, stitched</th>
+            <th scope="col" class="px-5 py-4 text-[12.5px] font-semibold text-mute w-[20%]">Custom build</th>
+            <th scope="col" class="px-5 py-4 text-[12.5px] font-semibold text-ink bg-accent-soft w-[21%]">finOS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line align-top">
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">New product to market</th>
+            <td class="px-5 py-4 text-mute">Vendor roadmap, often quarters</td>
+            <td class="px-5 py-4 text-mute">Fast per system, slow across them</td>
+            <td class="px-5 py-4 text-mute">Whatever your backlog allows</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Configuration — hours to days for a variant</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Who changes pricing and policy</th>
+            <td class="px-5 py-4 text-mute">The vendor</td>
+            <td class="px-5 py-4 text-mute">Partly you, per system</td>
+            <td class="px-5 py-4 text-mute">Engineering</td>
+            <td class="px-5 py-4 bg-accent-soft/40">The business, inside guardrails it cannot override</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Ledger correctness</th>
+            <td class="px-5 py-4 text-mute">Usually strong — the one thing it does well</td>
+            <td class="px-5 py-4 text-mute">Reconciled between systems on a schedule</td>
+            <td class="px-5 py-4 text-mute">As good as the team that built it</td>
+            <td class="px-5 py-4 bg-accent-soft/40">One transactional boundary; saga only at external edges</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">A new market</th>
+            <td class="px-5 py-4 text-mute">A new instance, separately maintained</td>
+            <td class="px-5 py-4 text-mute">Depends which vendors operate there</td>
+            <td class="px-5 py-4 text-mute">A fork, then divergence</td>
+            <td class="px-5 py-4 bg-accent-soft/40">A versioned, effective-dated regulatory pack</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Reproducing a past decision</th>
+            <td class="px-5 py-4 text-mute">Reports, not replay</td>
+            <td class="px-5 py-4 text-mute">Split across vendors</td>
+            <td class="px-5 py-4 text-mute">Only if designed in from day one</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Replay from stored inputs and pinned policy versions</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Your data</th>
+            <td class="px-5 py-4 text-mute">Yours, in their schema</td>
+            <td class="px-5 py-4 text-mute">Multi-tenant, exportable at best</td>
+            <td class="px-5 py-4 text-mute">Yours</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Yours, with full export. Dedicated or shared SaaS, or self-hosted; moving between them is a deployment choice, not a migration</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Deployment</th>
+            <td class="px-5 py-4 text-mute">On-premise, upgrades are projects</td>
+            <td class="px-5 py-4 text-mute">Vendor cloud only</td>
+            <td class="px-5 py-4 text-mute">Anywhere you can operate it</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Cloud, on-premise, hybrid or air-gapped — same artifacts</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Extending it</th>
+            <td class="px-5 py-4 text-mute">Vendor services engagement</td>
+            <td class="px-5 py-4 text-mute">Whatever the API exposes</td>
+            <td class="px-5 py-4 text-mute">Unlimited — and entirely yours to maintain</td>
+            <td class="px-5 py-4 bg-accent-soft/40">Documented extension points, built and maintained by Swift against stable interfaces</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-5 text-[13.5px] text-mute-2 reveal">
+      The honest trade: finOS gives you a platform rather than a service contract. Swift implements
+      and supports it, in your environment or ours — and nothing about your lending business is
+      decided by someone else's roadmap.
+    </p>
+
+  </div>
+</section>
+
+<!-- ══════════ CLOSE ══════════ -->
+<section class="chapter chapter-dark text-white overflow-hidden mb-4 sm:mb-6">
+  <div class="mx-auto max-w-content px-6 lg:px-8 pt-20 lg:pt-28 pb-10">
+    <div class="grid lg:grid-cols-12 gap-10 items-end reveal">
+      <div class="lg:col-span-8">
+        <h2 class="text-[28px] lg:text-[36px] leading-[1.12] tracking-tightest font-semibold max-w-[24ch]">Assemble it once. <span class="tone">Reshape it as the business changes.</span></h2>
+        <p class="mt-5 text-[16px] leading-relaxed text-white/60 max-w-[62ch]">
+          The complete lending business on one configurable platform — the speed of SaaS, the
+          control of your own deployment, and compliance built into the architecture.
+        </p>
+      </div>
+      <div class="lg:col-span-4 flex lg:justify-end">
+        <a href="pricing.html" class="inline-flex items-center gap-1.5 rounded-lg btn-chap px-5 py-3 text-[15px] font-medium transition-colors">
+          Next: Pricing
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="px-3 pb-3 sm:px-4 sm:pb-4"><div class="toy rounded-[24px] lg:rounded-[32px]"><svg viewBox="0 0 1200 220" class="block w-full h-auto" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hs-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hs-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hs-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient></defs><rect width="1200" height="220" fill="#1f2330"/><path d="M0 120 C200 60 380 90 560 120 C760 150 920 70 1200 100 V220 H0z" fill="#2f6b4c"/><path d="M0 170 C220 130 420 150 640 170 C860 190 1000 140 1200 150 V220 H0z" fill="#0dac65"/><path d="M700 112 l26 -54 l26 54z" fill="#ff9fcf"/><path d="M300 150 v-34 a26 26 0 0 1 52 0 v34 h-14 v-30 a12 12 0 0 0 -24 0 v30z" fill="#7d97ff"/><path d="M960.0 120.0 v-40 a20 10.0 0 0 0 40 0 v40 a20 10.0 0 0 1 -40 0z" fill="url(#hs-cyl0)"/><ellipse cx="980" cy="80" rx="20" ry="10.0" fill="#fec250"/><circle cx="520" cy="150" r="13" fill="url(#hs-ballfa6900)"/><rect width="1200" height="220" filter="url(#hs-grain)" pointer-events="none"/></svg></div></div>
+</section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="text-mute">
+  <div class="mx-auto max-w-content px-6 lg:px-8 py-10">
+    <div class="flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between text-[13.5px]">
+      <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-ink">
+        <svg viewBox="0 0 392 87" class="h-[19px] w-auto" role="img" aria-label="finOS by Swift" focusable="false">
+          <use href="#finos-star" fill="#0E71DB"/>
+          <use href="#finos-wordmark" fill="currentColor"/>
+        </svg>
+        <span class="text-[12px] text-mute-2 font-normal">by</span>
+        <svg viewBox="0 0 439 98" class="h-[15px] w-auto" aria-hidden="true" focusable="false">
+          <use href="#swift-mark" fill="#0E71DB"/>
+          <use href="#swift-wordmark" fill="currentColor"/>
+        </svg>
+        <span class="h-3.5 w-px bg-black/[0.07] ml-1" aria-hidden="true"></span>
+        <span class="text-mute font-normal">with Swift Intelligence</span>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="index.html">Home</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="who.html">Who it's for</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="platform.html">Platform</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="core-banking.html">Core banking</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="architecture.html">Architecture</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="intelligence.html">Intelligence</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="trust.html" aria-current="page">Trust</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="pricing.html">Pricing</a></li>
+          <li><a class="inline-block py-1 hover:text-ink transition-colors" href="malaysia.html">Malaysia</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Hero contraption: SMIL ignores CSS motion preferences, so freeze it mid-journey */
+  const stage = document.querySelector('#hero-stage svg');
+  if (reduce && stage && stage.pauseAnimations) { stage.setCurrentTime(6); stage.pauseAnimations(); }
+
+  /* ---------- Hero: loan lifecycle ----------
+     Motion with a job: it shows that six different products run one lifecycle. State is driven
+     from JS attributes rather than CSS keyframes so the sequence stays legible and pausable, and
+     under prefers-reduced-motion it renders a completed cycle and never animates. */
+  const LC = {
+    products: [
+      { n: 'Digital moneylender loan', s: 'In-app · eKYC · statutory rate ceiling',      b: 'Collections' },
+      { n: 'Hire purchase',            s: 'At the dealer · asset-secured · monthly EMIs', b: 'Repossession' },
+      { n: 'Wallet micro-loan & BNPL', s: 'In-wallet · minutes · auto-debit repayment', b: 'Collections' },
+      { n: 'Send-Now-Pay-Later',       s: 'At send-time · decided inside the send flow', b: 'Collections' },
+      { n: 'Retail & corporate loan',  s: 'Bank channel · collateral and covenants',     b: 'Covenant watch' },
+      { n: 'Margin facility',          s: 'Pledged collateral · marked to market',       b: 'Margin call' }
+    ],
+    notes: [
+      'Intake, KYC and consent',
+      'Scorecard, rules and guardrails',
+      'Priced within statutory caps',
+      'Funded, booked, journal posted',
+      'Accrual, schedule, statements',
+      'Allocated across obligations',
+      'Settled, rebate applied if due'
+    ]
+  };
+
+  const lc = {
+    prod:   document.getElementById('lc-prod'),
+    sub:    document.getElementById('lc-sub'),
+    note:   document.getElementById('lc-note'),
+    fill:   document.getElementById('lc-fill'),
+    stages: [...document.querySelectorAll('.lc-stage')],
+    pips:   [...document.querySelectorAll('.lc-pip')],
+    bPath:  document.getElementById('lc-branch-path'),
+    bDot:   document.getElementById('lc-branch-dot'),
+    bLabel: document.getElementById('lc-branch-label')
+  };
+
+  if (lc.prod && lc.stages.length) {
+    const SERVICE = 4;                                  // branch activates from this stage on
+    const render = (p, stage) => {
+      const prod = LC.products[p];
+      lc.prod.textContent = prod.n;
+      lc.sub.textContent  = prod.s;
+      lc.bLabel.textContent = prod.b;
+      lc.pips.forEach((pip, i) => pip.setAttribute('fill', i === p ? '#3859F9' : '#E4DFD6'));
+
+      lc.stages.forEach((g, i) => {
+        const c = g.querySelector('circle'), t = g.querySelector('text');
+        const done = i < stage, now = i === stage;
+        c.setAttribute('fill',   done || now ? '#3859F9' : '#fff');
+        c.setAttribute('stroke', done || now ? '#3859F9' : '#C9C2B6');
+        c.setAttribute('r',      now ? '7' : '5.5');
+        t.setAttribute('fill',   now ? '#16181F' : done ? '#55534E' : '#85817A');
+        t.setAttribute('font-weight', now ? '600' : '400');
+      });
+
+      const y = +lc.stages[stage].dataset.y;
+      lc.fill.setAttribute('y2', y);
+      lc.note.textContent = LC.notes[stage];
+      lc.note.setAttribute('y', y + 4);
+
+      const branchOn = stage >= SERVICE;
+      lc.bPath.setAttribute('stroke', branchOn ? '#C2410C' : '#E4DFD6');
+      lc.bDot.setAttribute('stroke',  branchOn ? '#C2410C' : '#E4DFD6');
+      lc.bDot.setAttribute('fill',    branchOn ? '#FDF6E8' : '#fff');
+      lc.bLabel.setAttribute('fill',  branchOn ? '#9A6510' : '#8B94A6');
+    };
+
+    let p = 0, stage = 0, lcTimer = null;
+
+    if (reduce) {
+      render(0, LC.notes.length - 1);                   // completed cycle, no motion
+    } else {
+      render(p, stage);
+      lcTimer = setInterval(() => {
+        stage += 1;
+        if (stage >= LC.notes.length) { stage = 0; p = (p + 1) % LC.products.length; }
+        render(p, stage);
+      }, 1150);
+    }
+
+    // Clicking a stage takes manual control — the loop stops rather than fighting the reader.
+    lc.stages.forEach((g, i) => {
+      g.style.cursor = 'pointer';
+      g.addEventListener('click', () => {
+        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
+        stage = i;
+        render(p, stage);
+      });
+    });
+    lc.pips.forEach((pip, i) => {
+      pip.style.cursor = 'pointer';
+      pip.addEventListener('click', () => {
+        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
+        p = i;
+        render(p, stage);
+      });
+    });
+  }
+
+  /* ---------- Follow one loan ----------
+     An interactive walkthrough of a single loan. Three simultaneous views per stage — borrower,
+     platform, ledger — plus the evolving loan state, so the same lifecycle can be read as a
+     customer journey and as a sequence of credit operations at the same time. */
+  const FL_STAGES = ['Apply', 'Decide', 'Offer', 'Disburse', 'Service', 'Repay', 'Close'];
+  const FL = [
+    { who: 'Anita · wallet customer', stages: [
+      { c: 'Taps "Pay later" at checkout in the wallet app and consents to a credit check. There are no forms — the wallet already knows who she is.',
+        s: 'Intake arrives through the wallet\'s integration layer, the only caller the platform accepts. A duplicate check runs and KYC is reused from the verified wallet profile.',
+        l: 'Nothing. An application is not an obligation, so no balance exists yet.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'Reusing wallet KYC is why this journey has no document-upload step at all.' },
+      { c: 'Waits about a second. Nothing to fill in.',
+        s: 'The feature store turns raw wallet history into named business variables; the scorecard and rule set evaluate; guardrails clamp whatever the pricing script proposes.',
+        l: 'The decision is written with its inputs stored and its policy versions pinned — so it can be replayed exactly, years later.',
+        o: 'decision recorded · policy versions pinned',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'Stored inputs, not re-fetched ones. Replay cannot drift, and it never pays for a second bureau call.' },
+      { c: 'Sees three instalments of NPR 4,120, the total cost and the due dates. Accepts.',
+        s: 'Pricing proposes; the guardrail layer enforces the rate ceiling and the permitted-fee list before the offer is ever shown.',
+        l: 'Terms are fixed against the offer. Still no balance — acceptance is what creates the obligation.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'NPR 12,000', '—', '—', '—'],
+        h: 'A script may propose any rate. The guardrail sits outside it and the business cannot edit it.' },
+      { c: 'Checkout completes and the merchant is paid. She signs the agreement in-app.',
+        s: 'Disbursement executes through the wallet; the agreement is generated from the product\'s document set and stored with its version.',
+        l: 'The first credit operation books principal, and the journal posts in real time — there is no end-of-day batch that can drift from the operational view.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Disbursement clearing',
+        st: ['Active', 'NPR 12,000', 'NPR 12,360', 'in 15 days', '0'],
+        h: 'Real-time posting is why the ledger and the operational view never disagree.' },
+      { c: 'Opens the loan centre and sees her schedule, the next due date and a statement.',
+        s: 'Accrual and schedule operations run on time; reminders issue on the configured cadence, inside contact caps and quiet hours the platform enforces.',
+        l: 'Accrual posts to accrued interest receivable against interest income. Every posting is an operation, never an update in place.',
+        o: 'INTEREST_ACCRUAL · Dr Accrued interest receivable · Cr Interest income',
+        st: ['Active', 'NPR 12,000', 'NPR 12,360', 'in 3 days', '0'],
+        h: 'If she fell behind here the case would branch to collections — same loan, same ledger.' },
+      { c: 'Auto-debit takes instalment one from her wallet balance. She gets a receipt.',
+        s: 'Money is captured at client level, then allocated to this loan separately — so one transfer covering several loans stays one entry rather than three.',
+        l: 'The payment operation allocates across fees, interest and principal in the configured order. Outstanding falls.',
+        o: 'PAYMENT · allocated fees → interest → principal',
+        st: ['Active', 'NPR 12,000', 'NPR 8,240', 'in 30 days', '0'],
+        h: 'A rollback here would preserve the original allocation in history rather than erase it.' },
+      { c: 'The final instalment clears and the loan leaves her loan centre.',
+        s: 'Closure checks run. Had she settled early, the rebate would apply as a first-class operation rather than as a discount.',
+        l: 'The balance reaches zero. The operation history stays — her position at any past instant reconstructs from it alone.',
+        o: 'CLOSURE · balance 0 · history retained',
+        st: ['Closed', 'NPR 12,000', 'NPR 0', '—', '0'],
+        h: 'Closed is a state, not a deletion. The audit trail outlives the loan.' } ] },
+
+    { who: 'Bikash · remittance sender', stages: [
+      { c: 'Starts a transfer home in the partner\'s app and is short of funds. A send-now-pay-later option appears in the same flow.',
+        s: 'The partner never calls the platform directly — enterprise-integration routes carry the request, and eligibility resolves inside the send flow.',
+        l: 'Nothing yet.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'The sender never leaves the partner app. This is the headless API path.' },
+      { c: 'Sees no interruption — the offer resolves while he is still in the send flow.',
+        s: 'Remittance regularity is the credit signal. The whole decision path, including external calls, is budgeted under two seconds at the 95th percentile.',
+        l: 'Decision recorded with the corridor and FX context that produced it.',
+        o: 'decision recorded · corridor pack applied',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'Latency is a product requirement here, not an engineering preference.' },
+      { c: 'Sees how much he can send now and the single repayment due on payday.',
+        s: 'The corridor regulatory pack sets the disclosures and the permitted charges for this destination.',
+        l: 'Terms fixed; no balance yet.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'NPR 45,000', '—', '—', '—'],
+        h: 'A second corridor is a new pack and a partner adapter — not a new build.' },
+      { c: 'The transfer goes out and his family receives it the same day.',
+        s: 'The remittance leg settles through the partner rail. That leg is a saga with compensating transactions — the ledger write is not.',
+        l: 'Principal, schedule and allocation commit together in one transaction.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Settlement clearing',
+        st: ['Active', 'NPR 45,000', 'NPR 46,350', 'in 21 days', '0'],
+        h: 'Saga at the edge, ACID in the ledger. This is the load-bearing boundary.' },
+      { c: 'Gets a reminder in his own language ahead of the due date.',
+        s: 'Notification content is presentation metadata, so Nepali or Korean is a catalog addition rather than a release.',
+        l: 'Accrual posts on schedule against the fixed repayment.',
+        o: 'INTEREST_ACCRUAL · posted on schedule',
+        st: ['Active', 'NPR 45,000', 'NPR 46,350', 'in 4 days', '0'],
+        h: 'Language, date format and currency grouping follow the borrower, not the deployment.' },
+      { c: 'Repays in full on payday from his linked account.',
+        s: 'Payment is captured and reconciled against the rail; the outbox emits the event exactly once, in the same transaction as the state change.',
+        l: 'A single payment operation clears interest, then principal.',
+        o: 'PAYMENT · Dr Cash · Cr Loans & advances',
+        st: ['Active', 'NPR 45,000', 'NPR 0', '—', '0'],
+        h: 'No phantom events and none lost — that is what publishing only from the outbox buys.' },
+      { c: 'The loan closes, and his next send carries a higher limit.',
+        s: 'Repayment history feeds the feature store, so the next decision on this corridor is better informed than the last.',
+        l: 'Balance zero, history retained and attributable to the policy that produced it.',
+        o: 'CLOSURE · balance 0 · history retained',
+        st: ['Closed', 'NPR 45,000', 'NPR 0', '—', '0'],
+        h: 'Performance on this corridor becomes a named variable for the next one.' } ] },
+
+    { who: 'Sunita · bank customer', stages: [
+      { c: 'Applies in the bank\'s mobile app and uploads income and property documents.',
+        s: 'Intake arrives through the bank channel. Which documents are required comes from the product configuration, not from code.',
+        l: 'Nothing yet.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'A separate loan-application portal is also provided, as the regulator requires.' },
+      { c: 'Waits while the bank assesses, and is asked for one clarifying document.',
+        s: 'Bureau and income checks run in parallel. Anything needing judgment raises a work item for an underwriter rather than stalling the file.',
+        l: 'The decision and the approver behind any override are both recorded.',
+        o: 'decision recorded · four-eyes approval',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'Most applications flow through untouched. Underwriters see only the exceptions.' },
+      { c: 'Receives the offer, the amortisation schedule and the total cost of credit.',
+        s: 'Collateral is valued and the covenant set is attached to the facility at signing.',
+        l: 'Terms fixed and covenant baselines anchored at the signing date.',
+        o: 'offer issued · covenant baselines anchored',
+        st: ['Offered', 'NPR 800,000', '—', '—', '—'],
+        h: 'A covenant is a metric, a specification and a baseline — monitored, not filed away.' },
+      { c: 'Funds land in her bank account.',
+        s: 'Disbursement posts to the core banking system through an adapter, while the platform remains the system of record for the loan itself.',
+        l: 'Principal booked, with the journal identifying the legal entity that is lender of record.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr CBS settlement',
+        st: ['Active', 'NPR 800,000', 'NPR 800,000', 'in 30 days', '0'],
+        h: 'Multi-entity matters when the channel owner and the lender of record are different parties.' },
+      { c: 'Pays monthly by standing instruction and receives a statement each cycle.',
+        s: 'Covenant monitoring runs continuously — an insurance lapse or a ratio breach raises an event on the loan and in the work queue.',
+        l: 'Accrual and fee operations post monthly; provisioning inputs derive from the same record.',
+        o: 'INTEREST_ACCRUAL · monthly · provisioning inputs derived',
+        st: ['Active', 'NPR 800,000', 'NPR 782,400', 'in 12 days', '0'],
+        h: 'Breach is a first-class event, not a rediscovery at the next annual review.' },
+      { c: 'Makes an extra payment to bring the balance down.',
+        s: 'Directed allocation applies it exactly as instructed, instead of following the default strategy.',
+        l: 'The payment operation reduces principal and the schedule is regenerated from it.',
+        o: 'PAYMENT · directed allocation · schedule regenerated',
+        st: ['Active', 'NPR 800,000', 'NPR 731,900', 'in 30 days', '0'],
+        h: 'Smart allocation by default; directed allocation when the customer instructs.' },
+      { c: 'Asks for a payoff quote, settles early, and the charge on her property is released.',
+        s: 'The quote is generated from the ledger rather than estimated, and collateral release follows closure.',
+        l: 'Early settlement applies its rebate as an operation, then the balance reaches zero.',
+        o: 'EARLY_SETTLEMENT · rebate applied · balance 0',
+        st: ['Closed', 'NPR 800,000', 'NPR 0', '—', '0'],
+        h: 'Under a sale-based Islamic contract this same operation is the mandatory ibra\'.' } ] },
+
+    { who: 'Broker client · capital market', stages: [
+      { c: 'Requests a margin facility against a pledged share portfolio.',
+        s: 'Origination arrives from the existing broker portal over the loan-event bridge. No new channel is built.',
+        l: 'Nothing yet.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'The margin estate already runs a loan service — this bridges to it before absorbing anything.' },
+      { c: 'The portfolio is assessed for eligibility and haircut.',
+        s: 'Collateral valuation pulls live prices; concentration and exposure rules evaluate as ordinary decision artifacts.',
+        l: 'Decision recorded against the valued collateral set.',
+        o: 'decision recorded · haircut applied',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'The same decision engine with a different feature set. There is no second engine.' },
+      { c: 'Accepts a revolving limit rather than a fixed instalment loan.',
+        s: 'Product configuration expresses a revolving facility — a different product shape, not a different platform.',
+        l: 'Limit and terms anchored; each drawdown will book individually against the facility.',
+        o: 'facility opened · limit anchored',
+        st: ['Offered', 'Limit NPR 2,500,000', '—', '—', '—'],
+        h: 'Revolving and instalment are two configurations over one kernel.' },
+      { c: 'Draws NPR 1,800,000 to fund a trade.',
+        s: 'Shares are pledged through the depository adapter before the drawdown is released.',
+        l: 'The drawdown books as its own operation against the facility.',
+        o: 'DRAWDOWN · Dr Margin loans · Cr Client settlement',
+        st: ['Active', 'NPR 1,800,000 drawn', 'NPR 1,800,000', 'revolving', '0'],
+        h: 'Pledge and drawdown live in different systems, so that sequence is a saga at the edge.' },
+      { c: 'Watches the position, then receives a margin call as coverage falls.',
+        s: 'Mark-to-market runs daily. The coverage floor is a covenant, so the call raises automatically rather than by someone noticing.',
+        l: 'Daily accrual posts and the coverage metric is evaluated against its anchored baseline.',
+        o: 'INTEREST_ACCRUAL · daily · coverage metric evaluated',
+        st: ['Active · margin call', 'NPR 1,800,000 drawn', 'NPR 1,806,200', 'top-up in 1 day', '0'],
+        h: 'A margin call is the same covenant machinery the corporate loan uses.' },
+      { c: 'Tops up cash to restore coverage, then repays part of the drawdown.',
+        s: 'The top-up clears the call and the repayment allocates against the facility.',
+        l: 'The payment operation reduces the drawn balance and the covenant returns above its floor.',
+        o: 'PAYMENT · drawn balance reduced · covenant cured',
+        st: ['Active', 'NPR 900,000 drawn', 'NPR 900,000', 'revolving', '0'],
+        h: 'The cure is recorded, not just the breach — both sides of the event stay in history.' },
+      { c: 'Repays the facility in full and the pledge is released.',
+        s: 'Closure instructs the depository to unpledge, and the bridge emits the event back to the margin platform.',
+        l: 'Balance zero; the facility closes with its full operation history intact.',
+        o: 'CLOSURE · balance 0 · pledge released',
+        st: ['Closed', 'NPR 0 drawn', 'NPR 0', '—', '0'],
+        h: 'One kernel served a wallet BNPL and a margin facility without forking.' } ] },
+
+    { who: 'Ramesh · migrant worker, Malaysia', stages: [
+      { c: 'Short before payday, he opens OneSphere in-app and asks for a small advance against his salary. His e-KYC is already on file.',
+        s: 'Intake arrives through OneSphere\'s KPKT-licensed online channel; identity and work-permit validity are checked, and the human attestation the Act requires is captured.',
+        l: 'Nothing yet — an application is not an obligation.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'The Moneylenders Act attestation is a first-class step — an unattested loan is void, so disbursement is blocked until it is captured.' },
+      { c: 'Answers nothing more; the decision resolves in seconds.',
+        s: 'RemitScore reads salary regularity from his WPS credit history; the Malaysia regulatory pack clamps the amount to the statutory limit.',
+        l: 'Decision recorded with its inputs stored and its policy versions pinned.',
+        o: 'decision recorded · Malaysia pack applied',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'For a thin-file migrant worker, salary regularity — not a bureau score — is the signal.' },
+      { c: 'Sees how much he can take now and the single repayment due on his next payday.',
+        s: 'Pricing proposes; the guardrail enforces the 18% unsecured ceiling and blocks the fees the Act prohibits before the offer is ever shown.',
+        l: 'Terms fixed against the offer; no balance until he accepts.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'RM 800', '—', '—', '—'],
+        h: 'Fees are illegal here, so the whole cost lives in one capped rate — the guardrail proves it, outside the pricing script.' },
+      { c: 'Accepts and attests; the advance lands in his account within the hour.',
+        s: 'Disbursement executes and the agreement is generated from the product\'s document set and stored with its version.',
+        l: 'The first credit operation books principal, and the journal posts in real time.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Disbursement clearing',
+        st: ['Active', 'RM 800', 'RM 806', 'on payday', '0'],
+        h: 'Same kernel, a different regulatory pack — nothing about the ledger changes.' },
+      { c: 'Gets a reminder in his own language the day before payday.',
+        s: 'Accrual runs on schedule; reminders issue inside the contact caps and quiet hours the platform enforces.',
+        l: 'Accrual posts against the single fixed repayment.',
+        o: 'INTEREST_ACCRUAL · posted on schedule',
+        st: ['Active', 'RM 800', 'RM 806', 'in 1 day', '0'],
+        h: 'Tenure never exceeds his remaining permit validity — a permit-expiry flag watches it.' },
+      { c: 'On payday the single repayment clears from his salary account.',
+        s: 'Payment is captured and reconciled against the rail; the outbox emits the event exactly once, in the same transaction as the state change.',
+        l: 'One payment operation clears interest, then principal. Outstanding falls to zero.',
+        o: 'PAYMENT · Dr Cash · Cr Loans & advances',
+        st: ['Active', 'RM 800', 'RM 0', 'today', '0'],
+        h: 'A bullet repayment on payday runs the same waterfall the instalment products use — once.' },
+      { c: 'The advance closes, and his next payday carries a higher limit.',
+        s: 'Repayment history feeds the feature store, so the next decision is better informed than the last.',
+        l: 'Balance zero, history retained and attributable to the policy that produced it.',
+        o: 'CLOSURE · balance 0 · history retained',
+        st: ['Closed', 'RM 800', 'RM 0', '—', '0'],
+        h: 'Good repayment becomes a named variable, so the limit grows without a new build.' } ] },
+    { who: 'Suman · pickup buyer at a dealer', stages: [
+      { c: 'Picks a pickup truck at a dealer\'s showroom and puts 30% down. The dealer enters him through the dealer portal — citizenship, driving licence and the vehicle\'s chassis and engine numbers.',
+        s: 'The application lands in the single applicant master keyed on citizenship number, so a repeat customer or a guarantor links across loans. It locks on submit — the dealer can no longer edit it.',
+        l: 'Nothing yet. An application is not an obligation.',
+        o: 'no credit operation',
+        st: ['Application', '—', '—', '—', '—'],
+        h: 'Dealer and branch applications share one form and one pipeline, so the same rules apply wherever the loan starts.' },
+      { c: 'A field officer visits his home and his business; his brother signs as guarantor.',
+        s: 'Verification moves through configurable stages — documents, a geo-tagged field visit, income, a credit-bureau pull. A rule he fails is tagged as a deviation and routed to the authority that can approve it.',
+        l: 'Decision recorded with the bureau report, the deviation and the policy versions that produced it.',
+        o: 'decision recorded · deviation approved · policy versions pinned',
+        st: ['Assessing', '—', '—', '—', '—'],
+        h: 'A deviation is approved by name, never quietly overridden — and it stays on the loan for the auditor.' },
+      { c: 'Sees 60 EMIs of NPR 55,730 on a Bikram Sambat schedule, and signs the Nepali deed set.',
+        s: 'The approval matrix routes by amount and risk grade. The agreement, promissory note, guarantee deed and delivery order generate in Devanagari from the record — nothing is retyped.',
+        l: 'Terms locked against the offer. Still no balance.',
+        o: 'offer issued · terms locked',
+        st: ['Offered', 'NPR 2,450,000', '—', '—', '—'],
+        h: 'Documents come from data, so the deed can never disagree with the loan it describes.' },
+      { c: 'Drives the pickup off the lot. The dealer is paid.',
+        s: 'The delivery order releases the vehicle, hypothecation is registered with the transport office, and the insurance policy is recorded against the asset.',
+        l: 'The first credit operation books principal against the dealer payable, and the journal posts in real time.',
+        o: 'DISBURSEMENT · Dr Loans & advances · Cr Dealer payable',
+        st: ['Active', 'NPR 2,450,000', 'NPR 2,450,000', 'in 30 days', '0'],
+        h: 'The lien is part of the loan record, so closing the loan can release it automatically.' },
+      { c: 'Pays each EMI from the wallet app he already uses.',
+        s: 'The wallet posts into the loan through a biller API and reconciles at day end. Interest accrues daily; insurance renewal is tracked against the vehicle; the central-bank classification recalculates every night.',
+        l: 'Accrual posts daily. Every change is an operation, never an update in place.',
+        o: 'INTEREST_ACCRUAL · daily · classification: Pass',
+        st: ['Active', 'NPR 2,450,000', 'NPR 2,212,900', 'in 5 days', '0'],
+        h: 'Lapsed insurance on the asset raises a work item before it becomes an uninsured loss.' },
+      { c: 'Misses two EMIs in the off-season. After a recovery officer\'s visit he promises to pay, and catches up.',
+        s: 'At 45 days past due the loan classifies as Watchlist and joins a recovery queue. The visit is geo-tagged and the promise-to-pay is tracked. Had it slid to Doubtful, repossession and auction would run on this same loan.',
+        l: 'The payment allocates penal interest, then interest, then principal. The classification returns to Pass.',
+        o: 'PAYMENT · penal → interest → principal · Watchlist cured',
+        st: ['Active · cured', 'NPR 2,450,000', 'NPR 1,612,400', 'in 30 days', '0'],
+        h: 'The cure is recorded alongside the breach — both stay in the loan\'s history.' },
+      { c: 'The final EMI clears and he collects a no-objection letter.',
+        s: 'Closure generates the letter in Nepali and instructs the transport office to release hypothecation on the vehicle.',
+        l: 'Balance zero; the history is retained and attributable to the policies that produced it.',
+        o: 'CLOSURE · balance 0 · hypothecation released',
+        st: ['Closed', 'NPR 2,450,000', 'NPR 0', '—', '0'],
+        h: 'The lien is released by the balance reaching zero, not by someone remembering to file it.' } ] }
+  ];
+
+  // Display order for the product tabs: SNPL, Payday, Wallet BNPL, Retail, Margin, Hire purchase -> index into FL
+  const ORD = [1, 4, 0, 2, 3, 5];
+
+  const fl = {
+    prods: [...document.querySelectorAll('.fl-prod')],
+    steps: [...document.querySelectorAll('.fl-step')],
+    cust: document.getElementById('fl-cust'),
+    sys:  document.getElementById('fl-sys'),
+    led:  document.getElementById('fl-ledger'),
+    op:   document.getElementById('fl-op'),
+    hint: document.getElementById('fl-hint'),
+    play: document.getElementById('fl-play'),
+    prev: document.getElementById('fl-prev'),
+    next: document.getElementById('fl-next'),
+    out:  ['fl-status', 'fl-principal', 'fl-outstanding', 'fl-due', 'fl-dpd'].map(id => document.getElementById(id)),
+    who:  document.getElementById('fl-who')
+  };
+
+  if (fl.steps.length && fl.cust) {
+    let fp = 0, fs = 0, ftimer = null;
+
+    const flRender = () => {
+      const prod = FL[ORD[fp]], stage = prod.stages[fs];
+      fl.cust.textContent = stage.c;
+      fl.sys.textContent  = stage.s;
+      fl.led.textContent  = stage.l;
+      fl.op.textContent   = stage.o;
+      fl.hint.textContent = stage.h;
+      fl.who.textContent  = prod.who;
+      stage.st.forEach((v, i) => { if (fl.out[i]) fl.out[i].textContent = v; });
+
+      fl.prods.forEach((b, i) => { b.setAttribute('aria-selected', String(i === fp)); b.tabIndex = i === fp ? 0 : -1; });
+      fl.steps.forEach((b, i) => {
+        b.setAttribute('aria-selected', String(i === fs));
+        b.setAttribute('data-done', String(i < fs));
+        b.tabIndex = i === fs ? 0 : -1;
+      });
+    };
+
+    const flStop = () => { if (ftimer) { clearInterval(ftimer); ftimer = null; } fl.play.setAttribute('aria-pressed', 'false'); fl.play.textContent = 'Play'; };
+    const flStart = () => {
+      if (reduce) return;
+      ftimer = setInterval(() => { fs = (fs + 1) % FL_STAGES.length; if (fs === 0) fp = (fp + 1) % FL.length; flRender(); }, 4200);
+      fl.play.setAttribute('aria-pressed', 'true'); fl.play.textContent = 'Pause';
+    };
+
+    const flGo = (stage, prod) => {
+      flStop();
+      if (typeof prod === 'number') fp = prod;
+      fs = (stage + FL_STAGES.length) % FL_STAGES.length;
+      flRender();
+    };
+
+    fl.prods.forEach((b, i) => b.addEventListener('click', () => flGo(0, i)));
+    fl.steps.forEach((b, i) => b.addEventListener('click', () => flGo(i)));
+    fl.prev.addEventListener('click', () => flGo(fs - 1));
+    fl.next.addEventListener('click', () => flGo(fs + 1));
+    fl.play.addEventListener('click', () => { ftimer ? flStop() : flStart(); });
+
+    const flKeys = (list, onPick) => list.forEach((b, i) => b.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowLeft: -1, Home: 'f', End: 'l' }[e.key];
+      if (d === undefined) return;
+      e.preventDefault();
+      const n = d === 'f' ? 0 : d === 'l' ? list.length - 1 : (i + d + list.length) % list.length;
+      onPick(n); list[n].focus();
+    }));
+    flKeys(fl.steps, n => flGo(n));
+    flKeys(fl.prods, n => flGo(0, n));
+
+    flRender();
+  }
+
+  /* ---------- Swift Intelligence at work ----------
+     A scripted walkthrough of one implementation request. Each step names the agent that owns
+     it, and the safety envelope fills only as gates actually pass — the point being that the
+     sequence ends at a human, not at a deployment. */
+  const AI_STEPS = [
+    { w: 'you', t: 'We\'re launching a retail personal loan for salaried customers. Automated scoring at intake, and a credit committee above a ticket threshold.' },
+    { w: 'ai', a: 0, t: 'Three things before I draft anything: where does the committee threshold sit, does the intake score auto-decline below a cutoff or always route to a human, and is this the home regulatory pack?' },
+    { w: 'you', t: 'Committee above NPR 500,000. Auto-decline only below a hard cutoff, manual review in between. Home pack, EMI over 12 to 60 months.' },
+    { w: 'ai', a: 0, t: 'Proposing the product configuration, EMI schedule rules, fee schedule and intake form as typed artifacts. Coverage against the capability catalog: 94%. Four items flagged as needing a domain decision — including whether salary-transfer customers get a separate risk grade.',
+      v: 'Draft artifacts proposed. Nothing is live.' },
+    { w: 'ai', a: 1, t: 'Drafting the three-stage decision workflow: auto-score, manual review, committee above threshold. Every attribute reference resolved against the knowledge graph during generation — an unresolved name is rejected at the tool layer, not caught later.' },
+    { w: 'ai', a: 2, t: 'Pricing expression written against the declared variable dictionary — base rate plus a premium by risk grade. Note: the script proposes a rate; the guardrail layer clamps it to the regulatory ceiling. I cannot reference guardrail internals.' },
+    { w: 'ai', a: 3, t: 'Independent examiner session opened. It receives the artifacts, their specs and the schemas — not this conversation. Generating golden cases, a replay cohort and boundary cases at the rate ceiling and either side of the committee threshold.',
+      v: 'Tests written by an agent that cannot see the work being tested.' },
+    { w: 'sys', t: 'Static validation passed — types, references and latency budgets.', g: 0 },
+    { w: 'sys', t: 'Dry run passed against 40 nominated real applications, including 6 that straddle the committee threshold. Diff and trace attached.', g: 1 },
+    { w: 'sys', t: 'Replay passed on a 12-month historical cohort using stored provider responses. 3 outcome changes, all explained.', g: 2 },
+    { w: 'sys', t: 'Shadow-run on live traffic, no borrower effect. Distribution within tolerance.', g: 3 },
+    { w: 'sys', t: 'Awaiting sign-off. The activator must be a different person from the author.', g: 4,
+      v: 'Proposed, tested and rehearsed — and still not live. A human decides that.' }
+  ];
+
+  /* Two more scenarios, because the other agents earn their place elsewhere. Migration only has
+     work when there is an existing book; Ops Copilot is read-only and produces no artifact at
+     all — so it reaches none of the gates, which is the point rather than an omission. */
+  const AI_MIGRATE = [
+    { w: 'you', t: 'We\'re moving an existing book onto the platform — about 40,000 live loans from the current system.' },
+    { w: 'ai', a: 4, t: 'Ingesting the source schema and a PII-redacted sample extract. I will propose a field mapping, not run it — the migration executor is deterministic platform code that compiles from the reviewed spec.' },
+    { w: 'ai', a: 4, t: 'Mapping table proposed: 118 source fields to the domain model. 9 unmapped, 4 ambiguous — flagged rather than guessed. Two source date fields have no timezone and need a decision.',
+      v: 'A mapping specification. No transform has been executed.' },
+    { w: 'ai', a: 4, t: 'Generating reconciliation assertions: balance sums in integer minor units, loan counts by status, and schedule totals per loan — the invariants that must hold after the load.' },
+    { w: 'ai', a: 3, t: 'Independent examiner session generating migration test cases from the mapping spec and the target schemas, without sight of the mapping conversation.',
+      v: 'Tests written by an agent that cannot see the work being tested.' },
+    { w: 'sys', t: 'Static validation passed — every target field resolves against the domain model.', g: 0 },
+    { w: 'sys', t: 'Dry run passed on a 500-loan sample. 3 reconciliation deltas, each traced to a source-data defect rather than to the mapping.', g: 1 },
+    { w: 'sys', t: 'Replay of the loaded sample against servicing produced identical schedules to the source system.', g: 2 },
+    { w: 'sys', t: 'Shadow does not apply — a migration has no live traffic to run alongside.' },
+    { w: 'sys', t: 'Awaiting sign-off before the executor is given the spec.', g: 4,
+      v: 'Migration specs face the same envelope. The one gate that does not apply is skipped openly, not quietly passed.' }
+  ];
+
+  const AI_EXPLAIN = [
+    { w: 'you', t: 'A customer is disputing a decline from March. What actually happened?' },
+    { w: 'ai', a: 5, t: 'Reading the recorded decision trace. I can narrate what is stored; I cannot re-run the decision or form a view on whether it was right.' },
+    { w: 'ai', a: 5, t: 'On 14 March, policy version 41 was in force. Three rules fired: affordability ratio above threshold, one bureau adverse item within 24 months, and employment tenure below the product minimum. The decline reason codes recorded were AFF-02 and BUR-07.',
+      v: 'Narrated from stored data. Nothing here was inferred.' },
+    { w: 'ai', a: 5, t: 'The values behind those rules are shown alongside them, pseudonymised — I do not receive raw personal data on any path.' },
+    { w: 'ai', a: 5, t: 'I cannot draft the customer-facing adverse-action notice. Reason codes map to jurisdiction language deterministically, outside any model.',
+      v: 'Read-only: no artifact proposed, so no gate applies and there is nothing to activate.' }
+  ];
+
+  const AI_SCENARIOS = [AI_STEPS, AI_MIGRATE, AI_EXPLAIN];
+
+  const ai = {
+    log:     document.getElementById('ai-log'),
+    agents:  [...document.querySelectorAll('.ai-agent')],
+    gates:   [...document.querySelectorAll('.ai-gate')],
+    verdict: document.getElementById('ai-verdict'),
+    play:    document.getElementById('ai-play'),
+    restart: document.getElementById('ai-restart'),
+    scns:    [...document.querySelectorAll('.ai-scn')]
+  };
+
+  if (ai.log && ai.agents.length) {
+    let aiIdx = 0, aiTimer = null, aiScn = 0;
+    const aiSteps = () => AI_SCENARIOS[aiScn];
+
+    const aiReset = () => {
+      aiIdx = 0;
+      ai.log.textContent = '';
+      ai.agents.forEach(a => { a.classList.remove('on', 'used'); });
+      ai.gates.forEach(g => g.classList.remove('on', 'pending'));
+      ai.verdict.textContent = 'Nothing has been proposed yet.';
+      ai.play.textContent = 'Play';
+      ai.play.setAttribute('aria-pressed', 'false');
+    };
+
+    const aiStep = () => {
+      if (aiIdx >= aiSteps().length) return false;
+      const s = aiSteps()[aiIdx++];
+
+      const li = document.createElement('li');
+      li.className = 'ai-line';
+
+      if (s.w === 'sys') {
+        // Gate results read as system events, centred and quiet — not part of the conversation.
+        li.className += ' flex justify-center';
+        const pill = document.createElement('span');
+        pill.className = 'inline-flex items-start gap-2 max-w-[92%] rounded-lg bg-white/[0.05] px-3 py-2 text-[12px] leading-relaxed text-white/50';
+        const tick = document.createElement('span');
+        tick.className = 'text-signal-green shrink-0';
+        tick.textContent = '✓';
+        const txt = document.createElement('span');
+        txt.textContent = s.t;
+        pill.append(tick, txt);
+        li.appendChild(pill);
+      } else {
+        const mine = s.w === 'you';
+        li.className += mine ? ' flex flex-col items-end' : ' flex flex-col items-start';
+        const who = document.createElement('span');
+        who.className = 'mb-1 px-1 text-[10.5px] font-medium uppercase tracking-[0.08em] ' +
+                        (mine ? 'text-white/35' : 'text-accent');
+        who.textContent = mine ? 'You' : 'Swift Intelligence';
+        const bubble = document.createElement('div');
+        bubble.className = 'max-w-[86%] px-3.5 py-2.5 rounded-xl ' + (mine
+          ? 'rounded-br-sm bg-white/[0.12] text-white/90'
+          : 'rounded-bl-sm bg-white/[0.05] border border-white/10 text-white/85');
+        bubble.textContent = s.t;
+        li.append(who, bubble);
+      }
+
+      ai.log.appendChild(li);
+      ai.log.scrollTop = ai.log.scrollHeight;
+
+      ai.agents.forEach(a => a.classList.remove('on'));
+      if (typeof s.a === 'number') {
+        ai.agents[s.a].classList.add('on', 'used');
+      }
+      if (typeof s.g === 'number') {
+        const g = ai.gates[s.g];
+        g.classList.add(s.g === 4 ? 'pending' : 'on');
+      }
+      if (s.v) ai.verdict.textContent = s.v;
+      return aiIdx < aiSteps().length;
+    };
+
+    const aiStop = () => {
+      if (aiTimer) { clearInterval(aiTimer); aiTimer = null; }
+      ai.play.setAttribute('aria-pressed', 'false');
+      ai.play.textContent = aiIdx >= aiSteps().length ? 'Replay' : 'Play';
+    };
+    const aiStart = () => {
+      if (aiIdx >= aiSteps().length) aiReset();
+      if (!aiStep()) { aiStop(); return; }
+      aiTimer = setInterval(() => { if (!aiStep()) aiStop(); }, 2000);
+      ai.play.setAttribute('aria-pressed', 'true');
+      ai.play.textContent = 'Pause';
+    };
+
+    ai.play.addEventListener('click', () => { aiTimer ? aiStop() : aiStart(); });
+    ai.restart.addEventListener('click', () => { aiStop(); aiReset(); });
+
+    const aiPick = i => {
+      aiScn = i;
+      ai.scns.forEach((b, n) => { b.setAttribute('aria-selected', String(n === i)); b.tabIndex = n === i ? 0 : -1; });
+      aiStop();
+      aiReset();
+      if (reduce) { while (aiStep()) { /* static render */ } ai.agents.forEach(a => a.classList.remove('on')); ai.play.textContent = 'Replay'; }
+    };
+    ai.scns.forEach((b, i) => {
+      b.addEventListener('click', () => aiPick(i));
+      b.addEventListener('keydown', e => {
+        const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (!d) return;
+        e.preventDefault();
+        const n = (i + d + ai.scns.length) % ai.scns.length;
+        aiPick(n); ai.scns[n].focus();
+      });
+    });
+    ai.scns.forEach((b, i) => { b.tabIndex = i === 0 ? 0 : -1; });
+
+    if (reduce) {
+      while (aiStep()) { /* render the finished session, no motion */ }
+      ai.agents.forEach(a => a.classList.remove('on'));
+      ai.play.textContent = 'Replay';
+    } else {
+      aiReset();
+    }
+  }
+
+  /* ---------- Mobile nav ---------- */
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  menuBtn?.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('hidden') === false;
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  mobileNav?.addEventListener('click', e => {
+    if (e.target.closest('a')) {
+      mobileNav.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* ---------- Reveal on entry ----------
+     IntersectionObserver drives the animation, but it can skip an element that enters and
+     leaves between two frames (fast fling, deep link, find-in-page). A scroll-driven sweep
+     backstops it: anything at or above the viewport bottom is shown unconditionally, so no
+     content can ever be left invisible. */
+  const revealables = [...document.querySelectorAll('.reveal')];
+  let pending = new Set(revealables);
+
+  const show = el => { el.classList.add('in'); pending.delete(el); };
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealables.forEach(show);
+  } else {
+    const ro = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { show(en.target); obs.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    revealables.forEach(el => ro.observe(el));
+  }
+
+  const sweep = () => {
+    if (!pending.size) return;
+    const h = innerHeight;
+    pending.forEach(el => { if (el.getBoundingClientRect().top < h) show(el); });
+  };
+
+  /* ---------- Active section in nav ----------
+     Deliberately NOT intersectionRatio-based. Sections here range from ~400px to several
+     thousand, and a ratio compared against a narrow root band both saturates far below the
+     first useful threshold and biases toward whichever section is shortest. A reading line at
+     30% of the viewport is height-independent and exact: the active section is simply the last
+     one whose top has crossed it. */
+  // Only in-page links take part; links to other pages carry a static aria-current instead.
+  const links = [...document.querySelectorAll('#navlist a')]
+    .filter(a => a.hash && a.pathname === location.pathname && document.getElementById(a.hash.slice(1)));
+  const sections = links.map(a => document.getElementById(a.hash.slice(1)));
+
+  const markActive = () => {
+    const line = innerHeight * 0.3;
+    let active = -1;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= line) active = i; });
+    // At the very bottom the last section may never cross the line — claim it explicitly.
+    const de = document.documentElement;
+    if (de.scrollTop + de.clientHeight >= de.scrollHeight - 2) active = sections.length - 1;
+    links.forEach((a, i) => a.setAttribute('aria-current', i === active ? 'true' : 'false'));
+  };
+
+  /* ---------- Scroll progress + sweep ----------
+     Deliberately synchronous rather than rAF-gated: the sweep is a correctness guarantee, not
+     an animation, and must not depend on a frame being painted. Both are cheap — one style
+     write, plus a rect read per element still pending (a set that drains to empty). */
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+    sweep();
+    markActive();
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+  /* ---------- Module accordion ---------- */
+  document.querySelectorAll('.mod-row').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+  });
+
+  /* ---------- Tab groups (roving focus, arrow keys) ---------- */
+  const initTabs = (listSel, onChange) => {
+    const list = document.querySelector(listSel);
+    if (!list) return;
+    const tabs = [...list.querySelectorAll('[role="tab"]')];
+
+    const select = tab => {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.classList.toggle('hidden', !on);
+      });
+      onChange?.(tab);
+    };
+
+    tabs.forEach((t, i) => {
+      t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', e => {
+        const map = { ArrowRight: 1, ArrowLeft: -1, Home: 'first', End: 'last' };
+        if (!(e.key in map)) return;
+        e.preventDefault();
+        const next = map[e.key] === 'first' ? tabs[0]
+                   : map[e.key] === 'last' ? tabs[tabs.length - 1]
+                   : tabs[(i + map[e.key] + tabs.length) % tabs.length];
+        next.focus(); select(next);
+      });
+    });
+  };
+
+  initTabs('[aria-label="Architecture views"]');
+
+})();
+</script>
+
+</body>
+</html>
