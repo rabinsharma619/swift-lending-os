@@ -398,78 +398,71 @@
     <div class="mt-20 reveal">
       <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">What each layer supplies</h3>
       <p class="mt-3 text-[15.5px] text-mute max-w-[72ch]">
-        finOS is a self-contained lending platform: the lending domain, the platform
-        services it runs on, and the channels above them. The pilot-specific build concentrates on
-        credit truth and the Malaysian regulatory pack.
+        The same finOS architecture, scoped to OneSphere’s first release: borrower and staff
+        channels on top, one lending core where the loan and its books are saved together, the
+        platform services it runs on, and the Malaysian systems it reaches.
       </p>
 
-      <div class="mt-8 grid lg:grid-cols-12 gap-10">
-        <div class="lg:col-span-7">
-          <figure class="rounded-xl border border-line bg-white p-6">
-            <svg viewBox="0 0 460 320" class="w-full h-auto" role="img" aria-label="The OneSphere pilot stack. From top: borrower, agent and partner channels; the finOS lending domain containing the credit kernel, origination, decisioning, servicing, payments, collections and the Malaysia regulatory pack; the finOS platform services including identity, documents, notifications, process and task management, integration, reference data and model serving; and the runtime and infrastructure.">
-              <g font-family="Instrument Sans, sans-serif">
-                <rect x="6" y="6" width="448" height="44" rx="6" fill="#FAFBFD" stroke="#E6EAF1"/>
-                <text x="18" y="22" font-size="9" font-weight="600" fill="#8B94A6" letter-spacing="1">CHANNELS</text>
-                <g font-size="9" fill="#5A6478">
-                  <rect x="18" y="28" width="140" height="16" rx="3" fill="#fff" stroke="#E6EAF1"/><text x="26" y="39">Borrower app · one codebase</text>
-                  <rect x="165" y="28" width="140" height="16" rx="3" fill="#fff" stroke="#E6EAF1"/><text x="173" y="39">Agent &amp; branch console</text>
-                  <rect x="312" y="28" width="130" height="16" rx="3" fill="#fff" stroke="#E6EAF1"/><text x="320" y="39">Partner &amp; remittance API</text>
-                </g>
-
-                <rect x="6" y="58" width="448" height="112" rx="6" fill="#001133"/>
-                <text x="18" y="75" font-size="9" font-weight="600" fill="#5FA8EE" letter-spacing="1">finOS — THE LENDING DOMAIN (THE REAL BUILD)</text>
-                <rect x="18" y="83" width="424" height="30" rx="4" fill="#0E71DB"/>
-                <text x="28" y="96" font-size="10" font-weight="600" fill="#fff">Credit kernel</text>
-                <text x="28" y="107" font-size="8.5" fill="#DCE8FD">one ledger · one transactional boundary · statutory guardrails</text>
-                <g font-size="8.5" fill="#C9D8F5">
-                  <rect x="18" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="26" y="132">Origination</text>
-                  <rect x="105" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="113" y="132">Decisioning</text>
-                  <rect x="192" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="200" y="132">Servicing</text>
-                  <rect x="279" y="119" width="82" height="20" rx="3" fill="#0B2A55"/><text x="287" y="132">Payments</text>
-                  <rect x="366" y="119" width="76" height="20" rx="3" fill="#0B2A55"/><text x="374" y="132">Collections</text>
-                  <rect x="18" y="143" width="424" height="20" rx="3" fill="#0B2A55"/><text x="26" y="156">Malaysia pack — rate ceiling · no compounding · no extra fees · attestation · accounting</text>
-                </g>
-
-                <rect x="6" y="178" width="448" height="62" rx="6" fill="#EAF3FD" stroke="#0E71DB" stroke-opacity=".3"/>
-                <text x="18" y="194" font-size="9" font-weight="600" fill="#0E71DB" letter-spacing="1">PLATFORM SERVICES — CONFIGURED, NOT BUILT FOR THE PILOT</text>
-                <g font-size="8.5" fill="#3C4759">
-                  <rect x="18" y="200" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="26" y="211">Identity &amp; access</text>
-                  <rect x="125" y="200" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="133" y="211">Document mgmt</text>
-                  <rect x="232" y="200" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="240" y="211">Notifications</text>
-                  <rect x="339" y="200" width="103" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="347" y="211">Process &amp; task</text>
-                  <rect x="18" y="220" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="26" y="231">Reference data</text>
-                  <rect x="125" y="220" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="133" y="231">Integration</text>
-                  <rect x="232" y="220" width="100" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="240" y="231">AI &amp; predictive</text>
-                  <rect x="339" y="220" width="103" height="16" rx="3" fill="#fff" stroke="#D8E2F8"/><text x="347" y="231">Business metadata</text>
-                </g>
-
-                <rect x="6" y="248" width="448" height="44" rx="6" fill="#FAFBFD" stroke="#E6EAF1"/>
-                <text x="18" y="264" font-size="9" font-weight="600" fill="#8B94A6" letter-spacing="1">RUNTIME &amp; INFRASTRUCTURE</text>
-                <text x="18" y="278" font-size="9" fill="#5A6478">Spring Boot · PostgreSQL · Keycloak · OpenBao · S3 storage · Grafana · Kubernetes · optional Kafka</text>
-
-                <text x="6" y="308" font-size="9.5" fill="#8B94A6">Navy is the lending domain. Pale blue is platform capability configured rather than written.</text>
-              </g>
-            </svg>
+      <div class="mt-8 grid lg:grid-cols-12 gap-10 items-start">
+        <div class="lg:col-span-7 min-w-0">
+          <figure class="rounded-[20px] bg-white ring-1 ring-line p-3 sm:p-4" aria-labelledby="my-stack-cap">
+            <div class="rounded-xl p-4 bg-surface-2 ring-1 ring-line">
+              <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-mute-2">Channels</p>
+              <ul class="mt-3 grid sm:grid-cols-3 gap-2"><li class="rounded-lg bg-white ring-1 ring-line px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Borrower web portal</span><span class="block text-[12px] opacity-70 mt-0.5">OneSphere-branded · installable · en · ms · ne</span></li><li class="rounded-lg bg-white ring-1 ring-line px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Admin console</span><span class="block text-[12px] opacity-70 mt-0.5">operations · attestation · cases · accounting</span></li><li class="rounded-lg bg-white ring-1 ring-line px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Partner edges</span><span class="block text-[12px] opacity-70 mt-0.5">Ria remittance · DuitNow rails</span></li></ul>
+            </div>
+            <div class="flex justify-center py-1" aria-hidden="true"><svg class="h-4 w-4 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+            <div class="rounded-xl bg-ink p-4 text-white">
+              <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#FADF7C]">Lending core · one modular monolith</p>
+              <div class="mt-3 rounded-lg bg-[#23336F] ring-1 ring-accent p-3">
+                <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-white/90">One transactional boundary</p>
+                <ul class="mt-2 grid sm:grid-cols-3 gap-2"><li class="rounded-lg bg-accent text-white px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Credit</span><span class="block text-[12px] opacity-70 mt-0.5">flat and annuity schedules · accrual · allocation</span></li><li class="rounded-lg bg-accent text-white px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Accounting</span><span class="block text-[12px] opacity-70 mt-0.5">books slice · journal with every operation</span></li><li class="rounded-lg bg-accent text-white px-3 py-2.5"><span class="block text-[13.5px] font-semibold tracking-tighter">Kernel</span><span class="block text-[12px] opacity-70 mt-0.5">state machines · audit · outbox</span></li></ul>
+              </div>
+              <ul class="mt-3 flex flex-wrap gap-1.5"><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Origination and offers</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Decisioning · RemitScore v1 · CEL rules</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Servicing</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Payments</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Collections v0</li></ul>
+              <div class="mt-3 grid sm:grid-cols-2 gap-2">
+                <div class="rounded-lg bg-white/[.06] p-3"><p class="text-[12.5px] font-semibold text-[#FADF7C]">Malaysia pack</p><p class="mt-1 text-[12px] text-white/70">18% cap outside every script · no compounding · only fees the Act permits · s.27 attestation · Schedule J · KPKT returns</p></div>
+                <div class="rounded-lg bg-white/[.06] p-3"><p class="text-[12.5px] font-semibold text-[#FADF7C]">Minimum lawful lender</p><p class="mt-1 text-[12px] text-white/70">AML/CFT screening and reporting · complaints · statements · write-off · hardship · fraud and mule controls</p></div>
+              </div>
+            </div>
+            <div class="flex justify-center py-1" aria-hidden="true"><svg class="h-4 w-4 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+            <div class="rounded-xl p-4 bg-[#F8FAE3] ring-1 ring-[#DDE3A6]">
+              <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5F6E00]">Platform services · built in the first release, reused by every lender</p>
+              <ul class="mt-3 flex flex-wrap gap-1.5"><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Identity and access · MFA · maker-checker</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Documents · Key Facts · statements</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Notifications</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Process and tasks</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Connector hub · the only way out</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Reporting · KPKT returns · pilot analytics</li></ul>
+            </div>
+            <div class="mt-2 grid sm:grid-cols-2 gap-2">
+            <div class="rounded-xl p-4 bg-[#FDF1EA] ring-1 ring-[#F4CDB4]">
+              <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#C2410C]">Outside systems</p>
+              <ul class="mt-3 flex flex-wrap gap-1.5"><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Ria · remittance disbursement</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">DuitNow · AutoDebit and transfer</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Credit bureau</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">eKYC</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">AML screening</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">e-stamping</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">SMS and email</li></ul>
+            </div>
+            <div class="rounded-xl p-4 bg-[#FFF8D9] ring-1 ring-[#EED98A]">
+              <p class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#A15C07]">Data and runtime · hosted by Swift in a Malaysian region, DR in Malaysia</p>
+              <ul class="mt-3 flex flex-wrap gap-1.5"><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">PostgreSQL with standby</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Reporting replica</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">S3 object store</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">OpenBao secrets</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Keycloak</li><li class="rounded-md bg-white px-2.5 py-1.5 text-[12.5px] text-ink/80 ring-1 ring-line">Observability</li></ul>
+            </div>
+            </div>
+            <figcaption id="my-stack-cap" class="mt-3 px-1 text-[12px] text-mute-2">Colours match the <a href="architecture.html#architecture" class="underline decoration-line underline-offset-2 hover:text-accent">whole-system diagram</a>: ink is the lending core, blue the one transactional boundary, lime the platform services, orange the outside systems, yellow data and runtime.</figcaption>
           </figure>
         </div>
 
         <div class="lg:col-span-5">
           <dl class="divide-y divide-line border-t border-line">
             <div class="py-4">
-              <dt class="text-[14.5px] font-semibold tracking-tighter">The platform is already there</dt>
-              <dd class="mt-1 text-[14px] leading-relaxed text-mute">Identity, documents, notifications, task management, integration, model serving, and the runtime and CI/CD foundation are part of finOS. The pilot configures them; it does not build them.</dd>
+              <dt class="text-[14.5px] font-semibold tracking-tighter">Built once, for every lender</dt>
+              <dd class="mt-1 text-[14px] leading-relaxed text-mute">OneSphere is finOS’s first deployment, so its first release builds the credit kernel and the platform services — identity, documents, notifications, process management. They are designed, not yet built; every lender after OneSphere reuses them.</dd>
             </div>
             <div class="py-4">
               <dt class="text-[14.5px] font-semibold tracking-tighter">finOS supplies credit truth</dt>
-              <dd class="mt-1 text-[14px] leading-relaxed text-mute">The ledger, credit operations, decisioning policy, servicing and collections. This is the part where correctness cannot be compromised.</dd>
+              <dd class="mt-1 text-[14px] leading-relaxed text-mute">The ledger, credit operations, decisioning, servicing, collections and the books — with each loan and its journal saved in one transaction. This is the part where correctness cannot be compromised.</dd>
             </div>
             <div class="py-4">
-              <dt class="text-[14.5px] font-semibold tracking-tighter">OneSphere is configuration</dt>
-              <dd class="mt-1 text-[14px] leading-relaxed text-mute">The pilot is client-specific configuration and a regulatory pack over the shared lending domain, with no product logic written for one client.</dd>
+              <dt class="text-[14.5px] font-semibold tracking-tighter">OneSphere-specific work is a pack and configuration</dt>
+              <dd class="mt-1 text-[14px] leading-relaxed text-mute">The Malaysia pack, the RNPL product set-up and the Malaysian connectors. No product logic is written for one client.</dd>
+            </div>
+            <div class="py-4">
+              <dt class="text-[14.5px] font-semibold tracking-tighter">Compliance ships in the first release</dt>
+              <dd class="mt-1 text-[14px] leading-relaxed text-mute">Anti-money-laundering checks, complaints, statements, write-off and hardship are in scope from day one — they are what a licensed moneylender is inspected on.</dd>
             </div>
             <div class="py-4">
               <dt class="text-[14.5px] font-semibold tracking-tighter">Language is configuration</dt>
-              <dd class="mt-1 text-[14px] leading-relaxed text-mute">A borrower journey in Nepali, Bengali or Bahasa Malaysia is translation content over the same server-driven journey — not a separate build.</dd>
+              <dd class="mt-1 text-[14px] leading-relaxed text-mute">The borrower journey in English, Malay or Nepali is translation content over the same server-driven journey; another language is content, not a separate build.</dd>
             </div>
           </dl>
         </div>
