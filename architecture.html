@@ -967,49 +967,84 @@ flowchart TB
     </div>
 
     <!-- SDK -->
-    <div class="mt-20 grid lg:grid-cols-12 gap-10 lg:gap-14 items-start reveal">
-      <div class="lg:col-span-6 min-w-0">
-        <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Open SDK — extend without lock-in</h3>
-        <p class="mt-4 text-[15.5px] leading-relaxed text-mute">
-          Extension points are interfaces. The platform never requires subclassing a concrete
-          platform class, and each deployment's extensions live in their own module, built and
-          maintained by Swift. An upgrade is a
-          dependency bump and a CI run — not a merge conflict against customisation.
-        </p>
-        <p class="mt-4 text-[15.5px] leading-relaxed text-mute">
-          Every integration — bureau, core banking, payment rail, KYC, AML, e-signature, accounting —
-          composes from exactly four interface shapes, so a new provider is a small, well-understood
-          piece of work rather than a project.
-        </p>
-        <dl class="mt-8 divide-y divide-line border-t border-line text-[14px]">
-          <div class="py-3.5 grid grid-cols-3 gap-4"><dt class="font-medium">Descriptor</dt><dd class="col-span-2 text-mute">Auth, schemas, timeout, retry, circuit breaker, cost model, PII class, cache policy</dd></div>
-          <div class="py-3.5 grid grid-cols-3 gap-4"><dt class="font-medium">Call trace</dt><dd class="col-span-2 text-mute">Request, response, latency, cost and outcome — attributable to subject and policy version</dd></div>
-          <div class="py-3.5 grid grid-cols-3 gap-4"><dt class="font-medium">Failure model</dt><dd class="col-span-2 text-mute">Typed taxonomy with a per-provider breaker; a degraded provider affects its branch only</dd></div>
-          <div class="py-3.5 grid grid-cols-3 gap-4"><dt class="font-medium">Public API</dt><dd class="col-span-2 text-mute">OpenAPI, OAuth 2.0, cursor pagination, mandatory idempotency keys, additive-only within a major version</dd></div>
-          <div class="py-3.5 grid grid-cols-3 gap-4"><dt class="font-medium">Sandbox</dt><dd class="col-span-2 text-mute">Fixture mode per connector — forced decline, timeout and failure are first-class</dd></div>
-        </dl>
-      </div>
-      <div class="lg:col-span-6 min-w-0">
-        <div class="rounded-xl bg-ink overflow-hidden">
-          <div class="flex items-center gap-2 px-5 py-3 border-b border-white/10">
-            <span class="font-mono text-[11px] text-white/40">ConnectorSDK.java</span>
-          </div>
-          <pre class="px-5 py-5 overflow-x-auto text-[12.5px] leading-[1.75] font-mono text-white/80"><code><span class="text-white/35">// Pull data about a subject.</span>
+    <div id="sdk" class="mt-20 scroll-mt-20 reveal">
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Open SDK — extend without lock-in</h3>
+      <p class="mt-3 text-[15px] text-mute max-w-[72ch]">The Open SDK is the fixed set of published interfaces that everything outside the finOS core plugs into — integrations with outside providers, and the logic specific to one lender. Nothing is welded into the core, so any of it can be swapped or upgraded on its own.</p>
+
+      <div class="mt-10 grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-6 min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">01</span>Lender-specific logic lives outside the core</p>
+          <p class="text-[15px] leading-relaxed text-mute">Every lender wants something of its own — a fee rule, an extra approval step, a report format. In many platforms that work is edited into the product’s code, and the lender is stuck on an old version because every upgrade means re-merging it. finOS keeps it out of the core:</p>
+          <ul class="mt-4 space-y-2.5 text-[14.5px] leading-relaxed text-mute">
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="font-medium text-ink">Extension points are interfaces.</span> Custom code implements a published contract and never inherits from finOS’s internal classes, which change between releases.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="font-medium text-ink">Each deployment’s extensions sit in their own module,</span> built and maintained by Swift, separate from the core.</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span><span class="font-medium text-ink">An upgrade is a version bump and a test run.</span> The extension module is rebuilt and tested against the new contracts, and it ships — no fork to reconcile.</span></li>
+          </ul>
+          <p class="mt-8 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">02</span>Every integration takes one of four shapes</p>
+          <p class="text-[15px] leading-relaxed text-mute">Bureau, core banking, payment rail, eKYC, AML screening, e-signature, accounting — each is built from the same four interfaces, so a new provider is a small, well-understood piece of work rather than a project.</p>
+        </div>
+        <div class="lg:col-span-6 min-w-0">
+          <div class="rounded-xl bg-ink overflow-hidden">
+            <div class="flex items-center gap-2 px-5 py-3 border-b border-white/10">
+              <span class="font-mono text-[11px] text-white/40">ConnectorSDK.java · the four shapes</span>
+            </div>
+            <pre class="px-5 py-5 overflow-x-auto text-[12.5px] leading-[1.75] font-mono text-white/80"><code><span class="text-white/35">// 1 · Pull data about a subject.</span>
 <span class="text-accent">interface</span> OutboundDataSource&lt;S, T&gt; {
   ConnectorDescriptor descriptor();
   T fetch(S subject, FetchContext ctx);
 }
 
-<span class="text-white/35">// Cause an external effect.</span>
-<span class="text-white/35">// MUST be idempotent on the key.</span>
+<span class="text-white/35">// 2 · Cause an external effect.</span>
+<span class="text-white/35">//     MUST be idempotent on the key.</span>
 <span class="text-accent">interface</span> OutboundCommand&lt;C, R&gt; {
   ConnectorDescriptor descriptor();
   R execute(C command, CommandContext ctx);
 }
 
-<span class="text-white/35">// Plus inbound webhook receivers</span>
-<span class="text-white/35">// and scheduled import jobs.</span></code></pre>
+<span class="text-white/35">// 3 · Receive a pushed event: verify, dedupe.</span>
+<span class="text-accent">interface</span> InboundWebhook&lt;P&gt; {
+  ConnectorDescriptor descriptor();
+  VerifiedEvent&lt;P&gt; verifyAndNormalize(RawHttpRequest r);
+}
+
+<span class="text-white/35">// 4 · Exchange files on a schedule —</span>
+<span class="text-white/35">//     also the air-gapped form of any connector.</span>
+<span class="text-accent">interface</span> FileExchange&lt;L&gt; {
+  ConnectorDescriptor descriptor();
+  ExportFile&lt;L&gt; produce(ExportWindow window);
+  ImportResult consume(ImportFile file);
+}</code></pre>
+          </div>
         </div>
+      </div>
+
+      <div class="mt-8 overflow-x-auto rounded-xl border border-line bg-white">
+        <table class="w-full text-[14px] min-w-[680px]">
+          <caption class="sr-only">The four connector shapes, what each does and an example from the OneSphere Malaysia deployment</caption>
+          <thead><tr class="border-b border-line bg-surface-2"><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Shape</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">What it does</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Example · OneSphere Malaysia</th></tr></thead>
+          <tbody class="divide-y divide-line">
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top whitespace-nowrap"><span class="font-mono text-[11px] text-accent mr-2">1</span>Outbound data source</th><td class="px-5 py-3.5 align-top text-mute">Pulls information about a person or a loan</td><td class="px-5 py-3.5 align-top text-mute">Credit report from the bureau, eKYC result</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top whitespace-nowrap"><span class="font-mono text-[11px] text-accent mr-2">2</span>Outbound command</th><td class="px-5 py-3.5 align-top text-mute">Causes something to happen elsewhere — always safe to retry</td><td class="px-5 py-3.5 align-top text-mute">DuitNow disbursement, e-signature request</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top whitespace-nowrap"><span class="font-mono text-[11px] text-accent mr-2">3</span>Inbound webhook</th><td class="px-5 py-3.5 align-top text-mute">Receives an event a provider pushes, verified and de-duplicated</td><td class="px-5 py-3.5 align-top text-mute">Ria settlement or payment notification</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top whitespace-nowrap"><span class="font-mono text-[11px] text-accent mr-2">4</span>File exchange</th><td class="px-5 py-3.5 align-top text-mute">Imports and exports files on a schedule; the offline form of any connector</td><td class="px-5 py-3.5 align-top text-mute">Bank statement or settlement file</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">03</span>Every connector ships with the same parts</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3"><div class="rounded-xl bg-white ring-1 ring-line px-5 py-5"><h4 class="text-[15px] font-semibold tracking-tighter">Descriptor</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">Credentials, data schema, timeout, retries, a cut-off switch for a failing provider, cost per call, which fields are personal data, caching rules.</p></div><div class="rounded-xl bg-white ring-1 ring-line px-5 py-5"><h4 class="text-[15px] font-semibold tracking-tighter">Call trace</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">Every request and response recorded with latency, cost and outcome — which is what lets a credit decision be replayed exactly.</p></div><div class="rounded-xl bg-white ring-1 ring-line px-5 py-5"><h4 class="text-[15px] font-semibold tracking-tighter">Failure model</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">Typed errors and a per-provider breaker: if one provider is slow or down, only that branch of a decision degrades.</p></div><div class="rounded-xl bg-white ring-1 ring-line px-5 py-5"><h4 class="text-[15px] font-semibold tracking-tighter">Sandbox</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">A forced decline, a timeout or a failure can be simulated, so the unhappy paths are tested on purpose.</p></div><div class="rounded-xl bg-white ring-1 ring-line px-5 py-5"><h4 class="text-[15px] font-semibold tracking-tighter">Public API</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">For the lender’s own systems: OpenAPI, OAuth 2.0, mandatory idempotency keys, additive-only changes within a major version.</p></div></div>
+
+      <p class="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">What “without lock-in” means</p>
+      <div class="grid md:grid-cols-3 gap-4"><div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5"><p class="font-mono text-[12px] text-accent">01</p><h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">No lock-in to providers</h4><p class="mt-2 text-[14px] leading-relaxed text-mute">Changing bureau, eKYC provider or payment rail means one new connector in the same shape. Products, decision flows and the ledger don’t change.</p></div><div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5"><p class="font-mono text-[12px] text-accent">02</p><h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">No lock-in to an old version</h4><p class="mt-2 text-[14px] leading-relaxed text-mute">Customisations sit outside the core, so every customer stays on the current release instead of a frozen fork.</p></div><div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5"><p class="font-mono text-[12px] text-accent">03</p><h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">No lock-in to your data</h4><p class="mt-2 text-[14px] leading-relaxed text-mute">Your own systems reach loans, payments and events through a stable, versioned public API.</p></div></div>
+
+      <div role="note" aria-label="What open means here" class="mt-6 flex gap-4 rounded-xl px-5 py-5 sm:px-6" style="background:#EEF4FF;box-shadow:inset 0 0 0 1px #C9D4FE;border-left:4px solid #3859F9">
+        <svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3859F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+        <p class="text-[14.5px] leading-relaxed max-w-[88ch] text-ink/80">
+          <span class="font-semibold text-accent">“Open” means published, not do-it-yourself.</span>
+          The contract is documented, stable and versioned, and nothing you depend on is hidden in a
+          private fork. Swift builds and maintains every connector and extension, so one team stands
+          behind all the code you run; your own systems integrate through the public API.
+        </p>
       </div>
     </div>
 
