@@ -386,7 +386,7 @@
               <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">Who uses it</dt><dd class="text-mute">A bank where customer money must stay in its core banking accounts.</dd></div>
               <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">Money</dt><dd class="text-mute">Disbursements are credited to the customer's account in the core, and repayments are debited from it.</dd></div>
               <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">Books</dt><dd class="text-mute">The core's general ledger, fed by finOS's journals.</dd></div>
-              <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">The mirror</dt><dd class="text-mute">The core keeps a shadow loan account so tellers and statements show the loan. finOS stays the master and keeps the mirror up to date.</dd></div>
+              <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">The mirror</dt><dd class="text-mute">The core keeps a non-accruing shadow loan account so tellers and statements show the loan. finOS stays the master and updates the mirror, and any standing order, on every change.</dd></div>
             </dl>
             <p class="px-6 py-4 border-t border-line bg-surface-2 text-[13.5px] leading-relaxed text-mute"><span class="font-medium text-ink">Example.</span> A Nepali bank's retail personal loan, paid out to and collected from the customer's savings account.</p>
           </article>
@@ -405,7 +405,7 @@
             <dl class="px-6 py-5 space-y-3.5 text-[14px] leading-relaxed flex-1">
               <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">Who uses it</dt><dd class="text-mute">A bank that insists on servicing loans in its own core banking system.</dd></div>
               <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">finOS does</dt><dd class="text-mute">Application, KYC, scoring, approval, offer and documents — then hands the approved loan to the core.</dd></div>
-              <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">After handoff</dt><dd class="text-mute">The core owns balances, interest and overdue status. finOS never holds a balance; it listens to the core's servicing events to run collections and monitoring.</dd></div>
+              <div class="grid grid-cols-[96px_1fr] gap-3"><dt class="text-[12px] font-semibold uppercase tracking-[0.08em] text-mute-2 pt-0.5">After handoff</dt><dd class="text-mute">The core owns balances, interest and overdue status. finOS never holds a balance; it listens to the core's servicing events, in order, to run collections and monitoring, and sends waivers, settlements and restructures back to the core as instructions it must confirm.</dd></div>
             </dl>
             <p class="px-6 py-4 border-t border-line bg-surface-2 text-[13.5px] leading-relaxed text-mute"><span class="font-medium text-ink">Example.</span> A bank's corporate loans, where its existing servicing and approval processes stay put.</p>
           </article>
