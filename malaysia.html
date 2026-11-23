@@ -389,7 +389,7 @@
       <dl class="lg:col-span-7 grid grid-cols-2 gap-px bg-line rounded-xl overflow-hidden border border-line">
         <div class="bg-white p-6"><dt class="text-[28px] font-semibold tracking-tightest tnum">43</dt><dd class="mt-1 text-[13px] text-mute">pages of requirements reviewed</dd></div>
         <div class="bg-white p-6"><dt class="text-[28px] font-semibold tracking-tightest tnum">~146</dt><dd class="mt-1 text-[13px] text-mute">numbered requirements with acceptance criteria</dd></div>
-        <div class="bg-white p-6"><dt class="text-[28px] font-semibold tracking-tightest tnum">2</dt><dd class="mt-1 text-[13px] text-mute">pilot products in scope</dd></div>
+        <div class="bg-white p-6"><dt class="text-[28px] font-semibold tracking-tightest tnum">1</dt><dd class="mt-1 text-[13px] text-mute">pilot product in scope — RNPL; the Pay Day Loan is deferred</dd></div>
         <div class="bg-white p-6"><dt class="text-[28px] font-semibold tracking-tightest tnum">12</dt><dd class="mt-1 text-[13px] text-mute">development epics itemised</dd></div>
       </dl>
     </div>
@@ -419,7 +419,7 @@
               </div>
               <ul class="mt-3 flex flex-wrap gap-1.5"><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Origination and offers</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Decisioning · RemitScore v1 · CEL rules</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Servicing</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Payments</li><li class="rounded-md bg-white/[.07] px-2.5 py-1.5 text-[12.5px] text-white/80">Collections v0</li></ul>
               <div class="mt-3 grid sm:grid-cols-2 gap-2">
-                <div class="rounded-lg bg-white/[.06] p-3"><p class="text-[12.5px] font-semibold text-[#FADF7C]">Malaysia pack</p><p class="mt-1 text-[12px] text-white/70">18% cap outside every script · no compounding · only fees the Act permits · s.27 attestation · Schedule J · KPKT returns</p></div>
+                <div class="rounded-lg bg-white/[.06] p-3"><p class="text-[12.5px] font-semibold text-[#FADF7C]">Malaysia pack</p><p class="mt-1 text-[12px] text-white/70">18% unsecured / 12% secured cap outside every script · no compounding · only fees the Act permits · flat-rate schedules with EIR disclosure · s.27 attestation · Schedule J/K · KPKT returns</p></div>
                 <div class="rounded-lg bg-white/[.06] p-3"><p class="text-[12.5px] font-semibold text-[#FADF7C]">Minimum lawful lender</p><p class="mt-1 text-[12px] text-white/70">AML/CFT screening and reporting · complaints · statements · write-off · hardship · fraud and mule controls</p></div>
               </div>
             </div>
@@ -536,67 +536,47 @@
 
     <!-- Phases -->
     <div class="mt-20 reveal">
-      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Four phases, smallest risky thing first</h3>
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Four stages, smallest risky thing first</h3>
+      <p class="mt-3 text-[15.5px] text-mute max-w-[72ch]">Months count from the start of Phase 0, which has not started yet. OneSphere is Swift’s only active build until the pilot gate.</p>
       <div class="mt-8 divide-y divide-line rounded-xl border border-line bg-white overflow-hidden">
         <div class="p-7 grid lg:grid-cols-12 gap-5">
           <div class="lg:col-span-3">
             <span class="font-mono text-[11px] text-accent tnum">PHASE 0</span>
-            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Fit spike</h4>
+            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Resolve and foundations</h4>
+            <p class="mt-1 text-[12.5px] text-mute-2">13 weeks · M1–M3 · gate OS-G0</p>
           </div>
           <div class="lg:col-span-9">
-            <p class="text-[14.5px] leading-relaxed text-mute">
-              Prove the ledger pattern under pilot volumes, prove the decisioning path under real
-              connector fan-out, and confirm which shared services are production-grade for this
-              workload. Stood up as a single-node topology. The point is to convert the largest
-              architectural assumption into a measured result before anything is frozen.
-            </p>
+            <p class="text-[14.5px] leading-relaxed text-mute">Answer the four make-or-break questions in writing — who may borrow online, how attestation works remotely, how the rate cap is computed, and the remittance licensing position. Baseline the first-release requirements with OneSphere, lodge a complete online application, and prove a kernel walking skeleton: a loan books, accrues, takes a payment and posts its journal in one transaction, while the Malaysian guardrail blocks an over-cap offer outside the script. Name the DuitNow sponsor bank and sign the Ria contract. Time-boxed spikes settle decision latency and the workflow engine before anything is frozen.</p>
           </div>
         </div>
         <div class="p-7 grid lg:grid-cols-12 gap-5 bg-accent-soft/30">
           <div class="lg:col-span-3">
             <span class="font-mono text-[11px] text-accent tnum">PHASE 1</span>
-            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Licence-readiness release</h4>
+            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Licence-ready first release</h4>
+            <p class="mt-1 text-[12.5px] text-mute-2">39 weeks · M4–M12 · pilot-ready at the end of M12</p>
           </div>
           <div class="lg:col-span-9">
-            <p class="text-[14.5px] leading-relaxed text-mute">
-              The compliance-critical spine, plus the documentation the application requires:
-              onboarding with KYC and consent, agreement generation with the attestation step
-              designed in, the credit kernel and servicing ledger under the Malaysian guardrail
-              pack, native accounting (general ledger, cash and bank, financial statements, since
-              OneSphere has no accounting system of its own), the audit trio, and access control.
-              Commercially rich modules are deliberately
-              deferred. Deliverables include the customer-journey and technology plan, the security
-              certificate evidence, and a registered <span class="font-mono text-[13px]">.my</span>
-              domain with a named application.
-            </p>
+            <p class="text-[14.5px] leading-relaxed text-mute">The credit kernel and servicing ledger under the Malaysian pack; onboarding with eKYC and consent; a bureau check on every application; agreement generation with the attestation step designed in; native accounting, since OneSphere has no accounting system of its own; and the controls a licensed moneylender is inspected on — anti-money-laundering checks, complaints, statements, write-off, hardship, fraud and mule controls. Identity, documents, notifications, process management and KPKT returns are built here and reused by every later lender. Deliverables include the customer-journey and technology plan, the security certificate evidence, and a registered <span class="font-mono text-[13px]">.my</span> domain. Full approval and the live date are planned for M11–M14, pending KPKT.</p>
           </div>
         </div>
         <div class="p-7 grid lg:grid-cols-12 gap-5">
           <div class="lg:col-span-3">
-            <span class="font-mono text-[11px] text-accent tnum">PHASE 2</span>
-            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Pilot operation</h4>
+            <span class="font-mono text-[11px] text-accent tnum">PILOT</span>
+            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">RNPL on one corridor</h4>
+            <p class="mt-1 text-[12.5px] text-mute-2">26 weeks · 16 originating, 10 observing · gate OS-G1 ≈ M18–M20</p>
           </div>
           <div class="lg:col-span-9">
-            <p class="text-[14.5px] leading-relaxed text-mute">
-              Remit Now Pay Later live on one corridor. Remittance regularity as the credit signal,
-              scored on the finOS model-serving stack with reason codes and model versioning.
-              Repayment by direct debit through the payments module, collections with contact caps
-              and quiet hours enforced by the platform, and portfolio reporting from the operational
-              record.
-            </p>
+            <p class="text-[14.5px] leading-relaxed text-mute">Remit Now Pay Later in a bounded cohort. Remittance regularity is the credit signal, scored by RemitScore v1 — a rule-based scorecard with reason codes that replays exactly from stored inputs. Repayment by DuitNow direct debit, collections with contact caps and quiet hours enforced by the platform, and explicit stop criteria — loss appetite, early-default ceilings and a kill switch. The pilot ends with a clear decision: the thesis is proven, or it stops cleanly.</p>
           </div>
         </div>
         <div class="p-7 grid lg:grid-cols-12 gap-5">
           <div class="lg:col-span-3">
-            <span class="font-mono text-[11px] text-accent tnum">PHASE 3</span>
-            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Second corridor</h4>
+            <span class="font-mono text-[11px] text-accent tnum">AFTER OS-G1</span>
+            <h4 class="mt-1.5 text-[16px] font-semibold tracking-tighter">Second corridor, then Swift’s own platforms</h4>
+            <p class="mt-1 text-[12.5px] text-mute-2">Starts once the pilot gate is passed</p>
           </div>
           <div class="lg:col-span-9">
-            <p class="text-[14.5px] leading-relaxed text-mute">
-              A new corridor as new configuration — a regulatory pack over the same lending domain,
-              not another build. This is the phase that turns a project into a product, and
-              it is the reason the first build is worth doing on a platform at all.
-            </p>
+            <p class="text-[14.5px] leading-relaxed text-mute">A new corridor is new configuration — a regulatory pack over the same lending domain, not another build. Swift’s own platform track, paused while OneSphere is the only active build, resumes on the kernel OneSphere proved. This is the step that turns a project into a product.</p>
           </div>
         </div>
       </div>
@@ -614,15 +594,15 @@
           <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">The kernel keeps one transactional boundary</h4>
           <p class="mt-2 text-[14px] leading-relaxed text-mute">
             Balances, credit operations, schedules and allocation commit in a single ACID
-            transaction. Saga appears only at external edges — payment rails, the remittance leg,
-            core-banking posting.
+            transaction, and the journal posts in that same transaction. Saga appears only at
+            external edges — the payment rails and the remittance leg.
           </p>
         </li>
         <li class="bg-white p-7">
           <span class="font-mono text-[11px] text-accent tnum">02</span>
           <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Statutory limits sit outside the scripts</h4>
           <p class="mt-2 text-[14px] leading-relaxed text-mute">
-            The rate ceiling, the compounding prohibition and the fee prohibition belong in the
+            The rate ceiling, the compounding prohibition and the fee restriction belong in the
             guardrail layer, where a pricing-script edit cannot breach them. Under this statute a
             mistake is not a pricing error — sums paid are set off against the principal.
           </p>
@@ -658,11 +638,11 @@
       <div class="mt-6 rounded-xl border border-signal-red/20 bg-signal-redbg p-6 lg:p-7">
         <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-red mb-2.5">And one that decides a product</p>
         <p class="text-[15px] leading-relaxed text-ink">
-          The governing statute caps unsecured interest, prohibits compounding, and makes
-          <span class="font-medium">any additional fee illegal</span> — with sums paid set off
-          against principal. On a one-month tenure that leaves roughly
-          <span class="font-medium tnum">1.5%</span> of principal as total revenue, with no fee
-          available to bridge it.
+          The governing statute caps unsecured interest, prohibits compounding, and allows
+          <span class="font-medium">only the charges the Act permits</span> — any other sum paid is
+          set off against principal (the permitted list is to be confirmed with counsel). On a
+          one-month tenure that leaves roughly <span class="font-medium tnum">1.5%</span> of principal
+          as total revenue, with no fee available to bridge it.
         </p>
         <p class="mt-3 text-[14.5px] leading-relaxed text-ink/70">
           The short-tenure salary-linked product is very unlikely to be viable as specified. The
@@ -693,20 +673,15 @@
 
       <!-- Platform-wide primary-source findings (updated OS plan) -->
       <div class="mt-10 pt-10 border-t border-line">
-        <p class="text-[13px] font-semibold uppercase tracking-[0.12em] text-mute mb-6">Since then, primary-source research settled three more — and each one reached the guardrails</p>
-        <div class="grid md:grid-cols-3 gap-5">
+        <p class="text-[13px] font-semibold uppercase tracking-[0.12em] text-mute mb-6">Since then, primary-source research settled two more — and each one reached the guardrails</p>
+        <div class="grid md:grid-cols-2 gap-5">
           <article class="rounded-xl border border-signal-green/25 bg-signal-greenbg p-6">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-green mb-2.5">Finding 04 · Margin</p>
-            <h4 class="text-[15.5px] font-semibold tracking-tighter">Reconciled to the enacted directive</h4>
-            <p class="mt-2 text-[13.5px] leading-relaxed text-ink/70">Nepal's Margin Trading Directive 2082 (in force February 2026) superseded the secondary figures the plan carried — broker capacity is <span class="font-medium">5× net worth</span>, not 2×; a single client is capped at <span class="font-medium">10% of the total facility</span>, not 20% of net worth — and added a <span class="font-medium">4.5× funding-leverage limit</span> and a 20% maintenance margin. Each reached the guardrails as a rule, not a note.</p>
-          </article>
-          <article class="rounded-xl border border-signal-green/25 bg-signal-greenbg p-6">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-green mb-2.5">Finding 05 · Corridors</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-green mb-2.5">Finding 04 · Corridors</p>
             <h4 class="text-[15.5px] font-semibold tracking-tighter">A remittance licence never lends</h4>
             <p class="mt-2 text-[13.5px] leading-relaxed text-ink/70">Across five markets a remittance or exchange licence confers <span class="font-medium">no lending permission</span> on its own — a separately-licensed lender must originate. One corridor partner already runs exactly this, lending to foreign workers through its own licensed finance entity over the Gulf wage-protection rail. So the platform powers the licensed lender; the remittance operator distributes.</p>
           </article>
           <article class="rounded-xl border border-signal-amber/25 bg-signal-amberbg p-6">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-amber mb-2.5">Finding 06 · Islamic</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-signal-amber mb-2.5">Finding 05 · Islamic</p>
             <h4 class="text-[15.5px] font-semibold tracking-tighter">Sharia products don't cross borders</h4>
             <p class="mt-2 text-[13.5px] leading-relaxed text-ink/70">A structure accepted in one market is not automatically accepted in another — commodity-Tawarruq is the backbone of Malaysian personal finance yet is disfavoured under the Gulf's AAOIFI standard. A product cannot simply be ported; each market gets its own Shariah pack, versioned and effective-dated like every other regulatory pack.</p>
           </article>
@@ -742,13 +717,14 @@
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 reveal">
       <div class="lg:col-span-7">
         <p class="eyebrow mb-6"><span>Where it runs first</span></p>
-        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">OneSphere Malaysia first, <span class="tone">then four of Swift's own platforms</span></h2>
+        <h2 class="text-[30px] lg:text-[40px] leading-[1.1] tracking-tightest font-semibold">OneSphere Malaysia first, <span class="tone">then Swift's own platforms after the pilot gate</span></h2>
       </div>
       <div class="lg:col-span-5">
         <p class="text-[15.5px] leading-relaxed text-mute">
-          The kernel is market-agnostic and product-agnostic by construction. After OneSphere,
-          Swift's own four platforms are the next deployments and the hardest test — four genuinely
-          different lending businesses, one kernel, no fork.
+          The kernel is market-agnostic and product-agnostic by construction. OneSphere builds and
+          proves it; once the pilot passes its gate (OS-G1), Swift's own platforms are the next
+          deployments and the hardest test — genuinely different lending businesses, one kernel,
+          no fork.
         </p>
       </div>
     </div>
@@ -756,23 +732,23 @@
     <div class="mb-10 rounded-xl border border-line bg-white p-7 reveal">
       <p class="text-[15.5px] leading-relaxed text-mute max-w-[88ch]">
         <span class="font-medium text-ink">A bank, a licensed lender, a wallet operator or a broker
-        gets the same kernel</span> the estates run on — in their own environment or on finOS SaaS, with
-        their own regulatory pack, their own products and their own data. Nothing about the four
-        estates below is privileged: they are simply the deployments Swift runs itself, and the reason
-        the abstractions are honest rather than theoretical.
+        gets the same kernel</span> — in their own environment or on finOS SaaS, with their own
+        regulatory pack, their own products and their own data. Nothing about Swift's own platforms
+        below is privileged: they are simply the deployments Swift runs itself, and the reason the
+        abstractions are honest rather than theoretical.
       </p>
     </div>
 
     <div class="overflow-x-auto rounded-xl border border-line reveal">
       <table class="w-full text-[14px] min-w-[880px] bg-white">
-        <caption class="sr-only">The Swift estates and the hire-purchase vertical, their lending vertical, integration seam, design partner and delivery phase</caption>
+        <caption class="sr-only">OneSphere and Swift's own platforms: lending vertical, integration seam, partner and order</caption>
         <thead>
           <tr class="border-b border-line text-left align-bottom">
-            <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Estate</th>
+            <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Deployment</th>
             <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Lending vertical</th>
             <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Integration seam</th>
             <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Partner</th>
-            <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Phase</th>
+            <th scope="col" class="px-5 py-4 text-[12px] font-semibold uppercase tracking-wider text-mute-2">Order</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-line align-top">
@@ -781,42 +757,42 @@
             <td class="px-5 py-4 text-mute">Remit Now Pay Later (RNPL) · migrant corridor</td>
             <td class="px-5 py-4 text-mute">First build of the corridor send-flow design on finOS; Ria as remitter of record, decisioning inside the remittance</td>
             <td class="px-5 py-4 text-mute">OneSphere — KPKT-licensed lender of record; Ria</td>
-            <td class="px-5 py-4"><span class="font-medium">Phase 0 · first</span></td>
+            <td class="px-5 py-4"><span class="font-medium">First</span> <span class="block text-[12.5px] text-mute-2">Phase 0 not yet started</span></td>
           </tr>
           <tr>
-            <th scope="row" class="px-5 py-4 font-medium text-left">SmartWallet</th>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Wallet platform</th>
             <td class="px-5 py-4 text-mute">Micro-loans and BNPL</td>
-            <td class="px-5 py-4 text-mute">Onboards as an external service provider behind the wallet's integration layer — the estate's best-documented seam</td>
-            <td class="px-5 py-4 text-mute">Khalti, with a partner BFI as lender of record</td>
-            <td class="px-5 py-4"><span class="font-medium">Phase 1 · MVP</span></td>
+            <td class="px-5 py-4 text-mute">Onboards as an external service provider behind the wallet's integration layer — the best-documented seam</td>
+            <td class="px-5 py-4 text-mute">A wallet operator, with a licensed bank or financial institution as lender of record</td>
+            <td class="px-5 py-4"><span class="font-medium">After OS-G1 · next</span></td>
           </tr>
           <tr>
-            <th scope="row" class="px-5 py-4 font-medium text-left">Remittance</th>
+            <th scope="row" class="px-5 py-4 font-medium text-left">Remittance platform</th>
             <td class="px-5 py-4 text-mute">Send-Now-Pay-Later at send-time</td>
             <td class="px-5 py-4 text-mute">New enterprise-integration routes exposing origination and decisioning inside the send flow</td>
-            <td class="px-5 py-4 text-mute">IME London, Ria, GME Korea</td>
-            <td class="px-5 py-4"><span class="font-medium">Phase 2 · V1</span></td>
+            <td class="px-5 py-4 text-mute">Remittance partners in the sending markets</td>
+            <td class="px-5 py-4"><span class="font-medium">Then</span></td>
           </tr>
           <tr>
             <th scope="row" class="px-5 py-4 font-medium text-left">Digital Banking</th>
             <td class="px-5 py-4 text-mute">Retail and corporate lending</td>
             <td class="px-5 py-4 text-mute">Core-banking adapters for posting and settlement; bank channels as origination surfaces</td>
             <td class="px-5 py-4 text-mute">A selected bank, CBS-connected</td>
-            <td class="px-5 py-4"><span class="font-medium">Phase 3 · V2</span></td>
+            <td class="px-5 py-4"><span class="font-medium">Then</span></td>
           </tr>
           <tr>
             <th scope="row" class="px-5 py-4 font-medium text-left">Capital Market</th>
             <td class="px-5 py-4 text-mute">Margin trading loans</td>
             <td class="px-5 py-4 text-mute">Event bridge over the margin platform's existing loan topics; depository adapters for pledged collateral</td>
-            <td class="px-5 py-4 text-mute">Sani Securities</td>
-            <td class="px-5 py-4"><span class="font-medium">Phase 3 · bridge</span></td>
+            <td class="px-5 py-4 text-mute">A securities broker</td>
+            <td class="px-5 py-4"><span class="font-medium">Last · bridge first</span></td>
           </tr>
           <tr>
             <th scope="row" class="px-5 py-4 font-medium text-left"><a href="platform.html#hire-purchase" class="hover:text-accent transition-colors">Hire purchase</a></th>
             <td class="px-5 py-4 text-mute">Vehicle and heavy-equipment hire purchase</td>
             <td class="px-5 py-4 text-mute">Dealer portal and field app as origination surfaces; transport-office lien registration; wallet and IPS biller API for EMIs</td>
-            <td class="px-5 py-4 text-mute">NRB-licensed finance companies</td>
-            <td class="px-5 py-4"><span class="font-medium">To be phased</span></td>
+            <td class="px-5 py-4 text-mute">Licensed finance companies</td>
+            <td class="px-5 py-4"><span class="font-medium">To be sequenced</span></td>
           </tr>
         </tbody>
       </table>
@@ -824,30 +800,31 @@
 
     <div class="mt-6 grid lg:grid-cols-3 gap-5 reveal">
       <div class="lg:col-span-2 rounded-xl bg-ink text-white p-7">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-3">Why wallet first among Swift's platforms</p>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-3">Why the wallet goes next, after OS-G1</p>
         <p class="text-[15px] leading-relaxed text-white/70">
-          Scored against integration complexity, regulatory load, product complexity, counterparty
-          readiness, revenue and learning value, the wallet vertical wins on every axis except
-          revenue — and revenue is precisely the axis a <em>first</em> vertical should not maximise.
-          The first vertical's job is to prove the kernel with the smallest failure blast radius.
+          OneSphere proves the kernel first. Among Swift's own platforms, scored against integration
+          complexity, regulatory load, product complexity, counterparty readiness, revenue and
+          learning value, the wallet wins on every axis except revenue — and revenue is precisely the
+          axis the <em>next</em> vertical should not maximise. Its job is to widen what the kernel has
+          proved with the smallest failure blast radius.
         </p>
         <p class="mt-3 text-[15px] leading-relaxed text-white/70">
-          It also exercises the full loan lifecycle at high volume within months, so every kernel
-          path is tested early rather than discovered late.
+          It also exercises the full loan lifecycle at high volume within months, so every kernel path OneSphere did not reach is tested early rather than discovered late.
         </p>
       </div>
       <div class="rounded-xl border border-line bg-surface-2 p-7">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Home jurisdiction</p>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Markets</p>
         <p class="text-[14.5px] leading-relaxed text-mute">
-          Nepal first — the central bank's directives, the credit information bureau, NPA
-          classification and provisioning, and the capital-market regulator for margin. The core
-          stays market-agnostic; Nepal is simply the first regulatory pack, and the UK and Korea
-          enter as corridor considerations rather than as separate builds.
+          Malaysia first: OneSphere runs on the Malaysia pack — the moneylending rules, ringgit,
+          Kuala Lumpur business days, and English, Malay and Nepali. Swift's own platforms then run
+          on the Nepal pack — the central bank's directives, the credit information bureau, NPA
+          classification and provisioning, and the capital-market regulator for margin. Sending
+          markets enter as corridor considerations, not separate builds.
         </p>
         <p class="mt-3 text-[14.5px] leading-relaxed text-mute">
-          Nepali and Devanagari at launch, the Bikram Sambat calendar rendered alongside Gregorian,
-          and amounts grouped in lakh and crore. A corridor language is a message-catalog addition,
-          not a code change.
+          Under the Nepal pack: Nepali and Devanagari, the Bikram Sambat calendar rendered alongside
+          Gregorian, and amounts grouped in lakh and crore. A new language is a message-catalog
+          addition, not a code change.
         </p>
       </div>
     </div>
@@ -855,48 +832,49 @@
     <div class="mt-10 reveal">
       <h3 class="text-[19px] font-semibold tracking-tighter mb-2">The rollout sequence</h3>
       <p class="text-[15px] text-mute max-w-[74ch] mb-7">
-        OneSphere Malaysia is the first deployment on the kernel — a KPKT-licensed lender in a
-        real market. The rest is the order Swift builds its own estates in, each vertical reusing what
+        OneSphere Malaysia is the first deployment and Swift's only active build until its pilot
+        gate — a KPKT-licensed lender in a real market, building the kernel every later deployment
+        reuses. After the gate comes the order Swift deploys its own platforms in, each reusing what
         the previous one proved and nothing sequenced by revenue. An institution deploying the kernel
         starts wherever its own book starts; the sequence is evidence that the kernel generalises, not
         a path anyone else has to follow.
       </p>
       <ol class="grid sm:grid-cols-2 lg:grid-cols-6 gap-px bg-line rounded-xl overflow-hidden border border-line">
-        <li class="bg-white p-5">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 0</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Kernel spine</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">Credit kernel, decisioning, policy registry and guardrails. Nothing customer-facing.</p>
-        </li>
-        <li class="bg-white p-5 ring-1 ring-inset ring-accent/40">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 0 · FIRST</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">OneSphere Malaysia</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">First deployment — Remit Now Pay Later for the migrant corridor, KPKT-licensed; the first build of the kernel and the corridor design.</p>
-        </li>
-        <li class="bg-white p-5">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 1</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Wallet micro-loans and BNPL</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">One regulator, one currency, the simplest products and the cleanest seam.</p>
-        </li>
-        <li class="bg-white p-5">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 2</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">SNPL corridors</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">Reuses the kernel; adds FX, corridor packs and the policy-safety machinery.</p>
-        </li>
-        <li class="bg-white p-5">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 3</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Bank retail and corporate</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">Adds the core-banking connector, collateral, covenants, maker-checker and provisioning depth.</p>
-        </li>
-        <li class="bg-white p-5">
-          <span class="font-mono text-[10.5px] text-accent tnum">PHASE 3–4</span>
-          <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Margin</p>
-          <p class="mt-1 text-[13px] leading-relaxed text-mute">Bridge over existing loan events first. Absorb the estate's own loan service only on evidence.</p>
-        </li>
-      </ol>
+          <li class="bg-white p-5 ring-1 ring-inset ring-accent/40">
+            <span class="font-mono text-[10.5px] text-accent tnum">FIRST</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">OneSphere Malaysia</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">Remit Now Pay Later for the migrant corridor, KPKT-licensed. Builds and proves the credit kernel, accounting and platform services.</p>
+          </li>
+          <li class="bg-white p-5">
+            <span class="font-mono text-[10.5px] text-accent tnum">GATE</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">OS-G1</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">The pilot proves the thesis on real repayment, or stops cleanly. Swift’s own platform track resumes only after it.</p>
+          </li>
+          <li class="bg-white p-5">
+            <span class="font-mono text-[10.5px] text-accent tnum">NEXT</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Wallet micro-loans and BNPL</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">One regulator, one currency, the simplest products and the cleanest seam.</p>
+          </li>
+          <li class="bg-white p-5">
+            <span class="font-mono text-[10.5px] text-accent tnum">THEN</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">SNPL corridors</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">Reuses the kernel; adds FX, corridor packs and the policy-safety machinery.</p>
+          </li>
+          <li class="bg-white p-5">
+            <span class="font-mono text-[10.5px] text-accent tnum">THEN</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Bank retail and corporate</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">Adds the core-banking connector, collateral, covenants and provisioning depth.</p>
+          </li>
+          <li class="bg-white p-5">
+            <span class="font-mono text-[10.5px] text-accent tnum">LAST</span>
+            <p class="mt-1.5 text-[14px] font-semibold tracking-tighter">Margin</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-mute">Bridge over existing loan events first. Absorb the platform’s own loan service only on evidence.</p>
+          </li>
+        </ol>
       <div class="mt-6 rounded-lg border border-signal-amber/25 bg-signal-amberbg px-6 py-5">
         <p class="text-[14.5px] leading-relaxed text-ink/80">
           <span class="font-semibold">Two honest notes.</span> No architecture artifact exists for
-          the digital-banking estate, so that integration is discovery work rather than a documented
+          the digital-banking platform, so that integration is discovery work rather than a documented
           seam. And the margin platform already runs a complete loan management service — there is
           no revenue gap there, which is exactly why it is sequenced last and bridged before it is
           ever absorbed.
