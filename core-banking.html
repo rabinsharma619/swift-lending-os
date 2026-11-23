@@ -497,6 +497,115 @@
       </div>
     </div>
 
+    <!-- Infinity CBS and the finOS kernel -->
+    <div id="infinity" class="mt-20 scroll-mt-20 reveal">
+      <p class="eyebrow mb-5"><span>Swift’s Infinity CBS</span></p>
+      <h3 class="text-[26px] sm:text-[32px] leading-[1.1] tracking-tightest font-semibold max-w-[30ch]">Infinity sits next to the kernel, <span class="tone">not inside it.</span></h3>
+      <p class="mt-5 text-[15.5px] leading-relaxed text-mute max-w-[72ch]">
+        The finOS kernel rests on one rule: a loan’s balance and its accounting entry are saved
+        together, in one PostgreSQL transaction, or not at all. Infinity is a separate system, so it
+        can never be part of that transaction — even though Swift owns it. Most of what follows comes
+        from that one fact.
+      </p>
+
+      <p class="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Why the general ledger stays in finOS</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5">
+          <p class="font-mono text-[12px] text-accent">01</p>
+          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">One transaction would break</h4>
+          <p class="mt-2 text-[14px] leading-relaxed text-mute">A payment records the operation, moves the balance and posts the journal in one step. With the ledger in Infinity, the journal becomes a network call: finOS can say “paid” while the books don’t, or the reverse. Repairing that needs cross-system sagas on every money movement — finOS allows those only at the edges, never in the kernel.</p>
+        </div>
+        <div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5">
+          <p class="font-mono text-[12px] text-accent">02</p>
+          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">The books could no longer be proven</h4>
+          <p class="mt-2 text-[14px] leading-relaxed text-mute">Inside finOS, a control account accepts entries only from its own sub-ledger, so loan sub-ledger = GL control balance holds by construction. In Infinity, tellers, vouchers and its own loan module post to the same accounts; agreement becomes something reconciled after the fact.</p>
+        </div>
+        <div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5">
+          <p class="font-mono text-[12px] text-accent">03</p>
+          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">finOS would stop when Infinity stops</h4>
+          <p class="mt-2 text-[14px] leading-relaxed text-mute">Every disbursement, repayment and nightly accrual run would wait on Infinity being up and fast. Today an external ledger only receives a daily export, so an outage just delays the batch.</p>
+        </div>
+        <div class="rounded-xl bg-white/70 ring-1 ring-line px-5 py-5">
+          <p class="font-mono text-[12px] text-accent">04</p>
+          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Every lender would need Infinity</h4>
+          <p class="mt-2 text-[14px] leading-relaxed text-mute">OneSphere in Malaysia has no core banking system at all; banks run other cores; SaaS and air-gapped installs can’t depend on another system being present. The kernel has to stand alone.</p>
+        </div>
+      </div>
+
+      <div class="mt-10 space-y-8">
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">What Swift’s ownership changes</p>
+          <div class="overflow-x-auto rounded-xl border border-line bg-white">
+            <table class="w-full text-[14px] min-w-[640px]">
+              <caption class="sr-only">Which concerns Swift owning Infinity solves</caption>
+              <thead><tr class="border-b border-line bg-surface-2"><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Concern</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Ownership</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Why</th></tr></thead>
+              <tbody class="divide-y divide-line">
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Licence, upgrades and support</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#F8FAE3;color:#5F6E00">Solved</span></td><td class="px-5 py-3.5 align-top text-mute">All in Swift’s hands.</td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">An API for real-time posting</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#F8FAE3;color:#5F6E00">Solved</span></td><td class="px-5 py-3.5 align-top text-mute">Swift can build one.</td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Loan and journal saved in one transaction</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#FDF1EA;color:#C2410C">Not solved</span></td><td class="px-5 py-3.5 align-top text-mute">Only possible if both run in the same database and process.</td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">finOS keeps working when Infinity is down</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#FDF1EA;color:#C2410C">Not solved</span></td><td class="px-5 py-3.5 align-top text-mute">Not unless the two are merged into one deployment.</td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Lenders without Infinity</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#FDF1EA;color:#C2410C">Not solved</span></td><td class="px-5 py-3.5 align-top text-mute">Malaysia, other banks, SaaS and air-gapped installs still need a kernel that works alone.</td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Fit for every market</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium whitespace-nowrap" style="background:#FFF8D9;color:#A15C07">Partly</span></td><td class="px-5 py-3.5 align-top text-mute">Infinity is built for cooperatives and MFIs; finOS serves any lender.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Inside the kernel vs. as the lender’s ledger</p>
+          <div class="overflow-x-auto rounded-xl border border-line bg-white">
+            <table class="w-full text-[14px] min-w-[640px]">
+              <caption class="sr-only">Infinity inside the finOS kernel compared with Infinity as the lender's general ledger in mode B or C</caption>
+              <thead><tr class="border-b border-line bg-surface-2"><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2"></th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Infinity inside the kernel</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Infinity as the ledger · mode B or C</th></tr></thead>
+              <tbody class="divide-y divide-line">
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Loan balance and journal saved together</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">No — two systems, two transactions</span></td><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Yes — finOS’s own journal is saved with the loan</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">If Infinity is down</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">finOS stops</span></td><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Only the daily export waits</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Books proven to match</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Reconcile and hope</span></td><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">finOS proves its own GL, then reconciles the export</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Lenders without Infinity</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Blocked</span></td><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Unaffected — mode A or another driver</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[30%]">Effort</th><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Rework the kernel</span></td><td class="px-5 py-3.5 align-top text-mute"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">One certified driver</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">How the two fit together</p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="rounded-xl bg-white ring-1 ring-line px-6 py-6">
+          <p class="text-[12px] font-semibold text-accent">Bring Infinity’s accounting knowledge into finOS</p>
+          <h4 class="mt-2 text-[17px] font-semibold tracking-tighter">finOS keeps its own ledger, made stronger for Nepal</h4>
+          <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-mute">
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Chart-of-accounts templates for Nepali cooperatives and MFIs</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>NRB and cooperative statutory returns and report formats</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>NPA and provisioning rules, patronage distribution, period-close procedures</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Its test cases and real account histories as reference data</span></li>
+          </ul>
+          <p class="mt-4 text-[13px] text-mute-2">Less effort and lower risk on the books, with no change to the architecture.</p>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-line px-6 py-6">
+          <p class="text-[12px] font-semibold text-accent">Infinity as finOS’s first reference core</p>
+          <h4 class="mt-2 text-[17px] font-semibold tracking-tighter">One suite for cooperatives and MFIs</h4>
+          <ul class="mt-3 space-y-2 text-[14px] leading-relaxed text-mute">
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Infinity keeps member savings and the books; finOS runs lending</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>A Gold-certified Infinity driver: real-time API, member sync, savings debits for repayment, GL export, reconciliation</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Sold together in Nepal as one Swift cooperative and MFI suite</span></li>
+            <li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>The first real core to prove the driver and conformance kit against</span></li>
+          </ul>
+          <p class="mt-4 text-[13px] text-mute-2">Member savings stay integrated, not rebuilt in finOS.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-lg border border-line bg-surface-2 px-6 py-5">
+        <p class="text-[14.5px] leading-relaxed text-mute max-w-[88ch]">
+          <span class="font-medium text-ink">Merging the ledgers stays on the table only on evidence.</span>
+          Folding Infinity’s ledger into the kernel would need Infinity on Java and PostgreSQL with a
+          cleanly separable ledger module, and would still mean adopting finOS’s posting rules — in
+          practice a rewrite. It is weighed against the two steps above on effort once Infinity’s
+          architecture has been assessed. A single banking-plus-lending platform is a product-strategy
+          decision for a joint roadmap, not a kernel change.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
