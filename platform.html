@@ -617,28 +617,61 @@
         delivery artifacts over a single API.
       </p>
 
-      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line rounded-xl overflow-hidden border border-line">
-        <div class="bg-white p-6">
-          <span class="font-mono text-[11px] text-accent">01</span>
-          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Standalone portal</h4>
-          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">A white-label web app, themed per programme. Also the separate loan-application portal a bank programme is required to provide.</p>
+      <figure class="mt-8 rounded-[20px] bg-oat-200/60 p-4 sm:p-6" aria-labelledby="chan-cap">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Who comes in</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex flex-col">
+          <ul class="flex flex-wrap justify-center gap-1.5 lg:h-[68px] content-end" aria-label="Who comes in through channel 01"><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Borrowers on the web</li><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Bank programme applicants</li></ul>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+          <div class="flex-1 rounded-xl bg-white ring-1 ring-line p-5 flex flex-col">
+            <div class="flex items-center gap-2.5"><span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">01</span><h4 class="text-[15.5px] font-semibold tracking-tighter">Standalone portal</h4></div>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-mute flex-1">A white-label web app, themed per programme. Also the separate loan-application portal a bank programme is required to provide.</p>
+            <p class="mt-3 pt-3 border-t border-line text-[12.5px] text-mute-2"><span class="text-ink/70 font-medium">e.g.</span> OneSphere’s borrower portal</p>
+          </div>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
         </div>
-        <div class="bg-white p-6">
-          <span class="font-mono text-[11px] text-accent">02</span>
-          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Embeddable web widget</h4>
-          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">Checkout, application and repayment micro-flows dropped inside a host web app, on short-lived scoped tokens. Consent, personal data and payments always run in an isolated finOS frame the host page cannot read.</p>
+        <div class="flex flex-col">
+          <ul class="flex flex-wrap justify-center gap-1.5 lg:h-[68px] content-end" aria-label="Who comes in through channel 02"><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Shoppers at a merchant checkout</li><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Partner websites</li></ul>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+          <div class="flex-1 rounded-xl bg-white ring-1 ring-line p-5 flex flex-col">
+            <div class="flex items-center gap-2.5"><span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">02</span><h4 class="text-[15.5px] font-semibold tracking-tighter">Embeddable widget</h4></div>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-mute flex-1">Checkout, application and repayment micro-flows dropped inside a host web app, on short-lived scoped tokens. Consent, personal data and payments always run in an isolated finOS frame the host page cannot read.</p>
+            <p class="mt-3 pt-3 border-t border-line text-[12.5px] text-mute-2"><span class="text-ink/70 font-medium">e.g.</span> BNPL at an online checkout</p>
+          </div>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
         </div>
-        <div class="bg-white p-6">
-          <span class="font-mono text-[11px] text-accent">03</span>
-          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">White-label mobile apps</h4>
-          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">React Native apps for borrowers, field officers and recovery agents, themed per lender. The same micro-flows can also be embedded in a host wallet or bank app.</p>
+        <div class="flex flex-col">
+          <ul class="flex flex-wrap justify-center gap-1.5 lg:h-[68px] content-end" aria-label="Who comes in through channel 03"><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Borrowers on a phone</li><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Field officers · recovery agents</li></ul>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+          <div class="flex-1 rounded-xl bg-white ring-1 ring-line p-5 flex flex-col">
+            <div class="flex items-center gap-2.5"><span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">03</span><h4 class="text-[15.5px] font-semibold tracking-tighter">White-label mobile apps</h4></div>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-mute flex-1">React Native apps for borrowers, field officers and recovery agents, themed per lender. The same micro-flows can also be embedded in a host wallet or bank app.</p>
+            <p class="mt-3 pt-3 border-t border-line text-[12.5px] text-mute-2"><span class="text-ink/70 font-medium">e.g.</span> A wallet’s in-app loan centre</p>
+          </div>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
         </div>
-        <div class="bg-white p-6">
-          <span class="font-mono text-[11px] text-accent">04</span>
-          <h4 class="mt-2 text-[15.5px] font-semibold tracking-tighter">Headless API</h4>
-          <p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">For a channel that builds its own interface — the remittance send flow, the broker portal, any partner with a frontend team.</p>
+        <div class="flex flex-col">
+          <ul class="flex flex-wrap justify-center gap-1.5 lg:h-[68px] content-end" aria-label="Who comes in through channel 04"><li class="rounded-full bg-white px-3 py-1 text-[12.5px] text-ink/80 shadow-[0_0_0_1px_rgba(22,24,31,.07)]">Partners with their own front end</li></ul>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+          <div class="flex-1 rounded-xl bg-white ring-1 ring-line p-5 flex flex-col">
+            <div class="flex items-center gap-2.5"><span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">04</span><h4 class="text-[15.5px] font-semibold tracking-tighter">Headless API</h4></div>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-mute flex-1">For a channel that builds its own interface — the remittance send flow, the broker portal, any partner with a frontend team.</p>
+            <p class="mt-3 pt-3 border-t border-line text-[12.5px] text-mute-2"><span class="text-ink/70 font-medium">e.g.</span> An offer inside a remittance send flow</p>
+          </div>
+          <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
         </div>
-      </div>
+        </div>
+        <div class="rounded-xl bg-accent px-5 py-4 text-white flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <p class="text-[15px] font-semibold tracking-tighter">One portal API</p>
+          <p class="text-[13px] text-white/80">The same contract behind all four · short-lived, scoped tokens · channels 01–03 are thin UI over it; 04 is the API itself</p>
+        </div>
+        <div class="flex justify-center py-2" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v13M5 11l5 5 5-5"/></svg></div>
+        <div class="rounded-xl bg-ink px-5 py-4 text-white flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <p class="text-[15px] font-semibold tracking-tighter">finOS modules</p>
+          <p class="text-[13px] text-white/70">Offer maths, guardrails, document rules and notifications run here — never in a channel</p>
+        </div>
+        <figcaption id="chan-cap" class="sr-only">Borrowers, merchants, field staff and partners reach finOS through four channels — a standalone portal, an embeddable widget, white-label mobile apps and a headless API — which all call one portal API in front of the finOS modules.</figcaption>
+      </figure>
 
       <div class="mt-6 rounded-xl bg-ink text-white p-7">
         <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-3">The constraint that keeps this safe</p>
