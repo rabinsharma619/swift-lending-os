@@ -70,6 +70,10 @@
   /* Segmented control */
   .seg[aria-selected="true"] { background: #16181F; color: #fff; }
   .seg[aria-selected="true"] .segdot { background: #3859F9; }
+  .dec summary { list-style: none; }
+  .dec summary::-webkit-details-marker { display: none; }
+  .dec summary:focus-visible { outline: 2px solid #3859F9; outline-offset: 2px; border-radius: 12px; }
+  .dec[open] .dec-chev { transform: rotate(180deg); }
   .mmd { font-family: 'Instrument Sans', system-ui, sans-serif; white-space: normal; margin: 0; min-height: 120px; color: transparent; font-size: 0; display: flex; justify-content: center; }
   .mmd[data-processed] { color: inherit; font-size: inherit; }
   .mmd svg { max-width: 100%; height: auto; }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Architecture · finOS</title>
-<meta name="description" content="The finOS architecture: a modular monolith on one PostgreSQL ledger, extracted services where they earn it, and deployment in your environment or on finOS SaaS.">
+<meta name="description" content="The finOS architecture and the reasoning behind it: a modular monolith on one PostgreSQL ledger, every decision with its trade-off, and why the kernel is built rather than adopted from Apache Fineract or TigerBeetle.">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NyA4NyI+PHBhdGggZD0iTTQ2LjU1NTcgMC4wMDc4MTI1TDQ2LjUxODYgMjguMzg3N0w1Ny4zODg3IDIuMTcxODhMNjIuOTMxNiA0LjQ2OTczTDUxLjk3NDYgMzAuODk0NUw3Mi4zMDY2IDEwLjc3MTVMNzYuNTI3MyAxNS4wMzUyTDU2LjQ0NDMgMzQuOTEyMUw4Mi41NjE1IDI0LjEyNkw4NC44NTE2IDI5LjY3MTlMNTguNjI0IDQwLjUwMzlIODdWNDYuNTAzOUg1OC41NTU3TDg0LjgyNzEgNTcuNDA3Mkw4Mi41MjczIDYyLjk0ODJMNTYuMjU4OCA1Mi4wNDU5TDc2LjM0NDcgNzIuMTgyNkw3Mi4wOTY3IDc2LjQxOTlMNTIuMDk1NyA1Ni4zNjkxTDYyLjk2NjggODIuNTIwNUw1Ny40MjY4IDg0LjgyMzJMNDYuNDgxNCA1OC40OTIyTDQ2LjQ0NTMgODcuMDA3OEw0MC40NDUzIDg3TDQwLjQ4MTQgNTguNjE1MkwyOS42MTA0IDg0LjgzNTlMMjQuMDY4NCA4Mi41MzgxTDM1LjAyNDQgNTYuMTEyM0wxNC42OTM0IDc2LjIzNjNMMTAuNDcyNyA3MS45NzI3TDMwLjU1NDcgNTIuMDk1N0w0LjQzOTQ1IDYyLjg4MThMMi4xNDk0MSA1Ny4zMzU5TDI4LjM3NyA0Ni41MDM5SDBWNDAuNTAzOUgyOC40NDczTDIuMTcyODUgMjkuNTk5Nkw0LjQ3MjY2IDI0LjA1ODZMMzAuNzQyMiAzNC45NjA5TDEwLjY1NjIgMTQuODI0MkwxNC45MDQzIDEwLjU4NjlMMzQuOTAxNCAzMC42MzQ4TDI0LjAzMzIgNC40ODczTDI5LjU3MzIgMi4xODQ1N0w0MC41MTg2IDI4LjUxNzZMNDAuNTU1NyAwTDQ2LjU1NTcgMC4wMDc4MTI1WiIgZmlsbD0iIzBFNzFEQiIvPjwvc3ZnPg==">
 
@@ -70,6 +70,10 @@
   /* Segmented control */
   .seg[aria-selected="true"] { background: #16181F; color: #fff; }
   .seg[aria-selected="true"] .segdot { background: #3859F9; }
+  .dec summary { list-style: none; }
+  .dec summary::-webkit-details-marker { display: none; }
+  .dec summary:focus-visible { outline: 2px solid #3859F9; outline-offset: 2px; border-radius: 12px; }
+  .dec[open] .dec-chev { transform: rotate(180deg); }
   .mmd { font-family: 'Instrument Sans', system-ui, sans-serif; white-space: normal; margin: 0; min-height: 120px; color: transparent; font-size: 0; display: flex; justify-content: center; }
   .mmd[data-processed] { color: inherit; font-size: inherit; }
   .mmd svg { max-width: 100%; height: auto; }
@@ -615,6 +619,351 @@ flowchart TB
         <li class="bg-white p-6"><span class="font-mono text-[11px] text-accent tnum">05</span><h4 class="mt-2 text-[15px] font-semibold tracking-tighter">Guardrails run outside policy scripts</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">A script may propose any rate; the guardrail layer clamps or rejects it.</p></li>
         <li class="bg-white p-6"><span class="font-mono text-[11px] text-accent tnum">06</span><h4 class="mt-2 text-[15px] font-semibold tracking-tighter">Every topology runs the same artifacts</h4><p class="mt-1.5 text-[13.5px] leading-relaxed text-mute">Including air-gapped. No capability works only in a hosted deployment.</p></li>
       </ol>
+    </div>
+
+    <!-- Decisions: why it is built this way -->
+    <div id="decisions" class="mt-20 scroll-mt-20 reveal">
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Why it’s built this way</h3>
+      <p class="mt-3 text-[15px] text-mute max-w-[70ch]">Each decision names the trade-off it accepts and the alternatives it rejected. Open any one for the reasoning; the full records live in the decision log behind the design.</p>
+      <div class="mt-8 space-y-10">
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">01</span>Correctness core</p>
+        <div class="space-y-2.5">
+          <details class="dec group rounded-xl bg-white ring-1 ring-line" open>
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">A modular monolith, with extraction points drawn in advance</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D2</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">A payment spread over five loans touches five balances, the payment hub, the journal and the outbox — and all of it must commit as one. Inside one process and one PostgreSQL that is a single database transaction; across microservices it becomes a distributed saga with compensation on every money movement. Module boundaries are enforced by architecture tests, and decisioning, documents, connectors, batch and reporting are pre-drawn extraction points that scale on their own on Kubernetes.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">One deployable to release, and the discipline to keep module boundaries honest. Scaling the core means scaling the whole JVM.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Microservices per bounded context</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Services sharing one database</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D2</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Balances change only through append-only credit operations</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D4 · ADR-32</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Every change — accrual, payment, waiver, write-off — is an immutable operation with its real-world reason attached, and a balance is simply their sum. Corrections are compensating operations, never edits, so any balance can be explained line by line and replayed to any date for an auditor or a dispute.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">More rows and a stricter programming model. A backdated change becomes compensate-and-reapply instead of an update.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Mutable balance columns</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Event store as the only record</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D4 · ADR-32</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">The journal commits with the operation</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-31</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">The loan book and the general ledger are written in the same database transaction, and an operation with no posting rule is refused. The two cannot drift, so day close proves sub-ledger equals GL by construction instead of reconciling after the fact.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">A posting-rule lookup on the write path, and posting maps released together with the product versions that need them.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Asynchronous posting via a queue</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">An external GL inside the kernel</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-31</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Money is an integer in minor units</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D3</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Floating point cannot represent 0.10 exactly, and decimal types invite silent rounding in different places in different code. Integers in sen or paisa, with rounding done once by a named rule, make every schedule sum exactly and every report tie to the cent.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">Currency scale is handled explicitly at the edges. A float in a money path fails the build.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Floating-point amounts</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Ad-hoc decimal arithmetic</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D3</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">02</span>Runtime and data</p>
+        <div class="space-y-2.5">
+          <details class="dec group rounded-xl bg-white ring-1 ring-line" open>
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Java 21, Spring Boot and PostgreSQL</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D1</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Exact financial arithmetic, mature date and day-count libraries, long-term-support releases, and the deepest hiring pool for banking software in our markets. PostgreSQL is the single system of record: ACID, row-level security for tenants, JSONB for typed profiles, and operable by any lender’s DBA.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">A JVM’s memory footprint, and one relational database as the scaling ceiling — far above lending volumes.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Node or Python for the core</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">NoSQL as the system of record</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D1</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Events leave through a transactional outbox; a broker is optional</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-10</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Nothing inside a financial transaction talks to the network. Events are written to an outbox table in the same commit and relayed afterwards — signed webhooks by default, Kafka or RabbitMQ when the customer runs them. Only committed facts are ever published, and a small lender needs no broker at all.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">Delivery is at-least-once, so consumers deduplicate on aggregate and sequence number.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Kafka mandatory everywhere</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Redpanda (licence)</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Dual writes to database and broker</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-10</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Reporting runs on a modelled replica</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D8 · ADR-16</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Analysts’ SQL and month-end reports never compete with a borrower waiting on a decision. A logical-replication replica carries a documented mart schema, so regulatory returns and dashboards read stable tables instead of the operational schema.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">Reports run seconds behind live, and the mart model is a product we maintain.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">BI over the operational database</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Unmodelled reporting tables</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D8 · ADR-16</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Object storage through the S3 API only</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-26</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Documents, exports and backups go through the S3 API — the customer’s store, a cloud bucket, or the bundled SeaweedFS for self-hosted and air-gapped installs. No storage vendor is load-bearing.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">One more bundled component on self-hosted installs.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">MinIO as the bundled default</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Files on local disk</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-26</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">03</span>Rules, decisions and AI</p>
+        <div class="space-y-2.5">
+          <details class="dec group rounded-xl bg-white ring-1 ring-line" open>
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Our own workflow engine — with a deadline and a fallback</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-11</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Loan states must change in the same transaction as the money, and a lender with no platform team must be able to run the system. BPM servers bring their own cluster, their own expression language and their own task model. finOS embeds durable state machines in the core; a Phase 0 spike must prove timers, versioning, 1,000 concurrent executions and atomic commit by week 6, or embedded Flowable 7 takes over.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">We own durable execution and workflow versioning.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Temporal (its own cluster)</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Camunda 8 (production licence)</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">A separate BPM server</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-11</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Rules in CEL; analyst scripts out of process</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-33 · D6</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Guardrails, eligibility and most pricing are written in CEL — a non-Turing-complete language with bounded cost that cannot loop forever. Where an analyst needs JavaScript, it runs in a sandbox worker pool with memory and CPU limits and no network, so a runaway or hostile script fails one decision, never the ledger.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">One local network hop on the decision path, and one more deployable.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Scripts inside the core JVM</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Python for analysts</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-33 · D6</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Statutory limits sit outside policy scripts</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D10</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">A pricing script may propose any rate; a separate guardrail layer, driven by the regulatory pack, clamps or rejects it before an offer exists. A configuration mistake cannot produce an illegal loan, and the regulator’s rule is one reviewed artifact rather than logic scattered across products.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">Two places to look when an offer differs from the script’s output — by design.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Limits written into each product’s scripts</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D10</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">No LLM makes or shapes a credit decision</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">D9</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Credit decisions must be explainable, reproducible and defensible to a regulator years later. Decisioning is rules and scorecards with recorded inputs that replay exactly, and architecture tests block model calls from that path. Swift Intelligence helps engineers build products and drafts configuration; a person approves it.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">No “AI underwriting” headline.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">LLM scoring or approval</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">AI-written rules going live unreviewed</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">D9</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">04</span>Security and deployment</p>
+        <div class="space-y-2.5">
+          <details class="dec group rounded-xl bg-white ring-1 ring-line" open>
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Keycloak for identity; authorisation stays in finOS</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-14</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Keycloak brings OIDC, SAML, MFA and directory federation, runs offline, and maps SaaS tenants to organisations. Who may approve what — roles, data scopes, maker-checker — is lending logic, so it lives in finOS, versioned and audited with everything else.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">An identity server to operate.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Home-grown login</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Business permissions in the identity provider</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-14</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">OpenBao for secrets</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-34</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Secrets never live in configuration. OpenBao, the open-licence fork of Vault, is bundled; hosted SaaS uses the cloud’s key service; a bank can bring its own Vault through the same port. The licensing rule holds in every deployment shape.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">We re-check OpenBao’s features at each upgrade.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">HashiCorp Vault as the bundled default (BSL)</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-34</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">One artifact set — single node, Kubernetes, SaaS</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-24 · ADR-28 · D12</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">A finance company on one server, a bank’s air-gapped cluster and our multi-tenant SaaS run the same signed images. Sizing and optional parts change, features never do — so a fix reaches every customer at once, and a tenant can move from shared to dedicated by export.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">Every feature must work without the internet and without optional components.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">A separate SaaS codebase</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Cloud-only features</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-24 · ADR-28 · D12</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div>
+        <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3"><span class="font-mono text-accent mr-2">05</span>Markets and integration</p>
+        <div class="space-y-2.5">
+          <details class="dec group rounded-xl bg-white ring-1 ring-line" open>
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">One core-banking port, four modes, certified drivers</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-29</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Every bank’s core is different, so the lending domain talks to one canonical port and each core gets a driver tested against the same conformance kit. Whether finOS holds everything (A), exports the books (B), mirrors into the core (C) or only originates (D) is configuration per product and legal entity.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">A conformance kit and a simulator to maintain.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Custom integration per bank</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">One mode for everyone</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-29</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">Markets are packs and settings, not branches</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-35</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">Time zone, currency, calendar, language, loan classification and statutory limits come from the legal entity and its regulatory pack. Malaysia needed no change to the Nepal design, and the next market won’t either.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">A pack must be complete before a legal entity can go live.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Per-market code branches</li><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Market defaults in code</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-35</p>
+              </div>
+            </div>
+          </details>
+          <details class="dec group rounded-xl bg-white ring-1 ring-line">
+            <summary class="flex cursor-pointer items-start justify-between gap-4 px-5 py-4 sm:px-6">
+              <span class="text-[15.5px] font-semibold tracking-tighter text-ink">The lender of record is separate from the channel</span>
+              <span class="flex shrink-0 items-center gap-3"><span class="hidden sm:inline font-mono text-[11px] text-mute-2">ADR-18</span><svg class="dec-chev h-4 w-4 text-mute-2 transition-transform" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg></span>
+            </summary>
+            <div class="grid lg:grid-cols-12 gap-6 border-t border-line px-5 py-5 sm:px-6">
+              <div class="lg:col-span-7"><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1.5">Why</p><p class="text-[14px] leading-relaxed text-mute">A wallet or remittance operator can offer credit in its own app while a licensed lender books the loan. The programme model keeps who lends, who sells and who services as separate roles, so the same flow works for any partnership.</p></div>
+              <div class="lg:col-span-5 space-y-4">
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#A15C07] mb-1.5">What we accept</p><p class="text-[14px] leading-relaxed text-mute">A richer programme set-up.</p></div>
+                <div><p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-1.5">Rejected</p><ul class="flex flex-wrap gap-1.5"><li class="rounded-full bg-[#FDF1EA] px-2.5 py-0.5 text-[12px] text-[#C2410C]">Assuming the channel is the lender</li></ul></div>
+                <p class="sm:hidden font-mono text-[11px] text-mute-2">ADR-18</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Build or adopt -->
+    <div id="build-or-adopt" class="mt-20 scroll-mt-20 reveal">
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Build or adopt: why not Apache Fineract or TigerBeetle</h3>
+      <p class="mt-3 text-[15px] text-mute max-w-[70ch]">finOS builds its own credit kernel. That is the most expensive decision on this page, so here is the case for it — and an honest account of what each alternative does well.</p>
+      <div class="mt-8 grid lg:grid-cols-2 gap-4">
+        <article class="rounded-xl bg-white ring-1 ring-line flex flex-col">
+          <div class="px-6 pt-6">
+            <p class="text-[12px] font-semibold text-mute-2">Open-source core banking · Apache 2.0</p>
+            <h4 class="mt-1 text-[20px] font-semibold tracking-tighter">Apache Fineract</h4>
+            <p class="mt-2 text-[14px] leading-relaxed text-mute">The Apache Software Foundation’s core banking system, grown from Mifos. Java and Spring, standardising on PostgreSQL; clients, savings, shares, loans and an accounting module.</p>
+            <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#5F6E00] mb-1.5">What it does well</p>
+            <p class="text-[14px] leading-relaxed text-mute">Proven in microfinance across many countries, with broad out-of-the-box loan and savings products and an active community.</p>
+            <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#C2410C] mb-2">Why it isn’t the finOS kernel</p>
+            <ul class="space-y-2 text-[14px] leading-relaxed text-mute"><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>It is a deposit-and-loan core with its own domain model. finOS is a lending system that sits beside a core, not a core itself.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>What makes finOS finOS would be rebuilt on that model: append-only operations with compensation, journals in the same transaction, replayable decisions with guardrails outside scripts, work queues, four integration modes and market packs.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Its accounting for loan portfolios is opt-in and off by default. In finOS the books are part of the kernel.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Building on it means a fork that drifts from upstream, or upstreaming every change on the project’s timetable. Swift commits to own and support what it ships.</span></li></ul>
+          </div>
+          <p class="mt-5 px-6 py-4 border-t border-line bg-surface-2 rounded-b-xl text-[13.5px] leading-relaxed text-mute"><span class="font-medium text-ink">Where it still fits.</span> Like any core banking system, Fineract can sit behind a certified finOS driver in mode B, C or D.</p>
+        </article>
+        <article class="rounded-xl bg-white ring-1 ring-line flex flex-col">
+          <div class="px-6 pt-6">
+            <p class="text-[12px] font-semibold text-mute-2">Open-source ledger database · Apache 2.0</p>
+            <h4 class="mt-1 text-[20px] font-semibold tracking-tighter">TigerBeetle</h4>
+            <p class="mt-2 text-[14px] leading-relaxed text-mute">A database built for double-entry accounting: accounts and transfers in a fixed schema, with linked and two-phase transfers, running as its own replicated cluster. Everything else lives in a companion database.</p>
+            <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#5F6E00] mb-1.5">What it does well</p>
+            <p class="text-[14px] leading-relaxed text-mute">Very high throughput, rigorous correctness testing, and safe two-phase transfers for payments that settle later.</p>
+            <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#C2410C] mb-2">Why it isn’t the finOS kernel</p>
+            <ul class="space-y-2 text-[14px] leading-relaxed text-mute"><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>It is a ledger, not a lending system. Schedules, accrual, allocation, state machines, decisions and documents would still live in PostgreSQL.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Two databases cannot commit a loan operation and its journal together, so the loan book and the books could drift again.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>A fixed schema of 128-bit fields turns lending data into ID conventions, and the model cannot be migrated.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>One more replicated cluster to run — even for a lender on a single server.</span></li><li class="flex gap-2.5"><span class="text-accent mt-px shrink-0">—</span><span>Lending peaks at thousands of operations a second, comfortably within PostgreSQL. The throughput edge buys nothing here.</span></li></ul>
+          </div>
+          <p class="mt-5 px-6 py-4 border-t border-line bg-surface-2 rounded-b-xl text-[13.5px] leading-relaxed text-mute"><span class="font-medium text-ink">Where it still fits.</span> A high-volume wallet or payment switch, where millions of simple transfers matter more than loan lifecycles.</p>
+        </article>
+      </div>
+
+      <p class="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Against what the kernel has to do</p>
+      <div class="overflow-x-auto rounded-xl border border-line bg-white">
+        <table class="w-full text-[14px] min-w-[760px]">
+          <caption class="sr-only">The finOS kernel compared with Apache Fineract and TigerBeetle against the kernel's requirements</caption>
+          <thead><tr class="border-b border-line bg-surface-2"><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Requirement</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">finOS kernel</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">Apache Fineract</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">TigerBeetle</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Loan, balance and journal in one transaction</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Yes, by design</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Within its own model</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">No — a separate database</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Lending lifecycle, origination to collections</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Built in</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Its own lifecycle model</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Ledger only</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Replayable decisions, guardrails outside scripts</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Built in</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">To build on its model</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Out of scope</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">New market without code changes</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Packs and legal-entity settings</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Configure or extend</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FDF1EA;color:#C2410C">Out of scope</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Swift owns roadmap and support</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Yes</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Fork or upstream</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Not the ledger engine</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Small lender on one server</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Yes</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Yes</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#FFF8D9;color:#A15C07">Adds its own cluster in production</span></td></tr>
+            <tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[31%]">Licence</th><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Swift-owned</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Apache 2.0</span></td><td class="px-5 py-3.5 align-top"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[12.5px] font-medium" style="background:#F8FAE3;color:#5F6E00">Apache 2.0</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div role="note" aria-label="The cost of building the kernel" class="mt-6 flex gap-4 rounded-xl px-5 py-5 sm:px-6" style="background:#FFF8D9;box-shadow:inset 0 0 0 1px #EED98A;border-left:4px solid #A15C07">
+        <svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#A15C07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <p class="text-[14.5px] leading-relaxed max-w-[88ch]" style="color:#6B4A0E">
+          <span class="font-semibold" style="color:#A15C07">The cost we accept.</span>
+          Building the kernel and ledger is about 40 person-months of the first release, and its
+          correctness is ours to own. We carry it with a ledger property-test suite, a release-time
+          ledger diff that must come back zero, and the canonical ledger specification as the gate
+          out of Phase 0.
+        </p>
+      </div>
     </div>
 
     <!-- SDK -->
