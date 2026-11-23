@@ -594,9 +594,10 @@
         </div>
       </div>
 
-      <div class="mt-6 rounded-lg border border-line bg-surface-2 px-6 py-5">
-        <p class="text-[14.5px] leading-relaxed text-mute max-w-[88ch]">
-          <span class="font-medium text-ink">Merging the ledgers stays on the table only on evidence.</span>
+      <div role="note" aria-label="Caution: merging the ledgers" class="mt-6 flex gap-4 rounded-xl px-5 py-5 sm:px-6" style="background:#FFF8D9;box-shadow:inset 0 0 0 1px #EED98A;border-left:4px solid #A15C07">
+        <svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#A15C07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <p class="text-[14.5px] leading-relaxed max-w-[88ch]" style="color:#6B4A0E">
+          <span class="font-semibold" style="color:#A15C07">Merging the ledgers stays on the table only on evidence.</span>
           Folding Infinity’s ledger into the kernel would need Infinity on Java and PostgreSQL with a
           cleanly separable ledger module, and would still mean adopting finOS’s posting rules — in
           practice a rewrite. It is weighed against the two steps above on effort once Infinity’s
