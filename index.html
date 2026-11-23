@@ -70,6 +70,12 @@
   /* Segmented control */
   .seg[aria-selected="true"] { background: #16181F; color: #fff; }
   .seg[aria-selected="true"] .segdot { background: #3859F9; }
+  .mmd { font-family: 'Instrument Sans', system-ui, sans-serif; white-space: normal; margin: 0; min-height: 120px; color: transparent; font-size: 0; display: flex; justify-content: center; }
+  .mmd[data-processed] { color: inherit; font-size: inherit; }
+  .mmd svg { max-width: 100%; height: auto; }
+  .mmd .cluster rect { rx: 18px; ry: 18px; }
+  .mmd .node rect, .mmd .node .label-container { rx: 10px; ry: 10px; }
+  .mmd .edgeLabel, .mmd .edgeLabel p { font-size: 11.5px; color: #55534E; background: #F9F8F6 !important; }
 
   /* Module row expansion */
   .mod-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
@@ -190,7 +196,7 @@
     * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   }
 </style>
-<script>(function(){var m={"who": "who.html", "platform": "platform.html", "m11": "platform.html", "m5": "platform.html", "tp-wall": "platform.html", "tp-ballfa6900": "platform.html", "tp-ball8b5cf6": "platform.html", "m3": "platform.html", "m10": "platform.html", "tp-grain": "platform.html", "m8": "platform.html", "m9": "platform.html", "tp-blur": "platform.html", "m12": "platform.html", "m1": "platform.html", "tp-hz": "platform.html", "m6": "platform.html", "m7": "platform.html", "m4": "platform.html", "m2": "platform.html", "tp-floor": "platform.html", "tp-ballfdad15": "platform.html", "th-blur": "platform.html", "th-cyl2": "platform.html", "th-wall": "platform.html", "th-grain": "platform.html", "hire-purchase": "platform.html", "th-cyl0": "platform.html", "th-cyl1": "platform.html", "th-ball3859f9": "platform.html", "th-cyl3": "platform.html", "th-floor": "platform.html", "th-hz": "platform.html", "tc-blur": "core-banking.html", "tc-cyl0": "core-banking.html", "tc-cyl5": "core-banking.html", "tc-cyl3": "core-banking.html", "tc-ball0dac65": "core-banking.html", "mode-c": "core-banking.html", "mode-d": "core-banking.html", "core-banking": "core-banking.html", "tc-cyl4": "core-banking.html", "tc-hz": "core-banking.html", "tc-grain": "core-banking.html", "tc-floor": "core-banking.html", "tc-cyl1": "core-banking.html", "tc-balld0dc12": "core-banking.html", "mode-a": "core-banking.html", "mode-b": "core-banking.html", "tc-wall": "core-banking.html", "tc-cyl2": "core-banking.html", "architecture": "architecture.html", "tb-planes": "architecture.html", "tb-topo": "architecture.html", "tp-planes": "architecture.html", "decision": "architecture.html", "tp-kernel": "architecture.html", "deployment": "architecture.html", "tb-kernel": "architecture.html", "tp-topo": "architecture.html", "swift-intelligence": "intelligence.html", "ai-log": "intelligence.html", "ta-blur": "intelligence.html", "ta-ball3859f9": "intelligence.html", "ai-gates": "intelligence.html", "ai-play": "intelligence.html", "ai-agents": "intelligence.html", "ai-verdict": "intelligence.html", "ai-restart": "intelligence.html", "ta-grain": "intelligence.html", "ta-ball0dac65": "intelligence.html", "ta-floor": "intelligence.html", "ta-hz": "intelligence.html", "ta-wall": "intelligence.html", "tg-cyl2": "trust.html", "tg-ballf4efe7": "trust.html", "tg-hz": "trust.html", "tg-blur": "trust.html", "tg-cyl1": "trust.html", "tg-wall": "trust.html", "tg-ball3859f9": "trust.html", "tg-floor": "trust.html", "compliance": "trust.html", "tg-grain": "trust.html", "trust": "trust.html", "compare": "trust.html", "pricing": "pricing.html", "tm-floor": "malaysia.html", "tm-wall": "malaysia.html", "tm-ballfa6900": "malaysia.html", "tm-grain": "malaysia.html", "tm-hz": "malaysia.html", "tm-blur": "malaysia.html", "tm-cyl1": "malaysia.html", "malaysia": "malaysia.html", "practice": "malaysia.html", "scope": "malaysia.html"};var h=location.hash.slice(1);if(m[h])location.replace(m[h]+"#"+h);})();</script>
+<script>(function(){var m={"who": "who.html", "m5": "platform.html", "m6": "platform.html", "tp-floor": "platform.html", "tp-ballfa6900": "platform.html", "tp-grain": "platform.html", "m9": "platform.html", "m11": "platform.html", "m2": "platform.html", "m4": "platform.html", "m7": "platform.html", "m3": "platform.html", "m1": "platform.html", "platform": "platform.html", "tp-ball8b5cf6": "platform.html", "tp-blur": "platform.html", "m12": "platform.html", "tp-ballfdad15": "platform.html", "tp-wall": "platform.html", "m8": "platform.html", "tp-hz": "platform.html", "m10": "platform.html", "th-grain": "platform.html", "th-cyl2": "platform.html", "hire-purchase": "platform.html", "th-wall": "platform.html", "th-cyl1": "platform.html", "th-cyl3": "platform.html", "th-hz": "platform.html", "th-cyl0": "platform.html", "th-floor": "platform.html", "th-blur": "platform.html", "th-ball3859f9": "platform.html", "tc-cyl3": "core-banking.html", "tc-cyl2": "core-banking.html", "tc-cyl5": "core-banking.html", "tc-blur": "core-banking.html", "core-banking": "core-banking.html", "tc-cyl4": "core-banking.html", "tc-hz": "core-banking.html", "tc-balld0dc12": "core-banking.html", "tc-wall": "core-banking.html", "tc-cyl0": "core-banking.html", "mode-a": "core-banking.html", "mode-d": "core-banking.html", "mode-c": "core-banking.html", "tc-ball0dac65": "core-banking.html", "tc-cyl1": "core-banking.html", "mode-b": "core-banking.html", "tc-floor": "core-banking.html", "tc-grain": "core-banking.html", "sys-diagram-desc": "architecture.html", "deployment": "architecture.html", "decision": "architecture.html", "tp-planes": "architecture.html", "tp-kernel": "architecture.html", "tp-topo": "architecture.html", "architecture": "architecture.html", "tb-topo": "architecture.html", "tb-kernel": "architecture.html", "tb-planes": "architecture.html", "ai-play": "intelligence.html", "swift-intelligence": "intelligence.html", "ai-restart": "intelligence.html", "ai-verdict": "intelligence.html", "ta-ball3859f9": "intelligence.html", "ai-gates": "intelligence.html", "ta-blur": "intelligence.html", "ta-wall": "intelligence.html", "ta-floor": "intelligence.html", "ta-hz": "intelligence.html", "ai-log": "intelligence.html", "ta-ball0dac65": "intelligence.html", "ta-grain": "intelligence.html", "ai-agents": "intelligence.html", "tg-blur": "trust.html", "tg-cyl2": "trust.html", "compliance": "trust.html", "tg-grain": "trust.html", "tg-wall": "trust.html", "tg-floor": "trust.html", "tg-ball3859f9": "trust.html", "tg-hz": "trust.html", "tg-ballf4efe7": "trust.html", "tg-cyl1": "trust.html", "trust": "trust.html", "compare": "trust.html", "pricing": "pricing.html", "tm-blur": "malaysia.html", "tm-floor": "malaysia.html", "tm-grain": "malaysia.html", "tm-ballfa6900": "malaysia.html", "tm-wall": "malaysia.html", "tm-hz": "malaysia.html", "malaysia": "malaysia.html", "tm-cyl1": "malaysia.html", "practice": "malaysia.html", "scope": "malaysia.html"};var h=location.hash.slice(1);if(m[h])location.replace(m[h]+"#"+h);})();</script>
 </head>
 
 <body class="bg-oat text-ink font-sans antialiased">
@@ -1480,6 +1486,32 @@
   };
 
   initTabs('[aria-label="Architecture views"]');
+
+  /* ---------- Mermaid diagrams (loaded only on pages that have one) ---------- */
+  // Class "mmd", not "mermaid": Mermaid's own start-on-load scan must never pick these up.
+  const diagrams = [...document.querySelectorAll('pre.mmd')];
+  const sources = diagrams.map(el => el.textContent);
+  if (diagrams.length) {
+    Promise.all([import('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs'), document.fonts.ready])
+      .then(async ([{ default: mermaid }]) => {
+        mermaid.initialize({
+          startOnLoad: false, securityLevel: 'strict', theme: 'base',
+          themeVariables: { fontFamily: 'Instrument Sans, system-ui, sans-serif', fontSize: '13px',
+            primaryColor: '#FFFFFF', primaryBorderColor: '#E0DEDC', primaryTextColor: '#16181F',
+            lineColor: '#A8A296', clusterBkg: '#F9F8F6', clusterBorder: '#E0DEDC',
+            edgeLabelBackground: '#F9F8F6', textColor: '#55534E' },
+          flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true, nodeSpacing: 22, rankSpacing: 46, padding: 14, wrappingWidth: 420 }
+        });
+        // Render one at a time with our own ids: the default ids are time-based and can collide.
+        for (const [i, el] of diagrams.entries()) {
+          try {
+            const { svg, bindFunctions } = await mermaid.render('site-diagram-' + i, sources[i]);
+            el.innerHTML = svg; el.setAttribute('data-processed', 'true'); bindFunctions?.(el);
+          } catch (err) { console.error('diagram', i, err); el.setAttribute('data-processed', 'error'); }
+        }
+      })
+      .catch(err => console.error('mermaid', err));
+  }
 
 })();
 </script>

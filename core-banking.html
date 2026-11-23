@@ -70,6 +70,12 @@
   /* Segmented control */
   .seg[aria-selected="true"] { background: #16181F; color: #fff; }
   .seg[aria-selected="true"] .segdot { background: #3859F9; }
+  .mmd { font-family: 'Instrument Sans', system-ui, sans-serif; white-space: normal; margin: 0; min-height: 120px; color: transparent; font-size: 0; display: flex; justify-content: center; }
+  .mmd[data-processed] { color: inherit; font-size: inherit; }
+  .mmd svg { max-width: 100%; height: auto; }
+  .mmd .cluster rect { rx: 18px; ry: 18px; }
+  .mmd .node rect, .mmd .node .label-container { rx: 10px; ry: 10px; }
+  .mmd .edgeLabel, .mmd .edgeLabel p { font-size: 11.5px; color: #55534E; background: #F9F8F6 !important; }
 
   /* Module row expansion */
   .mod-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
@@ -1287,6 +1293,32 @@
   };
 
   initTabs('[aria-label="Architecture views"]');
+
+  /* ---------- Mermaid diagrams (loaded only on pages that have one) ---------- */
+  // Class "mmd", not "mermaid": Mermaid's own start-on-load scan must never pick these up.
+  const diagrams = [...document.querySelectorAll('pre.mmd')];
+  const sources = diagrams.map(el => el.textContent);
+  if (diagrams.length) {
+    Promise.all([import('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs'), document.fonts.ready])
+      .then(async ([{ default: mermaid }]) => {
+        mermaid.initialize({
+          startOnLoad: false, securityLevel: 'strict', theme: 'base',
+          themeVariables: { fontFamily: 'Instrument Sans, system-ui, sans-serif', fontSize: '13px',
+            primaryColor: '#FFFFFF', primaryBorderColor: '#E0DEDC', primaryTextColor: '#16181F',
+            lineColor: '#A8A296', clusterBkg: '#F9F8F6', clusterBorder: '#E0DEDC',
+            edgeLabelBackground: '#F9F8F6', textColor: '#55534E' },
+          flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true, nodeSpacing: 22, rankSpacing: 46, padding: 14, wrappingWidth: 420 }
+        });
+        // Render one at a time with our own ids: the default ids are time-based and can collide.
+        for (const [i, el] of diagrams.entries()) {
+          try {
+            const { svg, bindFunctions } = await mermaid.render('site-diagram-' + i, sources[i]);
+            el.innerHTML = svg; el.setAttribute('data-processed', 'true'); bindFunctions?.(el);
+          } catch (err) { console.error('diagram', i, err); el.setAttribute('data-processed', 'error'); }
+        }
+      })
+      .catch(err => console.error('mermaid', err));
+  }
 
 })();
 </script>

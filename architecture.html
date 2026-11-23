@@ -70,6 +70,12 @@
   /* Segmented control */
   .seg[aria-selected="true"] { background: #16181F; color: #fff; }
   .seg[aria-selected="true"] .segdot { background: #3859F9; }
+  .mmd { font-family: 'Instrument Sans', system-ui, sans-serif; white-space: normal; margin: 0; min-height: 120px; color: transparent; font-size: 0; display: flex; justify-content: center; }
+  .mmd[data-processed] { color: inherit; font-size: inherit; }
+  .mmd svg { max-width: 100%; height: auto; }
+  .mmd .cluster rect { rx: 18px; ry: 18px; }
+  .mmd .node rect, .mmd .node .label-container { rx: 10px; ry: 10px; }
+  .mmd .edgeLabel, .mmd .edgeLabel p { font-size: 11.5px; color: #55534E; background: #F9F8F6 !important; }
 
   /* Module row expansion */
   .mod-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
@@ -405,6 +411,181 @@
           <div class="rounded-lg border border-line bg-white p-5"><h4 class="text-[14.5px] font-semibold tracking-tighter mb-1.5">Cloud-agnostic</h4><p class="text-[13.5px] leading-relaxed text-mute">Containers and infrastructure-as-code, portable across clouds and on-premise alike.</p></div>
         </div>
       </div>
+    </div>
+
+    <!-- Whole system -->
+    <div class="mt-20 reveal">
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">The whole system, end to end</h3>
+      <p class="mt-3 text-[15px] leading-relaxed text-mute max-w-[70ch]">Every part of finOS on one page — from the apps people use, through the one lending core and the services around it, to the systems outside the lender's walls.</p>
+      <figure class="mt-8 rounded-xl border border-line bg-white" aria-describedby="sys-diagram-desc">
+        <div class="overflow-x-auto p-4 sm:p-6">
+          <div class="min-w-[1200px] lg:min-w-0">
+            <pre class="mmd" aria-hidden="true">
+flowchart TB
+    subgraph CH["CLIENT&amp;nbsp;APPS"]
+        direction LR
+        C1["&lt;b&gt;Admin console&lt;/b&gt;&lt;br/&gt;React + TypeScript"]
+        C2["&lt;b&gt;Borrower and partner portals&lt;/b&gt;&lt;br/&gt;white-label per programme"]
+        C3["&lt;b&gt;Embeddable widgets&lt;/b&gt;&lt;br/&gt;apply · offer · status"]
+        C4["&lt;b&gt;Mobile apps&lt;/b&gt;&lt;br/&gt;React Native&lt;br/&gt;borrower · field · recovery"]
+        C5["&lt;b&gt;Third-party clients&lt;/b&gt;&lt;br/&gt;public API · signed webhooks"]
+        C1 ~~~ C2 ~~~ C3 ~~~ C4 ~~~ C5
+    end
+
+    SI["&lt;b&gt;Swift Intelligence&lt;/b&gt;&lt;br/&gt;optional · build-time&lt;br/&gt;drafts only, never decides"]
+
+    subgraph EDGE["EDGE"]
+        direction LR
+        G1["&lt;b&gt;API gateway&lt;/b&gt;&lt;br/&gt;auth · rate limits · idempotency"]
+        G2["&lt;b&gt;Identity&lt;/b&gt;&lt;br/&gt;Keycloak · OIDC · SSO · MFA"]
+        G1 ~~~ G2
+    end
+
+    subgraph CORE["LENDING&amp;nbsp;CORE&amp;nbsp;·&amp;nbsp;MODULAR&amp;nbsp;MONOLITH"]
+        direction TB
+        subgraph API["API&amp;nbsp;layer"]
+            direction LR
+            P1["&lt;b&gt;Admin API&lt;/b&gt;&lt;br/&gt;configuration · back office"]
+            P2["&lt;b&gt;Public API&lt;/b&gt;&lt;br/&gt;OpenAPI · OAuth 2.0"]
+            P3["&lt;b&gt;Authorisation&lt;/b&gt;&lt;br/&gt;ABAC · maker-checker"]
+            P1 ~~~ P2 ~~~ P3
+        end
+        subgraph LEND["Lending&amp;nbsp;modules"]
+            direction LR
+            L1["&lt;b&gt;Origination&lt;/b&gt;&lt;br/&gt;application · KYC · approval"]
+            L2["&lt;b&gt;Products and offers&lt;/b&gt;&lt;br/&gt;versioned configuration"]
+            L3["&lt;b&gt;Collections&lt;/b&gt;&lt;br/&gt;DPD buckets · recovery"]
+            L4["&lt;b&gt;Monitoring&lt;/b&gt;&lt;br/&gt;covenants · early warning"]
+            L1 ~~~ L2 ~~~ L3 ~~~ L4
+        end
+        subgraph TXN["ONE&amp;nbsp;TRANSACTIONAL&amp;nbsp;BOUNDARY"]
+            direction LR
+            K1["&lt;b&gt;Credit&lt;/b&gt;&lt;br/&gt;operations · balances&lt;br/&gt;schedules · allocation"]
+            K2["&lt;b&gt;Accounting&lt;/b&gt;&lt;br/&gt;journal engine · GL&lt;br/&gt;sub-ledgers · close"]
+            K3["&lt;b&gt;Kernel&lt;/b&gt;&lt;br/&gt;state machines · work items&lt;br/&gt;audit · outbox"]
+            K1 ~~~ K2 ~~~ K3
+        end
+        subgraph PACKS["Packs&amp;nbsp;·&amp;nbsp;guardrails&amp;nbsp;and&amp;nbsp;posting&amp;nbsp;rules"]
+            direction LR
+            R1["&lt;b&gt;Regulatory packs&lt;/b&gt;&lt;br/&gt;Nepal · Malaysia · Islamic"]
+            R2["&lt;b&gt;Deployment extensions&lt;/b&gt;&lt;br/&gt;built and owned by Swift"]
+            R3["&lt;b&gt;Payments · comms&lt;/b&gt;&lt;br/&gt;notices · statements"]
+            R4["&lt;b&gt;Reference data&lt;/b&gt;&lt;br/&gt;calendars · catalogues"]
+            R1 ~~~ R2 ~~~ R3 ~~~ R4
+        end
+        API --&gt; LEND
+        LEND --&gt; TXN
+        TXN -.- PACKS
+    end
+
+    subgraph EXT["EXTRACTED&amp;nbsp;SERVICES"]
+        direction LR
+        X1["&lt;b&gt;Decisioning&lt;/b&gt;&lt;br/&gt;rules · scorecards&lt;br/&gt;replay · shadow"]
+        X2["&lt;b&gt;Documents&lt;/b&gt;&lt;br/&gt;templated rendering"]
+        X3["&lt;b&gt;Connector hub&lt;/b&gt;&lt;br/&gt;the only way out"]
+        X4["&lt;b&gt;Batch workers&lt;/b&gt;&lt;br/&gt;EOD · accrual · DPD"]
+        X5["&lt;b&gt;Reporting&lt;/b&gt;&lt;br/&gt;dashboards · regulatory returns"]
+        X1 ~~~ X2 ~~~ X3 ~~~ X4 ~~~ X5
+    end
+
+    subgraph INT["INTEGRATION&amp;nbsp;EDGE"]
+        direction LR
+        I1["&lt;b&gt;Core banking port&lt;/b&gt;&lt;br/&gt;certified drivers&lt;br/&gt;modes A · B · C · D"]
+        I2["&lt;b&gt;Edge adapters&lt;/b&gt;&lt;br/&gt;wallets · BNPL · margin"]
+        I1 ~~~ I2
+    end
+
+    subgraph DATA["DATA"]
+        direction LR
+        D1[("&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br/&gt;OLTP · sync standby")]
+        D2[("&lt;b&gt;Reporting replica&lt;/b&gt;&lt;br/&gt;modelled marts")]
+        D3[("&lt;b&gt;Object store&lt;/b&gt;&lt;br/&gt;S3 API")]
+        D4["&lt;b&gt;Event bus&lt;/b&gt;&lt;br/&gt;optional"]
+        D5["&lt;b&gt;Cache · search&lt;/b&gt;&lt;br/&gt;optional"]
+        D6["&lt;b&gt;Secrets&lt;/b&gt;&lt;br/&gt;Vault or KMS"]
+        D1 ~~~ D2 ~~~ D3 ~~~ D4 ~~~ D5 ~~~ D6
+    end
+
+    subgraph OUT["EXTERNAL&amp;nbsp;SYSTEMS"]
+        direction LR
+        E1["&lt;b&gt;Core banking systems&lt;/b&gt;"]
+        E2["&lt;b&gt;Payment rails · wallets&lt;/b&gt;"]
+        E3["&lt;b&gt;Bureaus · KYC · AML · e-sign&lt;/b&gt;"]
+        E4["&lt;b&gt;SMS · email · push&lt;/b&gt;"]
+        E1 ~~~ E2 ~~~ E3 ~~~ E4
+    end
+
+    subgraph OPS["OPERATIONS"]
+        direction LR
+        O1["&lt;b&gt;Observability&lt;/b&gt;&lt;br/&gt;OpenTelemetry · metrics&lt;br/&gt;traces · logs"]
+        O2["&lt;b&gt;GitOps delivery&lt;/b&gt;&lt;br/&gt;signed images · same artefacts&lt;br/&gt;in every topology"]
+        O1 ~~~ O2
+    end
+
+    CH --&gt;|"HTTPS · OIDC tokens"| EDGE
+    SI -.-&gt;|"drafts via Admin API"| EDGE
+    EDGE --&gt; CORE
+    CORE --&gt;|"outbox"| INT
+    CORE &lt;--&gt;|"REST · events"| EXT
+    INT &lt;--&gt;|"sagas with compensation"| OUT
+    EXT &lt;--&gt;|"bureau · KYC · rails"| OUT
+    EXT --&gt; DATA
+    INT ~~~ DATA
+    DATA ~~~ OPS
+
+    classDef app fill:#FFFFFF,stroke:#E0DEDC,stroke-width:1px,color:#16181F
+    classDef ai fill:#F4F0FF,stroke:#7934F0,stroke-width:1.5px,stroke-dasharray:5 4,color:#16181F
+    classDef edge fill:#FFFFFF,stroke:#C9D4FE,stroke-width:1px,color:#16181F
+    classDef mod fill:#262932,stroke:#363A45,stroke-width:1px,color:#F9F8F6
+    classDef txn fill:#3859F9,stroke:#6F87FB,stroke-width:1px,color:#FFFFFF
+    classDef svc fill:#FFFFFF,stroke:#DDE3A6,stroke-width:1px,color:#16181F
+    classDef int fill:#FFFFFF,stroke:#F4CDB4,stroke-width:1px,color:#16181F
+    classDef data fill:#FFFFFF,stroke:#EED98A,stroke-width:1px,color:#16181F
+    classDef opt fill:#FFFDF3,stroke:#C9A63A,stroke-width:1px,stroke-dasharray:5 4,color:#55534E
+    classDef ops fill:#FFFFFF,stroke:#DAD4C8,stroke-width:1px,color:#16181F
+    classDef ext fill:#EEE9DF,stroke:#C8C1B3,stroke-width:1px,color:#16181F
+
+    class C1,C2,C3,C4,C5 app
+    class SI ai
+    class G1,G2 edge
+    class P1,P2,P3,L1,L2,L3,L4,R1,R2,R3,R4 mod
+    class K1,K2,K3 txn
+    class X1,X2,X3,X4,X5 svc
+    class I1,I2 int
+    class D1,D2,D3,D6 data
+    class D4,D5 opt
+    class O1,O2 ops
+    class E1,E2,E3,E4 ext
+
+    style CH fill:#F9F8F6,stroke:#E0DEDC,color:#16181F
+    style EDGE fill:#EEF4FF,stroke:#C9D4FE,color:#3859F9
+    style CORE fill:#16181F,stroke:#16181F,color:#FADF7C
+    style API fill:#1E2129,stroke:#30343E,color:#B5B1A8
+    style LEND fill:#1E2129,stroke:#30343E,color:#B5B1A8
+    style PACKS fill:#1E2129,stroke:#30343E,color:#B5B1A8
+    style TXN fill:#23336F,stroke:#3859F9,color:#FFFFFF
+    style EXT fill:#F8FAE3,stroke:#DDE3A6,color:#5F6E00
+    style INT fill:#FDF1EA,stroke:#F4CDB4,color:#C2410C
+    style DATA fill:#FFF8D9,stroke:#EED98A,color:#A15C07
+    style OPS fill:#F9F8F6,stroke:#DAD4C8,color:#85817A
+    style OUT fill:#F9F8F6,stroke:#85817A,stroke-dasharray:6 5,color:#55534E
+            </pre>
+          </div>
+        </div>
+        <figcaption class="border-t border-line px-4 sm:px-6 py-4">
+          <p class="lg:hidden mb-3 text-[12.5px] text-mute-2">Swipe sideways to see the whole diagram.</p>
+          <p class="flex flex-wrap gap-1.5 text-[11.5px] font-medium" aria-label="Colour key"><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#16181F;color:#FADF7C">Lending core</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#3859F9;color:#FFFFFF">One transaction</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#EEF4FF;color:#3859F9">Edge</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#F8FAE3;color:#5F6E00">Extracted services</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#FDF1EA;color:#C2410C">Integration edge</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#FFF8D9;color:#A15C07">Data</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 border border-dashed border-current" style="background:#F4F0FF;color:#7934F0">Optional</span><span class="inline-flex items-center rounded-full px-2.5 py-0.5 " style="background:#EEE9DF;color:#55534E">Outside finOS</span></p>
+          <p id="sys-diagram-desc" class="mt-3 text-[13px] leading-relaxed text-mute max-w-[96ch]">
+            Client apps reach the lending core through the API gateway and identity service. Inside the
+            core, credit, accounting and the kernel commit in one database transaction. Decisioning,
+            documents, the connector hub, batch workers and reporting run as separate services; the
+            connector hub is the only way out to bureaus, KYC and payment rails. The integration edge
+            talks to the lender's core banking system in one of <a class="text-accent hover:underline" href="core-banking.html">four modes</a>,
+            with compensating steps if a call fails. Swift Intelligence is optional and only drafts
+            configuration through the Admin API.
+          </p>
+        </figcaption>
+      </figure>
     </div>
 
     <!-- Invariants -->
@@ -1295,6 +1476,32 @@
   };
 
   initTabs('[aria-label="Architecture views"]');
+
+  /* ---------- Mermaid diagrams (loaded only on pages that have one) ---------- */
+  // Class "mmd", not "mermaid": Mermaid's own start-on-load scan must never pick these up.
+  const diagrams = [...document.querySelectorAll('pre.mmd')];
+  const sources = diagrams.map(el => el.textContent);
+  if (diagrams.length) {
+    Promise.all([import('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs'), document.fonts.ready])
+      .then(async ([{ default: mermaid }]) => {
+        mermaid.initialize({
+          startOnLoad: false, securityLevel: 'strict', theme: 'base',
+          themeVariables: { fontFamily: 'Instrument Sans, system-ui, sans-serif', fontSize: '13px',
+            primaryColor: '#FFFFFF', primaryBorderColor: '#E0DEDC', primaryTextColor: '#16181F',
+            lineColor: '#A8A296', clusterBkg: '#F9F8F6', clusterBorder: '#E0DEDC',
+            edgeLabelBackground: '#F9F8F6', textColor: '#55534E' },
+          flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true, nodeSpacing: 22, rankSpacing: 46, padding: 14, wrappingWidth: 420 }
+        });
+        // Render one at a time with our own ids: the default ids are time-based and can collide.
+        for (const [i, el] of diagrams.entries()) {
+          try {
+            const { svg, bindFunctions } = await mermaid.render('site-diagram-' + i, sources[i]);
+            el.innerHTML = svg; el.setAttribute('data-processed', 'true'); bindFunctions?.(el);
+          } catch (err) { console.error('diagram', i, err); el.setAttribute('data-processed', 'error'); }
+        }
+      })
+      .catch(err => console.error('mermaid', err));
+  }
 
 })();
 </script>
