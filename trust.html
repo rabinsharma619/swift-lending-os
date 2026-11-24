@@ -396,6 +396,83 @@
       </div>
     </div>
 
+    <!-- Access control: RBAC and ABAC -->
+    <div id="access-control" class="mt-20 scroll-mt-20 reveal">
+      <h3 class="text-[22px] lg:text-[26px] font-semibold tracking-tighter">Who can do what: RBAC and ABAC</h3>
+      <p class="mt-3 text-[15.5px] text-mute max-w-[74ch]">Access is deny-by-default and answered in layers. <span class="font-medium text-ink">Role-based access control (RBAC)</span> says what a person is able to do. <span class="font-medium text-ink">Attribute-based access control (ABAC)</span> says whether this particular action, on this record, right now, is allowed. finOS uses both — RBAC for capability, ABAC for context.</p>
+
+      <div class="mt-8 overflow-x-auto rounded-xl border border-line bg-white">
+        <table class="w-full text-[14px] min-w-[720px]">
+          <caption class="sr-only">Role-based compared with attribute-based access control, and how finOS uses each</caption>
+          <thead><tr class="border-b border-line bg-surface-2"><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2"></th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">RBAC · role-based</th><th scope="col" class="px-5 py-3 text-left text-[12px] font-semibold uppercase tracking-wider text-mute-2">ABAC · attribute-based</th></tr></thead>
+          <tbody class="divide-y divide-line">
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">The question it answers</th><td class="px-5 py-3.5 align-top text-mute">Can this kind of user do this kind of thing?</td><td class="px-5 py-3.5 align-top text-mute">Is this particular action allowed — on this record, here and now?</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">Decided by</th><td class="px-5 py-3.5 align-top text-mute">The roles a person holds: named sets of permissions such as <span class="font-mono text-[12.5px]">loan:read</span> or <span class="font-mono text-[12.5px]">fee:waive</span></td><td class="px-5 py-3.5 align-top text-mute">Attributes of the person, the record and the moment: amount, branch, data residency, who proposed the change, approval state</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">Example</th><td class="px-5 py-3.5 align-top text-mute">A collections agent may waive fees</td><td class="px-5 py-3.5 align-top text-mute">…but only up to the waiver threshold — above it, a supervisor must approve</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">Good at</th><td class="px-5 py-3.5 align-top text-mute">Simple to grant, review and recertify</td><td class="px-5 py-3.5 align-top text-mute">Precise rules without inventing a new role for every case</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">Weak on its own</th><td class="px-5 py-3.5 align-top text-mute">Drifts into ever-larger “super-roles”</td><td class="px-5 py-3.5 align-top text-mute">Hard to reason about and audit if it is the only layer</td></tr>
+<tr><th scope="row" class="px-5 py-3.5 font-medium text-left align-top w-[22%]">In finOS</th><td class="px-5 py-3.5 align-top text-mute"><span class="font-medium text-ink">Capability.</span> People can hold several roles; each belongs to one department that owns their work queue</td><td class="px-5 py-3.5 align-top text-mute"><span class="font-medium text-ink">Context.</span> Amount thresholds, data residency, segregation of duties, maker-checker and break-glass</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-12 text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-3">Every request passes five checks, in order</p>
+      <div class="grid gap-3 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr]">
+<div class="rounded-xl bg-white ring-1 ring-line p-4 flex flex-col">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">1</span>
+            <p class="mt-2 text-[14px] font-semibold tracking-tighter">Scope</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-mute flex-1">Gateway checks the token’s coarse scopes</p>
+            <p class="mt-3 pt-2 border-t border-black/10 text-[12px] text-mute-2">Rejected: 401 / 403</p>
+          </div>
+<div class="hidden lg:flex items-center justify-center" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h13M11 5l5 5-5 5"/></svg></div>
+<div class="rounded-xl bg-[#EEF4FF] ring-1 ring-[#C9D4FE] p-4 flex flex-col">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">2</span>
+            <p class="mt-2 text-[14px] font-semibold tracking-tighter">Role · RBAC</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-mute flex-1">Does a role grant this permission?</p>
+            <p class="mt-3 pt-2 border-t border-black/10 text-[12px] text-mute-2">Rejected and logged: 403</p>
+          </div>
+<div class="hidden lg:flex items-center justify-center" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h13M11 5l5 5-5 5"/></svg></div>
+<div class="rounded-xl bg-[#EEF4FF] ring-1 ring-[#C9D4FE] p-4 flex flex-col">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">3</span>
+            <p class="mt-2 text-[14px] font-semibold tracking-tighter">Data scope</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-mute flex-1">Is the record in this person’s branch, product or partner scope? Enforced by row-level security in the database</p>
+            <p class="mt-3 pt-2 border-t border-black/10 text-[12px] text-mute-2">Out of scope looks like it doesn’t exist: 404</p>
+          </div>
+<div class="hidden lg:flex items-center justify-center" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h13M11 5l5 5-5 5"/></svg></div>
+<div class="rounded-xl bg-[#F4F0FF] ring-1 ring-[#D9C9FF] p-4 flex flex-col">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">4</span>
+            <p class="mt-2 text-[14px] font-semibold tracking-tighter">Conditions · ABAC</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-mute flex-1">Threshold, residency, segregation of duties, maker-checker state</p>
+            <p class="mt-3 pt-2 border-t border-black/10 text-[12px] text-mute-2">Routed to an approval work item, or 403</p>
+          </div>
+<div class="hidden lg:flex items-center justify-center" aria-hidden="true"><svg class="h-5 w-5 text-mute-2" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h13M11 5l5 5-5 5"/></svg></div>
+<div class="rounded-xl bg-[#FDF1EA] ring-1 ring-[#F4CDB4] p-4 flex flex-col">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-ink font-mono text-[11px] text-white">5</span>
+            <p class="mt-2 text-[14px] font-semibold tracking-tighter">Statutory guardrails</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-mute flex-1">The regulator’s limits from the market pack — cannot be configured away</p>
+            <p class="mt-3 pt-2 border-t border-black/10 text-[12px] text-mute-2">Clamped or declined, with an audited event</p>
+          </div>
+      </div>
+      <p class="mt-3 text-[12.5px] text-mute-2">Only step 1 happens at the gateway; every decision about a specific record is made inside finOS. After step 5 the action runs and is written to the tamper-evident audit trail.</p>
+
+      <div class="mt-10 grid lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-7 rounded-xl bg-white ring-1 ring-line p-6">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-3">Worked example · a collections agent waives a late fee</p>
+          <ol class="space-y-3 text-[14px] leading-relaxed text-mute"><li class="flex gap-3"><span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-white">1</span><span><span class="font-medium text-ink">Role.</span> The agent holds <span class="font-medium text-ink">collections-agent</span>, which grants the fee-waiver permission. Pass.</span></li><li class="flex gap-3"><span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-white">2</span><span><span class="font-medium text-ink">Data scope.</span> The loan belongs to her branch. Pass — a loan from another branch would simply not be visible.</span></li><li class="flex gap-3"><span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-white">3</span><span><span class="font-medium text-ink">Conditions.</span> The amount is above her waiver threshold, so the request is not refused — it becomes an approval work item for a collections supervisor, carrying the before-and-after.</span></li><li class="flex gap-3"><span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-white">4</span><span><span class="font-medium text-ink">Maker-checker.</span> The supervisor approves. The platform checks the approver is not the person who asked.</span></li><li class="flex gap-3"><span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-[10px] text-white">5</span><span><span class="font-medium text-ink">Guardrails and audit.</span> No statutory limit is touched. The waiver posts as a credit operation, with both names in the audit trail.</span></li></ol>
+        </div>
+        <div class="lg:col-span-5 space-y-4">
+          <div class="rounded-xl bg-[#F8FAE3] ring-1 ring-[#DDE3A6] p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#5F6E00] mb-2">Why both</p>
+            <p class="text-[14px] leading-relaxed text-mute">Roles alone force a choice between too much power and a new role for every exception. Attributes alone are hard to review. Roles keep access legible for an auditor; conditions keep it precise. Small teams can combine roles — originator and margin monitor, say — while segregation-of-duties rules stop the dangerous combinations.</p>
+          </div>
+          <div class="rounded-xl bg-white ring-1 ring-line p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2 mb-2">Identity outside, authorisation inside</p>
+            <p class="text-[14px] leading-relaxed text-mute">Keycloak proves who someone is — single sign-on, MFA, your directory. What they may approve is lending logic, so it lives in finOS: versioned, reviewed and audited like every other rule. Break-glass access is time-boxed and always needs a second person.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
