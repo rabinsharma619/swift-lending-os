@@ -91,13 +91,43 @@
   .mod-row[aria-expanded="true"] .chev { transform: rotate(90deg); }
   .chev { transition: transform .3s var(--ease); }
 
-  /* Hero lifecycle — geometry and paint transitions carry the motion */
-  .lc-stage circle { transition: r .35s var(--ease), fill .35s var(--ease), stroke .35s var(--ease); }
-  .lc-stage text   { transition: fill .35s var(--ease); }
-  #lc-fill         { transition: y2 .55s var(--ease); }
-  #lc-note         { transition: y .55s var(--ease); }
-  .lc-pip          { transition: fill .4s var(--ease); }
-  #lc-branch-path, #lc-branch-dot, #lc-branch-label { transition: stroke .4s var(--ease), fill .4s var(--ease); }
+  /* Hero lifecycle card */
+  .lc-chip { border-radius: 999px; padding: 4px 10px; font-size: 11.5px; font-weight: 500; color: #55534E;
+             background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px #E0DEDC; transition: background .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease); }
+  .lc-chip:hover { color: #16181F; box-shadow: inset 0 0 0 1px #C9D4FE; }
+  .lc-chip[aria-pressed="true"] { background: #16181F; color: #fff; box-shadow: none; }
+  .lc-chip:focus-visible, .lc-row:focus-visible, .lc-play:focus-visible { outline: 2px solid #3859F9; outline-offset: 2px; }
+  .lc-play { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 500;
+             color: #55534E; background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px #E0DEDC; }
+  .lc-play:hover { color: #16181F; }
+  .lc-track { position: relative; }
+  .lc-rail { position: absolute; left: 10px; top: 15px; width: 2px; border-radius: 2px; background: #E4DFD6; }
+  .lc-rail-fill { position: absolute; left: 0; top: 0; width: 2px; border-radius: 2px; background: #3859F9; height: 0; transition: height .5s var(--ease); }
+  .lc-row { position: relative; width: 100%; display: grid; grid-template-columns: 22px 68px 1fr; align-items: center; gap: 0 8px;
+            min-height: 30px; padding: 0 8px 0 0; border-radius: 10px; text-align: left; transition: background .3s var(--ease); }
+  .lc-row:hover { background: rgba(56,89,249,.05); }
+  .lc-dot { justify-self: center; width: 11px; height: 11px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px #C9C2B6;
+            transition: transform .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease); }
+  .lc-name { font-size: 12.5px; color: #85817A; transition: color .3s var(--ease); }
+  .lc-note { font-size: 11.5px; color: #A29E97; line-height: 1.3; transition: color .3s var(--ease); }
+  .lc-row[data-state="done"] .lc-dot { background: #3859F9; box-shadow: none; }
+  .lc-row[data-state="done"] .lc-name { color: #55534E; }
+  .lc-row[data-state="done"] .lc-note { color: #85817A; }
+  .lc-row[data-state="now"] { background: #EEF4FF; }
+  .lc-row[data-state="now"] .lc-dot { background: #3859F9; box-shadow: 0 0 0 4px rgba(56,89,249,.18); transform: scale(1.15); }
+  .lc-row[data-state="now"] .lc-name { color: #16181F; font-weight: 600; }
+  .lc-row[data-state="now"] .lc-note { color: #16181F; }
+  .lc-branch { position: relative; display: flex; align-items: center; min-height: 26px; padding-left: 30px; font-size: 11.5px; color: #A29E97;
+               transition: color .35s var(--ease), opacity .35s var(--ease); opacity: .7; }
+  .lc-elbow { position: absolute; left: 11px; top: -9px; width: 15px; height: 22px; border-left: 1.6px dashed #D6D0C6; border-bottom: 1.6px dashed #D6D0C6;
+              border-bottom-left-radius: 8px; transition: border-color .35s var(--ease); }
+  .lc-bchip { display: inline-block; border-radius: 999px; padding: 1px 8px; font-weight: 500; background: #F3F2ED; color: #85817A;
+              transition: background .35s var(--ease), color .35s var(--ease); }
+  .lc-branch[data-on="true"] { color: #55534E; opacity: 1; }
+  .lc-branch[data-on="true"] .lc-elbow { border-color: #C2410C; }
+  .lc-branch[data-on="true"] .lc-bchip { background: #FDF1EA; color: #C2410C; }
+  .lc-op { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; border-radius: 6px; padding: 2px 7px; background: #F4F0FF; color: #5B3FC4; }
+  @media (prefers-reduced-motion: reduce) { .lc-rail-fill, .lc-row, .lc-dot, .lc-name, .lc-note, .lc-branch, .lc-elbow, .lc-bchip, .lc-chip { transition: none; } }
 
   /* Follow-one-loan controls */
   .fl-prod[aria-selected="true"] { background: #16181F; color: #fff; }
@@ -953,102 +983,98 @@
   if (reduce && stage && stage.pauseAnimations) { stage.setCurrentTime(6); stage.pauseAnimations(); }
 
   /* ---------- Hero: loan lifecycle ----------
-     Motion with a job: it shows that six different products run one lifecycle. State is driven
-     from JS attributes rather than CSS keyframes so the sequence stays legible and pausable, and
-     under prefers-reduced-motion it renders a completed cycle and never animates. */
+     Shows that six different products run one lifecycle. The card tours on its own, says so,
+     and offers a pause; any click on a product or stage hands control to the reader. Under
+     prefers-reduced-motion it never tours and opens on servicing, with the branch visible. */
   const LC = {
     products: [
-      { n: 'Digital moneylender loan', s: 'In-app · eKYC · statutory rate ceiling',      b: 'Collections' },
-      { n: 'Hire purchase',            s: 'At the dealer · asset-secured · monthly EMIs', b: 'Repossession' },
-      { n: 'Wallet micro-loan & BNPL', s: 'In-wallet · minutes · auto-debit repayment', b: 'Collections' },
-      { n: 'Send-Now-Pay-Later',       s: 'At send-time · decided inside the send flow', b: 'Collections' },
-      { n: 'Retail & corporate loan',  s: 'Bank channel · collateral and covenants',     b: 'Covenant watch' },
-      { n: 'Margin facility',          s: 'Pledged collateral · marked to market',       b: 'Margin call' }
+      { n: 'Digital moneylender loan', s: 'In-app · eKYC · statutory rate ceiling',      w: 'If a payment is missed', b: 'Collections',
+        notes: ['In-app, eKYC and consent', 'Scorecard, rules, guardrails', 'Priced under the statutory cap', 'Paid out to the borrower', 'Accrual, schedule, statements', 'Oldest instalment first', 'Settled, rebate applied if due'] },
+      { n: 'Hire purchase',            s: 'At the dealer · asset-secured · monthly instalments', w: 'If arrears build up', b: 'Repossession',
+        notes: ['At the dealer, asset recorded', 'Rules and guardrails', 'Flat-rate terms, disclosed', 'Paid to the dealer', 'Monthly instalments, statements', 'Allocated across obligations', 'Settled, ownership passes'] },
+      { n: 'Wallet micro-loan & BNPL', s: 'In-wallet · minutes · auto-debit repayment',     w: 'If a payment is missed', b: 'Collections',
+        notes: ['In the wallet, pre-filled', 'Automated decision', 'Shown in the wallet', 'Credited to the wallet', 'Schedule and reminders', 'Auto-debited from the wallet', 'Settled, limit freed'] },
+      { n: 'Send-Now-Pay-Later',       s: 'At send-time · decided inside the send flow',   w: 'If a payment is missed', b: 'Collections',
+        notes: ['Inside the send flow', 'Automated, at send-time', 'Terms shown before sending', 'Remittance funded', 'Schedule and reminders', 'Paid back in instalments', 'Settled, rebate applied if due'] },
+      { n: 'Retail & corporate loan',  s: 'Bank channel · collateral and covenants',       w: 'If a covenant slips', b: 'Covenant watch',
+        notes: ['Bank channel, documents', 'Scorecard and credit review', 'Priced, collateral taken', 'Funded to the account', 'Accrual, covenants tracked', 'Allocated across obligations', 'Settled, collateral released'] },
+      { n: 'Margin facility',          s: 'Pledged collateral · marked to market',         w: 'If collateral falls short', b: 'Margin call',
+        notes: ['Securities pledged', 'Limit from pledged value', 'Facility limit set', 'Drawn as needed', 'Collateral revalued', 'Repaid, limit restored', 'Pledge released'] }
     ],
-    notes: [
-      'Intake, KYC and consent',
-      'Scorecard, rules and guardrails',
-      'Priced within statutory caps',
-      'Funded, booked, journal posted',
-      'Accrual, schedule, statements',
-      'Allocated across obligations',
-      'Settled, rebate applied if due'
-    ]
+    // What the credit kernel records at each stage, the same for every product
+    ops: ['Application + consent record', 'Decision + policy version', 'Offer + disclosure', 'DISBURSEMENT + journal',
+          'INTEREST_ACCRUAL + journal', 'PAYMENT + journal', 'CLOSE, loan record sealed']
   };
 
   const lc = {
+    card:   document.getElementById('lc-card'),
     prod:   document.getElementById('lc-prod'),
     sub:    document.getElementById('lc-sub'),
-    note:   document.getElementById('lc-note'),
     fill:   document.getElementById('lc-fill'),
-    stages: [...document.querySelectorAll('.lc-stage')],
-    pips:   [...document.querySelectorAll('.lc-pip')],
-    bPath:  document.getElementById('lc-branch-path'),
-    bDot:   document.getElementById('lc-branch-dot'),
-    bLabel: document.getElementById('lc-branch-label')
+    rail:   document.querySelector('.lc-rail'),
+    rows:   [...document.querySelectorAll('.lc-row')],
+    chips:  [...document.querySelectorAll('.lc-chip')],
+    branch: document.getElementById('lc-branch'),
+    bWhen:  document.getElementById('lc-bwhen'),
+    bLabel: document.getElementById('lc-blabel'),
+    sName:  document.getElementById('lc-stage-name'),
+    op:     document.getElementById('lc-op'),
+    play:   document.getElementById('lc-play')
   };
 
-  if (lc.prod && lc.stages.length) {
-    const SERVICE = 4;                                  // branch activates from this stage on
-    const render = (p, stage) => {
+  if (lc.card && lc.rows.length) {
+    const SERVICE = 4;                                  // the exception branch opens from servicing on
+    const centre = el => el.offsetTop + el.offsetHeight / 2;
+    let p = 0, stage = 0, lcTimer = null;
+
+    const render = () => {
       const prod = LC.products[p];
       lc.prod.textContent = prod.n;
       lc.sub.textContent  = prod.s;
+      lc.bWhen.textContent = prod.w;
       lc.bLabel.textContent = prod.b;
-      lc.pips.forEach((pip, i) => pip.setAttribute('fill', i === p ? '#3859F9' : '#E4DFD6'));
-
-      lc.stages.forEach((g, i) => {
-        const c = g.querySelector('circle'), t = g.querySelector('text');
-        const done = i < stage, now = i === stage;
-        c.setAttribute('fill',   done || now ? '#3859F9' : '#fff');
-        c.setAttribute('stroke', done || now ? '#3859F9' : '#C9C2B6');
-        c.setAttribute('r',      now ? '7' : '5.5');
-        t.setAttribute('fill',   now ? '#16181F' : done ? '#55534E' : '#85817A');
-        t.setAttribute('font-weight', now ? '600' : '400');
+      lc.chips.forEach((c, i) => c.setAttribute('aria-pressed', i === p ? 'true' : 'false'));
+      lc.rows.forEach((r, i) => {
+        r.dataset.state = i < stage ? 'done' : i === stage ? 'now' : 'next';
+        r.querySelector('.lc-note').textContent = prod.notes[i];
+        if (i === stage) r.setAttribute('aria-current', 'step'); else r.removeAttribute('aria-current');
       });
+      lc.branch.dataset.on = stage >= SERVICE ? 'true' : 'false';
+      lc.sName.textContent = lc.rows[stage].querySelector('.lc-name').textContent;
+      lc.op.textContent = LC.ops[stage];
 
-      const y = +lc.stages[stage].dataset.y;
-      lc.fill.setAttribute('y2', y);
-      lc.note.textContent = LC.notes[stage];
-      lc.note.setAttribute('y', y + 4);
-
-      const branchOn = stage >= SERVICE;
-      lc.bPath.setAttribute('stroke', branchOn ? '#C2410C' : '#E4DFD6');
-      lc.bDot.setAttribute('stroke',  branchOn ? '#C2410C' : '#E4DFD6');
-      lc.bDot.setAttribute('fill',    branchOn ? '#FDF6E8' : '#fff');
-      lc.bLabel.setAttribute('fill',  branchOn ? '#9A6510' : '#8B94A6');
+      const li = el => el.closest('li');
+      const top = centre(li(lc.rows[0]));
+      lc.rail.style.top = top + 'px';
+      lc.rail.style.height = (centre(li(lc.rows[lc.rows.length - 1])) - top) + 'px';
+      lc.fill.style.height = (centre(li(lc.rows[stage])) - top) + 'px';
     };
 
-    let p = 0, stage = 0, lcTimer = null;
-
-    if (reduce) {
-      render(0, LC.notes.length - 1);                   // completed cycle, no motion
-    } else {
-      render(p, stage);
+    const setPlaying = on => {
+      lc.play.setAttribute('aria-pressed', on ? 'false' : 'true');
+      lc.play.setAttribute('aria-label', on ? 'Pause the tour' : 'Play the tour');
+      document.getElementById('lc-play-label').textContent = on ? 'Pause' : 'Play';
+      document.getElementById('lc-ico-pause').style.display = on ? '' : 'none';
+      document.getElementById('lc-ico-play').style.display  = on ? 'none' : '';
+    };
+    const stop = () => { if (lcTimer) { clearInterval(lcTimer); lcTimer = null; } setPlaying(false); };
+    const start = () => {
+      stop();
       lcTimer = setInterval(() => {
         stage += 1;
-        if (stage >= LC.notes.length) { stage = 0; p = (p + 1) % LC.products.length; }
-        render(p, stage);
-      }, 1150);
-    }
+        if (stage >= LC.ops.length) { stage = 0; p = (p + 1) % LC.products.length; }
+        render();
+      }, 1700);
+      setPlaying(true);
+    };
 
-    // Clicking a stage takes manual control — the loop stops rather than fighting the reader.
-    lc.stages.forEach((g, i) => {
-      g.style.cursor = 'pointer';
-      g.addEventListener('click', () => {
-        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
-        stage = i;
-        render(p, stage);
-      });
-    });
-    lc.pips.forEach((pip, i) => {
-      pip.style.cursor = 'pointer';
-      pip.addEventListener('click', () => {
-        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
-        p = i;
-        render(p, stage);
-      });
-    });
+    if (reduce) { stage = SERVICE; render(); setPlaying(false); }
+    else { render(); start(); }
+
+    lc.play.addEventListener('click', () => { if (lcTimer) stop(); else start(); });
+    lc.rows.forEach((r, i) => r.addEventListener('click', () => { stop(); stage = i; render(); }));
+    lc.chips.forEach((c, i) => c.addEventListener('click', () => { stop(); p = i; render(); }));
+    window.addEventListener('resize', render);
   }
 
   /* ---------- Follow one loan ----------

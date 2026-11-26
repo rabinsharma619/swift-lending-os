@@ -91,13 +91,43 @@
   .mod-row[aria-expanded="true"] .chev { transform: rotate(90deg); }
   .chev { transition: transform .3s var(--ease); }
 
-  /* Hero lifecycle — geometry and paint transitions carry the motion */
-  .lc-stage circle { transition: r .35s var(--ease), fill .35s var(--ease), stroke .35s var(--ease); }
-  .lc-stage text   { transition: fill .35s var(--ease); }
-  #lc-fill         { transition: y2 .55s var(--ease); }
-  #lc-note         { transition: y .55s var(--ease); }
-  .lc-pip          { transition: fill .4s var(--ease); }
-  #lc-branch-path, #lc-branch-dot, #lc-branch-label { transition: stroke .4s var(--ease), fill .4s var(--ease); }
+  /* Hero lifecycle card */
+  .lc-chip { border-radius: 999px; padding: 4px 10px; font-size: 11.5px; font-weight: 500; color: #55534E;
+             background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px #E0DEDC; transition: background .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease); }
+  .lc-chip:hover { color: #16181F; box-shadow: inset 0 0 0 1px #C9D4FE; }
+  .lc-chip[aria-pressed="true"] { background: #16181F; color: #fff; box-shadow: none; }
+  .lc-chip:focus-visible, .lc-row:focus-visible, .lc-play:focus-visible { outline: 2px solid #3859F9; outline-offset: 2px; }
+  .lc-play { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 500;
+             color: #55534E; background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px #E0DEDC; }
+  .lc-play:hover { color: #16181F; }
+  .lc-track { position: relative; }
+  .lc-rail { position: absolute; left: 10px; top: 15px; width: 2px; border-radius: 2px; background: #E4DFD6; }
+  .lc-rail-fill { position: absolute; left: 0; top: 0; width: 2px; border-radius: 2px; background: #3859F9; height: 0; transition: height .5s var(--ease); }
+  .lc-row { position: relative; width: 100%; display: grid; grid-template-columns: 22px 68px 1fr; align-items: center; gap: 0 8px;
+            min-height: 30px; padding: 0 8px 0 0; border-radius: 10px; text-align: left; transition: background .3s var(--ease); }
+  .lc-row:hover { background: rgba(56,89,249,.05); }
+  .lc-dot { justify-self: center; width: 11px; height: 11px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px #C9C2B6;
+            transition: transform .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease); }
+  .lc-name { font-size: 12.5px; color: #85817A; transition: color .3s var(--ease); }
+  .lc-note { font-size: 11.5px; color: #A29E97; line-height: 1.3; transition: color .3s var(--ease); }
+  .lc-row[data-state="done"] .lc-dot { background: #3859F9; box-shadow: none; }
+  .lc-row[data-state="done"] .lc-name { color: #55534E; }
+  .lc-row[data-state="done"] .lc-note { color: #85817A; }
+  .lc-row[data-state="now"] { background: #EEF4FF; }
+  .lc-row[data-state="now"] .lc-dot { background: #3859F9; box-shadow: 0 0 0 4px rgba(56,89,249,.18); transform: scale(1.15); }
+  .lc-row[data-state="now"] .lc-name { color: #16181F; font-weight: 600; }
+  .lc-row[data-state="now"] .lc-note { color: #16181F; }
+  .lc-branch { position: relative; display: flex; align-items: center; min-height: 26px; padding-left: 30px; font-size: 11.5px; color: #A29E97;
+               transition: color .35s var(--ease), opacity .35s var(--ease); opacity: .7; }
+  .lc-elbow { position: absolute; left: 11px; top: -9px; width: 15px; height: 22px; border-left: 1.6px dashed #D6D0C6; border-bottom: 1.6px dashed #D6D0C6;
+              border-bottom-left-radius: 8px; transition: border-color .35s var(--ease); }
+  .lc-bchip { display: inline-block; border-radius: 999px; padding: 1px 8px; font-weight: 500; background: #F3F2ED; color: #85817A;
+              transition: background .35s var(--ease), color .35s var(--ease); }
+  .lc-branch[data-on="true"] { color: #55534E; opacity: 1; }
+  .lc-branch[data-on="true"] .lc-elbow { border-color: #C2410C; }
+  .lc-branch[data-on="true"] .lc-bchip { background: #FDF1EA; color: #C2410C; }
+  .lc-op { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; border-radius: 6px; padding: 2px 7px; background: #F4F0FF; color: #5B3FC4; }
+  @media (prefers-reduced-motion: reduce) { .lc-rail-fill, .lc-row, .lc-dot, .lc-name, .lc-note, .lc-branch, .lc-elbow, .lc-bchip, .lc-chip { transition: none; } }
 
   /* Follow-one-loan controls */
   .fl-prod[aria-selected="true"] { background: #16181F; color: #fff; }
@@ -203,7 +233,7 @@
     * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   }
 </style>
-<script>(function(){var m={"twh-blur": "who.html", "twh-ball0dac65": "who.html", "tw6-hz": "who.html", "tw4-hz": "who.html", "tw3-ballfdad15": "who.html", "tw1-wall": "who.html", "twh-ballfdad15": "who.html", "tw4-grain": "who.html", "twh-floor": "who.html", "twh-cyl3": "who.html", "tw4-wall": "who.html", "tw3-ball0dac65": "who.html", "tw2-floor": "who.html", "tw3-wall": "who.html", "tw2-grain": "who.html", "tw4-blur": "who.html", "tw3-ballfa6900": "who.html", "tw6-wall": "who.html", "tw5-grain": "who.html", "twh-cyl0": "who.html", "twh-hz": "who.html", "tw5-wall": "who.html", "who": "who.html", "twh-wall": "who.html", "tw2-wall": "who.html", "twh-cyl2": "who.html", "tw3-grain": "who.html", "tw2-cyl1": "who.html", "tw1-floor": "who.html", "twh-ball8b5cf6": "who.html", "twh-cyl1": "who.html", "tw2-cyl2": "who.html", "tw3-balle5479f": "who.html", "tw3-ball3859f9": "who.html", "twh-ballfa6900": "who.html", "tw5-cyl0": "who.html", "twh-balle5479f": "who.html", "tw6-floor": "who.html", "tw2-cyl0": "who.html", "tw3-floor": "who.html", "tw1-hz": "who.html", "tw3-hz": "who.html", "tw5-ball3859f9": "who.html", "tw1-cyl1": "who.html", "tw2-hz": "who.html", "tw5-blur": "who.html", "twh-grain": "who.html", "twh-ball3859f9": "who.html", "tw3-blur": "who.html", "tw6-blur": "who.html", "tw1-blur": "who.html", "tw1-cyl2": "who.html", "tw4-floor": "who.html", "tw5-hz": "who.html", "tw5-floor": "who.html", "tw1-cyl0": "who.html", "tw2-blur": "who.html", "tw1-grain": "who.html", "tw3-ball8b5cf6": "who.html", "tw6-grain": "who.html", "m6": "platform.html", "tp-ball8b5cf6": "platform.html", "m7": "platform.html", "chan-cap": "platform.html", "m1": "platform.html", "m8": "platform.html", "m3": "platform.html", "m10": "platform.html", "tp-grain": "platform.html", "m12": "platform.html", "m2": "platform.html", "m11": "platform.html", "tp-blur": "platform.html", "m9": "platform.html", "tp-hz": "platform.html", "m4": "platform.html", "tp-floor": "platform.html", "tp-ballfa6900": "platform.html", "m5": "platform.html", "platform": "platform.html", "tp-ballfdad15": "platform.html", "tp-wall": "platform.html", "th-cyl1": "platform.html", "hire-purchase": "platform.html", "th-grain": "platform.html", "th-wall": "platform.html", "th-cyl3": "platform.html", "th-ball3859f9": "platform.html", "th-blur": "platform.html", "th-cyl0": "platform.html", "th-hz": "platform.html", "th-floor": "platform.html", "th-cyl2": "platform.html", "tc-cyl5": "core-banking.html", "mode-d": "core-banking.html", "mode-a": "core-banking.html", "tc-hz": "core-banking.html", "tc-balld0dc12": "core-banking.html", "mode-b": "core-banking.html", "tc-grain": "core-banking.html", "core-banking": "core-banking.html", "tc-cyl3": "core-banking.html", "infinity": "core-banking.html", "mode-c": "core-banking.html", "tc-cyl1": "core-banking.html", "tc-ball0dac65": "core-banking.html", "tc-cyl0": "core-banking.html", "tc-wall": "core-banking.html", "tc-blur": "core-banking.html", "tc-floor": "core-banking.html", "tc-cyl2": "core-banking.html", "tc-cyl4": "core-banking.html", "deployment": "architecture.html", "tat-cyl1": "architecture.html", "tae-grain": "architecture.html", "tab-hz": "architecture.html", "tai-cyl1": "architecture.html", "tas-wall": "architecture.html", "tai-cyl0": "architecture.html", "tat-cyl3": "architecture.html", "tb-topo": "architecture.html", "tar-grain": "architecture.html", "tae-floor": "architecture.html", "sysFullBtn": "architecture.html", "tar-ball3859f9": "architecture.html", "tar-hz": "architecture.html", "sysFull": "architecture.html", "sys-diagram-desc": "architecture.html", "tp-kernel": "architecture.html", "tar-wall": "architecture.html", "architecture": "architecture.html", "tai-cyl2": "architecture.html", "tat-grain": "architecture.html", "tat-cyl0": "architecture.html", "tai-grain": "architecture.html", "decision": "architecture.html", "tat-wall": "architecture.html", "tae-blur": "architecture.html", "tat-ball0dac65": "architecture.html", "tab-wall": "architecture.html", "tae-wall": "architecture.html", "tai-wall": "architecture.html", "sdk": "architecture.html", "tas-floor": "architecture.html", "tab-blur": "architecture.html", "tai-cyl3": "architecture.html", "build-or-adopt": "architecture.html", "tai-floor": "architecture.html", "tas-cyl2": "architecture.html", "tar-floor": "architecture.html", "tar-ballfa6900": "architecture.html", "cs-cap": "architecture.html", "tp-topo": "architecture.html", "tat-cyl2": "architecture.html", "tab-grain": "architecture.html", "tas-cyl1": "architecture.html", "tae-hz": "architecture.html", "tat-balle5479f": "architecture.html", "tas-cyl3": "architecture.html", "tai-hz": "architecture.html", "tai-blur": "architecture.html", "tb-kernel": "architecture.html", "tae-ballfdad15": "architecture.html", "tat-blur": "architecture.html", "decisions": "architecture.html", "tat-hz": "architecture.html", "tb-planes": "architecture.html", "tas-grain": "architecture.html", "tab-floor": "architecture.html", "tar-blur": "architecture.html", "tai-cyl4": "architecture.html", "tae-ballfa6900": "architecture.html", "tat-floor": "architecture.html", "tas-hz": "architecture.html", "channels-and-sdk": "architecture.html", "tai-cyl5": "architecture.html", "tas-blur": "architecture.html", "tp-planes": "architecture.html", "tas-cyl0": "architecture.html", "ai-agents": "intelligence.html", "ta-floor": "intelligence.html", "ta-grain": "intelligence.html", "ai-play": "intelligence.html", "ta-blur": "intelligence.html", "ai-log": "intelligence.html", "ai-verdict": "intelligence.html", "ta-ball0dac65": "intelligence.html", "ai-gates": "intelligence.html", "swift-intelligence": "intelligence.html", "ta-wall": "intelligence.html", "ta-hz": "intelligence.html", "ta-ball3859f9": "intelligence.html", "ai-restart": "intelligence.html", "tg-hz": "trust.html", "compliance": "trust.html", "tg-cyl2": "trust.html", "tg-blur": "trust.html", "tg-grain": "trust.html", "access-control": "trust.html", "tg-ballf4efe7": "trust.html", "tg-cyl1": "trust.html", "tg-ball3859f9": "trust.html", "tg-wall": "trust.html", "tg-floor": "trust.html", "trust": "trust.html", "compare": "trust.html", "tpr-blur": "pricing.html", "tpr-ball3859f9": "pricing.html", "trl-ballfdad15": "pricing.html", "trl-grain": "pricing.html", "trl-blur": "pricing.html", "tpr-cyl6": "pricing.html", "tpr-ballfa6900": "pricing.html", "trl-cyl3": "pricing.html", "tpr-floor": "pricing.html", "pricing": "pricing.html", "tpr-grain": "pricing.html", "tpr-cyl16": "pricing.html", "tpr-cyl2": "pricing.html", "tpr-cyl14": "pricing.html", "tpr-cyl5": "pricing.html", "tpr-cyl1": "pricing.html", "tpr-cyl3": "pricing.html", "tpr-cyl13": "pricing.html", "tpr-cyl10": "pricing.html", "tpr-cyl12": "pricing.html", "tpr-cyl18": "pricing.html", "tpr-balle5479f": "pricing.html", "tpr-wall": "pricing.html", "tpr-cyl17": "pricing.html", "trs-blur": "pricing.html", "trs-grain": "pricing.html", "trl-cyl2": "pricing.html", "trs-ball3859f9": "pricing.html", "tpr-cyl4": "pricing.html", "tpr-cyl15": "pricing.html", "tpr-ball0dac65": "pricing.html", "trs-floor": "pricing.html", "tpr-cyl8": "pricing.html", "tpr-ball8b5cf6": "pricing.html", "trs-wall": "pricing.html", "tpr-hz": "pricing.html", "tpr-cyl7": "pricing.html", "tpr-cyl11": "pricing.html", "trs-hz": "pricing.html", "trl-floor": "pricing.html", "trl-wall": "pricing.html", "trl-cyl1": "pricing.html", "trl-hz": "pricing.html", "tpr-cyl0": "pricing.html", "tpr-cyl9": "pricing.html", "tm-grain": "malaysia.html", "tm-ballfa6900": "malaysia.html", "tm-cyl1": "malaysia.html", "tm-blur": "malaysia.html", "tm-hz": "malaysia.html", "tm-floor": "malaysia.html", "malaysia": "malaysia.html", "tm-wall": "malaysia.html", "practice": "malaysia.html", "my-stack-cap": "malaysia.html", "scope": "malaysia.html"};var h=location.hash.slice(1);if(m[h])location.replace(m[h]+"#"+h);})();</script>
+<script>(function(){var m={"tw3-ballfa6900": "who.html", "twh-cyl0": "who.html", "twh-hz": "who.html", "who": "who.html", "twh-ballfdad15": "who.html", "tw2-grain": "who.html", "tw5-blur": "who.html", "tw5-cyl0": "who.html", "tw2-wall": "who.html", "tw6-blur": "who.html", "tw6-hz": "who.html", "tw2-blur": "who.html", "tw1-floor": "who.html", "tw4-grain": "who.html", "twh-ball8b5cf6": "who.html", "tw4-floor": "who.html", "tw1-wall": "who.html", "tw6-grain": "who.html", "tw5-wall": "who.html", "tw6-floor": "who.html", "tw3-floor": "who.html", "tw3-hz": "who.html", "tw2-cyl1": "who.html", "tw3-ball8b5cf6": "who.html", "tw1-hz": "who.html", "tw2-cyl0": "who.html", "tw3-wall": "who.html", "tw5-grain": "who.html", "tw1-grain": "who.html", "twh-cyl3": "who.html", "tw1-blur": "who.html", "twh-floor": "who.html", "twh-blur": "who.html", "twh-cyl1": "who.html", "tw4-wall": "who.html", "tw5-ball3859f9": "who.html", "tw2-hz": "who.html", "tw2-cyl2": "who.html", "tw4-blur": "who.html", "twh-ball3859f9": "who.html", "tw4-hz": "who.html", "tw5-hz": "who.html", "twh-balle5479f": "who.html", "tw3-blur": "who.html", "tw2-floor": "who.html", "tw3-ballfdad15": "who.html", "tw1-cyl0": "who.html", "tw1-cyl2": "who.html", "twh-wall": "who.html", "tw3-grain": "who.html", "tw5-floor": "who.html", "twh-grain": "who.html", "twh-ball0dac65": "who.html", "twh-ballfa6900": "who.html", "tw3-ball3859f9": "who.html", "twh-cyl2": "who.html", "tw3-ball0dac65": "who.html", "tw3-balle5479f": "who.html", "tw1-cyl1": "who.html", "tw6-wall": "who.html", "m3": "platform.html", "m5": "platform.html", "tp-blur": "platform.html", "tp-ballfa6900": "platform.html", "tp-floor": "platform.html", "m7": "platform.html", "m6": "platform.html", "tp-grain": "platform.html", "tp-ballfdad15": "platform.html", "m2": "platform.html", "m12": "platform.html", "m8": "platform.html", "m10": "platform.html", "m1": "platform.html", "m9": "platform.html", "tp-hz": "platform.html", "platform": "platform.html", "chan-cap": "platform.html", "tp-wall": "platform.html", "m11": "platform.html", "tp-ball8b5cf6": "platform.html", "m4": "platform.html", "th-wall": "platform.html", "th-blur": "platform.html", "th-cyl2": "platform.html", "th-grain": "platform.html", "th-cyl3": "platform.html", "th-cyl1": "platform.html", "th-cyl0": "platform.html", "th-ball3859f9": "platform.html", "hire-purchase": "platform.html", "th-hz": "platform.html", "th-floor": "platform.html", "tc-wall": "core-banking.html", "mode-a": "core-banking.html", "core-banking": "core-banking.html", "tc-hz": "core-banking.html", "mode-c": "core-banking.html", "tc-floor": "core-banking.html", "tc-balld0dc12": "core-banking.html", "tc-grain": "core-banking.html", "tc-cyl1": "core-banking.html", "infinity": "core-banking.html", "tc-ball0dac65": "core-banking.html", "tc-cyl2": "core-banking.html", "tc-cyl0": "core-banking.html", "tc-cyl5": "core-banking.html", "tc-blur": "core-banking.html", "tc-cyl4": "core-banking.html", "mode-b": "core-banking.html", "tc-cyl3": "core-banking.html", "mode-d": "core-banking.html", "tae-grain": "architecture.html", "tas-cyl1": "architecture.html", "tab-blur": "architecture.html", "channels-and-sdk": "architecture.html", "tae-floor": "architecture.html", "tp-topo": "architecture.html", "tae-ballfa6900": "architecture.html", "tat-blur": "architecture.html", "tb-topo": "architecture.html", "tas-hz": "architecture.html", "cs-cap": "architecture.html", "sdk": "architecture.html", "sys-diagram-desc": "architecture.html", "tb-kernel": "architecture.html", "tar-wall": "architecture.html", "tat-cyl2": "architecture.html", "tai-cyl0": "architecture.html", "tat-floor": "architecture.html", "tab-hz": "architecture.html", "tar-floor": "architecture.html", "tp-kernel": "architecture.html", "tai-floor": "architecture.html", "tai-grain": "architecture.html", "tae-wall": "architecture.html", "tai-cyl1": "architecture.html", "tat-hz": "architecture.html", "sysFull": "architecture.html", "tae-blur": "architecture.html", "tat-cyl3": "architecture.html", "tas-wall": "architecture.html", "tar-ballfa6900": "architecture.html", "tat-cyl0": "architecture.html", "tb-planes": "architecture.html", "tai-hz": "architecture.html", "tat-grain": "architecture.html", "tai-cyl5": "architecture.html", "deployment": "architecture.html", "sysFullBtn": "architecture.html", "tar-blur": "architecture.html", "build-or-adopt": "architecture.html", "decisions": "architecture.html", "tas-cyl3": "architecture.html", "tat-wall": "architecture.html", "tas-grain": "architecture.html", "tai-cyl3": "architecture.html", "tai-cyl2": "architecture.html", "tp-planes": "architecture.html", "tar-hz": "architecture.html", "tat-cyl1": "architecture.html", "tab-wall": "architecture.html", "tab-grain": "architecture.html", "decision": "architecture.html", "tar-grain": "architecture.html", "tae-ballfdad15": "architecture.html", "tai-blur": "architecture.html", "tat-ball0dac65": "architecture.html", "tai-wall": "architecture.html", "tas-blur": "architecture.html", "tas-cyl2": "architecture.html", "tab-floor": "architecture.html", "tar-ball3859f9": "architecture.html", "tas-cyl0": "architecture.html", "architecture": "architecture.html", "tae-hz": "architecture.html", "tai-cyl4": "architecture.html", "tas-floor": "architecture.html", "tat-balle5479f": "architecture.html", "ta-blur": "intelligence.html", "ta-ball0dac65": "intelligence.html", "swift-intelligence": "intelligence.html", "ta-wall": "intelligence.html", "ta-hz": "intelligence.html", "ai-play": "intelligence.html", "ai-log": "intelligence.html", "ai-restart": "intelligence.html", "ai-agents": "intelligence.html", "ai-verdict": "intelligence.html", "ta-floor": "intelligence.html", "ai-gates": "intelligence.html", "ta-ball3859f9": "intelligence.html", "ta-grain": "intelligence.html", "tg-cyl2": "trust.html", "tg-hz": "trust.html", "tg-floor": "trust.html", "tg-ballf4efe7": "trust.html", "tg-grain": "trust.html", "tg-blur": "trust.html", "tg-ball3859f9": "trust.html", "access-control": "trust.html", "tg-cyl1": "trust.html", "compliance": "trust.html", "tg-wall": "trust.html", "trust": "trust.html", "compare": "trust.html", "tpr-hz": "pricing.html", "trl-blur": "pricing.html", "trs-wall": "pricing.html", "tpr-cyl11": "pricing.html", "tpr-ball3859f9": "pricing.html", "trl-grain": "pricing.html", "tpr-floor": "pricing.html", "tpr-cyl1": "pricing.html", "tpr-cyl5": "pricing.html", "tpr-wall": "pricing.html", "trs-hz": "pricing.html", "tpr-cyl2": "pricing.html", "tpr-grain": "pricing.html", "tpr-cyl8": "pricing.html", "trl-floor": "pricing.html", "pricing": "pricing.html", "trl-cyl2": "pricing.html", "tpr-cyl15": "pricing.html", "tpr-cyl14": "pricing.html", "trl-hz": "pricing.html", "trl-wall": "pricing.html", "trl-cyl3": "pricing.html", "trs-grain": "pricing.html", "trs-ball3859f9": "pricing.html", "tpr-cyl4": "pricing.html", "tpr-cyl9": "pricing.html", "tpr-ball8b5cf6": "pricing.html", "trs-floor": "pricing.html", "tpr-cyl18": "pricing.html", "trl-cyl1": "pricing.html", "tpr-cyl17": "pricing.html", "tpr-cyl6": "pricing.html", "trs-blur": "pricing.html", "tpr-ball0dac65": "pricing.html", "tpr-cyl0": "pricing.html", "tpr-blur": "pricing.html", "tpr-cyl12": "pricing.html", "tpr-cyl13": "pricing.html", "tpr-cyl10": "pricing.html", "tpr-ballfa6900": "pricing.html", "tpr-cyl7": "pricing.html", "trl-ballfdad15": "pricing.html", "tpr-cyl3": "pricing.html", "tpr-balle5479f": "pricing.html", "tpr-cyl16": "pricing.html", "tm-grain": "malaysia.html", "tm-blur": "malaysia.html", "tm-floor": "malaysia.html", "tm-wall": "malaysia.html", "tm-ballfa6900": "malaysia.html", "tm-cyl1": "malaysia.html", "malaysia": "malaysia.html", "tm-hz": "malaysia.html", "my-stack-cap": "malaysia.html", "practice": "malaysia.html", "scope": "malaysia.html"};var h=location.hash.slice(1);if(m[h])location.replace(m[h]+"#"+h);})();</script>
 </head>
 
 <body class="bg-oat text-ink font-sans antialiased">
@@ -336,82 +366,54 @@
         <svg viewBox="0 0 1200 600" class="block w-full h-full" preserveAspectRatio="xMinYMid slice" aria-hidden="true" focusable="false" font-family="Instrument Sans, sans-serif"><defs><filter id="hx-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="hx-grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .25  0 0 0 .09 0"/></filter><linearGradient id="hx-cyl0" x1="0" x2="1"><stop offset="0" stop-color="#fdb731"/><stop offset=".55" stop-color="#fdad15"/><stop offset="1" stop-color="#b67d0f"/></linearGradient><radialGradient id="hx-ballfa6900" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fdbc8c"/><stop offset=".45" stop-color="#fa6900"/><stop offset="1" stop-color="#a24400"/></radialGradient><radialGradient id="hx-balle5479f" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#f3acd4"/><stop offset=".45" stop-color="#e5479f"/><stop offset="1" stop-color="#952e67"/></radialGradient><radialGradient id="hx-ball3859f9" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#a5b4fc"/><stop offset=".45" stop-color="#3859f9"/><stop offset="1" stop-color="#243aa2"/></radialGradient><radialGradient id="hx-ball0dac65" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#92daba"/><stop offset=".45" stop-color="#0dac65"/><stop offset="1" stop-color="#087042"/></radialGradient><radialGradient id="hx-ballfdad15" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#feda96"/><stop offset=".45" stop-color="#fdad15"/><stop offset="1" stop-color="#a4700e"/></radialGradient><radialGradient id="hx-balle0393e" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#f1a6a8"/><stop offset=".45" stop-color="#e0393e"/><stop offset="1" stop-color="#922528"/></radialGradient><linearGradient id="hx-cyl7" x1="0" x2="1"><stop offset="0" stop-color="#506dfa"/><stop offset=".55" stop-color="#3859f9"/><stop offset="1" stop-color="#2840b3"/></linearGradient><linearGradient id="hx-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9d4ff"/><stop offset=".75" stop-color="#e3f1ff"/><stop offset="1" stop-color="#f3f8ff"/></linearGradient><linearGradient id="hx-h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8ecbd"/><stop offset="1" stop-color="#6fd48f"/></linearGradient><linearGradient id="hx-h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd08a"/><stop offset="1" stop-color="#18a865"/></linearGradient><linearGradient id="hx-h3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fbf74"/><stop offset="1" stop-color="#078a52"/></linearGradient></defs><rect width="1200" height="600" fill="url(#hx-sky)"/><g fill="#fff" opacity=".9"><ellipse cx="250" cy="90" rx="70" ry="22"/><ellipse cx="300" cy="78" rx="48" ry="26"/><ellipse cx="930" cy="70" rx="80" ry="22"/><ellipse cx="980" cy="58" rx="46" ry="24"/><ellipse cx="620" cy="130" rx="44" ry="14"/></g><path d="M0 330 C180 250 360 280 520 320 C700 365 860 250 1200 290 V600 H0z" fill="url(#hx-h1)"/><path d="M0 420 C160 360 330 400 470 430 C640 470 800 380 1200 400 V600 H0z" fill="url(#hx-h2)"/><path d="M0 520 C220 470 420 500 600 520 C800 545 1000 480 1200 500 V600 H0z" fill="url(#hx-h3)"/><path d="M880 300 l30 -70 l30 70z" fill="#ff9fcf"/><path d="M910 230 l30 70 h-12z" fill="#e06aa8"/><path d="M984.0 300.0 v-54 a26 13.0 0 0 0 52 0 v54 a26 13.0 0 0 1 -52 0z" fill="url(#hx-cyl0)"/><ellipse cx="1010" cy="246" rx="26" ry="13.0" fill="#fec250"/><path d="M1080 330 v-46 a32 32 0 0 1 64 0 v46 h-18 v-40 a14 14 0 0 0 -28 0 v40z" fill="#7d97ff"/><g transform="translate(36 84) scale(.78)"><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 196 C150 250 220 292 300 296" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M372 298 C440 300 470 330 536 356" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#b9ae9c" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#f4efe7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="M640 393 C680 406 720 420 770 430" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4.7" stroke-linecap="round" transform="translate(-1.5 -5.7)"/><polygon points="586,430 610,384 634,430" fill="#8b5cf6"/><polygon points="610,384 634,430 626,430" fill="#6a3fd6"/><g transform="rotate(16 588 376)"><rect x="520" y="368" width="140" height="14" rx="5" fill="#b9a2ff"/><rect x="520" y="368" width="140" height="5" rx="2.5" fill="#e2d8ff"/></g><ellipse cx="610.0" cy="436.0" rx="44" ry="8" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><g class="hero-balls"><circle cx="0" cy="0" r="13" fill="url(#hx-ballfa6900)" opacity="0"><set attributeName="opacity" to="1" begin="0.0s"/><animateMotion dur="9.6s" begin="0.0s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-balle5479f)" opacity="0"><set attributeName="opacity" to="1" begin="1.6s"/><animateMotion dur="9.6s" begin="1.6s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ball3859f9)" opacity="0"><set attributeName="opacity" to="1" begin="3.2s"/><animateMotion dur="9.6s" begin="3.2s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ball0dac65)" opacity="0"><set attributeName="opacity" to="1" begin="4.800000000000001s"/><animateMotion dur="9.6s" begin="4.800000000000001s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-ballfdad15)" opacity="0"><set attributeName="opacity" to="1" begin="6.4s"/><animateMotion dur="9.6s" begin="6.4s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle><circle cx="0" cy="0" r="13" fill="url(#hx-balle0393e)" opacity="0"><set attributeName="opacity" to="1" begin="8.0s"/><animateMotion dur="9.6s" begin="8.0s" repeatCount="indefinite" path="M150 150 L150 196 C150 250 220 292 300 296 L372 298 C440 300 470 330 536 356 L620 386 C680 406 720 420 770 430" keyPoints="0;.12;.45;1" keyTimes="0;.18;.55;1" calcMode="linear"/></circle></g><ellipse cx="150.0" cy="210.0" rx="40" ry="8" fill="#5b4a33" opacity="0.2" filter="url(#hx-blur)"/><path d="M96 112 L204 112 L166 176 L166 200 L134 200 L134 176 Z" fill="#fa6900"/><path d="M150 112 L204 112 L166 176 L166 200 L150 200 Z" fill="#d85a00"/><ellipse cx="150" cy="112" rx="54" ry="15" fill="#ff9a52"/><ellipse cx="150" cy="113" rx="44" ry="10" fill="#b84b00"/><ellipse cx="336.0" cy="283.0" rx="54.0" ry="21.6" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><polygon points="289.2,277.0 336.0,304.0 336.0,242.0 289.2,215.0" fill="#18b26c"/><polygon points="336.0,304.0 382.8,277.0 382.8,215.0 336.0,242.0" fill="#138e56"/><polygon points="336.0,188.0 382.8,215.0 336.0,242.0 289.2,215.0" fill="#4bc38c"/><polyline points="289.2,215.0 336.0,242.0 382.8,215.0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/><ellipse cx="804.0" cy="474.0" rx="46.2" ry="24.200000000000003" fill="#5b4a33" opacity="0.28" filter="url(#hx-blur)"/><path d="M756.0 468.0 v-52 a44 22.0 0 0 0 88 0 v52 a44 22.0 0 0 1 -88 0z" fill="url(#hx-cyl7)"/><ellipse cx="800" cy="416" rx="44" ry="22.0" fill="#6a82fa"/><ellipse cx="800" cy="416" rx="34" ry="13" fill="#1d3bc4"/><line x1="150" y1="70" x2="150" y2="96" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="122.9" y="48.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="150" y="63.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Apply</text><line x1="336" y1="200" x2="336" y2="200" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="305.2" y="178.5" width="61.5" height="25.5" rx="12.8" fill="#fff"/><text x="336" y="193.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Decide</text><line x1="560" y1="300" x2="560" y2="326" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="522.0" y="278.5" width="76.0" height="25.5" rx="12.8" fill="#fff"/><text x="560" y="293.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Disburse</text><line x1="712" y1="360" x2="712" y2="386" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="684.9" y="338.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="712" y="353.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Repay</text><line x1="800" y1="370" x2="800" y2="370" stroke="#9c907c" stroke-width="2.5" stroke-linecap="round"/><rect x="772.9" y="348.5" width="54.2" height="25.5" rx="12.8" fill="#fff"/><text x="800" y="363.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#16181f">Close</text></g><rect width="1200" height="600" filter="url(#hx-grain)" pointer-events="none"/></svg>
       </div>
       <div class="relative -mt-14 mx-2 sm:mx-auto sm:max-w-[440px] lg:absolute lg:right-8 lg:top-8 lg:mt-0 lg:mx-0 lg:w-[400px]">
-        <figure class="frost rounded-[24px] p-5 sm:p-6">
-          <figcaption class="mb-4 flex items-baseline justify-between gap-4">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2">Loan lifecycle</span>
-            <span class="text-[11px] text-mute-2">one kernel · every product</span>
+        <figure class="frost rounded-[24px] p-5 sm:p-6" id="lc-card" aria-labelledby="lc-title">
+          <figcaption class="flex items-center justify-between gap-4">
+            <span id="lc-title" class="text-[11px] font-semibold uppercase tracking-[0.12em] text-mute-2">Loan lifecycle</span>
+            <button type="button" id="lc-play" class="lc-play" aria-label="Pause the tour" aria-pressed="false">
+              <svg viewBox="0 0 12 12" class="w-3 h-3" aria-hidden="true"><g id="lc-ico-pause" fill="currentColor"><rect x="2" y="1.5" width="2.6" height="9" rx=".8"/><rect x="7.4" y="1.5" width="2.6" height="9" rx=".8"/></g><path id="lc-ico-play" d="M3 1.6v8.8L10.2 6z" fill="currentColor" style="display:none"/></svg>
+              <span id="lc-play-label">Pause</span>
+            </button>
           </figcaption>
 
-          <svg viewBox="0 0 380 352" class="w-full h-auto" role="img" aria-labelledby="lc-title lc-desc">
-            <title id="lc-title">The loan lifecycle through finOS</title>
-            <desc id="lc-desc">Every product — digital moneylending, hire purchase, wallet micro-loans and BNPL, Send-Now-Pay-Later, retail and corporate loans, and margin facilities — runs the same seven-stage lifecycle: apply, decide, offer, disburse, service, repay and close, with a product-specific exception branch off the servicing stage.</desc>
+          <p class="mt-3 text-[12px] text-mute">Pick a product, then a stage — the steps never change, only the details do.</p>
+          <div class="mt-2.5 flex flex-wrap gap-1.5" role="group" aria-label="Product">
+            <button type="button" class="lc-chip" data-p="0" aria-pressed="true">Moneylender</button>
+            <button type="button" class="lc-chip" data-p="1" aria-pressed="false">Hire purchase</button>
+            <button type="button" class="lc-chip" data-p="2" aria-pressed="false">Wallet &amp; BNPL</button>
+            <button type="button" class="lc-chip" data-p="3" aria-pressed="false">Send-Now-Pay-Later</button>
+            <button type="button" class="lc-chip" data-p="4" aria-pressed="false">Bank loans</button>
+            <button type="button" class="lc-chip" data-p="5" aria-pressed="false">Margin</button>
+          </div>
 
-            <g font-family="Instrument Sans, sans-serif">
-              <!-- Product header -->
-              <text id="lc-prod" x="0" y="18" font-size="15" font-weight="600" fill="#16181F">Digital moneylender loan</text>
-              <text id="lc-sub" x="0" y="36" font-size="10.5" fill="#5A6478">In-app · eKYC · statutory rate ceiling</text>
+          <div class="mt-4">
+            <p id="lc-prod" class="text-[16px] font-semibold tracking-tighter text-ink">Digital moneylender loan</p>
+            <p id="lc-sub" class="mt-0.5 text-[12px] text-mute-2">In-app · eKYC · statutory rate ceiling</p>
+          </div>
 
-              <!-- Product cycle indicator -->
-              <g id="lc-pips">
-                <rect class="lc-pip" x="0" y="48" width="34" height="2.5" rx="1.25" fill="#3859F9"/>
-                <rect class="lc-pip" x="39" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
-                <rect class="lc-pip" x="78" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
-                <rect class="lc-pip" x="117" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
-                <rect class="lc-pip" x="156" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
-                <rect class="lc-pip" x="195" y="48" width="34" height="2.5" rx="1.25" fill="#E4DFD6"/>
-              </g>
+          <div class="lc-track mt-3" id="lc-track">
+            <span class="lc-rail" aria-hidden="true"><span class="lc-rail-fill" id="lc-fill"></span></span>
+            <ol class="relative" aria-label="Stages">
+              <li><button type="button" class="lc-row" data-i="0"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Apply</span><span class="lc-note"></span></button></li>
+              <li><button type="button" class="lc-row" data-i="1"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Decide</span><span class="lc-note"></span></button></li>
+              <li><button type="button" class="lc-row" data-i="2"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Offer</span><span class="lc-note"></span></button></li>
+              <li><button type="button" class="lc-row" data-i="3"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Disburse</span><span class="lc-note"></span></button></li>
+              <li><button type="button" class="lc-row" data-i="4"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Service</span><span class="lc-note"></span></button></li>
+              <li class="lc-branch" id="lc-branch" aria-live="off"><span class="lc-elbow" aria-hidden="true"></span><span class="lc-btext"><span id="lc-bwhen">If a payment is missed</span> <span aria-hidden="true">→</span> <span id="lc-blabel" class="lc-bchip">Collections</span></span></li>
+              <li><button type="button" class="lc-row" data-i="5"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Repay</span><span class="lc-note"></span></button></li>
+              <li><button type="button" class="lc-row" data-i="6"><span class="lc-dot" aria-hidden="true"></span><span class="lc-name">Close</span><span class="lc-note"></span></button></li>
+            </ol>
+          </div>
 
-              <!-- Rail -->
-              <line x1="11" y1="78" x2="11" y2="294" stroke="#E4DFD6" stroke-width="2" stroke-linecap="round"/>
-              <line id="lc-fill" x1="11" y1="78" x2="11" y2="78" stroke="#3859F9" stroke-width="2" stroke-linecap="round"/>
-
-              <!-- Exception branch (activates at servicing) -->
-              <path id="lc-branch-path" d="M13 226 C 58 258 116 300 182 316" fill="none"
-                    stroke="#E4DFD6" stroke-width="1.6" stroke-dasharray="3 3"/>
-              <circle id="lc-branch-dot" cx="188" cy="317" r="4.5" fill="#fff" stroke="#E4DFD6" stroke-width="1.6"/>
-              <text id="lc-branch-label" x="200" y="321" font-size="10.5" fill="#8B94A6">Collections</text>
-
-              <!-- Stages -->
-              <g id="lc-stages" font-size="12">
-                <g class="lc-stage" data-y="78">
-                  <circle cx="11" cy="78" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="82" fill="#5A6478">Apply</text>
-                </g>
-                <g class="lc-stage" data-y="114">
-                  <circle cx="11" cy="114" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="118" fill="#5A6478">Decide</text>
-                </g>
-                <g class="lc-stage" data-y="150">
-                  <circle cx="11" cy="150" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="154" fill="#5A6478">Offer</text>
-                </g>
-                <g class="lc-stage" data-y="186">
-                  <circle cx="11" cy="186" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="190" fill="#5A6478">Disburse</text>
-                </g>
-                <g class="lc-stage" data-y="222">
-                  <circle cx="11" cy="222" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="226" fill="#5A6478">Service</text>
-                </g>
-                <g class="lc-stage" data-y="258">
-                  <circle cx="11" cy="258" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="262" fill="#5A6478">Repay</text>
-                </g>
-                <g class="lc-stage" data-y="294">
-                  <circle cx="11" cy="294" r="5.5" fill="#fff" stroke="#C3CCDA" stroke-width="2"/>
-                  <text x="30" y="298" fill="#5A6478">Close</text>
-                </g>
-              </g>
-
-              <!-- Per-stage annotation, right-aligned to the active stage -->
-              <text id="lc-note" x="374" y="82" text-anchor="end" font-size="10" fill="#8B94A6">Intake, KYC and consent</text>
-            </g>
-          </svg>
-
-          <p class="mt-4 pt-4 border-t border-black/[0.07] text-[12.5px] leading-relaxed text-mute">
-            <span id="lc-kernel" class="font-medium text-ink">Every stage writes through the credit kernel</span> —
-            one ledger, one transactional boundary, whichever product it is.
-          </p>
+          <div class="mt-3 pt-3.5 border-t border-black/[0.07]">
+            <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-mute" aria-live="polite">
+              <span class="font-medium text-ink"><span id="lc-stage-name">Apply</span> writes</span>
+              <code id="lc-op" class="lc-op">Application + consent record</code>
+            </p>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-mute">
+              <span id="lc-kernel" class="font-medium text-ink">Every stage writes through the credit kernel</span> —
+              one ledger, one transactional boundary, whichever product it is.
+            </p>
+          </div>
         </figure>
       </div>
     </div>
@@ -765,102 +767,98 @@
   if (reduce && stage && stage.pauseAnimations) { stage.setCurrentTime(6); stage.pauseAnimations(); }
 
   /* ---------- Hero: loan lifecycle ----------
-     Motion with a job: it shows that six different products run one lifecycle. State is driven
-     from JS attributes rather than CSS keyframes so the sequence stays legible and pausable, and
-     under prefers-reduced-motion it renders a completed cycle and never animates. */
+     Shows that six different products run one lifecycle. The card tours on its own, says so,
+     and offers a pause; any click on a product or stage hands control to the reader. Under
+     prefers-reduced-motion it never tours and opens on servicing, with the branch visible. */
   const LC = {
     products: [
-      { n: 'Digital moneylender loan', s: 'In-app · eKYC · statutory rate ceiling',      b: 'Collections' },
-      { n: 'Hire purchase',            s: 'At the dealer · asset-secured · monthly EMIs', b: 'Repossession' },
-      { n: 'Wallet micro-loan & BNPL', s: 'In-wallet · minutes · auto-debit repayment', b: 'Collections' },
-      { n: 'Send-Now-Pay-Later',       s: 'At send-time · decided inside the send flow', b: 'Collections' },
-      { n: 'Retail & corporate loan',  s: 'Bank channel · collateral and covenants',     b: 'Covenant watch' },
-      { n: 'Margin facility',          s: 'Pledged collateral · marked to market',       b: 'Margin call' }
+      { n: 'Digital moneylender loan', s: 'In-app · eKYC · statutory rate ceiling',      w: 'If a payment is missed', b: 'Collections',
+        notes: ['In-app, eKYC and consent', 'Scorecard, rules, guardrails', 'Priced under the statutory cap', 'Paid out to the borrower', 'Accrual, schedule, statements', 'Oldest instalment first', 'Settled, rebate applied if due'] },
+      { n: 'Hire purchase',            s: 'At the dealer · asset-secured · monthly instalments', w: 'If arrears build up', b: 'Repossession',
+        notes: ['At the dealer, asset recorded', 'Rules and guardrails', 'Flat-rate terms, disclosed', 'Paid to the dealer', 'Monthly instalments, statements', 'Allocated across obligations', 'Settled, ownership passes'] },
+      { n: 'Wallet micro-loan & BNPL', s: 'In-wallet · minutes · auto-debit repayment',     w: 'If a payment is missed', b: 'Collections',
+        notes: ['In the wallet, pre-filled', 'Automated decision', 'Shown in the wallet', 'Credited to the wallet', 'Schedule and reminders', 'Auto-debited from the wallet', 'Settled, limit freed'] },
+      { n: 'Send-Now-Pay-Later',       s: 'At send-time · decided inside the send flow',   w: 'If a payment is missed', b: 'Collections',
+        notes: ['Inside the send flow', 'Automated, at send-time', 'Terms shown before sending', 'Remittance funded', 'Schedule and reminders', 'Paid back in instalments', 'Settled, rebate applied if due'] },
+      { n: 'Retail & corporate loan',  s: 'Bank channel · collateral and covenants',       w: 'If a covenant slips', b: 'Covenant watch',
+        notes: ['Bank channel, documents', 'Scorecard and credit review', 'Priced, collateral taken', 'Funded to the account', 'Accrual, covenants tracked', 'Allocated across obligations', 'Settled, collateral released'] },
+      { n: 'Margin facility',          s: 'Pledged collateral · marked to market',         w: 'If collateral falls short', b: 'Margin call',
+        notes: ['Securities pledged', 'Limit from pledged value', 'Facility limit set', 'Drawn as needed', 'Collateral revalued', 'Repaid, limit restored', 'Pledge released'] }
     ],
-    notes: [
-      'Intake, KYC and consent',
-      'Scorecard, rules and guardrails',
-      'Priced within statutory caps',
-      'Funded, booked, journal posted',
-      'Accrual, schedule, statements',
-      'Allocated across obligations',
-      'Settled, rebate applied if due'
-    ]
+    // What the credit kernel records at each stage, the same for every product
+    ops: ['Application + consent record', 'Decision + policy version', 'Offer + disclosure', 'DISBURSEMENT + journal',
+          'INTEREST_ACCRUAL + journal', 'PAYMENT + journal', 'CLOSE, loan record sealed']
   };
 
   const lc = {
+    card:   document.getElementById('lc-card'),
     prod:   document.getElementById('lc-prod'),
     sub:    document.getElementById('lc-sub'),
-    note:   document.getElementById('lc-note'),
     fill:   document.getElementById('lc-fill'),
-    stages: [...document.querySelectorAll('.lc-stage')],
-    pips:   [...document.querySelectorAll('.lc-pip')],
-    bPath:  document.getElementById('lc-branch-path'),
-    bDot:   document.getElementById('lc-branch-dot'),
-    bLabel: document.getElementById('lc-branch-label')
+    rail:   document.querySelector('.lc-rail'),
+    rows:   [...document.querySelectorAll('.lc-row')],
+    chips:  [...document.querySelectorAll('.lc-chip')],
+    branch: document.getElementById('lc-branch'),
+    bWhen:  document.getElementById('lc-bwhen'),
+    bLabel: document.getElementById('lc-blabel'),
+    sName:  document.getElementById('lc-stage-name'),
+    op:     document.getElementById('lc-op'),
+    play:   document.getElementById('lc-play')
   };
 
-  if (lc.prod && lc.stages.length) {
-    const SERVICE = 4;                                  // branch activates from this stage on
-    const render = (p, stage) => {
+  if (lc.card && lc.rows.length) {
+    const SERVICE = 4;                                  // the exception branch opens from servicing on
+    const centre = el => el.offsetTop + el.offsetHeight / 2;
+    let p = 0, stage = 0, lcTimer = null;
+
+    const render = () => {
       const prod = LC.products[p];
       lc.prod.textContent = prod.n;
       lc.sub.textContent  = prod.s;
+      lc.bWhen.textContent = prod.w;
       lc.bLabel.textContent = prod.b;
-      lc.pips.forEach((pip, i) => pip.setAttribute('fill', i === p ? '#3859F9' : '#E4DFD6'));
-
-      lc.stages.forEach((g, i) => {
-        const c = g.querySelector('circle'), t = g.querySelector('text');
-        const done = i < stage, now = i === stage;
-        c.setAttribute('fill',   done || now ? '#3859F9' : '#fff');
-        c.setAttribute('stroke', done || now ? '#3859F9' : '#C9C2B6');
-        c.setAttribute('r',      now ? '7' : '5.5');
-        t.setAttribute('fill',   now ? '#16181F' : done ? '#55534E' : '#85817A');
-        t.setAttribute('font-weight', now ? '600' : '400');
+      lc.chips.forEach((c, i) => c.setAttribute('aria-pressed', i === p ? 'true' : 'false'));
+      lc.rows.forEach((r, i) => {
+        r.dataset.state = i < stage ? 'done' : i === stage ? 'now' : 'next';
+        r.querySelector('.lc-note').textContent = prod.notes[i];
+        if (i === stage) r.setAttribute('aria-current', 'step'); else r.removeAttribute('aria-current');
       });
+      lc.branch.dataset.on = stage >= SERVICE ? 'true' : 'false';
+      lc.sName.textContent = lc.rows[stage].querySelector('.lc-name').textContent;
+      lc.op.textContent = LC.ops[stage];
 
-      const y = +lc.stages[stage].dataset.y;
-      lc.fill.setAttribute('y2', y);
-      lc.note.textContent = LC.notes[stage];
-      lc.note.setAttribute('y', y + 4);
-
-      const branchOn = stage >= SERVICE;
-      lc.bPath.setAttribute('stroke', branchOn ? '#C2410C' : '#E4DFD6');
-      lc.bDot.setAttribute('stroke',  branchOn ? '#C2410C' : '#E4DFD6');
-      lc.bDot.setAttribute('fill',    branchOn ? '#FDF6E8' : '#fff');
-      lc.bLabel.setAttribute('fill',  branchOn ? '#9A6510' : '#8B94A6');
+      const li = el => el.closest('li');
+      const top = centre(li(lc.rows[0]));
+      lc.rail.style.top = top + 'px';
+      lc.rail.style.height = (centre(li(lc.rows[lc.rows.length - 1])) - top) + 'px';
+      lc.fill.style.height = (centre(li(lc.rows[stage])) - top) + 'px';
     };
 
-    let p = 0, stage = 0, lcTimer = null;
-
-    if (reduce) {
-      render(0, LC.notes.length - 1);                   // completed cycle, no motion
-    } else {
-      render(p, stage);
+    const setPlaying = on => {
+      lc.play.setAttribute('aria-pressed', on ? 'false' : 'true');
+      lc.play.setAttribute('aria-label', on ? 'Pause the tour' : 'Play the tour');
+      document.getElementById('lc-play-label').textContent = on ? 'Pause' : 'Play';
+      document.getElementById('lc-ico-pause').style.display = on ? '' : 'none';
+      document.getElementById('lc-ico-play').style.display  = on ? 'none' : '';
+    };
+    const stop = () => { if (lcTimer) { clearInterval(lcTimer); lcTimer = null; } setPlaying(false); };
+    const start = () => {
+      stop();
       lcTimer = setInterval(() => {
         stage += 1;
-        if (stage >= LC.notes.length) { stage = 0; p = (p + 1) % LC.products.length; }
-        render(p, stage);
-      }, 1150);
-    }
+        if (stage >= LC.ops.length) { stage = 0; p = (p + 1) % LC.products.length; }
+        render();
+      }, 1700);
+      setPlaying(true);
+    };
 
-    // Clicking a stage takes manual control — the loop stops rather than fighting the reader.
-    lc.stages.forEach((g, i) => {
-      g.style.cursor = 'pointer';
-      g.addEventListener('click', () => {
-        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
-        stage = i;
-        render(p, stage);
-      });
-    });
-    lc.pips.forEach((pip, i) => {
-      pip.style.cursor = 'pointer';
-      pip.addEventListener('click', () => {
-        if (lcTimer) { clearInterval(lcTimer); lcTimer = null; }
-        p = i;
-        render(p, stage);
-      });
-    });
+    if (reduce) { stage = SERVICE; render(); setPlaying(false); }
+    else { render(); start(); }
+
+    lc.play.addEventListener('click', () => { if (lcTimer) stop(); else start(); });
+    lc.rows.forEach((r, i) => r.addEventListener('click', () => { stop(); stage = i; render(); }));
+    lc.chips.forEach((c, i) => c.addEventListener('click', () => { stop(); p = i; render(); }));
+    window.addEventListener('resize', render);
   }
 
   /* ---------- Follow one loan ----------
